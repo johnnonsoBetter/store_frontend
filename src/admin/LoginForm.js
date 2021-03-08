@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {TextField, Container, Grid, CssBaseline, Button, Box, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -37,26 +37,9 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginForm(){
     const classes = useStyles()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     return (
-
-        // <Container maxWidth="xs" className={classes.root}>
-        
-        //       <form  noValidate autoComplete="off">
-
-        //           <Grid container>
-        //               <Grid item xs={12} className={classes.inputContainer}>
-        //                     <TextField id="password" label="Email" variant="outlined" />
-        //               </Grid>
-
-        //               <Grid item xs={12} className={classes.inputContainer}>
-        //                     <TextField id="password" label="Password" variant="outlined" />
-        //               </Grid>
-        //           </Grid>
-                
-        //     </form>
-
-        // </Container>
-
         <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm" className={classes.root }>
@@ -75,11 +58,11 @@ function LoginForm(){
                        </Grid>
 
                        <Grid item xs={12} className={classes.inputContainer} >
-                             <TextField   className={classes.input} id="password" label="Email" variant="outlined" />
+                             <TextField  value = {email} onChange ={(e) => setEmail(e.target.value)}  className={classes.input} id="password" label="Email" variant="outlined" />
                        </Grid>
 
                         <Grid item xs={12} className={classes.inputContainer}>
-                                <TextField id="password" label="Password" variant="outlined" />
+                                <TextField id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} label="Password" variant="outlined" />
                         </Grid>
 
                         <Grid item xs={12} className={classes.inputContainer}>
@@ -88,7 +71,7 @@ function LoginForm(){
                                 color="secondary"
                                 className={classes.button}
                                 href="#text-buttons"
-         
+                               
                             >
                                 Login
                             </Button>
