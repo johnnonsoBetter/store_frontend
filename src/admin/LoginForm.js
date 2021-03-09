@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {TextField, Container, Grid, CssBaseline, Button, Box, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import axios from 'axios'
 
 const font = 'Kanit'
 
@@ -18,7 +19,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
    root: {
        backgroundColor: "white",
-       borderRadius: "10px",
+       borderRadius: "15px",
        width: '29ch'
        
    },
@@ -39,25 +40,45 @@ const useStyles = makeStyles((theme) => ({
    }
 }))
 
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//       '& > *': {
-//         margin: theme.spacing(1),
-//         width: '25ch',
-//       },
-//     },
-//   }));
 
 function LoginForm(){
     const classes = useStyles()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+            axios({
+                method: 'POST',
+                url: 'http://localhost:3001/api/v1/auth_admin/sign_in',
+                data: {
+                    email: email,
+                    password: password
+                }
+            }).then(response => {
+                
+                localStorage.setItem('admin', 
+                    JSON.stringify({
+                        'access-token': response.headers['access-token'],
+                        'client': response.headers['client'],
+                        'uid': response.headers['uid']
+                    })
+                )
+
+                window.location = '/admin_dashboard'
+
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+
+    
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Container maxWidth="sm" className={classes.root }>
-                    <form  noValidate autoComplete="off">
+                    <form  noValidate autoComplete="off" onSubmit={handleSubmit}>
 
                             <Grid container  >
                                     <Grid item xs={12} className={classes.inputContainer} >
@@ -67,7 +88,7 @@ function LoginForm(){
                                 </Grid>
                                     <Grid item xs={12} className={classes.inputContainer} >
                                         <Box >
-                                            <img src="static/images/admin.png" className={classes.img}/>
+                                            <img src="static/images/admin.png" alt="admin login logo" className={classes.img}/>
                                         </Box>
                                 </Grid>
 
@@ -84,7 +105,7 @@ function LoginForm(){
                                             variant="contained"
                                             color="secondary"
                                             className={classes.button}
-                                            href="#text-buttons"
+                                            type="submit"
                                         
                                         >
                                             Login

@@ -1,16 +1,17 @@
 
 import './App.css';
-import Homepage from './Homepage'
-import Login from "./admin/LoginForm";
 import LoginForm from './admin/LoginForm';
+import AdminDashboard from './admin/AdminDashboard';
 
 
 function App() {
+  const currentUser = localStorage.getItem('admin')
   return (
     <div className="App">
       <div className="App-body">
         {/* <Homepage /> */}
-        <LoginForm />
+        
+        {currentUser ? <AdminDashboard /> : <LoginForm />}
       </div>
 
     </div>
