@@ -14,9 +14,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import {Typography, Button} from '@material-ui/core/';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {Select} from '@material-ui/core/'
+import {Typography, Button, Card, CardContent} from '@material-ui/core/';
+import { makeStyles, useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {Select, Box, Grid, Paper} from '@material-ui/core/'
 import MenuItem from '@material-ui/core/MenuItem';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -29,6 +29,15 @@ import {
 
 const drawerWidth = 240;
 
+const muiTheme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Kanit',
+      'cursive',
+    ].join(','),
+  },});
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -37,28 +46,52 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
+    
     },
+
   },
+  img: {
+   
+    height: "auto"
+  },
+  
   appBar: {
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    backgroundColor: "#282c34",
+    boxShadow: "none"
+
+  },
+  toolBar: {
+    display: "flex",
+    justifyContent: "space-around"
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
+   
+  },
+  storeIcon: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2)
+  },
+  selectStore: {
+    flexGrow: 1
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: "#1f1f1f",
+    color: "white"
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
   },
 
   formControl: {
@@ -68,6 +101,27 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+
+  infoLinks: {
+    minWidth: 270,
+    margin: theme.spacing(3),
+    backgroundColor: "#0f2e447a",
+    padding: theme.spacing(7),
+    color: "white"
+  },
+
+  infoLinksContainer: {
+    marginTop: theme.spacing(5),
+    padding: theme.spacing(0),
+   
+  },
+
+  startContainer: {
+    marginTop: theme.spacing(3),
+    padding: theme.spacing(1)
+  },
+
+
 }));
 
 
@@ -78,26 +132,30 @@ const useStyles = makeStyles((theme) => ({
 
 function SimpleSelect() {
   
-  const [age, setAge] = React.useState('');
-
+  const [store, setStore] = React.useState('upright');
+  const classes = useStyles()
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setStore(event.target.value);
   };
 
   return (
     <div>
-      
-        
+      <Box display="flex"  justifyContent="center" alignItems="center" color="white" className={classes.selectStore} >
+              
+        <ShoppingCartIcon className={classes.storeIcon}/>
         <Select
           labelId="demo-simple-select-label"
          
-          value={age}
+          value={store}
+          style={{color: "whitesmoke"}}
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem  value={"upright"}>Upright</MenuItem>
+          <MenuItem value={"dechoice"}>Dechoice</MenuItem>
+          
         </Select>
+      </Box>
+     
       
       </div>
       )
@@ -121,13 +179,32 @@ function AdminDashboard(props) {
 
   const drawer = (
     <div>
+   
       <div className={classes.toolbar} />
-      <Divider />
+      
       <List>
         
+          <ListItem button>
+             
+             <ListItemIcon style={{marginBottom: "4px"}}> <img src="static/images/shopping-bag.png" className={classes.img} />  </ListItemIcon>
+            <ListItemText primary="Audit Items"/>
+          </ListItem>
 
-        <ListItem button>
-          <ListItemIcon> <ExitToAppIcon /> </ListItemIcon>
+          <ListItem button>
+             
+             <ListItemIcon > <img src="static/images/warehouse.png" className={classes.img} />  </ListItemIcon>
+            <ListItemText primary="WareHouse"/>
+          </ListItem>
+
+          <ListItem button>
+             
+             <ListItemIcon > <img src="static/images/workers.png" className={classes.img} />  </ListItemIcon>
+            <ListItemText primary="Workers"/>
+          </ListItem>
+
+          
+          <ListItem button>
+          <ListItemIcon > <img src="static/images/logout.png" className={classes.img} />  </ListItemIcon>
           <ListItemText primary="Logout" onClick={(e) => {
 
             e.preventDefault();
@@ -151,10 +228,12 @@ function AdminDashboard(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+
+    <ThemeProvider theme={muiTheme}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar display="flex" justifyContent="space-around">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -164,7 +243,12 @@ function AdminDashboard(props) {
           >
             <MenuIcon />
           </IconButton>
-          <SimpleSelect />
+
+         
+              
+              <SimpleSelect />
+
+          
          
         </Toolbar>
       </AppBar>
@@ -173,6 +257,7 @@ function AdminDashboard(props) {
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
+            
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={mobileOpen}
@@ -189,6 +274,7 @@ function AdminDashboard(props) {
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer
+            
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -201,31 +287,132 @@ function AdminDashboard(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+
+                <Typography variant="h4"> Wellcome to Upright Supermarket</Typography>
+                <Box className={classes.startContainer}>
+                  <img src="static/images/favourites.png" /> 
+                  <img src="static/images/favourites.png" /> 
+                  <img src="static/images/favourites.png" /> 
+                    
+                </Box>
+                <Grid container className={classes.infoLinksContainer}>
+                  <Grid item xs={12} md={6} lg={4}>
+                  <Link>
+                                      
+                  
+                   <Box>
+                   <Card className={classes.infoLinks}>
+                        <CardContent>
+                        <img src="static/images/shopping-bag.png" />
+                        <Typography variant="h5"> Transaction Activity </Typography>
+
+                        </CardContent>
+                        
+                      </Card>
+                   </Box>
+                   </Link>
+                     
+             
+                    
+                      
+                  </Grid>
+
+
+                  <Grid item xs={12} md={6} lg={4}>
+                  <Link>
+                  
+                  
+                  
+                   <Box>
+                   <Card className={classes.infoLinks}>
+                        <CardContent>
+                        <img src="static/images/shopping-bag.png" />
+                        <Typography variant="h5"> Transaction Activity </Typography>
+
+                        </CardContent>
+                        
+                      </Card>
+                   </Box>
+
+                     
+             
+                   </Link>
+                      
+                  </Grid>
+
+
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Link> 
+                    <Box>
+                    <Card className={classes.infoLinks}>
+                        <CardContent>
+                        <img src="static/images/shopping-bag.png" />
+                        <Typography variant="h5"> Transaction Activity </Typography>
+
+                        </CardContent>
+                        
+                      </Card>
+                    </Box>
+                    </Link>
+
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={4}>
+
+                   
+
+                      <Card className={classes.infoLinks}>
+                        <CardContent>
+                        <img src="static/images/transaction.png" />
+                        <Typography variant="h5"> Transaction Activity </Typography>
+
+                        </CardContent>
+                        
+                      </Card>
+             
+                    
+                      
+                  </Grid>
+
+                  <Grid item xs={12} md={6} lg={4}>
+
+                   
+
+                      <Card className={classes.infoLinks}>
+                        <CardContent>
+                        <img src="static/images/shopping-bag.png" />
+                        <Typography variant="h5"> Transaction Activity </Typography>
+
+                        </CardContent>
+                        
+                      </Card>
+             
+                    
+                      
+                  </Grid>
+
+                  <Grid item xs={12} md={6} lg={4}>
+
+                   
+
+                      <Card className={classes.infoLinks}>
+                        <CardContent>
+                        <img src="static/images/shopping-bag.png" />
+                        <Typography variant="h5"> Transaction Activity </Typography>
+
+                        </CardContent>
+                        
+                      </Card>
+             
+                    
+                      
+                  </Grid>
+
+                  
+                </Grid>
+            
       </main>
     </div>
+    </ThemeProvider>
   );
 }
 

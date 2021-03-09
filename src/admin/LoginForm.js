@@ -45,6 +45,8 @@ function LoginForm(){
     const classes = useStyles()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    // handles form submit
     const handleSubmit = (e)=>{
         e.preventDefault()
             axios({
