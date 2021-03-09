@@ -68,11 +68,11 @@ function LoginForm(){
 
             }).catch(err => {
                 console.log(err)
+                setEmail("")
+                setPassword("")
             })
     }
 
-
-    
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
