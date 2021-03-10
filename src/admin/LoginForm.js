@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme) => ({
        width: '29ch'
        
    },
+
+   formContainer: {
+
+        display: "flex",
+        alignContent: "center",
+        justifyContent: "center"
+   },
    inputContainer: {
        margin: theme.spacing(3),
        fontFamily: font
@@ -69,7 +76,7 @@ function LoginForm(){
                 window.location = '/admin_dashboard'
 
             }).catch(err => {
-                console.log(err)
+               
                 setEmail("")
                 setPassword("")
             })
@@ -79,47 +86,49 @@ function LoginForm(){
         <React.Fragment>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <Container maxWidth="sm" className={classes.root }>
-                    <form  noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <div className={classes.formContainer}>
+                    <Container maxWidth="sm" className={classes.root }>
+                        <form  noValidate autoComplete="off" onSubmit={handleSubmit}>
 
-                            <Grid container  >
-                                    <Grid item xs={12} className={classes.inputContainer} >
-                                        <Box >
-                                            <Typography className={classes.headingText} variant="h5">Admin Login</Typography>
-                                        </Box>
-                                </Grid>
-                                    <Grid item xs={12} className={classes.inputContainer} >
-                                        <Box >
-                                            <img src="static/images/admin.png" alt="admin login logo" className={classes.img}/>
-                                        </Box>
-                                </Grid>
-
-                                <Grid item xs={12} className={classes.inputContainer} >
-                                        <TextField  value = {email} onChange ={(e) => setEmail(e.target.value)}  className={classes.input} id="password" label="Email" variant="outlined" />
-                                </Grid>
-
-                                    <Grid item xs={12} className={classes.inputContainer}>
-                                            <TextField id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} label="Password" variant="outlined" />
+                                <Grid container  >
+                                        <Grid item xs={12} className={classes.inputContainer} >
+                                            <Box >
+                                                <Typography className={classes.headingText} variant="h5">Admin Login</Typography>
+                                            </Box>
+                                    </Grid>
+                                        <Grid item xs={12} className={classes.inputContainer} >
+                                            <Box >
+                                                <img src="static/images/admin.png" alt="admin login logo" className={classes.img}/>
+                                            </Box>
                                     </Grid>
 
-                                    <Grid item xs={12} className={classes.inputContainer}>
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            className={classes.button}
-                                            type="submit"
-                                        
-                                        >
-                                            Login
-                                        </Button>
+                                    <Grid item xs={12} className={classes.inputContainer} >
+                                            <TextField  value = {email} onChange ={(e) => setEmail(e.target.value)}  className={classes.input} id="password" label="Email" variant="outlined" />
+                                    </Grid>
+
+                                        <Grid item xs={12} className={classes.inputContainer}>
+                                                <TextField id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} label="Password" variant="outlined" />
+                                        </Grid>
+
+                                        <Grid item xs={12} className={classes.inputContainer}>
+                                            <Button
+                                                variant="contained"
+                                                color="secondary"
+                                                className={classes.button}
+                                                type="submit"
+                                            
+                                            >
+                                                Login
+                                            </Button>
+                                    </Grid>
+
+
+                                    
                                 </Grid>
-
-
                                 
-                            </Grid>
-                            
-                        </form>
-                </Container>
+                            </form>
+                    </Container>
+                </div>
             </ThemeProvider>
         </React.Fragment>
 
