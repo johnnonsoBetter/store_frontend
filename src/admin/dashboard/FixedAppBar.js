@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import {AppBar, Toolbar, IconButton} from '@material-ui/core'
 import SelectStore from './SelectStore'
 import MenuIcon from '@material-ui/icons/Menu'
-import AdminDashboardStyleContext from '../../context/admin/AdminDashboardStyleContext'
+import AdminDashboardContext from '../../context/admin/AdminDashboardContext'
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -22,30 +22,29 @@ function DatePicker() {
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
+    <MuiPickersUtilsProvider utils={DateFnsUtils} >
+      
       <KeyboardDatePicker
           disableToolbar
           variant="inline"
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label=""
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
+          style={{margin: 0, marginLeft: "20px", color: "white"}}
         />
         
-      </Grid>
     </MuiPickersUtilsProvider>
   );
 }
 
 function FixedAppBar(props){
 
-    const {appBar, menuButton} = useContext(AdminDashboardStyleContext).styles
+    const {appBar, menuButton, appBarPickerContainer} = useContext(AdminDashboardContext).styles
    
     return (
 
@@ -62,12 +61,12 @@ function FixedAppBar(props){
           </IconButton>
 
          
+              <div className={appBarPickerContainer}>
+                <DatePicker />
+                <SelectStore />
+               
+              </div>
               
-              <SelectStore />
-              <DatePicker />
-
-          
-         
         </Toolbar>
       </AppBar>
     )

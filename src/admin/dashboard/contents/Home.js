@@ -1,13 +1,33 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import {Typography, Box, Card, CardContent, Grid} from '@material-ui/core'
 import {Link, Switch, Route} from 'react-router-dom'
-import AdminDashboardStyleContext from '../../../context/admin/AdminDashboardStyleContext'
+import AdminDashboardContext from '../../../context/admin/AdminDashboardContext'
+import axios from 'axios'
 
 
 function Home(){
 
-    const {startContainer, infoLinksContainer, infoLinks} = useContext(AdminDashboardStyleContext).styles
-    const {storeName} = useContext(AdminDashboardStyleContext).store
+    const {startContainer, infoLinksContainer, infoLinks} = useContext(AdminDashboardContext).styles
+    const {storeName, setDashboardData} = useContext(AdminDashboardContext).store
+    console.log("this is the storeName", storeName)
+    useEffect(() => {
+        
+        axios({
+            method: 'GET',
+            url: `http://localhost:3001/api/v1/admin_dashboard/?store=${storeName}`,
+            headers: JSON.parse(localStorage.getItem('admin'))
+        }).then(response => {
+            const {data} = response
+            setDashboardData(data)
+            console.log(data)
+        }).catch(err => {
+
+            console.log(err)
+        })
+    }, [])
+    
+    
+    
 
     return (
 
@@ -137,4 +157,4 @@ function Home(){
 }
 
 
-export default Home
+export default React.memo(Home)

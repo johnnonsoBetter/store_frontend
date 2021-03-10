@@ -28,7 +28,7 @@ function App(){
             </Route>
              <Route exact path="/admin_dashboard">
                 {currentAdmin == null ?
-                  <Redirect to="/login" /> : <AdminPage />
+                  <Redirect to="/admin_login" /> : <AdminPage />
                 }
               </Route>
 
@@ -36,12 +36,14 @@ function App(){
                 <CashierPage />
              </Route>
 
-             <Route exact path="/login">
+             <Route exact path="/admin_login">
           
                {currentAdmin ?
                 <Redirect to="/admin_dashboard" /> : <LoginForm />
                }
              </Route>
+
+
            </Switch>  
            </div>
        </div>
@@ -52,8 +54,6 @@ export default withRouter(App)
 
 
 function Linker(props){
-  const {pathname} = props.location
-  
 
   return(
 

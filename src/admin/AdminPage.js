@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AdminDashboardStyleContextProvider } from '../context/admin/AdminDashboardStyleContext'
+import { AdminDashboardContextProvider } from '../context/admin/AdminDashboardContext'
 import AdminDashboard from './dashboard/AdminDashboard'
 import LoginForm from './LoginForm'
 import {makeStyles, createMuiTheme} from '@material-ui/core/styles'
@@ -99,6 +99,13 @@ import {makeStyles, createMuiTheme} from '@material-ui/core/styles'
       padding: theme.spacing(1)
     },
 
+    appBarPickerContainer: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexGrow: 1
+    }
+
   }));
 
 
@@ -107,6 +114,7 @@ function AdminPage(){
     
     const styles = useStyles()
     const [storeName, setStoreName] = useState("upright")
+    const [dashboardData, setDashboardData] = useState({})
 
     const currentUser = localStorage.getItem('admin')
     
@@ -115,20 +123,27 @@ function AdminPage(){
           {currentUser ? 
           
  
-            <AdminDashboardStyleContextProvider value={{
+            <AdminDashboardContextProvider value={{
               muiTheme: muiTheme,
               styles: styles,
               drawerWidth: drawerWidth,
               store: {
                 storeName: storeName,
+                dashboardData: dashboardData,
                 changeStoreName: (name)=>{
                   setStoreName(name)
+                },
+                setDashboardData: (data) => {
+                  setDashboardData(data)
+
                 }
+                
+
               }
               
             }}>
               <AdminDashboard />
-            </AdminDashboardStyleContextProvider>
+            </AdminDashboardContextProvider>
 
           : <LoginForm />}
       </>

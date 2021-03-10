@@ -12,7 +12,7 @@ import {
   Route,
   Link, useLocation, useHistory
 } from "react-router-dom";
-import AdminDashboardStyleContext from '../../context/admin/AdminDashboardStyleContext';
+import AdminDashboardStyleContext from '../../context/admin/AdminDashboardContext';
 import DrawerLinkList from './DrawerLinkList';
 import FixedAppBar from './FixedAppBar';
 

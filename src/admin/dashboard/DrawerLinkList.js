@@ -1,12 +1,12 @@
 import React, { useContext} from 'react'
 import {List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core/'
-import AdminDashboardStyleContext from '../../context/admin/AdminDashboardStyleContext';
+import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
 import axios from 'axios'
 import {useHistory, Link} from 'react-router-dom'
 
 
 function DrawerLinkList(){
-    const {img, toolbar} = useContext(AdminDashboardStyleContext).styles
+    const {img, toolbar} = useContext(AdminDashboardContext).styles
     const history = useHistory()
 
     return ( 
@@ -22,7 +22,7 @@ function DrawerLinkList(){
                     <ListItemText primary="Audit Items"/>
                   </ListItem>
         
-                  <ListItem button component={Link} to="/co">
+                  <ListItem button component={Link} to="/co" active>
                      
                      <ListItemIcon > <img src="static/images/warehouse.png" alt="warehouse" className={img} />  </ListItemIcon>
                     <ListItemText primary="WareHouse"/>
