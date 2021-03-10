@@ -2,7 +2,7 @@ import React, { useContext} from 'react'
 import {List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core/'
 import AdminDashboardStyleContext from '../../context/admin/AdminDashboardStyleContext';
 import axios from 'axios'
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 
 
 function DrawerLinkList(){
@@ -16,13 +16,13 @@ function DrawerLinkList(){
               
               <List>
                 
-                  <ListItem button>
+                  <ListItem button component={Link} to="/admin_dashboard">
                      
-                     <ListItemIcon style={{marginBottom: "4px"}}> <img src="static/images/shopping-bag.png" className={img} alt="items"/>  </ListItemIcon>
+                     <ListItemIcon  style={{marginBottom: "4px"}}> <img src="static/images/shopping-bag.png" className={img} alt="items"/>  </ListItemIcon>
                     <ListItemText primary="Audit Items"/>
                   </ListItem>
         
-                  <ListItem button>
+                  <ListItem button component={Link} to="/co">
                      
                      <ListItemIcon > <img src="static/images/warehouse.png" alt="warehouse" className={img} />  </ListItemIcon>
                     <ListItemText primary="WareHouse"/>

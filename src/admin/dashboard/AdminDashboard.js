@@ -166,7 +166,17 @@ function AdminDashboard(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-                <Home />
+               
+
+                <Switch>
+                  <Route exact path="/co" component={<h1> How are we </h1>}>
+                      <h1> HOw are we going to make the same </h1>
+                  </Route>
+
+                  <Route exact={true} path='/admin_dashboard'>
+                      <Home />
+                  </Route>
+                </Switch>
                 
       </main>
     </div>
