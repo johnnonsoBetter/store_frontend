@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState} from 'react'
-import {Typography, Box, Card, CardContent, Grid} from '@material-ui/core'
+import React, { useContext, useEffect} from 'react'
+import {Typography, Box, Card, CardContent, Grid, Backdrop, CircularProgress, Fab} from '@material-ui/core'
 import {Link, Switch, Route} from 'react-router-dom'
+import AddIcon from '@material-ui/icons/Add'
 import AdminDashboardContext from '../../../context/admin/AdminDashboardContext'
+import SettingsIcon from '@material-ui/icons/Settings'
 import axios from 'axios'
 
-
 function Home(){
-
-    const {startContainer, infoLinksContainer, infoLinks} = useContext(AdminDashboardContext).styles
+    const [backdropState, setBackdropState] = React.useState(true);
+    const {startContainer, infoLinksContainer, infoLinks, backdrop, fab, preference, preferenceLink} = useContext(AdminDashboardContext).styles
     const {storeName, setDashboardData} = useContext(AdminDashboardContext).store
-    console.log("this is the storeName", storeName)
+
     useEffect(() => {
         
         axios({
@@ -19,7 +20,10 @@ function Home(){
         }).then(response => {
             const {data} = response
             setDashboardData(data)
-            console.log(data)
+            setTimeout(() => {
+                setBackdropState(false)
+            }, 2000)
+            
         }).catch(err => {
 
             console.log(err)
@@ -31,7 +35,18 @@ function Home(){
 
     return (
 
+        
+
         <>  
+              { backdropState == true ? 
+                <Backdrop className={backdrop} open={backdropState} >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
+                :
+                
+            <div>
+
+            
             <Typography variant="h5"> Wellcome to {storeName.toUpperCase()} Supermarket</Typography>
             <Box className={startContainer}>
                 <img src="static/images/favourites.png" alt="star"/> 
@@ -143,15 +158,18 @@ function Home(){
                         </Link>
 
                     </Grid>
-
-
-                    
-
-
-                 
                 </Grid>
-            
+                <Box className={preference}>
+                    <Typography component={Link} to="/admin_login" className={preferenceLink}> <SettingsIcon /> Preferences </Typography>
+                </Box>
 
+                <Fab color="primary"  aria-label="add" className={fab}>
+                    <AddIcon/>
+                </Fab>
+            
+            </div>
+
+              }
         </>
     )
 }

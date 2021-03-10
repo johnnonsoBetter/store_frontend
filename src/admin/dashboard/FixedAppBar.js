@@ -4,16 +4,26 @@ import SelectStore from './SelectStore'
 import MenuIcon from '@material-ui/icons/Menu'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext'
 import 'date-fns';
-import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
+import lime from "@material-ui/core/colors/lime";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
 
+const defaultMaterialTheme = createMuiTheme({
+  palette: {
+    primary: lime,
+    font: "kanits"
+  },
+  color: "green"
+});
+
 function DatePicker() {
-  // The first commit of Material-UI
+  
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = (date) => {
@@ -22,23 +32,28 @@ function DatePicker() {
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils} >
-      
-      <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-          style={{margin: 0, marginLeft: "20px", color: "white"}}
-        />
+    <ThemeProvider theme={defaultMaterialTheme}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils} color="inherit">
         
-    </MuiPickersUtilsProvider>
+        <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="MM/dd/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+            color="inherit"
+            style={{margin: 0, marginLeft: "20px", color: "white"}}
+          />
+          
+        </MuiPickersUtilsProvider>
+
+    </ThemeProvider>
+    
   );
 }
 

@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
+import {Drawer, Backdrop, CircularProgress} from '@material-ui/core/';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, useTheme, ThemeProvider } from '@material-ui/core/styles';
 import Home from './contents/Home'
@@ -111,6 +111,7 @@ function AdminDashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  
  
 
   
@@ -121,12 +122,18 @@ function AdminDashboard(props) {
   
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  const {drawerWidth, muiTheme} = useContext(AdminDashboardStyleContext)
+  const {drawerWidth, muiTheme, backdrop} = useContext(AdminDashboardStyleContext)
+  const {backdropState, setBackdropState} = useContext(AdminDashboardStyleContext).store
   console.log("this is the drawer width" + drawerWidth)
 
   return (
 
     <ThemeProvider theme={muiTheme}>
+
+            
+             
+
+
     <div className={classes.root}>
       <CssBaseline />
 
@@ -169,7 +176,7 @@ function AdminDashboard(props) {
                
 
                 <Switch>
-                  <Route exact path="/co" component={<h1> How are we </h1>}>
+                  <Route exact={true} path="/audit_item" component={<h1> How are we </h1>}>
                       <h1> HOw are we going to make the same </h1>
                   </Route>
 
@@ -180,10 +187,16 @@ function AdminDashboard(props) {
                 
       </main>
     </div>
+
     </ThemeProvider>
+          
   );
 }
 
+
+const AuditItem = () => {
+  return <h1>Auditing the same item</h1>
+}
 
 
 export default AdminDashboard;

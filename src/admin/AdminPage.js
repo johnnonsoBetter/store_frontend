@@ -3,6 +3,8 @@ import { AdminDashboardContextProvider } from '../context/admin/AdminDashboardCo
 import AdminDashboard from './dashboard/AdminDashboard'
 import LoginForm from './LoginForm'
 import {makeStyles, createMuiTheme} from '@material-ui/core/styles'
+import {Backdrop, CircularProgress} from '@material-ui/core'
+import { BrowserRouter } from 'react-router-dom'
 
 
 
@@ -20,6 +22,12 @@ import {makeStyles, createMuiTheme} from '@material-ui/core/styles'
     root: {
       display: 'flex',
     },
+
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+
     drawer: {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
@@ -104,22 +112,41 @@ import {makeStyles, createMuiTheme} from '@material-ui/core/styles'
       alignItems: "center",
       justifyContent: "space-between",
       flexGrow: 1
+    },
+    fab: {
+      position: "fixed",
+      bottom: "3em",
+      right: "2em"
+    },
+    preference: {
+      margin: theme.spacing(7),
+    
+      color: "white"
+    },
+    preferenceLink: {
+
+      color: "white",
+      textDecoration: "none",
+      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingBottom: theme.spacing(0.3),
+      backgroundColor: "black",
+      borderRadius: "10px"
     }
 
   }));
-
 
 
 function AdminPage(){
     
     const styles = useStyles()
     const [storeName, setStoreName] = useState("upright")
-    const [dashboardData, setDashboardData] = useState({})
-
+    const [dashboardData, setDashboardData] = useState(null)
     const currentUser = localStorage.getItem('admin')
     
     return (
       <>
+
           {currentUser ? 
           
  
@@ -127,6 +154,9 @@ function AdminPage(){
               muiTheme: muiTheme,
               styles: styles,
               drawerWidth: drawerWidth,
+              
+
+              
               store: {
                 storeName: storeName,
                 dashboardData: dashboardData,
@@ -142,7 +172,17 @@ function AdminPage(){
               }
               
             }}>
-              <AdminDashboard />
+
+              
+
+              <div>
+
+                <BrowserRouter>
+                    <AdminDashboard />
+                </BrowserRouter>
+
+              </div>
+              
             </AdminDashboardContextProvider>
 
           : <LoginForm />}

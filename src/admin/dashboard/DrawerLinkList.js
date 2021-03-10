@@ -22,7 +22,7 @@ function DrawerLinkList(){
                     <ListItemText primary="Audit Items"/>
                   </ListItem>
         
-                  <ListItem button component={Link} to="/co" active>
+                  <ListItem button component={Link} to="/audit_item" active>
                      
                      <ListItemIcon > <img src="static/images/warehouse.png" alt="warehouse" className={img} />  </ListItemIcon>
                     <ListItemText primary="WareHouse"/>
@@ -35,7 +35,7 @@ function DrawerLinkList(){
                   </ListItem>
         
                   
-                  <ListItem button>
+                  <ListItem button component={Link} to="/">
                   <ListItemIcon > <img src="static/images/logout.png" alt="logout" className={img} />  </ListItemIcon>
                   <ListItemText primary="Logout" onClick={(e) => {
         
