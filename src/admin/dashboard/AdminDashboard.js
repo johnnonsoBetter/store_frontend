@@ -1,16 +1,18 @@
 
 import React, { useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Drawer, Backdrop, CircularProgress} from '@material-ui/core/';
+import {Drawer, Backdrop, CircularProgress, ListItem, ListItemIcon, ListItemText, List} from '@material-ui/core/';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, useTheme, ThemeProvider } from '@material-ui/core/styles';
 import Home from './contents/Home'
+import axios from 'axios'
+
 
 
 import {
   Switch,
   Route,
-  Link, useLocation, useHistory
+  Link, useRouteMatch, useHistory, BrowserRouter
 } from "react-router-dom";
 import AdminDashboardStyleContext from '../../context/admin/AdminDashboardContext';
 import DrawerLinkList from './DrawerLinkList';
@@ -111,7 +113,7 @@ function AdminDashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  
+  const history = useHistory()
  
 
   
@@ -120,75 +122,45 @@ function AdminDashboard(props) {
   };
 
   
-
+  let { path, url } = useRouteMatch();
   const container = window !== undefined ? () => window().document.body : undefined;
   const {drawerWidth, muiTheme, backdrop} = useContext(AdminDashboardStyleContext)
   const {backdropState, setBackdropState} = useContext(AdminDashboardStyleContext).store
   console.log("this is the drawer width" + drawerWidth)
 
   return (
-
+    
     <ThemeProvider theme={muiTheme}>
-
-            
-             
-
-
+    
     <div className={classes.root}>
       <CssBaseline />
-
-      <FixedAppBar handleDrawerToggle= {handleDrawerToggle}/>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            <DrawerLinkList /> 
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            <DrawerLinkList />
-          </Drawer>
-        </Hidden>
-      </nav>
+      
+     
       <main className={classes.content}>
         <div className={classes.toolbar} />
                
+             
+              <Switch>
+                  <Route exact={true} path='/admin_dashboard'>
+                    <FixedAppBar handleDrawerToggle= {handleDrawerToggle}/>
+                      <Home />
+                  </Route>
 
-                <Switch>
-                  <Route exact={true} path="/audit_item" component={<h1> How are we </h1>}>
-                      <h1> HOw are we going to make the same </h1>
+                  <Route exact={true} path='/audit_item'>
+                    <h1> Please this is the </h1>
                   </Route>
 
                   <Route exact={true} path='/admin_dashboard'>
+                    <FixedAppBar handleDrawerToggle= {handleDrawerToggle}/>
                       <Home />
                   </Route>
                 </Switch>
-                
+    
       </main>
     </div>
 
     </ThemeProvider>
+   
           
   );
 }

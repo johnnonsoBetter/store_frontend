@@ -47,16 +47,33 @@ function Home(){
             <div>
 
             
-            <Typography variant="h5"> Wellcome to {storeName.toUpperCase()} Supermarket</Typography>
+            {/* <Typography variant="h5"> Wellcome to {storeName.toUpperCase()} Supermarket</Typography>
             <Box className={startContainer}>
                 <img src="static/images/favourites.png" alt="star"/> 
                 <img src="static/images/favourites.png" alt="star" /> 
                 <img src="static/images/favourites.png" alt="star"/> 
                 
-            </Box>
+            </Box> */}
 
 
                 <Grid container className={infoLinksContainer}>
+
+                <Grid item xs={12} >
+                    
+                        <Box>
+                            <Card className={infoLinks}>
+                                <CardContent>
+                                <img src="static/images/shopping-bag.png" />
+                                <Typography variant="h5"> Transaction Activity </Typography>
+
+                                </CardContent>      
+                            </Card>
+                        </Box>
+                    
+                    
+                    </Grid>
+
+
                     <Grid item xs={12} md={6} lg={4}>
                     <Link>
                         <Box>
@@ -159,13 +176,7 @@ function Home(){
 
                     </Grid>
                 </Grid>
-                <Box className={preference}>
-                    <Typography component={Link} to="/admin_login" className={preferenceLink}> <SettingsIcon /> Preferences </Typography>
-                </Box>
-
-                <Fab color="primary"  aria-label="add" className={fab}>
-                    <AddIcon/>
-                </Fab>
+                
             
             </div>
 

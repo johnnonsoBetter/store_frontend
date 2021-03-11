@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { AdminDashboardContextProvider } from '../context/admin/AdminDashboardContext'
 import AdminDashboard from './dashboard/AdminDashboard'
 import LoginForm from './LoginForm'
-import {makeStyles, createMuiTheme} from '@material-ui/core/styles'
-import {Backdrop, CircularProgress} from '@material-ui/core'
-import { BrowserRouter } from 'react-router-dom'
-
+import {makeStyles, createMuiTheme, useTheme} from '@material-ui/core/styles'
+import {Backdrop, CircularProgress, Hidden, Drawer, CssBaseline, Link, ListItemText, ListItem, ListItemIcon} from '@material-ui/core'
+import { BrowserRouter, useHistory} from 'react-router-dom'
+import DrawerLinkList from './dashboard/DrawerLinkList'
+import axios from 'axios'
 
 
   const drawerWidth = 240;
@@ -137,12 +138,24 @@ import { BrowserRouter } from 'react-router-dom'
   }));
 
 
-function AdminPage(){
-    
+function AdminPage(props){
+    const { window } = props;
     const styles = useStyles()
     const [storeName, setStoreName] = useState("upright")
     const [dashboardData, setDashboardData] = useState(null)
     const currentUser = localStorage.getItem('admin')
+    const classes = useStyles()
+    const container = window !== undefined ? () => window().document.body : undefined;
+    const theme = useTheme()
+
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const history = useHistory()
+  
+
+    
+    const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+    };
     
     return (
       <>
@@ -177,9 +190,50 @@ function AdminPage(){
 
               <div>
 
-                <BrowserRouter>
-                    <AdminDashboard />
-                </BrowserRouter>
+                
+              <BrowserRouter>
+              <div className={classes.root}>
+                <CssBaseline />
+                  <nav className={classes.drawer} aria-label="mailbox folders">
+                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                    <Hidden smUp implementation="css">
+                      <Drawer
+                        container={container}
+                        
+                        variant="temporary"
+                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                        classes={{
+                          paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                          keepMounted: true, // Better open performance on mobile.
+                        }}
+                      >
+                        <DrawerLinkList /> 
+                      </Drawer>
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                      <Drawer
+                        
+                        classes={{
+                          paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open
+                      >
+                        <DrawerLinkList />
+
+
+                    
+                      </Drawer>
+                    </Hidden>
+                  </nav>
+                        <AdminDashboard />
+                    </div>
+                    </BrowserRouter>
+                    
 
               </div>
               

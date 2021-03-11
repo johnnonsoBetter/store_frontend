@@ -4,7 +4,7 @@ import AdminPage from './admin/AdminPage';
 import {
   Switch,
   Route,
-  Link, useLocation, Redirect
+  Link, useLocation, Redirect, BrowserRouter
 } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
 import LoginForm from './admin/LoginForm';
@@ -12,45 +12,34 @@ import LoginForm from './admin/LoginForm';
 
 
 function App(){
-  const location = useLocation()
+  
   const currentAdmin = localStorage.getItem('admin')
 
 
   return (
     <div className="App">
             <div className="App-body">
-            
+
+              {/* <BrowserRouter>
+              
              
-            <Switch>
 
-            <Route exact path="/">
-                <Linker location={location}/>
-            </Route>
-             <Route exact path="/admin_dashboard">
-                {currentAdmin == null ?
-                  <Redirect to="/admin_login" /> : <AdminPage />
+                {
+                  currentAdmin ? <AdminPage /> : <Linker />
                 }
-              </Route>
+                
+              </BrowserRouter> */}
 
-              <Route exact path="/cashier_dashboard">
-                <CashierPage />
-             </Route>
+            <AdminPage />
+            
 
-             <Route exact path="/admin_login">
-          
-               {currentAdmin ?
-                <Redirect to="/admin_dashboard" /> : <LoginForm />
-               }
-             </Route>
-
-
-           </Switch>  
+           
            </div>
        </div>
   )
 }
 
-export default withRouter(App)
+export default App
 
 
 function Linker(props){
