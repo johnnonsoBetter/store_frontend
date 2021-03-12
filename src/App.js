@@ -2,49 +2,35 @@
 import './App.css';
 import AdminPage from './admin/AdminPage';
 import {
-  Switch,
-  Route,
-  Link, useLocation, Redirect
+ useLocation, useHistory
 } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
-import LoginForm from './admin/LoginForm';
+import { Button } from '@material-ui/core';
 
 
 
 function App(){
   const location = useLocation()
-  const currentAdmin = localStorage.getItem('admin')
+  const history = useHistory()
+  const desiredLocation = localStorage.getItem('desiredLocation')
+ 
+
+
+  if(desiredLocation == null ){
+    localStorage.setItem("desiredLocation", "homepage")
+    history.push('/')
+  }
+  
 
 
   return (
     <div className="App">
             <div className="App-body">
-            
-             
-            <Switch>
+             {
+               location.pathname === "/" ?  <Linker history={history}/> :
 
-            <Route exact path="/">
-                <Linker location={location}/>
-            </Route>
-             <Route exact path="/admin_dashboard">
-                {currentAdmin == null ?
-                  <Redirect to="/admin_login" /> : <AdminPage />
-                }
-              </Route>
+             localStorage.getItem('desiredLocation') === "admin" ? <AdminPage /> : desiredLocation === "cashier" ? <CashierPage /> : null}
 
-              <Route exact path="/cashier_dashboard">
-                <CashierPage />
-             </Route>
-
-             <Route exact path="/admin_login">
-          
-               {currentAdmin ?
-                <Redirect to="/admin_dashboard" /> : <LoginForm />
-               }
-             </Route>
-
-
-           </Switch>  
            </div>
        </div>
   )
@@ -53,20 +39,25 @@ function App(){
 export default withRouter(App)
 
 
-function Linker(props){
+function Linker({history}){
 
   return(
 
     <div>
         
           <>
-             <Link to="/admin_dashboard">
-                AdminPage
-             </Link>
+             <Button color="primary" onClick={() => {
+               localStorage.setItem("desiredLocation", "cashier")
+               history.push("/cashier_dashboard")
 
-             <Link to="/cashier_dashboard">
-                CashierPage
-             </Link>
+             }}> Cashier </Button>
+
+             <Button color="secondary" onClick={() => {
+
+               localStorage.setItem("desiredLocation", "admin")
+               history.push("/admin_dashboard")
+             }}> Admin </Button>
+
           </>
          
     </div>

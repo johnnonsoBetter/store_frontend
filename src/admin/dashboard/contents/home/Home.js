@@ -1,14 +1,13 @@
 import React, { useContext, useEffect} from 'react'
-import {Typography, Box, Card, CardContent, Grid, Backdrop, CircularProgress, Fab} from '@material-ui/core'
-import {Link, Switch, Route} from 'react-router-dom'
-import AddIcon from '@material-ui/icons/Add'
-import AdminDashboardContext from '../../../context/admin/AdminDashboardContext'
-import SettingsIcon from '@material-ui/icons/Settings'
+import {Typography, Box, Paper, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
+import {Link} from 'react-router-dom'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
 import axios from 'axios'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
-    const {startContainer, infoLinksContainer, infoLinks, backdrop, fab, preference, preferenceLink} = useContext(AdminDashboardContext).styles
+    const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName, setDashboardData} = useContext(AdminDashboardContext).store
 
     useEffect(() => {
@@ -46,18 +45,49 @@ function Home(){
                 
             <div>
 
-            
-            <Typography variant="h5"> Wellcome to {storeName.toUpperCase()} Supermarket</Typography>
-            <Box className={startContainer}>
-                <img src="static/images/favourites.png" alt="star"/> 
-                <img src="static/images/favourites.png" alt="star" /> 
-                <img src="static/images/favourites.png" alt="star"/> 
-                
-            </Box>
-
-
                 <Grid container className={infoLinksContainer}>
-                    <Grid item xs={12} md={6} lg={4}>
+
+                    <Grid item xs={12} >
+            
+                        <Box>
+                            <Card className={storeBaseInfo}>
+                                <CardContent>
+                                    <Accordion className={storeBaseDetail}>
+                                        <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                        >
+                                            <Typography className={storeBaseInfoHeader}>Accordion 1</Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails >
+                                            <Grid container>
+                                                <Grid item xs={6}>
+
+                                                    
+                                                    <Paper>
+                                                        d
+                                                    </Paper>
+                                                </Grid>
+
+                                                <Grid item xs={6}>
+                                                    <Paper>
+                                                        d
+                                                    </Paper>
+                                                </Grid>
+
+
+                                            </Grid>
+                                        </AccordionDetails>
+                                    </Accordion>
+
+                                </CardContent>      
+                            </Card>
+                        </Box>
+                        
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} lg={4}>
                     <Link>
                         <Box>
                             <Card className={infoLinks}>
@@ -73,7 +103,7 @@ function Home(){
                     </Grid>
 
 
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} lg={4}>
                         <Link>              
                             <Box>
                                 <Card className={infoLinks}>
@@ -91,7 +121,7 @@ function Home(){
                     </Grid>
 
 
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} lg={4}>
                         <Link> 
                             <Box>
                             <Card className={infoLinks}>
@@ -108,7 +138,7 @@ function Home(){
                     </Grid>
 
 
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} lg={4}>
                         <Link> 
                             <Box>
                             <Card className={infoLinks}>
@@ -126,7 +156,7 @@ function Home(){
 
 
 
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} lg={4}>
                         <Link> 
                             <Box>
                             <Card className={infoLinks}>
@@ -143,7 +173,7 @@ function Home(){
                     </Grid>
 
 
-                    <Grid item xs={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} lg={4}>
                         <Link> 
                             <Box>
                             <Card className={infoLinks}>
@@ -159,14 +189,7 @@ function Home(){
 
                     </Grid>
                 </Grid>
-                <Box className={preference}>
-                    <Typography component={Link} to="/admin_login" className={preferenceLink}> <SettingsIcon /> Preferences </Typography>
-                </Box>
-
-                <Fab color="primary"  aria-label="add" className={fab}>
-                    <AddIcon/>
-                </Fab>
-            
+              
             </div>
 
               }

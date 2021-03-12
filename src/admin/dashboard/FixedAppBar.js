@@ -46,6 +46,7 @@ function DatePicker() {
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
+            disabled={true}
             color="inherit"
             style={{margin: 0, marginLeft: "20px", color: "white"}}
           />
