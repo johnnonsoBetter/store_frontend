@@ -2,7 +2,7 @@ import React, { useContext} from 'react'
 import {List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core/'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
 import axios from 'axios'
-import {useHistory, Link} from 'react-router-dom'
+import {useHistory, Link, Redirect} from 'react-router-dom'
 
 
 function DrawerLinkList(){

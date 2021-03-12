@@ -4,7 +4,7 @@ import AdminPage from './admin/AdminPage';
 import {
  useLocation, useHistory
 } from "react-router-dom";
-import {withRouter} from 'react-router-dom';
+
 import { Button } from '@material-ui/core';
 
 
@@ -36,7 +36,7 @@ function App(){
   )
 }
 
-export default withRouter(App)
+export default App
 
 
 function Linker({history}){
@@ -77,5 +77,3 @@ function CashierPage(){
 }
 
 
-
-// export default App;
