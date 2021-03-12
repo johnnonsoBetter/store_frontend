@@ -29,7 +29,7 @@ function DrawerLinkList(){
                     <ListItemText primary="Audit Items"/>
                   </ListItem>
         
-                  <ListItem button component={Link} to="/admin_dashboard/warehouse" active>
+                  <ListItem button component={Link} to="/admin_dashboard/warehouse" >
                      
                      <ListItemIcon > <img src={`/${base_imageUrl}warehouse.png`} alt="warehouse" className={img} />  </ListItemIcon>
                     <ListItemText primary="WareHouse"/>

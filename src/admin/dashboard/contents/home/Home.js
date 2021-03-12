@@ -1,14 +1,60 @@
-import React, { useContext, useEffect} from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import {Typography, Box, Paper, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
 import axios from 'axios'
+import StoreInfo from './StoreInfo'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
     const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, storeBaseDetail} = useContext(AdminDashboardContext).styles
-    const {storeName, setDashboardData} = useContext(AdminDashboardContext).store
+    const {storeName} = useContext(AdminDashboardContext).store
+    const {dashBoardData, setDashboardData} = useContext(AdminDashboardContext).store
+    const data = useContext(AdminDashboardContext).store['dashboardData']
+    const [generalStoreInfos, setGeneralStoreInfos] = useState([
+        {
+            infoName: "Reserve Change",
+            amount: `₦ ${0}`
+        },
+        {
+            infoName: "Debt Amount",
+            amount: `₦ ${0}`
+        }
+    ])
+
+    const [todayTransactionInfo, setTodayTransactionInfo] = useState([
+        {
+            infoName: "Total Sales",
+            amount: `₦ ${0}`
+        },
+        {
+            infoName: "Total Expenses",
+            amount: `₦ ${0}`
+        },
+        {
+            infoName: "Total Debts",
+            amount: `₦ ${0}`
+        },
+        {
+            infoName: "Recovered Debts",
+            amount: `₦ ${0}`
+        },
+        {
+            infoName: "Returned Goods",
+            amount: `₦ ${0}`
+        },
+        {
+            infoName: "Total Change",
+            amount: `₦ ${0}`
+        }
+        
+    ])
+
+
+
+
+  
 
     useEffect(() => {
         
@@ -22,6 +68,17 @@ function Home(){
             setTimeout(() => {
                 setBackdropState(false)
             }, 2000)
+
+            setGeneralStoreInfos([
+                {
+                    infoName: "Reserve Change",
+                    amount: `₦ ${data['change_balance']}`
+                },
+                {
+                    infoName: "Debt Amount",
+                    amount: `₦ ${data['total_debts_amount']}`
+                }
+            ])
             
         }).catch(err => {
 
@@ -52,7 +109,7 @@ function Home(){
                         <Box>
                             <Card className={storeBaseInfo}>
                                 <CardContent>
-                                    <Accordion className={storeBaseDetail}>
+                                    <Accordion elevation={0} className={storeBaseDetail}>
                                         <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel1a-content"
@@ -62,20 +119,25 @@ function Home(){
                                         </AccordionSummary>
                                         <AccordionDetails >
                                             <Grid container>
-                                                <Grid item xs={6}>
+                                                
 
-                                                    
-                                                    <Paper>
-                                                        d
-                                                    </Paper>
+                                                <Grid item xs={12} md={6}>
+
+                                                    <Typography className={storeBaseInfoHeader}>Transaction Overview</Typography>
+                                                    <StoreInfo infos={todayTransactionInfo} paddingColor="" imgUrl="trend.png"/>
                                                 </Grid>
 
-                                                <Grid item xs={6}>
-                                                    <Paper>
-                                                        d
-                                                    </Paper>
+                                                <Grid item xs={12} md={6}>
+
+                                                    <Typography className={storeBaseInfoHeader}>Transaction Overview</Typography>
+                                                    <StoreInfo infos={todayTransactionInfo} paddingColor="" imgUrl="trend.png"/>
                                                 </Grid>
 
+                                                <Grid item xs={12} md={6}>
+
+                                                    <Typography className={storeBaseInfoHeader}>General Info</Typography>
+                                                    <StoreInfo infos={generalStoreInfos} paddingColor="#034230" imgUrl="logout.png"/>
+                                                </Grid>
 
                                             </Grid>
                                         </AccordionDetails>

@@ -9,6 +9,8 @@ function SelectStore(){
   const [store, setStore] = React.useState('upright');
   const {selectStore, storeIcon, backdrop} = useContext(AdminDashboardContext).styles
   const {changeStoreName, setDashboardData} = useContext(AdminDashboardContext).store
+
+  console.log(setDashboardData)
   const [backdropState, setBackdropState] = React.useState(false);
   
 
@@ -45,7 +47,7 @@ function SelectStore(){
                   <CircularProgress color="inherit" />
                 </Backdrop>
                 :
-            <Box display="flex"  justifyContent="center" alignItems="center" color="white" className={selectStore} >
+            <Box display="flex"  justifycontent="center" alignItems="center" color="white" className={selectStore} >
                     
               <ShoppingCartIcon className={storeIcon}/>
               <Select

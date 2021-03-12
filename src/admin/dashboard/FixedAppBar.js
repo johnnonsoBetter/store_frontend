@@ -33,7 +33,7 @@ function DatePicker() {
 
   return (
     <ThemeProvider theme={defaultMaterialTheme}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils} color="inherit">
+        <MuiPickersUtilsProvider utils={DateFnsUtils} >
         
         <KeyboardDatePicker
             disableToolbar
@@ -47,7 +47,7 @@ function DatePicker() {
               'aria-label': 'change date',
             }}
             disabled={true}
-            color="inherit"
+           
             style={{margin: 0, marginLeft: "20px", color: "white"}}
           />
           
@@ -65,7 +65,7 @@ function FixedAppBar(props){
     return (
 
         <AppBar position="fixed" className={appBar} >
-        <Toolbar display="flex" justifyContent="space-around" >
+        <Toolbar display="flex" justifycontent="space-around" >
           <IconButton
             color="inherit"
             aria-label="open drawer"

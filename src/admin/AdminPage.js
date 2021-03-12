@@ -95,7 +95,8 @@ import FixedAppBar from './dashboard/FixedAppBar'
       margin: theme.spacing(2),
       backgroundColor: "#0b1125",
       padding: theme.spacing(5),
-      color: "white"
+      color: "white",
+      
     },
 
     infoLinksContainer: {
@@ -148,12 +149,42 @@ import FixedAppBar from './dashboard/FixedAppBar'
       color: "white"
     },
 
+    storeInfoContainer: {
+
+      backgroundColor: "#0b1125",
+      margin: theme.spacing(1)
+    },
+
     storeBaseInfo: {
       minWidth: 270,
       margin: theme.spacing(2),
       backgroundColor: "#0b1125",
       padding: theme.spacing(0),
       color: "white"
+    },
+
+    infoContainer: {
+      backgroundColor: "#453b542e",
+      padding: theme.spacing(1),
+      borderRadius: "9px",
+      color: "wheat",
+      margin: theme.spacing(1),
+      justifyContent: "space-evenly"
+      
+    },
+
+    infoText: {
+      fontSize: "1rem",
+      paddingRight: "3px",
+      paddingLeft: "3px",
+      borderRadius: "20%",
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    }
+    ,
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
     },
 
   }));
@@ -262,7 +293,7 @@ function AdminPage(props){
                   <Switch>
 
                    
-                      <Route exact={true} path="/admin_dashboard/audit_item" component={<h1> How are we </h1>}>
+                      <Route exact={true} path="/admin_dashboard/audit_item" >
                           <h1> Audit item</h1>
                       </Route>
 
