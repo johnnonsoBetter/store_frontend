@@ -1,23 +1,30 @@
 import React, { useContext} from 'react'
-import {List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core/'
+import {List, ListItem, ListItemText, ListItemIcon, Avatar, Box, Typography} from '@material-ui/core/'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
 import axios from 'axios'
-import {useHistory, Link, Redirect} from 'react-router-dom'
+import {useHistory, Link, NavLink} from 'react-router-dom'
+import PersonIcon from '@material-ui/icons/Person'
 
 
 function DrawerLinkList(props){
-    const {img, toolbar} = useContext(AdminDashboardContext).styles
+    const {img, toolbar, adminAvatar, avatarContainer} = useContext(AdminDashboardContext).styles
     const history = useHistory()
     const base_imageUrl = 'static/images/' 
 
     return ( 
-            <div>
-           
+            <>
               <div className={toolbar} />
+              <Box display="flex" className={avatarContainer}>
+                <Avatar className={adminAvatar}>
+                  <PersonIcon />
+                </Avatar>
+                <Typography > Admin </Typography>
+              </Box>
+
               
               <List>
                 
-                  <ListItem button component={Link} onClick={props.handleDrawerToggle} to="/admin_dashboard">
+                  <ListItem button component={NavLink} active={true} onClick={props.handleDrawerToggle} to="/admin_dashboard">
                      
                      <ListItemIcon  style={{marginBottom: "4px"}}> <img src={`/${base_imageUrl}dashboard.png`} className={img} alt="items"/>  </ListItemIcon>
                     <ListItemText primary="Store Dashboard"/>
@@ -63,7 +70,7 @@ function DrawerLinkList(props){
                 </ListItem>
               </List>
               
-            </div>
+            </>
           );
     
 

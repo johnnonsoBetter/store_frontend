@@ -5,21 +5,14 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
 import axios from 'axios'
 import StoreInfo from './StoreInfo'
+import AmountFormater from '../../../../helpers/AmountFormater'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
     const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos, setInventoryManagerInfos, inventoryManagerInfos} = useContext(AdminDashboardContext).store
-   
     
-
-    
-
-
-
-  
-
     useEffect(() => {
         
         axios({
@@ -37,19 +30,19 @@ function Home(){
             setGeneralStoreInfos([
                 {
                     infoName: "Reserve Change",
-                    amount: `₦ ${change_balance}`
+                    amount: `₦ ${AmountFormater(change_balance).amount()}`
                 },
                 {
                     infoName: "Resumption Change",
-                    amount: `₦ ${next_day_change}`
+                    amount: `₦ ${AmountFormater(next_day_change).amount()}`
                 },
                 {
                     infoName: "All Items Worth",
-                    amount: `₦ ${inventory_manager['total_goods_worth']}`
+                    amount: `₦ ${AmountFormater(inventory_manager['total_goods_worth']).amount()}`
                 },
                 {
                     infoName: "All Items Cost",
-                    amount: `₦ ${inventory_manager['total_goods_cost']}`
+                    amount: `₦ ${AmountFormater(inventory_manager['total_goods_cost']).amount()}`
                 },
                 {
                     infoName: "All Items Quantity",
@@ -57,34 +50,34 @@ function Home(){
                 },
                 {
                     infoName: "Expected Items Profit",
-                    amount: `₦ ${inventory_manager['expected_profit']}`
+                    amount: `₦ ${AmountFormater(inventory_manager['expected_profit']).amount() }`
                 },
             ])
 
             setTransactionReviewInfos([
                 {
                     infoName: "Sales",
-                    amount: `₦ ${transaction_activity['total_sales']}`
+                    amount: `₦ ${AmountFormater(transaction_activity['total_sales']).amount()}`
                 },
                 {
                     infoName: "Expenses",
-                    amount: `₦ ${transaction_activity['total_expenses']}`
+                    amount: `₦ ${AmountFormater(transaction_activity['total_expenses']).amount()}`
                 },
                 {
                     infoName: "Today Debts",
-                    amount: `₦ ${transaction_activity['total_debts']}`
+                    amount: `₦ ${ AmountFormater(transaction_activity['total_debts']).amount()}`
                 },
                 {
                     infoName: "Recovered",
-                    amount: `₦ ${transaction_activity['total_recovered']}`
+                    amount: `₦ ${AmountFormater(transaction_activity['total_recovered']).amount()}`
                 },
                 {
                     infoName: "Returned Goods",
-                    amount: `₦ ${transaction_activity['total_goods_returned_cost']}`
+                    amount: `₦ ${AmountFormater(transaction_activity['total_goods_returned_cost']).amount()}`
                 },
                 {
                     infoName: "Change",
-                    amount: `₦ ${transaction_activity['total_change']}`
+                    amount: `₦ ${AmountFormater(transaction_activity['total_change']).amount()}`
                 }
                 
             ])
@@ -123,8 +116,9 @@ function Home(){
                             <Card className={storeBaseInfo}>
                                 <CardContent>
                                     <Accordion elevation={0} className={storeBaseDetail}>
-                                        <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
+                                        <AccordionSummary 
+                                        expandIcon={<ExpandMoreIcon style={{color: "white"}} />}
+                                        
                                         aria-controls="panel1a-content"
                                         id="panel1a-header"
                                         >

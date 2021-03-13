@@ -7,6 +7,7 @@ import { Switch, Route} from 'react-router-dom'
 import DrawerLinkList from './dashboard/DrawerLinkList'
 import Home from './dashboard/contents/home/Home'
 import FixedAppBar from './dashboard/FixedAppBar'
+import AuditItem from './dashboard/contents/audit_item/AuditItem'
 
 
   const drawerWidth = 240;
@@ -191,6 +192,21 @@ import FixedAppBar from './dashboard/FixedAppBar'
       height: theme.spacing(3),
     },
 
+    adminAvatar: {
+      width: theme.spacing(9),
+      height: theme.spacing(9),
+      marginBottom: theme.spacing(2)
+    },
+
+    avatarContainer: {
+      display: "flex",
+      alignItems: "center",
+      flexDirection: "column",
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      letterSpacing: "5px"
+    },
+
   }));
 
 
@@ -267,6 +283,7 @@ function AdminPage(props){
               
             
                 <nav className={classes.drawer} aria-label="mailbox folders">
+                 
                   {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                   <Hidden smUp implementation="css">
                     <Drawer
@@ -283,6 +300,7 @@ function AdminPage(props){
                         keepMounted: true, // Better open performance on mobile.
                       }}
                     >
+                     
                       <DrawerLinkList handleDrawerToggle={closeDrawer}/> 
                     </Drawer>
                   </Hidden>
@@ -295,6 +313,7 @@ function AdminPage(props){
                       variant="permanent"
                       open
                     >
+                        
                       <DrawerLinkList handleDrawerToggle={closeDrawer}/>
                     </Drawer>
                   </Hidden>
@@ -307,7 +326,7 @@ function AdminPage(props){
                    
                       <Route exact={true} path="/admin_dashboard/audit_item" >
                         <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
-                          <h1> Audit item</h1>
+                          <AuditItem />
                       </Route>
 
                       <Route exact={true} path='/admin_dashboard/warehouse'>

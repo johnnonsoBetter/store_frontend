@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import {Box, Select, MenuItem, CircularProgress, Backdrop} from '@material-ui/core/'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
+import AmountFormater from '../../helpers/AmountFormater'
 import axios from 'axios'
 
 
@@ -10,6 +11,7 @@ function SelectStore(){
   const {selectStore, storeIcon, backdrop} = useContext(AdminDashboardContext).styles
   const {changeStoreName, setDashboardData, setGeneralStoreInfos, setTransactionReviewInfos, setInventoryManagerInfos} = useContext(AdminDashboardContext).store
   const [backdropState, setBackdropState] = React.useState(false);
+
   
 
     const handleChange = (event) => {
@@ -31,56 +33,56 @@ function SelectStore(){
           }, 2000)
 
           setGeneralStoreInfos([
-              {
-                  infoName: "Reserve Change",
-                  amount: `₦ ${change_balance}`
-              },
-              {
-                  infoName: "Resumption Change",
-                  amount: `₦ ${next_day_change}`
-              },
-              {
-                  infoName: "All Items Worth",
-                  amount: `₦ ${inventory_manager['total_goods_worth']}`
-              },
-              {
-                  infoName: "All Items Cost",
-                  amount: `₦ ${inventory_manager['total_goods_cost']}`
-              },
-              {
-                  infoName: "All Items Quantity",
-                  amount: `${inventory_manager['total_goods_quantity']}`
-              },
-              {
-                  infoName: "Expected Items Profit",
-                  amount: `₦ ${inventory_manager['expected_profit']}`
-              },
-          ])
+            {
+                infoName: "Reserve Change",
+                amount: `₦ ${AmountFormater(change_balance).amount()}`
+            },
+            {
+                infoName: "Resumption Change",
+                amount: `₦ ${AmountFormater(next_day_change).amount()}`
+            },
+            {
+                infoName: "All Items Worth",
+                amount: `₦ ${AmountFormater(inventory_manager['total_goods_worth']).amount()}`
+            },
+            {
+                infoName: "All Items Cost",
+                amount: `₦ ${AmountFormater(inventory_manager['total_goods_cost']).amount()}`
+            },
+            {
+                infoName: "All Items Quantity",
+                amount: `${inventory_manager['total_goods_quantity']}`
+            },
+            {
+                infoName: "Expected Items Profit",
+                amount: `₦ ${AmountFormater(inventory_manager['expected_profit']).amount() }`
+            },
+        ])
 
-          setTransactionReviewInfos([
+        setTransactionReviewInfos([
             {
                 infoName: "Sales",
-                amount: `₦ ${transaction_activity['total_sales']}`
+                amount: `₦ ${AmountFormater(transaction_activity['total_sales']).amount()}`
             },
             {
                 infoName: "Expenses",
-                amount: `₦ ${transaction_activity['total_expenses']}`
+                amount: `₦ ${AmountFormater(transaction_activity['total_expenses']).amount()}`
             },
             {
                 infoName: "Today Debts",
-                amount: `₦ ${transaction_activity['total_debts']}`
+                amount: `₦ ${ AmountFormater(transaction_activity['total_debts']).amount()}`
             },
             {
                 infoName: "Recovered",
-                amount: `₦ ${transaction_activity['total_recovered']}`
+                amount: `₦ ${AmountFormater(transaction_activity['total_recovered']).amount()}`
             },
             {
                 infoName: "Returned Goods",
-                amount: `₦ ${transaction_activity['total_goods_returned_cost']}`
+                amount: `₦ ${AmountFormater(transaction_activity['total_goods_returned_cost']).amount()}`
             },
             {
                 infoName: "Change",
-                amount: `₦ ${transaction_activity['total_change']}`
+                amount: `₦ ${AmountFormater(transaction_activity['total_change']).amount()}`
             }
             
         ])

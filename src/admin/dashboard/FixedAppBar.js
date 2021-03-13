@@ -62,13 +62,13 @@ function DatePicker() {
 
 function FixedAppBar(props){
 
-    const {appBar, menuButton, appBarPickerContainer} = useContext(AdminDashboardContext).styles
+    const {appBar, menuButton, appBarPickerContainer, toolbar} = useContext(AdminDashboardContext).styles
     const location = useLocation()
    
     return (
 
         <AppBar position="fixed" className={appBar} >
-        <Toolbar display="flex" justifycontent="space-around" >
+        <Toolbar display="flex" justifycontent="space-around" className={toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -76,8 +76,10 @@ function FixedAppBar(props){
             onClick={props.handleDrawerToggle}
             className={menuButton}
           >
+            
             <MenuIcon />
           </IconButton>
+          
 
               {
                 location.pathname == "/admin_dashboard" ? 
