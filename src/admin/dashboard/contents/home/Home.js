@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState} from 'react'
-import {Typography, Box, Paper, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
+import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
@@ -12,7 +12,7 @@ function Home(){
     const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos, setInventoryManagerInfos, inventoryManagerInfos} = useContext(AdminDashboardContext).store
-    
+    const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
         
         axios({
@@ -106,7 +106,7 @@ function Home(){
                 </Backdrop>
                 :
                 
-            <div>
+            <Container> 
 
                 <Grid container className={infoLinksContainer}>
 
@@ -115,10 +115,10 @@ function Home(){
                         <Box>
                             <Card className={storeBaseInfo}>
                                 <CardContent>
-                                    <Accordion elevation={0} className={storeBaseDetail}>
+                                    <Accordion expanded={isExpanded} elevation={0} className={storeBaseDetail}>
                                         <AccordionSummary 
                                         expandIcon={<ExpandMoreIcon style={{color: "white"}} />}
-                                        
+                                        onClick={() => setIsExpanded(!isExpanded)}
                                         aria-controls="panel1a-content"
                                         id="panel1a-header"
                                         >
@@ -253,7 +253,7 @@ function Home(){
                     </Grid>
                 </Grid>
               
-            </div>
+                </Container>
 
               }
         </>

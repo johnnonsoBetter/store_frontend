@@ -325,7 +325,7 @@ function AdminPage(props){
 
                    
                       <Route exact={true} path="/admin_dashboard/audit_item" >
-                        <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                          <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
                           <AuditItem />
                       </Route>
 

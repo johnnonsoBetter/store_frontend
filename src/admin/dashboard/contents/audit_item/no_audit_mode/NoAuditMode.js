@@ -1,12 +1,14 @@
+import { Container, Typography} from '@material-ui/core';
 import React from 'react';
-
 
 function NoAuditMode(){
 
     return (
-        <h1> No AuditMode</h1>
+        <Container>
+            <Typography> How is this same time and </Typography>
+        </Container>
     )
 }
 
 
-export default AuditMode
+export default NoAuditMode
