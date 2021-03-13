@@ -5,7 +5,7 @@ import axios from 'axios'
 import {useHistory, Link, Redirect} from 'react-router-dom'
 
 
-function DrawerLinkList(){
+function DrawerLinkList(props){
     const {img, toolbar} = useContext(AdminDashboardContext).styles
     const history = useHistory()
     const base_imageUrl = 'static/images/' 
@@ -17,25 +17,25 @@ function DrawerLinkList(){
               
               <List>
                 
-                  <ListItem button component={Link} to="/admin_dashboard">
+                  <ListItem button component={Link} onClick={props.handleDrawerToggle} to="/admin_dashboard">
                      
                      <ListItemIcon  style={{marginBottom: "4px"}}> <img src={`/${base_imageUrl}dashboard.png`} className={img} alt="items"/>  </ListItemIcon>
                     <ListItemText primary="Store Dashboard"/>
                   </ListItem>
 
-                  <ListItem button component={Link} to="/admin_dashboard/audit_item">
+                  <ListItem onClick={props.handleDrawerToggle} button component={Link} to="/admin_dashboard/audit_item">
                      
                      <ListItemIcon  style={{marginBottom: "4px"}}> <img src={`/${base_imageUrl}shopping-bag.png`} className={img} alt="items"/>  </ListItemIcon>
                     <ListItemText primary="Audit Items"/>
                   </ListItem>
         
-                  <ListItem button component={Link} to="/admin_dashboard/warehouse" >
+                  <ListItem onClick={props.handleDrawerToggle} button component={Link} to="/admin_dashboard/warehouse" >
                      
                      <ListItemIcon > <img src={`/${base_imageUrl}warehouse.png`} alt="warehouse" className={img} />  </ListItemIcon>
                     <ListItemText primary="WareHouse"/>
                   </ListItem>
         
-                  <ListItem button component={Link} to="/admin_dashboard/workers">
+                  <ListItem onClick={props.handleDrawerToggle} button component={Link} to="/admin_dashboard/workers">
                      
                      <ListItemIcon > <img src={`/${base_imageUrl}workers.png`} className={img} alt="workers" />  </ListItemIcon>
                     <ListItemText primary="Workers"/>

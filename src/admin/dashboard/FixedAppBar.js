@@ -13,6 +13,8 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
+import {useLocation} from 'react-router-dom'
+
 
 const defaultMaterialTheme = createMuiTheme({
   palette: {
@@ -61,6 +63,7 @@ function DatePicker() {
 function FixedAppBar(props){
 
     const {appBar, menuButton, appBarPickerContainer} = useContext(AdminDashboardContext).styles
+    const location = useLocation()
    
     return (
 
@@ -76,12 +79,16 @@ function FixedAppBar(props){
             <MenuIcon />
           </IconButton>
 
-         
-              <div className={appBarPickerContainer}>
-                <DatePicker />
-                <SelectStore />
-               
-              </div>
+              {
+                location.pathname == "/admin_dashboard" ? 
+                  <div className={appBarPickerContainer}>
+                  <DatePicker />
+                  <SelectStore />
+                
+                  </div> :
+                  null
+              }
+              
               
         </Toolbar>
       </AppBar>

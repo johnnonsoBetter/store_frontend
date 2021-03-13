@@ -218,6 +218,10 @@ function AdminPage(props){
       setMobileOpen(!mobileOpen);
     };
 
+    const closeDrawer = () => {
+      setMobileOpen(false)
+    }
+
     
     
     
@@ -279,7 +283,7 @@ function AdminPage(props){
                         keepMounted: true, // Better open performance on mobile.
                       }}
                     >
-                      <DrawerLinkList /> 
+                      <DrawerLinkList handleDrawerToggle={closeDrawer}/> 
                     </Drawer>
                   </Hidden>
                   <Hidden mdDown implementation="css">
@@ -291,7 +295,7 @@ function AdminPage(props){
                       variant="permanent"
                       open
                     >
-                      <DrawerLinkList />
+                      <DrawerLinkList handleDrawerToggle={closeDrawer}/>
                     </Drawer>
                   </Hidden>
                 </nav>
@@ -302,16 +306,17 @@ function AdminPage(props){
 
                    
                       <Route exact={true} path="/admin_dashboard/audit_item" >
+                        <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
                           <h1> Audit item</h1>
                       </Route>
 
                       <Route exact={true} path='/admin_dashboard/warehouse'>
-                       
+                          <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
                           <h1> THIs is the same warehouse</h1>
                       </Route>
 
                       <Route exact={true} path='/admin_dashboard/workers'>
-                       
+                          <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
                           <h1> THIs is the same workers</h1>
                       </Route>
 
