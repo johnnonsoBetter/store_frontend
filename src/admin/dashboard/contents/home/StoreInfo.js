@@ -8,7 +8,7 @@ function StoreInfo(props){
 
     const classes = useContext(AdminDashboardContext).styles
     const baseImgUrl = 'static/images/'
-    const {infos, imgUrl, paddingColor} = props
+    const {infos, imgUrl, textColor} = props
 
     return (
         <Paper className={classes.storeInfoContainer} elevation={0}>
@@ -21,7 +21,7 @@ function StoreInfo(props){
                             <Box display="flex" alignItems="center"  className={classes.infoContainer}>
         
                                 <Typography style={{fontSize: "1rem" }} className={classes.storeBaseInfoHeader}> {info.infoName}</Typography>
-                                <Typography  className={classes.infoText} style={{backgroundColor: paddingColor}} > {info.amount} </Typography>
+                                <Typography  className={classes.infoText} style={{color: textColor}} > {info.amount} </Typography>
                                 <Avatar alt="Total Items" src={`/${baseImgUrl}${imgUrl}`} className={classes.small} />
                             
                             </Box>

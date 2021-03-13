@@ -30,7 +30,7 @@ import FixedAppBar from './dashboard/FixedAppBar'
     },
 
     drawer: {
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('lg')]: {
         width: drawerWidth,
         flexShrink: 0,
       
@@ -44,7 +44,7 @@ import FixedAppBar from './dashboard/FixedAppBar'
     },
     
     appBar: {
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('lg')]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
       },
@@ -58,7 +58,7 @@ import FixedAppBar from './dashboard/FixedAppBar'
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('lg')]: {
         display: 'none',
       },
     
@@ -96,11 +96,14 @@ import FixedAppBar from './dashboard/FixedAppBar'
       backgroundColor: "#0b1125",
       padding: theme.spacing(5),
       color: "white",
+      fontSize: theme.typography.pxToRem(1),
+      fontWeight: theme.typography.fontWeightRegular,
+      textTransform: "capitalize"
       
     },
 
     infoLinksContainer: {
-      marginTop: theme.spacing(5),
+      
       padding: theme.spacing(0),
     
     },
@@ -141,6 +144,7 @@ import FixedAppBar from './dashboard/FixedAppBar'
 
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
+      textTransform: "capitalize"
     },
 
     storeBaseDetail: {
@@ -192,24 +196,29 @@ import FixedAppBar from './dashboard/FixedAppBar'
 
 function AdminPage(props){
     
-    const classes = useStyles()
-    const [storeName, setStoreName] = useState("upright")
-    const [dashboardData, setDashboardData] = useState(null)
+     
+      
     const currentUser = localStorage.getItem('admin')
-
-
+    
+    // style states
     const { window } = props;
+    const container = window !== undefined ? () => window().document.body : undefined;
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    
- 
+    const classes = useStyles()
 
-  
+    // info states
+    const [storeName, setStoreName] = useState("upright")
+    const [dashboardData, setDashboardData] = useState(null)
+    const [generalStoreInfos, setGeneralStoreInfos] = useState([])
+    const [transactionReviewInfos, setTransactionReviewInfos] = useState([])
+    const [inventoryManagerInfos, setInventoryManagerInfos] = useState([])
+
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
 
-    const container = window !== undefined ? () => window().document.body : undefined;
+    
     
     
     
@@ -229,15 +238,14 @@ function AdminPage(props){
               store: {
                 storeName: storeName,
                 dashboardData: dashboardData,
-                changeStoreName: (name)=>{
-                  setStoreName(name)
-                },
-                setDashboardData: (data) => {
-                  setDashboardData(data)
-
-                }
-                
-
+                generalStoreInfos: generalStoreInfos,
+                transactionReviewInfos: transactionReviewInfos,
+                inventoryManagerInfos: inventoryManagerInfos,
+                changeStoreName: name => setStoreName(name),
+                setDashboardData: data => setDashboardData(data),
+                setGeneralStoreInfos: generalStoreInfos => setGeneralStoreInfos(generalStoreInfos),
+                setTransactionReviewInfos: transactionReviewInfos => setTransactionReviewInfos(transactionReviewInfos),
+                setInventoryManagerInfos: inventoryManagerInfos => setInventoryManagerInfos(inventoryManagerInfos)
               }
               
             }}>
@@ -274,7 +282,7 @@ function AdminPage(props){
                       <DrawerLinkList /> 
                     </Drawer>
                   </Hidden>
-                  <Hidden smDown implementation="css">
+                  <Hidden mdDown implementation="css">
                     <Drawer
                       
                       classes={{
