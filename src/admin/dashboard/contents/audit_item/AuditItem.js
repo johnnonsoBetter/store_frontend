@@ -26,6 +26,8 @@ function AuditItem(){
     //create_item: {upright: {name: "upright", quantity: 3}, dechoice: {name: "dechoice", quantity: 4}, warehouse: {quantity: 6}}
     const matches = useMediaQuery('(min-width:600px)')
 
+
+
     const handleChange = (e) => {
         e.preventDefault()
     
@@ -131,7 +133,42 @@ function AuditItem(){
                localStorage.setItem('audit', e.target.checked)
            }}/>
 
-            <IconButton  aria-label="add to shopping cart" onClick = {() => setDrawerOpened(true)}>
+            <IconButton  aria-label="add to shopping cart" onClick = {() => {
+                
+                setDrawerOpened(true)
+                let cleared_item = Object.assign({}, item)
+
+                cleared_item['real_item'] = {
+                    name: "",
+                    cost_price: 0,
+                    selling_price: 0,
+                    barcode: "",
+                    category_id: 1,
+                }
+
+                cleared_item['create_item'] = {
+                    upright: {
+                        name: "upright",
+                        quantity: 0
+                    }, 
+                    dechoice: {
+                        name: "dechoice",
+                        quantity: 0
+                    },
+                    warehouse: {
+                        quantity: 0
+                    }
+                }
+
+               
+
+                setItem(cleared_item)
+            
+            }
+              
+
+
+                }>
                 <AddShoppingCartIcon />
             </IconButton>
 
