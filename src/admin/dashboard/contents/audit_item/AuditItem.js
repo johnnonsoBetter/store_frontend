@@ -1,6 +1,7 @@
 import { Box, Drawer, IconButton, makeStyles, Switch, TextField, useMediaQuery, InputAdornment, InputLabel, OutlinedInput, MenuItem, Button, Typography} from '@material-ui/core'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCartRounded'
 import CloseIcon from '@material-ui/icons/Close';
+import axios from 'axios';
 import React, { useState } from 'react'
 import AuditMode from './audit_mode/AuditMode'
 import NoAuditMode from './no_audit_mode/NoAuditMode'
@@ -109,6 +110,26 @@ function AuditItem(){
             }
         },
     })
+
+
+    const handleSubmit = (e)=> {
+        e.preventDefault()
+
+        console.log(item)
+
+        
+        axios({
+            method: "POST",
+            url: 'http://localhost:3001/api/v1/real_items',
+            headers: JSON.parse(localStorage.admin),
+            data: item
+            
+        }).then(response => {
+            console.log(response)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
    
     if (storedMode === null) {
         localStorage.setItem('audit', false)
@@ -183,7 +204,7 @@ function AuditItem(){
                     <Box m={2}>
                         <Typography variant="h5"> Create Item</Typography>
                     </Box>
-                    <form  className={classes} noValidate autoComplete="off">
+                    <form onSubmit={handleSubmit} className={classes} noValidate autoComplete="off">
                      
                         <Box display="flex" m={1} justifyContent="center">
                             <Box m={1}> 
@@ -303,7 +324,7 @@ function AuditItem(){
 
                         <Box display="flex"  m={1} justifyContent="center">
                             <Box m={1}>
-                                <Button style={{backgroundColor: "#04044ee0", color: "white"}} > Create Item</Button>
+                                <Button style={{backgroundColor: "#04044ee0", color: "white"}} type="submit" > Create Item</Button>
                             </Box>               
                         </Box>
                        
