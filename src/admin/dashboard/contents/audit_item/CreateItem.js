@@ -40,13 +40,14 @@ function CreateItem(){
                 new_item['real_item']['category_id'] = e.target.value
             break;
             case "upright":
-                new_item['create_item']['upright'] = e.target.value
+                new_item['create_item']['upright']['quantity'] = e.target.value
+                
             break;
             case "dechoice":
-                new_item['create_item']['dechoice'] = e.target.value
+                new_item['create_item']['dechoice']['quantity'] = e.target.value
             break;
             case "warehouse":
-                new_item['create_item']['warehouse'] = e.target.value
+                new_item['create_item']['warehouse']['quantity'] = e.target.value
             break;
             default: 
 
@@ -101,6 +102,8 @@ function CreateItem(){
 
     const handleSubmit = (e)=> {
         e.preventDefault()
+
+        console.log(item)
 
        
         axios({
