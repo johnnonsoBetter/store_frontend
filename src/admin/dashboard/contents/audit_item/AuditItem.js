@@ -9,8 +9,7 @@ const value = (input) => (input === "true" ? true : false)
 function AuditItem(){
 
     const storedMode = localStorage.getItem('audit')
-    //{real_item: {name: "zee soap", cost_price: 80, selling_price: 150, barcode: "897738384", category_id: @category.id},  
-    //create_item: {upright: {name: "upright", quantity: 3}, dechoice: {name: "dechoice", quantity: 4}, warehouse: {quantity: 6}}
+   
     
     if (storedMode === null) {
         localStorage.setItem('audit', false)
@@ -18,8 +17,6 @@ function AuditItem(){
 
     const [auditMode, setAuditMode] = useState(value(localStorage.getItem('audit')))
     
-    //const [openSnackBar, setOpenSnackBar] = useState(false)
- 
     return (
             <div>
            <Switch checked={value(storedMode)} onChange={(e) => {
@@ -38,4 +35,4 @@ function AuditItem(){
     )
 }
 
-export default AuditItem
+export default AuditItem 

@@ -11,10 +11,10 @@ function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
     const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
-    const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos, setInventoryManagerInfos, inventoryManagerInfos} = useContext(AdminDashboardContext).store
+    const {setDashboardData, generalStoreInfos, changeStoreName, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
-        
+        console.log("effect logged ")
         axios({
             method: 'GET',
             url: `http://localhost:3001/api/v1/admin_dashboard/?store=${storeName}`,
@@ -90,6 +90,16 @@ function Home(){
 
             console.log(err)
         })
+
+
+        return ()=> {
+
+            console.log("effect logged out")
+            setDashboardData({})
+            setGeneralStoreInfos([])
+            setTransactionReviewInfos([])
+            changeStoreName("upright")
+        }
     }, [])
     
     
