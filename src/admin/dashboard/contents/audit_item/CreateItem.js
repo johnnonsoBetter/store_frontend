@@ -118,6 +118,7 @@ function CreateItem(){
             setSnackBarOpened(true)
             setItemCreated(true)
             setItemName(item['real_item'].name)
+            clearItemState()
         }).catch(err => {
             console.log(item)
             setSnackBarOpened(true)
@@ -134,6 +135,35 @@ function CreateItem(){
         setSnackBarOpened(false);
     };
 
+    const clearItemState = () => {
+        let cleared_item = Object.assign({}, item)
+
+        cleared_item['real_item'] = {
+            name: "",
+            cost_price: 0,
+            selling_price: 0,
+            barcode: "",
+            category_id: 1,
+        }
+
+        cleared_item['create_item'] = {
+            upright: {
+                name: "upright",
+                quantity: 0
+            }, 
+            dechoice: {
+                name: "dechoice",
+                quantity: 0
+            },
+            warehouse: {
+                quantity: 0
+            }
+        }
+
+        setItem(cleared_item)
+
+    }
+
 
     const categoryName = categories.find((cat) => cat.id == item['real_item']['category_id']).name
     const [drawerOpened, setDrawerOpened] = useState(false)
@@ -142,44 +172,12 @@ function CreateItem(){
     const [itemName, setItemName] = useState('')
 
 
-
-
-    console.log(categoryName)
- 
-   
-
     return (
         <>
          <IconButton style={{marginLeft: "70px"}} aria-label="add to shopping cart" onClick = {() => {
                 
                 setDrawerOpened(true)
-                let cleared_item = Object.assign({}, item)
-
-                cleared_item['real_item'] = {
-                    name: "",
-                    cost_price: 0,
-                    selling_price: 0,
-                    barcode: "",
-                    category_id: 1,
-                }
-
-                cleared_item['create_item'] = {
-                    upright: {
-                        name: "upright",
-                        quantity: 0
-                    }, 
-                    dechoice: {
-                        name: "dechoice",
-                        quantity: 0
-                    },
-                    warehouse: {
-                        quantity: 0
-                    }
-                }
-
-               
-
-                setItem(cleared_item)
+                clearItemState()
             
             }
               

@@ -165,7 +165,7 @@ function Home(){
                         <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
-                                <img src="static/images/shopping-bag.png" />
+                                <img src="static/images/transaction_activity.png" alt="transaction activity"/>
                                 <Typography > Transaction Activity </Typography>
 
                                 </CardContent>      
@@ -181,7 +181,7 @@ function Home(){
                             <Box>
                                 <Card className={infoLinks}>
                                     <CardContent>
-                                    <img src="static/images/shopping-bag.png" />
+                                    <img src="static/images/storage.png" alt="inventory activity" />
                                     <Typography > Inventory Activity </Typography>
 
                                     </CardContent>
@@ -199,8 +199,8 @@ function Home(){
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
-                                <img src="static/images/shopping-bag.png" />
-                                <Typography > Transaction Activity </Typography>
+                                <img src="static/images/statistics.png" />
+                                <Typography > Statistics Report </Typography>
 
                                 </CardContent>
                                 

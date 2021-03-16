@@ -95,7 +95,7 @@ import AuditItem from './dashboard/contents/audit_item/AuditItem'
       minWidth: 270,
       margin: theme.spacing(2),
       backgroundColor: "#0b1125",
-      padding: theme.spacing(5),
+      padding: theme.spacing(4),
       color: "white",
       fontSize: theme.typography.pxToRem(1),
       fontWeight: theme.typography.fontWeightRegular,
