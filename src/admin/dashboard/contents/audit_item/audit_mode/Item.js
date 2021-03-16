@@ -1,6 +1,6 @@
 import { Typography, Grid, Box, Card, CardContent, makeStyles, CardHeader, ButtonBase} from "@material-ui/core";
 import React from "react";
-
+import AmountFormatter from '../../../../../helpers/AmountFormater'
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -19,6 +19,7 @@ function Item(props){
 
     const {name, id, cost_price, selling_price} = props
     const classes = useStyles()
+    
 
     return (
         <Grid item xs={12} md={6} lg={4} >
@@ -28,8 +29,8 @@ function Item(props){
                             <CardContent style={{padding: "0"}}>
         
                                 <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
-                                    <Typography style={{color: "#DEC429"}}> ₦{cost_price} </Typography>
-                                    <Typography style={{color: "#17B80A"}}> ₦{selling_price} </Typography>
+                                    <Typography style={{color: "#DEC429"}}> ₦{AmountFormatter(cost_price).amount() } </Typography>
+                                    <Typography style={{color: "#17B80A"}}> ₦{AmountFormatter(selling_price).amount()} </Typography>
                                 </Box>
 
                                 <Box p={2} style={{backgroundColor: "#0A0B0C"}} >

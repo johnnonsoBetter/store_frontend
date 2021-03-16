@@ -15,7 +15,7 @@ function Alert(props) {
 function CreateItem(){
 
     const matches = useMediaQuery('(min-width:600px)')
-    const {items, setItems} = useContext(AuditModeContext)
+    const {items, setItems, setTotalItems} = useContext(AuditModeContext)
 
    
     
@@ -119,12 +119,13 @@ function CreateItem(){
             const new_item = response.data
            
             let new_items = [...items, new_item['item']]
+            let totalItems = new_items.length
             setSnackBarOpened(true)
             setItemCreated(true)
             setItemName(item['real_item'].name)
             setItems(new_items)
-            // console.log(new_item['item'])
-            // console.log(new_items)
+            setTotalItems(totalItems)
+            
            
             
         }).catch(err => {
