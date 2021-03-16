@@ -1,10 +1,10 @@
-import { Typography, Grid, Box, Card, CardContent, makeStyles, CardHeader} from "@material-ui/core";
+import { Typography, Grid, Box, Card, CardContent, makeStyles, CardHeader, ButtonBase} from "@material-ui/core";
 import React from "react";
 
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
-        minWidth: 200,
+        minWidth: 290,
         margin: theme.spacing(1),
         backgroundColor: "blue",
         padding: theme.spacing(0),
@@ -22,23 +22,29 @@ function Item(props){
 
     return (
         <Grid item xs={12} md={6} lg={4} >
-                <Box >
-                    <Card className={classes.itemContainer}>
-                        <CardContent style={{padding: "0"}}>
-    
-                            <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
-                                <Typography style={{color: "#DEC429"}}> ₦{cost_price} </Typography>
-                                <Typography style={{color: "#17B80A"}}> ₦{selling_price} </Typography>
-                            </Box>
+            <ButtonBase>
+               
+                        <Card className={classes.itemContainer}>
+                            <CardContent style={{padding: "0"}}>
+        
+                                <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
+                                    <Typography style={{color: "#DEC429"}}> ₦{cost_price} </Typography>
+                                    <Typography style={{color: "#17B80A"}}> ₦{selling_price} </Typography>
+                                </Box>
 
-                            <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
-                                <Typography > {name} </Typography>
-                            </Box>
-                            
+                                <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
+                                    <Typography > {name} </Typography>
+                                </Box>
+                                
 
-                        </CardContent>      
-                    </Card>
-                </Box>
+                            </CardContent>      
+                        </Card>
+                  
+
+
+
+            </ButtonBase>
+                
           
         </Grid>
     )

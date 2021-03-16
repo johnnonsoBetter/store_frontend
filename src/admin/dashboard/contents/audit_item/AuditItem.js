@@ -18,6 +18,7 @@ function AuditItem(){
 
     const [auditMode, setAuditMode] = useState(value(localStorage.getItem('audit')))
     const [items, setItems] = useState([])
+    const [totalItems, setTotalItems] = useState("0")
 
 
     return (
@@ -26,7 +27,9 @@ function AuditItem(){
                 <AuditModeContextProvider 
                     value = {{
                             items: items,
-                            setItems: items => setItems(items)
+                            totalItems: totalItems,
+                            setItems: items => setItems(items),
+                            setTotalItems: totalItems => setTotalItems(totalItems)
                         }
                     }
                 
@@ -34,7 +37,7 @@ function AuditItem(){
 
 
                 
-                <Switch checked={value(storedMode)} onChange={(e) => {
+                <Switch  checked={value(storedMode)} onChange={(e) => {
                     setAuditMode(e.target.checked)
                     
                     localStorage.setItem('audit', e.target.checked)

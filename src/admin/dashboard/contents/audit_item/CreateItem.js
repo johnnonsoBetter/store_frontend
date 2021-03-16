@@ -150,7 +150,7 @@ function CreateItem(){
 
     return (
         <>
-         <IconButton  aria-label="add to shopping cart" onClick = {() => {
+         <IconButton style={{marginLeft: "70px"}} aria-label="add to shopping cart" onClick = {() => {
                 
                 setDrawerOpened(true)
                 let cleared_item = Object.assign({}, item)

@@ -1,4 +1,4 @@
-import { Box,  TextField,  Container, Grid, CircularProgress, Typography} from '@material-ui/core'
+import { Box,  TextField, Badge,  Container, Grid, CircularProgress, Typography} from '@material-ui/core'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuditModeContext from '../../../../../context/audit_item/AuditModeContext'
@@ -7,10 +7,7 @@ import ItemList from './ItemList'
 function AuditMode(){
 
     const [loading, setLoading] = useState(true)
-    const {items, setItems} = useContext(AuditModeContext)
-
-   
-    
+    const {setTotalItems, setItems, totalItems} = useContext(AuditModeContext)
 
     useEffect(() => {
         axios({
@@ -25,6 +22,7 @@ function AuditMode(){
            
             setLoading(false)
             setItems(items)
+            setTotalItems(total_items)
             
         }).catch(err => {
             console.log("there was an issue with this request", err)
@@ -34,6 +32,7 @@ function AuditMode(){
         return () => {
             // clean up
             setItems([])
+            setTotalItems("0")
         }
     }, [])
 
@@ -46,8 +45,12 @@ function AuditMode(){
             <Grid container >
                 <Grid item md={9} lg={9}>
                     <Box   >
-                        <Box display="flex" p={1} width="30%" >
+                        <Box display="flex" p={1} justifyContent="space-between" alignItems="baseline" >
                             <TextField id="standard-basic" label="Standard" style={{color: "whitesmoke"}}/>
+                            <Box m={2}>
+                                     <Badge max={10000}  color="primary"   badgeContent={totalItems}> <Typography> Total Items</Typography> </Badge>   
+                            </Box>
+                            
                         </Box>
                         
                         <Box display="flex" justifyContent="center" alignItems="center" >
