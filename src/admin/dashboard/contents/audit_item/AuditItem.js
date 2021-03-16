@@ -19,6 +19,7 @@ function AuditItem(){
     const [auditMode, setAuditMode] = useState(value(localStorage.getItem('audit')))
     const [items, setItems] = useState([])
     const [totalItems, setTotalItems] = useState("0")
+    const [searchValue, setSearchValue] = useState("")
 
 
     return (
@@ -28,8 +29,10 @@ function AuditItem(){
                     value = {{
                             items: items,
                             totalItems: totalItems,
+                            searchValue: searchValue,
                             setItems: items => setItems(items),
-                            setTotalItems: totalItems => setTotalItems(totalItems)
+                            setTotalItems: totalItems => setTotalItems(totalItems),
+                            setSearchValue: searchValue => setSearchValue(searchValue)
                         }
                     }
                 

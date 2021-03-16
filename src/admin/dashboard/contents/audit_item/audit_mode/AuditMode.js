@@ -7,7 +7,15 @@ import ItemList from './ItemList'
 function AuditMode(){
 
     const [loading, setLoading] = useState(true)
-    const {setTotalItems, setItems, totalItems} = useContext(AuditModeContext)
+    const {setTotalItems, setItems, items, totalItems, searchValue, setSearchValue} = useContext(AuditModeContext)
+
+    
+
+    const handleSearch = (e) => {
+        setSearchValue(e.target.value)
+    
+    }
+
 
     useEffect(() => {
         axios({
@@ -33,6 +41,7 @@ function AuditMode(){
             // clean up
             setItems([])
             setTotalItems("0")
+            setSearchValue("")
         }
     }, [])
 
@@ -46,7 +55,7 @@ function AuditMode(){
                 <Grid item md={9} lg={9}>
                     <Box   >
                         <Box display="flex" p={1} justifyContent="space-between" alignItems="baseline" >
-                            <TextField id="standard-basic" label="Standard" style={{color: "whitesmoke"}}/>
+                            <TextField id="standard-basic" label="Standard" style={{color: "whitesmoke"}} onChange={handleSearch}/>
                             <Box m={2}>
                                      <Badge max={10000}  color="primary"   badgeContent={totalItems}> <Typography> Total Items</Typography> </Badge>   
                             </Box>

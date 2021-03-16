@@ -4,12 +4,13 @@ import AuditModeContext from '../../../../../context/audit_item/AuditModeContext
 import Item from './Item'
 
 function ItemList(){
-    const {items} = useContext(AuditModeContext)
+    const {items, searchValue} = useContext(AuditModeContext)
+    const filteredItems = items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
 
     return (
         <Grid container style={{height: "calc(100vh - 200px)", overflow: "auto"}}>
             {
-                items.map((item) => {
+                filteredItems.map((item) => {
                     return <Item key={item.id} {...item}/>
                 })
             }
