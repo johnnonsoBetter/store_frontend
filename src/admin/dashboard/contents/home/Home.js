@@ -14,7 +14,7 @@ function Home(){
     const {setDashboardData, generalStoreInfos, changeStoreName, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
-        console.log("effect logged ")
+        
         axios({
             method: 'GET',
             url: `http://localhost:3001/api/v1/admin_dashboard/?store=${storeName}`,
@@ -94,7 +94,7 @@ function Home(){
 
         return ()=> {
 
-            console.log("effect logged out")
+          
             setDashboardData({})
             setGeneralStoreInfos([])
             setTransactionReviewInfos([])
