@@ -25,8 +25,6 @@ function AuditMode(){
 
         }).then(response => {
             const {items, total_items} = response.data
-           // setItems(response.)
-
            
             setLoading(false)
             setItems(items)

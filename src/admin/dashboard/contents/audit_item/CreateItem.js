@@ -1,9 +1,11 @@
-import {React, useState} from 'react'
+import {React, useState, useContext} from 'react'
 import {Box, Drawer, InputAdornment, InputLabel, OutlinedInput, TextField, Button, MenuItem, Typography, IconButton, useMediaQuery, Snackbar} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import axios from 'axios'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import MuiAlert from '@material-ui/lab/Alert'
+import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
+import { SettingsRemoteSharp } from '@material-ui/icons'
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -13,9 +15,12 @@ function Alert(props) {
 function CreateItem(){
 
     const matches = useMediaQuery('(min-width:600px)')
+    const {items, setItems} = useContext(AuditModeContext)
 
-
-
+   
+    
+    
+   
     const handleChange = (e) => {
         e.preventDefault()
     
@@ -102,9 +107,6 @@ function CreateItem(){
 
     const handleSubmit = (e)=> {
         e.preventDefault()
-
-        console.log(item)
-
        
         axios({
             method: "POST",
@@ -113,12 +115,18 @@ function CreateItem(){
             data: item
             
         }).then(response => {
-            console.log(response)
-            let data = response.data
+            
+            const new_item = response.data
+           
+            let new_items = [...items, new_item['item']]
             setSnackBarOpened(true)
             setItemCreated(true)
             setItemName(item['real_item'].name)
-            clearItemState()
+            setItems(new_items)
+            // console.log(new_item['item'])
+            // console.log(new_items)
+           
+            
         }).catch(err => {
             console.log(item)
             setSnackBarOpened(true)
@@ -184,7 +192,7 @@ function CreateItem(){
 
 
                 }>
-                <AddShoppingCartIcon />
+                <AddShoppingCartIcon style={{color: "hsl(31deg 90% 44% / 96%)"}}/>
             </IconButton>
 
             <Snackbar open={snackBarOpened} onClose={handleClose}  autoHideDuration={3000} >
