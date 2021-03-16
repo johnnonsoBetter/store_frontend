@@ -28,7 +28,7 @@ function Item(props){
     
                             <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
                                 <Typography style={{color: "#DEC429"}}> ₦{cost_price} </Typography>
-                                <Typography> ₦{selling_price} </Typography>
+                                <Typography style={{color: "#17B80A"}}> ₦{selling_price} </Typography>
                             </Box>
 
                             <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
