@@ -71,6 +71,15 @@ function AuditItem(){
     const handleSearchToggle = () => {
 
         setShowSearch(!showSearch)
+        setSearchValue("")
+    }
+
+    const handleSearchInput = (e) => {
+        e.preventDefault()
+
+        setSearchValue(e.target.value)
+        
+
     }
 
 
@@ -99,7 +108,7 @@ function AuditItem(){
                                 
                                 <Box width="100%" display="flex" justifyContent="flex-end"> 
                                     <Box display="flex" borderRadius={16}  p={1} style={{backgroundColor: "white"}} >
-                                        <input className={classes.searchInput}/>
+                                        <input className={classes.searchInput} onChange={handleSearchInput}/>
                                     </Box>
 
                                     <Box display="flex" marginLeft={2} >
