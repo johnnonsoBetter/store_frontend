@@ -12,7 +12,7 @@ function ItemList(){
     return (
      
             
-        <Grid container >
+        <Grid spacing={4} container >
         {
             filteredItems.map((item) => {
                 return <Item key={item.id} {...item}/>

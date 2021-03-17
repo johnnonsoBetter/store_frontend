@@ -161,15 +161,11 @@ function AuditItem(){
                   }
                 </AppBar>
 
-                <main className={classes.content}>
+                
                     {auditMode ? <AuditMode /> :  <NoAuditMode />  }
                 
 
 
-                </main>
-                
-                
-               
 
                      
                   

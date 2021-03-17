@@ -1,16 +1,35 @@
-import { Box,  TextField, Badge, Grid, CircularProgress, Typography} from '@material-ui/core'
+import { Box,  TextField, Badge, Grid, CircularProgress, Container, makeStyles} from '@material-ui/core'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuditModeContext from '../../../../../context/audit_item/AuditModeContext'
 import ItemList from './ItemList'
 
 
+const useStyles = makeStyles((theme) => ({
+
+    root: {
+        flexGrow: 1,
+        [theme.breakpoints.up('xl')]: {
+            minWidth: 1400
+        },
+        [theme.breakpoints.up('lg')]: {
+            minWidth: 1200
+        },
+        [theme.breakpoints.up('md')]: {
+            minWidth: 960
+        },
+
+       marginTop: theme.spacing(6)
+   
+    }
+}))
+
 
 function AuditMode(){
 
     const [loading, setLoading] = useState(true)
     const {setTotalItems, setItems, items, totalItems, searchValue, setSearchValue} = useContext(AuditModeContext)
-
+    const classes = useStyles()
     
 
     const handleSearch = (e) => {
@@ -49,13 +68,13 @@ function AuditMode(){
     
     return (
      
-            <>
+            <Container className={classes.root}>
                 <Box display="flex" justifyContent="center" alignItems="center" >
                
                 {loading ? <CircularProgress color="secondary" /> :<ItemList /> }
                 </Box>
             
-            </>  
+            </Container>  
                         
     )
 }
