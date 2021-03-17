@@ -1,4 +1,5 @@
 import { Typography, Grid, Box, Card, Paper, makeStyles, CardContent, CardHeader, ButtonBase} from "@material-ui/core";
+import axios from "axios";
 import React from "react";
 import AmountFormatter from '../../../../../helpers/AmountFormater'
 
@@ -27,14 +28,35 @@ function Item(props){
 
     const {name, id, cost_price, selling_price} = props
     const classes = useStyles()
+
+    const handleShowItemFullDetail = () => {
+
+        
+        axios({
+            method: "GET",
+            headers: JSON.parse(localStorage.getItem('admin')),
+            url: `http://localhost:3001/api/v1/real_items/name`,
+            
+            params: {
+                item_name: name
+            }
+
+        }).then(response => {
+            console.log(response.data)
+            
+        }).catch(err => {
+            console.log("there was an issue with this request", err)
+        })
+    }
     
 
     return (
-        <Grid  xs={12} sm={6} md={4}  >
+        <Grid item  xs={12} sm={6} md={4}  >
             
-            
+           
             <Card className={classes.itemContainer}>
-                <CardContent style={{padding: "0"}}>
+            <ButtonBase style={{width: "100%"}} onClick={handleShowItemFullDetail}>
+                <CardContent style={{padding: "0" , width: "100%"}}>
                     <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
                         <Typography style={{color: "#DEC429"}}> ₦{AmountFormatter(cost_price).amount() } </Typography>
                         <Typography style={{color: "#17B80A"}}> ₦{AmountFormatter(selling_price).amount()} </Typography>
@@ -44,8 +66,11 @@ function Item(props){
                         <Typography > {name} </Typography>
                     </Box>
                 </CardContent>
+                </ButtonBase>
                 </Card>
 
+          
+            
           
 
                     

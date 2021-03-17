@@ -231,13 +231,13 @@ function CreateItem(){
                                 <InputLabel htmlFor="outlined-adornment-amount">Cost Price</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
-                                    type="number"
+                                    type={"number"}
                                     value={item['real_item'].cost_price}
                                     name="cost_price"
                                     onChange={handleChange}
                                     placeholder={0}
                                     startAdornment={<InputAdornment position="start">₦</InputAdornment>}
-                                    labelWidth={100}
+                                    
                                 />
                             </Box>
 
@@ -246,13 +246,13 @@ function CreateItem(){
                                 <InputLabel htmlFor="outlined-adornment-amount">Selling Price</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
-                                    type="number"
+                                    type={"number"}
                                     value={item['real_item'].selling_price}
                                     name="selling_price"
                                     placeholder={0}
                                     onChange={handleChange}
                                     startAdornment={<InputAdornment position="start">₦</InputAdornment>}
-                                    labelWidth={100}
+                                    
                                 />
                             </Box>
                             
@@ -297,7 +297,7 @@ function CreateItem(){
                                     value={item['create_item']['upright'].quantity}
                                     onChange={handleChange}
                                     name="upright"
-                                    labelWidth={100}
+                                    
                                 />
                             
                             
@@ -311,7 +311,7 @@ function CreateItem(){
                                     value={item['create_item']['dechoice'].quantity}
                                     onChange={handleChange}
                                     name="dechoice"
-                                    labelWidth={100}
+                                    
                                 />
                             
                             
@@ -325,7 +325,7 @@ function CreateItem(){
                                     value={item['create_item']['warehouse'].quantity}
                                     onChange={handleChange}
                                     name="warehouse"
-                                    labelWidth={100}
+                                    
                                 />
                             
                             
