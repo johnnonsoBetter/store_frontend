@@ -183,7 +183,7 @@ function CreateItem(){
 
     return (
         <>
-         <IconButton style={{marginLeft: "70px"}} aria-label="add to shopping cart" onClick = {() => {
+         <IconButton  aria-label="add to shopping cart" onClick = {() => {
                 
                 setDrawerOpened(true)
                 clearItemState()

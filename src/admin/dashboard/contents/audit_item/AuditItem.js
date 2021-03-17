@@ -1,15 +1,61 @@
-import { Box, Switch} from '@material-ui/core'
+import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow} from '@material-ui/core'
+import { SearchOutlined } from '@material-ui/icons';
 import React, { useState } from 'react'
 import {AuditModeContextProvider} from '../../../../context/audit_item/AuditModeContext';
 import AuditMode from './audit_mode/AuditMode'
 import CreateItem from './CreateItem';
 import NoAuditMode from './no_audit_mode/NoAuditMode' 
+import ClearIcon from '@material-ui/icons/Clear';
+
 
 const value = (input) => (input === "true" ? true : false) 
+
+const useStyles = makeStyles((theme) => ({
+    appBar: {
+        [theme.breakpoints.up('md')]: {
+          width: `calc(100% - ${300}px)`,
+          marginLeft: 270,
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: `calc(100% - ${50}px)`,
+            
+          },
+        
+        backgroundColor: "#282c34",
+        boxShadow: "none"
+  
+    },
+
+
+
+    actionContainer: {
+        marginRight: theme.spacing(1),
+        display: "flex"
+    },
+    
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(0),
+    },
+
+ 
+    searchInput: {
+        display: "block",
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightRegular,
+        textTransform: "capitalize",
+        outline: "none",
+        height: "100%",
+        border: "none"
+    },
+
+    toolbar: theme.mixins.toolbar,
+}))
 
 function AuditItem(){
 
     const storedMode = localStorage.getItem('audit')
+    const classes = useStyles()
    
     
     if (storedMode === null) {
@@ -20,6 +66,12 @@ function AuditItem(){
     const [items, setItems] = useState([])
     const [totalItems, setTotalItems] = useState("0")
     const [searchValue, setSearchValue] = useState("")
+    const [showSearch, setShowSearch] = useState(false)
+
+    const handleSearchToggle = () => {
+
+        setShowSearch(!showSearch)
+    }
 
 
     return (
@@ -37,20 +89,81 @@ function AuditItem(){
                     }
                 
                 >
-
-
                 
-                <Switch  checked={value(storedMode)} onChange={(e) => {
-                    setAuditMode(e.target.checked)
+                <AppBar className={classes.appBar} position="fixed"> 
+                
+
+                    {showSearch ? 
+                    <Grow in={true}> 
+                        <Toolbar className={classes.toolbar} >
+                                
+                                <Box width="100%" display="flex" justifyContent="flex-end"> 
+                                    <Box display="flex" borderRadius={16}  p={1} style={{backgroundColor: "white"}} >
+                                        <input className={classes.searchInput}/>
+                                    </Box>
+
+                                    <Box display="flex" marginLeft={2} >
+                                        <IconButton size="small" style={{color: "#e25218"}} onClick={handleSearchToggle}>
+                                            <ClearIcon  />
+                                        </IconButton>
+                                    </Box>
+                                </Box>
+
+                                
+                        </Toolbar> 
+                    </Grow>
+                    :  
                     
-                    localStorage.setItem('audit', e.target.checked)
-                }}/>
+                          <Toolbar className={classes.toolbar}>
+                            <Box width="100%" display="flex" justifyContent="flex-end" alignItems="center" >
+                                <Box className={classes.actionContainer} >
+                                    
+                                    <IconButton>
+                                        <SearchOutlined style={{color: "grey"}} onClick={handleSearchToggle}/>
+                                    </IconButton>
+                                </Box>
 
-                <CreateItem />
+                                <Box className={classes.actionContainer}>
+                                    <Switch  checked={value(storedMode)} onChange={(e) => {
+                                    setAuditMode(e.target.checked)
+                                        
+                                        localStorage.setItem('audit', e.target.checked)
+                                    }}/>
 
-                     
+                                </Box>
+
+                                <Box className={classes.actionContainer}>
+                                    <CreateItem />
+
+                                </Box>
+                            
+
+                                
+
+                            </Box>
+
+                   
+               
+                    
+                </Toolbar>
+                   
+
+
+                  }
+                </AppBar>
+
+                <main className={classes.content}>
                     {auditMode ? <AuditMode /> :  <NoAuditMode />  }
                 
+
+
+                </main>
+                
+                
+               
+
+                     
+                  
                     
                 </AuditModeContextProvider>
             </div>
