@@ -3,7 +3,7 @@ import {Box, Divider, IconButton, makeStyles, Typography} from '@material-ui/cor
 import EditOutlined from '@material-ui/icons/Edit'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { CloseOutlined, DeleteOutline } from '@material-ui/icons'
-import CostPriceTrackerChart from './CostPriceTrackerChart'
+import CostPriceTrackerChart from './PriceTrackerChart'
 import AmountFormatter from '../../../../helpers/AmountFormater'
  
 
@@ -89,12 +89,12 @@ function Item(){
 
             <Box marginTop={2} >
                 <Typography> Cost Price Analysis</Typography>
-                <CostPriceTrackerChart />
+                <CostPriceTrackerChart trackers={cost_price_trackers}/>
             </Box>
 
             <Box marginTop={2} >
-                <Typography> Cost Price Analysis</Typography>
-                <CostPriceTrackerChart />
+                <Typography> Selling Price Analysis</Typography>
+                <CostPriceTrackerChart trackers={selling_price_trackers}/>
             </Box>
 
           
