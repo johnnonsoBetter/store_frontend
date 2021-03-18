@@ -52,32 +52,20 @@ function Item(props){
 
     return (
         <Grid item  xs={12} sm={6} md={4}  >
-            
-           
             <Card className={classes.itemContainer}>
-            <ButtonBase style={{width: "100%"}} onClick={handleShowItemFullDetail}>
-                <CardContent style={{padding: "0" , width: "100%"}}>
-                    <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
-                        <Typography style={{color: "#DEC429"}}> ₦{AmountFormatter(cost_price).amount() } </Typography>
-                        <Typography style={{color: "#17B80A"}}> ₦{AmountFormatter(selling_price).amount()} </Typography>
-                    </Box>
+                <ButtonBase style={{width: "100%"}} onClick={handleShowItemFullDetail}>
+                    <CardContent style={{padding: "0" , width: "100%"}}>
+                        <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
+                            <Typography style={{color: "#DEC429"}}> ₦{AmountFormatter(cost_price).amount() } </Typography>
+                            <Typography style={{color: "#17B80A"}}> ₦{AmountFormatter(selling_price).amount()} </Typography>
+                        </Box>
 
-                    <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
-                        <Typography > {name} </Typography>
-                    </Box>
-                </CardContent>
+                        <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
+                            <Typography > {name} </Typography>
+                        </Box>
+                    </CardContent>
                 </ButtonBase>
-                </Card>
-
-          
-            
-          
-
-                    
-                    
-
-           
-          
+            </Card>          
         </Grid>
     )
 }

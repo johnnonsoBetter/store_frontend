@@ -17,10 +17,6 @@ function CreateItem(){
     const matches = useMediaQuery('(min-width:600px)')
     const {items, setItems, setTotalItems} = useContext(AuditModeContext)
 
-   
-    
-    
-   
     const handleChange = (e) => {
         e.preventDefault()
     

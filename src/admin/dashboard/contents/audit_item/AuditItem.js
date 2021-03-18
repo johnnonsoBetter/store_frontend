@@ -1,5 +1,5 @@
-import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow} from '@material-ui/core'
-import { SearchOutlined } from '@material-ui/icons';
+import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, Typography, useMediaQuery, Drawer} from '@material-ui/core'
+import { EditOutlined, SearchOutlined } from '@material-ui/icons';
 import React, { useState } from 'react'
 import {AuditModeContextProvider} from '../../../../context/audit_item/AuditModeContext';
 import AuditMode from './audit_mode/AuditMode'
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   
     },
 
-
+   
 
     actionContainer: {
         marginRight: theme.spacing(1),
@@ -67,6 +67,8 @@ function AuditItem(){
     const [totalItems, setTotalItems] = useState("0")
     const [searchValue, setSearchValue] = useState("")
     const [showSearch, setShowSearch] = useState(false)
+    const [itemDrawerOpened, setItemDrawerOpened] = useState(true)
+    const matches = useMediaQuery('(min-width:600px)')
 
     const handleSearchToggle = () => {
 
@@ -78,8 +80,10 @@ function AuditItem(){
         e.preventDefault()
 
         setSearchValue(e.target.value)
-        
+    }
 
+    const toggleItemDrawer = () => {
+        setItemDrawerOpened(!itemDrawerOpened)
     }
 
 
@@ -91,6 +95,7 @@ function AuditItem(){
                             items: items,
                             totalItems: totalItems,
                             searchValue: searchValue,
+                            itemDrawerOpened: itemDrawerOpened,
                             setItems: items => setItems(items),
                             setTotalItems: totalItems => setTotalItems(totalItems),
                             setSearchValue: searchValue => setSearchValue(searchValue)
@@ -123,7 +128,7 @@ function AuditItem(){
                     </Grow>
                     :  
                     
-                          <Toolbar className={classes.toolbar}>
+                        <Toolbar className={classes.toolbar}>
                             <Box width="100%" display="flex" justifyContent="flex-end" alignItems="center" >
                                 <Box className={classes.actionContainer} >
                                     
@@ -141,7 +146,7 @@ function AuditItem(){
 
                                 </Box>
 
-                                <Box className={classes.actionContainer}>
+                                <Box  className={classes.actionContainer}>
                                     <CreateItem />
 
                                 </Box>
@@ -150,26 +155,30 @@ function AuditItem(){
                                 
 
                             </Box>
-
-                   
-               
-                    
-                </Toolbar>
+                        </Toolbar>
                    
 
 
                   }
                 </AppBar>
+                  <main>
+                    <Drawer anchor="right"    open={itemDrawerOpened} onClose={ toggleItemDrawer}>
+                        <Box width={matches ? 340 : "100%"}  style={{backgroundColor: "yellow", height: "80%"}} height="90%" >
+                            <Box   style={{backgroundColor: "green", height: "80%"}}>
 
-                
+                                <Box display="flex" alignItems="center" m={1} justifyContent="space-between" p={1}>
+                                    <Typography> Milo 1kg Ref </Typography>
+                                    <EditOutlined fontSize="small"/>
+                                    <Typography> Time to take the same  things where we are going to a </Typography>
+                                </Box>
+                            </Box>
+                          
+                            
+                        </Box>
+                    </Drawer>
                     {auditMode ? <AuditMode /> :  <NoAuditMode />  }
-                
-
-
-
-                     
-                  
-                    
+                  </main>
+       
                 </AuditModeContextProvider>
             </div>
     )

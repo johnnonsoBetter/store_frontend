@@ -32,12 +32,6 @@ function AuditMode(){
     const classes = useStyles()
     
 
-    const handleSearch = (e) => {
-        setSearchValue(e.target.value)
-    
-    }
-
-
     useEffect(() => {
         axios({
             method: "GET",
