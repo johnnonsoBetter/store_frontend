@@ -45,7 +45,7 @@ function Item(props){
 
         }).then(response => {
 
-            const {item, cost_price_trackers, selling_price_trackers} = response.data
+            const {item, cost_price_trackers, selling_price_trackers, category} = response.data
             
             
            // setItemName()
@@ -53,6 +53,7 @@ function Item(props){
                item,
                cost_price_trackers,
                selling_price_trackers,
+               category,
            })
             
         }).catch(err => {

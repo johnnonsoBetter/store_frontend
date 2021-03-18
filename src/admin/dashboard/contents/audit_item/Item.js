@@ -3,7 +3,9 @@ import {Box, Divider, IconButton, makeStyles, Typography} from '@material-ui/cor
 import EditOutlined from '@material-ui/icons/Edit'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { CloseOutlined, DeleteOutline } from '@material-ui/icons'
-
+import CostPriceTrackerChart from './CostPriceTrackerChart'
+import AmountFormatter from '../../../../helpers/AmountFormater'
+ 
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
         letterSpacing: "0.4px",
         color: "#6626fd",
         marginTop: theme.spacing(2)
-        
+         
     },
     barcode: {
-        lineHeight: "1.9",
         letterSpacing: "2px"
+    },
+    category: {
+        textTransform: "capitalize"
     }
 
 }))
@@ -28,17 +32,20 @@ const useStyles = makeStyles((theme) => ({
 function Item(){
     const classes = useStyles()
     const {itemInfo} = useContext(AuditModeContext)
-    const {item, cost_price_trackers, selling_price_trackers} = itemInfo
+    const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
     const {name, barcode, cost_price, selling_price} = item
-
-    console.log(item)
+    const {setItemInfo, toggleItemDrawer} = useContext(AuditModeContext)
+    
     return (
         <Box className={classes.root} >
 
             <Box  display="flex" alignItems="center"  justifyContent="space-between" >
 
-                <IconButton >
-                    <CloseOutlined fontSize="small"/>
+                <IconButton onClick={()=> {
+                    setItemInfo(null)
+                    toggleItemDrawer()
+                }}>
+                    <CloseOutlined fontSize="small" />
                 </IconButton>
 
                 <IconButton>
@@ -58,22 +65,38 @@ function Item(){
             <Box display="flex" justifyContent="space-around" p={2}>
                 <Box textAlign="center">   
                     <Typography> Cost Price </Typography>
-                    <Typography> {cost_price} </Typography>
+                    <Typography> ₦{AmountFormatter(cost_price).amount()} </Typography>
 
                 </Box>
                 <Divider orientation="vertical" flexItem />
                 <Box textAlign="center">   
                     <Typography> Selling Price </Typography>
-                    <Typography> {selling_price} </Typography>
+                    <Typography> ₦{AmountFormatter(selling_price).amount()} </Typography>
 
                 </Box>
                
             </Box>
             <Divider />
-            <Box textAlign="center" p={2}>
-                <Typography>Barcode</Typography>
+            <Box textAlign="center" display="flex" justifyContent="space-between" m={2}>
+                <Typography>Barcode:</Typography>
                 <Typography className={classes.barcode}>{barcode}</Typography>
             </Box>
+           
+            <Box textAlign="center"  display="flex" justifyContent="space-between" p={2}>
+                <Typography>Category:</Typography>
+                <Typography className={classes.category} >{category['name']}</Typography>
+            </Box>
+
+            <Box marginTop={2} >
+                <Typography> Cost Price Analysis</Typography>
+                <CostPriceTrackerChart />
+            </Box>
+
+            <Box marginTop={2} >
+                <Typography> Cost Price Analysis</Typography>
+                <CostPriceTrackerChart />
+            </Box>
+
           
            
         </Box>
