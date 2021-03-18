@@ -6,6 +6,7 @@ import AuditMode from './audit_mode/AuditMode'
 import CreateItem from './CreateItem';
 import NoAuditMode from './no_audit_mode/NoAuditMode' 
 import ClearIcon from '@material-ui/icons/Clear';
+import Item from './Item';
 
 
 const value = (input) => (input === "true" ? true : false) 
@@ -67,8 +68,9 @@ function AuditItem(){
     const [totalItems, setTotalItems] = useState("0")
     const [searchValue, setSearchValue] = useState("")
     const [showSearch, setShowSearch] = useState(false)
-    const [itemDrawerOpened, setItemDrawerOpened] = useState(true)
+    const [itemDrawerOpened, setItemDrawerOpened] = useState(false)
     const matches = useMediaQuery('(min-width:600px)')
+    const [itemInfo, setItemInfo] = useState(null)
 
     const handleSearchToggle = () => {
 
@@ -92,10 +94,13 @@ function AuditItem(){
 
                 <AuditModeContextProvider 
                     value = {{
-                            items: items,
-                            totalItems: totalItems,
-                            searchValue: searchValue,
-                            itemDrawerOpened: itemDrawerOpened,
+                            items,
+                            totalItems,
+                            searchValue,
+                            itemInfo,
+                            itemDrawerOpened,
+                            toggleItemDrawer: ()=> {toggleItemDrawer()},
+                            setItemInfo: itemInfo => setItemInfo(itemInfo),
                             setItems: items => setItems(items),
                             setTotalItems: totalItems => setTotalItems(totalItems),
                             setSearchValue: searchValue => setSearchValue(searchValue)
@@ -105,8 +110,6 @@ function AuditItem(){
                 >
                 
                 <AppBar className={classes.appBar} position="fixed"> 
-                
-
                     {showSearch ? 
                     <Grow in={true}> 
                         <Toolbar className={classes.toolbar} >
@@ -162,18 +165,13 @@ function AuditItem(){
                   }
                 </AppBar>
                   <main>
-                    <Drawer anchor="right"    open={itemDrawerOpened} onClose={ toggleItemDrawer}>
-                        <Box width={matches ? 340 : "100%"}  style={{backgroundColor: "yellow", height: "80%"}} height="90%" >
-                            <Box   style={{backgroundColor: "green", height: "80%"}}>
+                    <Drawer anchor="right" open={itemDrawerOpened} onClose={() => {
+                        setItemInfo(null)
+                        toggleItemDrawer()
+                    }}>
+                        <Box width={matches ? 340 : "100%"}    >
+                          {itemInfo ? <Item /> : null}
 
-                                <Box display="flex" alignItems="center" m={1} justifyContent="space-between" p={1}>
-                                    <Typography> Milo 1kg Ref </Typography>
-                                    <EditOutlined fontSize="small"/>
-                                    <Typography> Time to take the same  things where we are going to a </Typography>
-                                </Box>
-                            </Box>
-                          
-                            
                         </Box>
                     </Drawer>
                     {auditMode ? <AuditMode /> :  <NoAuditMode />  }
