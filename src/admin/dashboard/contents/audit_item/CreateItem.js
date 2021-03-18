@@ -24,10 +24,11 @@ function CreateItem(){
         const field_name = e.target.name
         switch(field_name){
             case "name":
-                new_item['real_item']['name'] = e.target.value
+                new_item['real_item']['name'] = `${e.target.value}`
+                
             break;
             case "barcode": 
-                new_item['real_item']['barcode'] = e.target.value
+                new_item['real_item']['barcode'] = `${e.target.value}`
             break;
             case "cost_price": 
                 new_item['real_item']['cost_price'] = e.target.value
@@ -54,6 +55,8 @@ function CreateItem(){
 
     
         }
+
+        console.log(new_item)
     
         setItem(new_item)
     

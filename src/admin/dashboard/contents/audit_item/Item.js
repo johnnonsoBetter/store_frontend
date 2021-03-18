@@ -5,6 +5,7 @@ import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { CloseOutlined, DeleteOutline } from '@material-ui/icons'
 import CostPriceTrackerChart from './PriceTrackerChart'
 import AmountFormatter from '../../../../helpers/AmountFormater'
+import axios from 'axios'
  
 
 const useStyles = makeStyles((theme) => ({
@@ -31,10 +32,28 @@ const useStyles = makeStyles((theme) => ({
 
 function Item(){
     const classes = useStyles()
-    const {itemInfo} = useContext(AuditModeContext)
+    const {itemInfo, items, setItemInfo, toggleItemDrawer, setItems} = useContext(AuditModeContext)
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
-    const {name, barcode, cost_price, selling_price} = item
-    const {setItemInfo, toggleItemDrawer} = useContext(AuditModeContext)
+    const {name, barcode, cost_price, selling_price, id} = item
+    
+    const deleteItem = ()=> {
+      
+      
+        axios({
+            method: "DELETE",
+            url: `http://localhost:3001/api/v1/real_items/${name}`,
+            headers: JSON.parse(localStorage.getItem('admin')),
+            params: {name: name}
+        }).then(response => {
+           
+            const new_items = items.filter(item => item.name != name)
+            setItems(new_items)
+            toggleItemDrawer()
+            
+        }).catch(err => {
+            console.log(err)
+        })
+    }
     
     return (
         <Box className={classes.root} >
@@ -48,7 +67,7 @@ function Item(){
                     <CloseOutlined fontSize="small" />
                 </IconButton>
 
-                <IconButton>
+                <IconButton onClick={deleteItem}>
                     <DeleteOutline style={{color: "#ff3f3f"}} fontSize="small"/>
                 </IconButton>
 
