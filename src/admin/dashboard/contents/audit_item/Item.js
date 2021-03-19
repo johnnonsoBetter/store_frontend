@@ -7,6 +7,7 @@ import CostPriceTrackerChart from './PriceTrackerChart'
 import AmountFormatter from '../../../../helpers/AmountFormater'
 import axios from 'axios'
 import DeleteConfirmation from './DeleteConfirmation'
+import UpdateItem from './UpdateItem'
  
 
 const useStyles = makeStyles((theme) => ({
@@ -46,15 +47,16 @@ function Item(){
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
     const [confirmationVisible, setConfirmationVisible] = useState(false)
+    const [onUpdate, setOnUpdate] = useState(false)
     
     const deleteItem = ()=> {
       
       
         axios({
             method: "DELETE",
-            url: `http://localhost:3001/api/v1/real_items/${name}`,
+            url: `http://localhost:3001/api/v1/real_items/name`,
             headers: JSON.parse(localStorage.getItem('admin')),
-            params: {name: name}
+            params: {item_name: name}
         }).then(response => {
            
             const new_items = items.filter(item => item.name != name)
@@ -71,6 +73,7 @@ function Item(){
         setConfirmationVisible(!confirmationVisible)
     }
     
+    const toggleUpdate =() => setOnUpdate(!onUpdate)
     return (
         <Box className={classes.root} >
            { confirmationVisible ?
@@ -83,9 +86,13 @@ function Item(){
             
                 />
 
-                
-
             :  
+
+            onUpdate ? 
+            <UpdateItem 
+                toggleUpdate={toggleUpdate}
+               
+            /> :
             <>
             <Box  display="flex" alignItems="center"  justifyContent="space-between" >
 
@@ -100,7 +107,7 @@ function Item(){
                     <DeleteOutline style={{color: "#ff3f3f"}} fontSize="small"/>
                 </IconButton>
 
-                <IconButton>
+                <IconButton onClick={toggleUpdate}>
                     <EditOutlined style={{color: "#d69500eb"}} fontSize="small"/>
                 </IconButton>
                 
