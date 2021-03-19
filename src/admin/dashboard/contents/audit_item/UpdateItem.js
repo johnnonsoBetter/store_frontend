@@ -9,7 +9,7 @@ import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 
 function UpdateItem({...props}){
 
-    const {itemInfo} = useContext(AuditModeContext)
+    const {itemInfo, setItemInfo, setItems, items} = useContext(AuditModeContext)
     const {toggleUpdate} = props
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
@@ -101,6 +101,26 @@ function UpdateItem({...props}){
             
         }).then(response => {
             console.log(response)
+
+            const {the_item} = response.data
+
+            let updateItem = Object.assign({}, itemInfo)
+            updateItem['item'] = item
+            const new_items = items.map((item) => {
+                if (id === item.id)
+                    return the_item
+                else
+                    return item
+                    
+            })
+
+            
+
+            console.log(new_items)
+             setItems(new_items)
+            setItemInfo(updateItem)
+
+        
         }).catch(err => {
 
             console.log(err)
