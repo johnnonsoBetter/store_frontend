@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import {Box, Divider, IconButton, makeStyles, Typography} from '@material-ui/core'
+import React, { useContext, useState } from 'react'
+import {Box, Button, Collapse, Divider, Grow, IconButton, makeStyles, Typography} from '@material-ui/core'
 import EditOutlined from '@material-ui/icons/Edit'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { CloseOutlined, DeleteOutline } from '@material-ui/icons'
@@ -26,6 +26,15 @@ const useStyles = makeStyles((theme) => ({
     },
     category: {
         textTransform: "capitalize"
+    },
+    deleteConfirmation: {
+       
+        backgroundColor: "#006d8e",
+        borderRadius: "8px",
+        color: "white"
+    },
+    lineHeight: {
+        lineHeight: "2.2"
     }
 
 }))
@@ -35,6 +44,7 @@ function Item(){
     const {itemInfo, items, setItemInfo, toggleItemDrawer, setItems} = useContext(AuditModeContext)
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
+    const [confirmationVisible, setConfirmationVisible] = useState(false)
     
     const deleteItem = ()=> {
       
@@ -54,10 +64,41 @@ function Item(){
             console.log(err)
         })
     }
+
+
+    const toggleConfirmationVisible = ()=> {
+        setConfirmationVisible(!confirmationVisible)
+    }
     
     return (
         <Box className={classes.root} >
+           { confirmationVisible ?
+           <Grow in={confirmationVisible}>
+           
+           
+           
+            <Box >
+                <Box textAlign="center" p={1} className={classes.deleteConfirmation}>
+                    <Typography className={classes.lineHeight}> Are You Sure You Want To Delete</Typography>
+                    <Typography> {name} </Typography>
 
+                    <Box display="flex" justifyContent="space-around">
+                        <Button onClick={toggleConfirmationVisible} >
+                           Cancel
+                        </Button>
+
+                        <Button  onClick={deleteItem}>
+                            Confirm
+                        </Button>
+                    </Box>
+
+                </Box>
+            </Box>
+
+            </Grow>
+
+            :  
+            <>
             <Box  display="flex" alignItems="center"  justifyContent="space-between" >
 
                 <IconButton onClick={()=> {
@@ -67,7 +108,7 @@ function Item(){
                     <CloseOutlined fontSize="small" />
                 </IconButton>
 
-                <IconButton onClick={deleteItem}>
+                <IconButton onClick={ toggleConfirmationVisible}>
                     <DeleteOutline style={{color: "#ff3f3f"}} fontSize="small"/>
                 </IconButton>
 
@@ -115,8 +156,9 @@ function Item(){
                 <Typography> Selling Price Analysis</Typography>
                 <CostPriceTrackerChart trackers={selling_price_trackers}/>
             </Box>
+            </>
 
-          
+           }
            
         </Box>
     )
