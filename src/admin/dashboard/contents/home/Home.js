@@ -9,7 +9,7 @@ import AmountFormater from '../../../../helpers/AmountFormater'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
-    const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, storeBaseDetail} = useContext(AdminDashboardContext).styles
+    const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, textHeight, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, changeStoreName, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
@@ -166,7 +166,7 @@ function Home(){
                             <Card className={infoLinks}>
                                 <CardContent>
                                 <img src="static/images/transaction_activity.png" alt="transaction activity"/>
-                                <Typography > Transaction Activity </Typography>
+                                <Typography className={textHeight}> Transaction Activity </Typography>
 
                                 </CardContent>      
                             </Card>
@@ -182,7 +182,7 @@ function Home(){
                                 <Card className={infoLinks}>
                                     <CardContent>
                                     <img src="static/images/storage.png" alt="inventory activity" />
-                                    <Typography > Inventory Activity </Typography>
+                                    <Typography className={textHeight}> Inventory Activity </Typography>
 
                                     </CardContent>
                                     
@@ -200,7 +200,7 @@ function Home(){
                             <Card className={infoLinks}>
                                 <CardContent>
                                 <img src="static/images/statistics.png" />
-                                <Typography > Statistics Report </Typography>
+                                <Typography className={textHeight} > Statistics Report </Typography>
 
                                 </CardContent>
                                 
@@ -216,8 +216,8 @@ function Home(){
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
-                                <img src="static/images/shopping-bag.png" />
-                                <Typography > Transaction Activity </Typography>
+                                <img src="static/images/shelves.png" />
+                                <Typography className={textHeight}> Shelf Items </Typography>
 
                                 </CardContent>
                                 
@@ -234,8 +234,8 @@ function Home(){
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
-                                <img src="static/images/shopping-bag.png" />
-                                <Typography > Transaction Activity </Typography>
+                                <img src="static/images/cashier-machine.png" />
+                                <Typography className={textHeight} > Cashiers </Typography>
 
                                 </CardContent>
                                 
@@ -251,8 +251,8 @@ function Home(){
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
-                                <img src="static/images/shopping-bag.png" />
-                                <Typography > Transaction Activity </Typography>
+                                <img src="static/images/settings.png" />
+                                <Typography className={textHeight} > Settings </Typography>
 
                                 </CardContent>
                                 

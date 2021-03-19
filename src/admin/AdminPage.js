@@ -206,6 +206,10 @@ import AuditItem from './dashboard/contents/audit_item/AuditItem'
       paddingBottom: theme.spacing(2),
       letterSpacing: "5px"
     },
+    textHeight: {
+      lineHeight: "2",
+      letterSpacing: "2px"
+    }
 
   }));
 
