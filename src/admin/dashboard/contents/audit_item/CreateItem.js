@@ -55,8 +55,6 @@ function CreateItem(){
 
     
         }
-
-        console.log(new_item)
     
         setItem(new_item)
     

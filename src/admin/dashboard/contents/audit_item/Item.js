@@ -6,6 +6,7 @@ import { CloseOutlined, DeleteOutline } from '@material-ui/icons'
 import CostPriceTrackerChart from './PriceTrackerChart'
 import AmountFormatter from '../../../../helpers/AmountFormater'
 import axios from 'axios'
+import DeleteConfirmation from './DeleteConfirmation'
  
 
 const useStyles = makeStyles((theme) => ({
@@ -73,29 +74,16 @@ function Item(){
     return (
         <Box className={classes.root} >
            { confirmationVisible ?
-           <Grow in={confirmationVisible}>
-           
-           
-           
-            <Box >
-                <Box textAlign="center" p={1} className={classes.deleteConfirmation}>
-                    <Typography className={classes.lineHeight}> Are You Sure You Want To Delete</Typography>
-                    <Typography> {name} </Typography>
+           <DeleteConfirmation 
+                name={name} 
+                toggleConfirmationVisible={toggleConfirmationVisible}
+                confirmationVisible={confirmationVisible}
+                deleteConfirmation = {classes.deleteConfirmation}
+                deleteItem = {deleteItem}
+            
+                />
 
-                    <Box display="flex" justifyContent="space-around">
-                        <Button onClick={toggleConfirmationVisible} >
-                           Cancel
-                        </Button>
-
-                        <Button  onClick={deleteItem}>
-                            Confirm
-                        </Button>
-                    </Box>
-
-                </Box>
-            </Box>
-
-            </Grow>
+                
 
             :  
             <>
