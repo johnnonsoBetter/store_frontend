@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Box, Divider, IconButton, makeStyles, Typography} from '@material-ui/core'
 import EditOutlined from '@material-ui/icons/Edit'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
@@ -43,11 +43,24 @@ const useStyles = makeStyles((theme) => ({
 
 function Item(){
     const classes = useStyles()
-    const {itemInfo, items, setItemInfo, toggleItemDrawer, setItems} = useContext(AuditModeContext)
+    const {itemInfo, items, setItemInfo, toggleItemDrawer, setItems, setSnackBarAction} = useContext(AuditModeContext)
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
     const {name, barcode, cost_price, selling_price} = item
     const [confirmationVisible, setConfirmationVisible] = useState(false)
     const [onUpdate, setOnUpdate] = useState(false)
+
+      useEffect(() => {
+
+        return () => {
+            setSnackBarAction({
+                itemName: "",
+                action: "",
+                snackBarOpened: false,
+                taskDone: undefined
+        
+            })
+        }
+    }, [])
     
     const deleteItem = ()=> {
             

@@ -9,7 +9,7 @@ import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 
 function UpdateItem({...props}){
 
-    const {itemInfo, setItemInfo, setItems, items} = useContext(AuditModeContext)
+    const {itemInfo, setItemInfo, setItems, items, snackBarAction, setSnackBarAction} = useContext(AuditModeContext)
     const {toggleUpdate} = props
     const {item, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
@@ -98,7 +98,7 @@ function UpdateItem({...props}){
             console.log(response)
 
             const {item, cost_price_trackers, selling_price_trackers} = response.data
-
+            
             let updateItem = Object.assign({}, itemInfo)
             updateItem['item'] = item
             updateItem['cost_price_trackers'] = cost_price_trackers
@@ -106,17 +106,32 @@ function UpdateItem({...props}){
 
 
             const new_items = items.map((this_item) => (id === this_item.id) ? item : this_item)
-
+            const newSnackBarAction = Object.assign({}, snackBarAction)
+            newSnackBarAction['itemName'] = item['name']
+            newSnackBarAction['action'] = "Updated"
+            newSnackBarAction['snackBarOpened'] = true
+            newSnackBarAction['taskDone'] = true
             
             console.log(new_items)
             setItems(new_items)
+
+            console.log(newSnackBarAction)
             setItemInfo(updateItem)
             toggleUpdate()
+            setSnackBarAction(newSnackBarAction)
+            
 
         
         }).catch(err => {
 
             console.log(err)
+            const newSnackBarAction = Object.assign({}, snackBarAction)
+            newSnackBarAction['itemName'] = item['name']
+            newSnackBarAction['action'] = "Updated"
+            newSnackBarAction['snackBarOpened'] = true
+            newSnackBarAction['taskDone'] = false
+
+            setSnackBarAction(newSnackBarAction)
         })
     }
     

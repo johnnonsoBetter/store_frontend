@@ -7,6 +7,7 @@ import CreateItem from './CreateItem';
 import NoAuditMode from './no_audit_mode/NoAuditMode' 
 import ClearIcon from '@material-ui/icons/Clear';
 import Item from './Item';
+import ItemActionSnackbar from './ItemActionSnackbar';
 
 
 const value = (input) => (input === "true" ? true : false) 
@@ -71,6 +72,13 @@ function AuditItem(){
     const [itemDrawerOpened, setItemDrawerOpened] = useState(false)
     const matches = useMediaQuery('(min-width:600px)')
     const [itemInfo, setItemInfo] = useState(null)
+    const [snackBarAction, setSnackBarAction] = useState({
+        itemName: "",
+        action: "",
+        snackBarOpened: false,
+        taskDone: false
+
+    })
 
     const handleSearchToggle = () => {
 
@@ -88,6 +96,9 @@ function AuditItem(){
         setItemDrawerOpened(!itemDrawerOpened)
     }
 
+   
+
+   
 
     return (
             <div>
@@ -99,9 +110,11 @@ function AuditItem(){
                             searchValue,
                             itemInfo,
                             itemDrawerOpened,
+                            snackBarAction,
                             toggleItemDrawer: ()=> {toggleItemDrawer()},
                             setItemInfo: itemInfo => setItemInfo(itemInfo),
                             setItems: items => setItems(items),
+                            setSnackBarAction: snackBarAction => setSnackBarAction(snackBarAction),
                             setTotalItems: totalItems => setTotalItems(totalItems),
                             setSearchValue: searchValue => setSearchValue(searchValue)
                         }
@@ -176,6 +189,7 @@ function AuditItem(){
                     </Drawer>
                     {auditMode ? <AuditMode /> :  <NoAuditMode />  }
                   </main>
+                  <ItemActionSnackbar />
        
                 </AuditModeContextProvider>
             </div>
