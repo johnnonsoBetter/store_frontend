@@ -179,7 +179,7 @@ import AuditItem from './dashboard/contents/audit_item/AuditItem'
     },
 
     infoText: {
-      fontSize: "1rem",
+      
       paddingRight: "3px",
       paddingLeft: "3px",
       borderRadius: "20%",

@@ -1,4 +1,4 @@
-import { Typography, Grid, Box, Card, Paper, makeStyles, CardContent, CardHeader, ButtonBase} from "@material-ui/core";
+import { Typography, Grid, Box, Card, makeStyles, CardContent, ButtonBase} from "@material-ui/core";
 import axios from "axios";
 import React, { useContext } from "react";
 import AmountFormatter from '../../../../../helpers/AmountFormater'
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Item(props){
 
-    const {name, id, cost_price, selling_price} = props
+    const {name, cost_price, selling_price} = props
     const {setItemInfo, toggleItemDrawer} = useContext(AuditModeContext)
     const classes = useStyles()
 

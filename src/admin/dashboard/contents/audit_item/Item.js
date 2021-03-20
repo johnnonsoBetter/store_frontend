@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import {Box, Button, Collapse, Divider, Grow, IconButton, makeStyles, Typography} from '@material-ui/core'
+import {Box, Divider, IconButton, makeStyles, Typography} from '@material-ui/core'
 import EditOutlined from '@material-ui/icons/Edit'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { CloseOutlined, DeleteOutline } from '@material-ui/icons'
@@ -45,13 +45,12 @@ function Item(){
     const classes = useStyles()
     const {itemInfo, items, setItemInfo, toggleItemDrawer, setItems} = useContext(AuditModeContext)
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
-    const {name, barcode, cost_price, selling_price, id} = item
+    const {name, barcode, cost_price, selling_price} = item
     const [confirmationVisible, setConfirmationVisible] = useState(false)
     const [onUpdate, setOnUpdate] = useState(false)
     
     const deleteItem = ()=> {
-      
-      
+            
         axios({
             method: "DELETE",
             url: `http://localhost:3001/api/v1/real_items/name`,
@@ -59,7 +58,7 @@ function Item(){
             params: {item_name: name}
         }).then(response => {
            
-            const new_items = items.filter(item => item.name != name)
+            const new_items = items.filter(item => item.name !== name)
             setItems(new_items)
             toggleItemDrawer()
             
@@ -84,7 +83,7 @@ function Item(){
                 deleteConfirmation = {classes.deleteConfirmation}
                 deleteItem = {deleteItem}
             
-                />
+            />
 
             :  
 

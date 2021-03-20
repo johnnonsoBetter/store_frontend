@@ -5,7 +5,7 @@ import axios from 'axios'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import MuiAlert from '@material-ui/lab/Alert'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
-import { SettingsRemoteSharp } from '@material-ui/icons'
+
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -171,7 +171,7 @@ function CreateItem(){
     }
 
 
-    const categoryName = categories.find((cat) => cat.id == item['real_item']['category_id']).name
+    const categoryName = categories.find((cat) => cat.id === item['real_item']['category_id']).name
     const [drawerOpened, setDrawerOpened] = useState(false)
     const [snackBarOpened, setSnackBarOpened] = useState(false)
     const [itemCreated, setItemCreated] = useState(false)

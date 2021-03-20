@@ -21,7 +21,7 @@ function Home(){
             headers: JSON.parse(localStorage.getItem('admin'))
         }).then(response => {
             const {data} = response
-            const {change_balance, total_debts_amount, transaction_activity, next_day_change, inventory_manager} = data
+            const {change_balance, transaction_activity, next_day_change, inventory_manager} = data
             setDashboardData(data)
             setTimeout(() => {
                 setBackdropState(false)
@@ -110,7 +110,7 @@ function Home(){
         
 
         <>  
-              { backdropState == true ? 
+              { backdropState === true ? 
                 <Backdrop className={backdrop} open={backdropState} >
                   <CircularProgress color="inherit" />
                 </Backdrop>

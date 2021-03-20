@@ -1,5 +1,5 @@
-import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, Typography, useMediaQuery, Drawer} from '@material-ui/core'
-import { EditOutlined, SearchOutlined } from '@material-ui/icons';
+import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, useMediaQuery, Drawer} from '@material-ui/core'
+import { SearchOutlined } from '@material-ui/icons';
 import React, { useState } from 'react'
 import {AuditModeContextProvider} from '../../../../context/audit_item/AuditModeContext';
 import AuditMode from './audit_mode/AuditMode'

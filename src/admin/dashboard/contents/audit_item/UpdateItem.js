@@ -1,4 +1,4 @@
-import { Box, Select, IconButton, Slide, Typography, TextField, MenuItem, OutlinedInput, InputLabel, InputAdornment, Button} from '@material-ui/core'
+import { Box, IconButton, Slide, Typography, TextField, MenuItem, OutlinedInput, InputLabel, InputAdornment, Button} from '@material-ui/core'
 import { ArrowBack } from '@material-ui/icons'
 import SaveIcon from '@material-ui/icons/Save'
 import axios from 'axios'
@@ -11,11 +11,11 @@ function UpdateItem({...props}){
 
     const {itemInfo, setItemInfo, setItems, items} = useContext(AuditModeContext)
     const {toggleUpdate} = props
-    const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
+    const {item, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
 
-    const [categoryId, setCategoryId] = useState(0)
-    const [categoryName, setCategoryName] = useState(category['name'])
+    const [ setCategoryId] = useState(0)
+    const [setCategoryName] = useState(category['name'])
     
     const [updateItem, setItem] = useState({
         real_item: {
@@ -26,8 +26,6 @@ function UpdateItem({...props}){
             category_id: 1,
         }
     })
-
-    
 
      useEffect(()=> {
         setItem({
@@ -65,12 +63,9 @@ function UpdateItem({...props}){
             break;
             case "category": 
 
-                
-                
                 const category = categories.find(category => category.id === e.target.value)
                 console.log(category)
-                console.log("this is the category name ", categoryName)
-                console.log("this is the category id" , categoryId)
+               
                 setCategoryId(category.id)
                 setCategoryName(category.name)
                 new_item['real_item']['category_id'] = category.id
@@ -108,19 +103,13 @@ function UpdateItem({...props}){
             updateItem['item'] = item
             updateItem['cost_price_trackers'] = cost_price_trackers
             updateItem['selling_price_trackers'] = selling_price_trackers
-            // const new_items = items.map((item) => {
-            //     if (id === item.id)
-            //         return the_item
-            //     else
-            //         return item
-                    
-            // })
+
+
+            const new_items = items.map((this_item) => (id === this_item.id) ? item : this_item)
 
             
-
-            
-            console.log(response)
-             //setItems(new_items)
+            console.log(new_items)
+            setItems(new_items)
             setItemInfo(updateItem)
             toggleUpdate()
 
@@ -150,9 +139,6 @@ function UpdateItem({...props}){
     return (
         <Slide direction="left" in={true}  > 
             <Box >
-
-                
-
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography variant="h6">Update Item</Typography>
                     <IconButton onClick={toggleUpdate}>
@@ -250,7 +236,9 @@ function UpdateItem({...props}){
 
 
             </Box>
+
         </Slide>
+        
     )
 
 }

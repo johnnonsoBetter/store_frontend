@@ -1,4 +1,4 @@
-import { Box,  TextField, Badge, Grid, CircularProgress, Container, makeStyles} from '@material-ui/core'
+import { Box, CircularProgress, Container, makeStyles} from '@material-ui/core'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuditModeContext from '../../../../../context/audit_item/AuditModeContext'
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 function AuditMode(){
 
     const [loading, setLoading] = useState(true)
-    const {setTotalItems, setItems, items, totalItems, searchValue, setSearchValue} = useContext(AuditModeContext)
+    const {setTotalItems, setItems, setSearchValue} = useContext(AuditModeContext)
     const classes = useStyles()
     
 

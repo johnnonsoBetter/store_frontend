@@ -9,7 +9,7 @@ import axios from 'axios'
 function SelectStore(){
   const [store, setStore] = React.useState('upright');
   const {selectStore, storeIcon, backdrop} = useContext(AdminDashboardContext).styles
-  const {changeStoreName, setDashboardData, setGeneralStoreInfos, setTransactionReviewInfos, setInventoryManagerInfos} = useContext(AdminDashboardContext).store
+  const {changeStoreName, setDashboardData, setGeneralStoreInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
   const [backdropState, setBackdropState] = React.useState(false);
 
   
@@ -22,7 +22,7 @@ function SelectStore(){
         headers: JSON.parse(localStorage.getItem('admin'))
       }).then(response => {
           const {data} = response
-          const {change_balance, next_day_change, total_debts_amount, transaction_activity, inventory_manager} = data
+          const {change_balance, next_day_change, transaction_activity, inventory_manager} = data
       
           
             setDashboardData(data)
