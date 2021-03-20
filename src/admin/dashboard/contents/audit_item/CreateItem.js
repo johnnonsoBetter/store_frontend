@@ -15,7 +15,9 @@ function Alert(props) {
 function CreateItem(){
 
     const matches = useMediaQuery('(min-width:600px)')
-    const {items, setItems, setTotalItems} = useContext(AuditModeContext)
+    const {items, setItems, setTotalItems, setSnackBarAction} = useContext(AuditModeContext)
+    const {itemName, action, snackBarOpened, snackBarAction, taskDone} = useContext(AuditModeContext).snackBarAction
+
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -104,7 +106,7 @@ function CreateItem(){
 
     const handleSubmit = (e)=> {
         e.preventDefault()
-       
+        const newSnackBarAction = Object.assign({}, snackBarAction)
         axios({
             method: "POST",
             url: 'http://localhost:3001/api/v1/real_items',
@@ -114,33 +116,55 @@ function CreateItem(){
         }).then(response => {
             
             const new_item = response.data
+            
+            newSnackBarAction['itemName'] = item['real_item'].name
+            newSnackBarAction['action'] = "Created"
+            newSnackBarAction['snackBarOpened'] = true
+            newSnackBarAction['taskDone'] = true
            
             let new_items = [...items, new_item['item']]
             let totalItems = new_items.length
-            setSnackBarOpened(true)
-            setItemCreated(true)
-            setItemName(item['real_item'].name)
+            
+            // setItemName(item['real_item'].name)
             setItems(new_items)
             setTotalItems(totalItems)
+            setSnackBarAction(newSnackBarAction)
+            setItem({
+                real_item: {
+                    name: "",
+                    cost_price: 0,
+                    selling_price: 0,
+                    barcode: "",
+                    category_id: 1,
+                },
+                create_item: {
+                    upright: {
+                        name: "upright",
+                        quantity: 0
+                    }, 
+                    dechoice: {
+                        name: "dechoice",
+                        quantity: 0
+                    },
+                    warehouse: {
+                        quantity: 0
+                    }
+                },
+            })
             
            
             
         }).catch(err => {
-            console.log(item)
-            setSnackBarOpened(true)
-            setItemCreated(false)
-            setItemName(item['real_item'].name)
+            newSnackBarAction['itemName'] = item['real_item'].name
+            newSnackBarAction['action'] = "Created"
+            newSnackBarAction['snackBarOpened'] = true
+            newSnackBarAction['taskDone'] = false
+            setSnackBarAction(newSnackBarAction)
+            
         })
     }
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setSnackBarOpened(false);
-    };
-
+  
     const clearItemState = () => {
         let cleared_item = Object.assign({}, item)
 
@@ -173,10 +197,7 @@ function CreateItem(){
 
     const categoryName = categories.find((cat) => cat.id === item['real_item']['category_id']).name
     const [drawerOpened, setDrawerOpened] = useState(false)
-    const [snackBarOpened, setSnackBarOpened] = useState(false)
-    const [itemCreated, setItemCreated] = useState(false)
-    const [itemName, setItemName] = useState('')
-
+    
 
     return (
         <>
@@ -192,13 +213,6 @@ function CreateItem(){
                 }>
                 <AddShoppingCartIcon style={{color: "hsl(31deg 90% 44% / 96%)"}}/>
             </IconButton>
-
-            <Snackbar open={snackBarOpened} onClose={handleClose}  autoHideDuration={3000} >
-                
-                {
-                    itemCreated ? <Alert severity="success" onClose={handleClose} > {itemName } Successfully created </Alert> :  <Alert severity="error" onClose={handleClose}> {itemName} Failed To Be Created! </Alert> 
-                }
-            </Snackbar>
 
         <Drawer  p={2} anchor="right" open={drawerOpened} >
                 
