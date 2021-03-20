@@ -102,23 +102,27 @@ function UpdateItem({...props}){
         }).then(response => {
             console.log(response)
 
-            const {the_item} = response.data
+            const {item, cost_price_trackers, selling_price_trackers} = response.data
 
             let updateItem = Object.assign({}, itemInfo)
             updateItem['item'] = item
-            const new_items = items.map((item) => {
-                if (id === item.id)
-                    return the_item
-                else
-                    return item
+            updateItem['cost_price_trackers'] = cost_price_trackers
+            updateItem['selling_price_trackers'] = selling_price_trackers
+            // const new_items = items.map((item) => {
+            //     if (id === item.id)
+            //         return the_item
+            //     else
+            //         return item
                     
-            })
+            // })
 
             
 
-            console.log(new_items)
-             setItems(new_items)
+            
+            console.log(response)
+             //setItems(new_items)
             setItemInfo(updateItem)
+            toggleUpdate()
 
         
         }).catch(err => {
