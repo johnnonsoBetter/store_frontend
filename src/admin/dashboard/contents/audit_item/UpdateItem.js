@@ -86,7 +86,7 @@ function UpdateItem({...props}){
     const handleSubmit = (e) => {
         e.preventDefault()
 
-
+        const newSnackBarAction = Object.assign({}, snackBarAction)
         axios({
             method: "PUT",
             url: `http://localhost:3001/api/v1/real_items/name`,
@@ -106,7 +106,7 @@ function UpdateItem({...props}){
 
 
             const new_items = items.map((this_item) => (id === this_item.id) ? item : this_item)
-            const newSnackBarAction = Object.assign({}, snackBarAction)
+           
             newSnackBarAction['itemName'] = item['name']
             newSnackBarAction['action'] = "Updated"
             newSnackBarAction['snackBarOpened'] = true
@@ -125,7 +125,7 @@ function UpdateItem({...props}){
         }).catch(err => {
 
             console.log(err)
-            const newSnackBarAction = Object.assign({}, snackBarAction)
+           
             newSnackBarAction['itemName'] = item['name']
             newSnackBarAction['action'] = "Updated"
             newSnackBarAction['snackBarOpened'] = true

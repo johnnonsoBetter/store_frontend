@@ -44,26 +44,16 @@ const useStyles = makeStyles((theme) => ({
 function Item(){
     const classes = useStyles()
     const {itemInfo, items, setItemInfo, toggleItemDrawer, setItems, setSnackBarAction} = useContext(AuditModeContext)
+    const {snackBarAction} = useContext(AuditModeContext).snackBarAction
     const {item, cost_price_trackers, selling_price_trackers, category} = itemInfo
     const {name, barcode, cost_price, selling_price} = item
     const [confirmationVisible, setConfirmationVisible] = useState(false)
     const [onUpdate, setOnUpdate] = useState(false)
 
-      useEffect(() => {
-
-        return () => {
-            setSnackBarAction({
-                itemName: "",
-                action: "",
-                snackBarOpened: false,
-                taskDone: undefined
-        
-            })
-        }
-    }, [])
+    
     
     const deleteItem = ()=> {
-            
+        const newSnackBarAction = Object.assign({}, snackBarAction)
         axios({
             method: "DELETE",
             url: `http://localhost:3001/api/v1/real_items/name`,
@@ -71,12 +61,25 @@ function Item(){
             params: {item_name: name}
         }).then(response => {
            
+           
+            newSnackBarAction['itemName'] = name
+            newSnackBarAction['action'] = "Deleted"
+            newSnackBarAction['snackBarOpened'] = true
+            newSnackBarAction['taskDone'] = true
+            
             const new_items = items.filter(item => item.name !== name)
             setItems(new_items)
+            setSnackBarAction(newSnackBarAction)
             toggleItemDrawer()
+
             
         }).catch(err => {
-            console.log(err)
+            newSnackBarAction['itemName'] = name
+            newSnackBarAction['action'] = "Deleted"
+            newSnackBarAction['snackBarOpened'] = true
+            newSnackBarAction['taskDone'] = false
+
+            setSnackBarAction(newSnackBarAction)
         })
     }
 
