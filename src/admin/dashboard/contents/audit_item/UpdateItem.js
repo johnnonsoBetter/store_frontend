@@ -9,7 +9,7 @@ import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 
 function UpdateItem({...props}){
 
-    const {itemInfo, setItemInfo, setItems, items, snackBarAction, setSnackBarAction} = useContext(AuditModeContext)
+    const {itemInfo, setItemInfo, setItems, items, snackBarAction, setSnackBarAction, categories} = useContext(AuditModeContext)
     const {toggleUpdate} = props
     const {item, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
@@ -63,11 +63,7 @@ function UpdateItem({...props}){
             break;
             case "category": 
 
-                const category = categories.find(category => category.id === e.target.value)
-                console.log(category)
-               
-                setCategoryId(category.id)
-                setCategoryName(category.name)
+                const category = categories.find(category => category.id === e.target.value)            
                 new_item['real_item']['category_id'] = category.id
             break;
           
@@ -97,13 +93,14 @@ function UpdateItem({...props}){
         }).then(response => {
             console.log(response)
 
-            const {item, cost_price_trackers, selling_price_trackers} = response.data
+            const {item, cost_price_trackers, selling_price_trackers, category} = response.data
             
             let updateItem = Object.assign({}, itemInfo)
             updateItem['item'] = item
             updateItem['cost_price_trackers'] = cost_price_trackers
             updateItem['selling_price_trackers'] = selling_price_trackers
-
+            updateItem['category'] = category
+            console.log(response)
 
             const new_items = items.map((this_item) => (id === this_item.id) ? item : this_item)
            
@@ -136,20 +133,7 @@ function UpdateItem({...props}){
     }
     
 
-    const categories = [
-        {
-            id: 1,
-            name: "Beverages"
-        },
-        {
-            id: 2,
-            name: "Hair Products"
-        },
-        {
-            id: 3,
-            name: "Hot Drinks And Wine"
-        }
-    ]
+  
 
     return (
         <Slide direction="left" in={true}  > 

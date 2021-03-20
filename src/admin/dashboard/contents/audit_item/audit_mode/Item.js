@@ -48,12 +48,14 @@ function Item(props){
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
             
             
+            
            // setItemName()
            setItemInfo({
                item,
                cost_price_trackers,
                selling_price_trackers,
                category,
+               
            })
             
         }).catch(err => {

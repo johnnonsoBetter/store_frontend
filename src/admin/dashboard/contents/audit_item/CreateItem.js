@@ -15,8 +15,8 @@ function Alert(props) {
 function CreateItem(){
 
     const matches = useMediaQuery('(min-width:600px)')
-    const {items, setItems, setTotalItems, setSnackBarAction} = useContext(AuditModeContext)
-    const {itemName, action, snackBarOpened, snackBarAction, taskDone} = useContext(AuditModeContext).snackBarAction
+    const {items, setItems, setTotalItems, setSnackBarAction, categories} = useContext(AuditModeContext)
+    const {itemName, snackBarAction} = useContext(AuditModeContext).snackBarAction
 
 
     const handleChange = (e) => {
@@ -63,22 +63,6 @@ function CreateItem(){
     }
 
 
-    
-
-    const categories = [
-        {
-            id: 1,
-            name: "Beverages"
-        },
-        {
-            id: 2,
-            name: "Hair Products"
-        },
-        {
-            id: 3,
-            name: "Hot Drinks And Wine"
-        }
-    ]
 
     const [item, setItem] = useState({
         real_item: {
@@ -194,8 +178,6 @@ function CreateItem(){
 
     }
 
-
-    const categoryName = categories.find((cat) => cat.id === item['real_item']['category_id']).name
     const [drawerOpened, setDrawerOpened] = useState(false)
     
 
@@ -227,9 +209,9 @@ function CreateItem(){
                     </Box>
                     <form onSubmit={handleSubmit}  noValidate autoComplete="off">
                      
-                        <Box display="flex" m={1} justifyContent="center">
-                            <Box m={1}> 
-                                <TextField id="outlined-basic" name="name" label="Name" variant="outlined" onChange={handleChange} value={item['real_item'].name}/>
+                        <Box display="flex"  m={1} justifyContent="center">
+                            <Box m={1} > 
+                                <TextField  id="outlined-basic" name="name" label="Name" variant="outlined" onChange={handleChange} value={item['real_item'].name}/>
                             </Box>
 
                             <Box m={1}>
@@ -280,7 +262,7 @@ function CreateItem(){
                                     select
                                     labelWidth={70}
                                     label="Category"
-                                    value={categoryName}
+                                    
                                     name="category"
                                     onChange={handleChange}
                                     variant="outlined"
@@ -291,6 +273,7 @@ function CreateItem(){
                                         </MenuItem>
                                     
                                     ))}
+                                    
                                 </TextField>
 
                                 

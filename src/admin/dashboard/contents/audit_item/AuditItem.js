@@ -1,6 +1,6 @@
 import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, useMediaQuery, Drawer} from '@material-ui/core'
 import { SearchOutlined } from '@material-ui/icons';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {AuditModeContextProvider} from '../../../../context/audit_item/AuditModeContext';
 import AuditMode from './audit_mode/AuditMode'
 import CreateItem from './CreateItem';
@@ -8,6 +8,7 @@ import NoAuditMode from './no_audit_mode/NoAuditMode'
 import ClearIcon from '@material-ui/icons/Clear';
 import Item from './Item';
 import ItemActionSnackbar from './ItemActionSnackbar';
+import axios from 'axios';
 
 
 const value = (input) => (input === "true" ? true : false) 
@@ -72,6 +73,7 @@ function AuditItem(){
     const [itemDrawerOpened, setItemDrawerOpened] = useState(false)
     const matches = useMediaQuery('(min-width:600px)')
     const [itemInfo, setItemInfo] = useState(null)
+    const [categories, setCategories] = useState([])
     const [snackBarAction, setSnackBarAction] = useState({
         itemName: "",
         action: "",
@@ -96,6 +98,31 @@ function AuditItem(){
         setItemDrawerOpened(!itemDrawerOpened)
     }
 
+    
+    useEffect(()=> {
+
+        axios({
+            method: "GET",
+            url: 'http://localhost:3001/api/v1/categories',
+            headers: JSON.parse(localStorage.admin),
+        }).then(response => {
+            console.log(response.data)
+            const {categories} = response.data
+            console.log(categories)
+
+            setCategories(categories)
+        }).catch(err => {
+
+
+        })
+
+        return ()=> {
+            setCategories([])
+        }
+
+
+    },[])
+
    
 
    
@@ -111,6 +138,8 @@ function AuditItem(){
                             itemInfo,
                             itemDrawerOpened,
                             snackBarAction,
+                            categories,
+                            setCategories,
                             toggleItemDrawer: ()=> {toggleItemDrawer()},
                             setItemInfo: itemInfo => setItemInfo(itemInfo),
                             setItems: items => setItems(items),
