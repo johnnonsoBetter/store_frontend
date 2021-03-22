@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState} from 'react'
 import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
-import {Link} from 'react-router-dom'
+import {Link, useRouteMatch} from 'react-router-dom'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
 import axios from 'axios'
@@ -9,7 +9,7 @@ import AmountFormater from '../../../../helpers/AmountFormater'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
-    const {infoLinksContainer, infoLinks, backdrop, storeBaseInfoHeader, storeBaseInfo, textHeight, storeBaseDetail} = useContext(AdminDashboardContext).styles
+    const {infoLinksContainer, infoLinks, theLink, backdrop, storeBaseInfoHeader, storeBaseInfo, textHeight, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, changeStoreName, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
@@ -102,6 +102,12 @@ function Home(){
         }
     }, [])
     
+
+    const routes = useRouteMatch()
+    console.log(routes)
+
+    const url = routes['url']
+  
     
     
 
@@ -161,7 +167,7 @@ function Home(){
                     </Grid>
 
                     <Grid item xs={12} sm={6} lg={4}>
-                    <Link>
+                    <Link className={theLink} to={`${url}/${storeName}/transaction_activity`}>
                         <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
@@ -177,7 +183,7 @@ function Home(){
 
 
                     <Grid item xs={12} sm={6} lg={4}>
-                        <Link>              
+                        <Link className={theLink} to={`${url}/${storeName}/inventory_activity`}>              
                             <Box>
                                 <Card className={infoLinks}>
                                     <CardContent>
@@ -194,8 +200,8 @@ function Home(){
                     </Grid>
 
 
-                    <Grid item xs={12} sm={6} lg={4}>
-                        <Link> 
+                    <Grid item xs={12} sm={6} lg={4} >
+                        <Link className={theLink} to={`${url}/${storeName}/statistics_report`}> 
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
@@ -212,7 +218,7 @@ function Home(){
 
 
                     <Grid item xs={12} sm={6} lg={4}>
-                        <Link> 
+                        <Link className={theLink} to={`${url}/${storeName}/items`}> 
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>
@@ -230,9 +236,9 @@ function Home(){
 
 
                     <Grid item xs={12} sm={6} lg={4}>
-                        <Link> 
+                        <Link className={theLink} to={`${url}/${storeName}/cashiers`}> 
                             <Box>
-                            <Card className={infoLinks}>
+                            <Card className={infoLinks} >
                                 <CardContent>
                                 <img src="static/images/cashier-machine.png" />
                                 <Typography className={textHeight} > Cashiers </Typography>
@@ -247,7 +253,7 @@ function Home(){
 
 
                     <Grid item xs={12} sm={6} lg={4}>
-                        <Link> 
+                        <Link className={theLink} to={`${url}/${storeName}/settings`}> 
                             <Box>
                             <Card className={infoLinks}>
                                 <CardContent>

@@ -209,6 +209,9 @@ import AuditItem from './dashboard/contents/audit_item/AuditItem'
     textHeight: {
       lineHeight: "2",
       letterSpacing: "2px"
+    },
+    theLink: {
+      textDecoration: "none"
     }
 
   }));
@@ -327,7 +330,30 @@ function AdminPage(props){
                       <div className={classes.toolbar} />
                   <Switch>
 
-                   
+                      <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity" >
+                          <h1> Transaction Activity</h1>
+                      </Route>
+
+                      <Route exact={true} path="/admin_dashboard/:storeName/inventory_activity" >
+                          <h1> Inventory Activity </h1>
+                      </Route>
+
+                      <Route exact={true} path="/admin_dashboard/:storeName/statistics_report" >
+                          <h1>  Statistics Reports</h1>
+                      </Route>
+
+                      <Route exact={true} path="/admin_dashboard/:storeName/items" >
+                          <h1> Items </h1>
+                      </Route>
+                      
+                      <Route exact={true} path="/admin_dashboard/:storeName/cashiers" >
+                          <h1>  Cashiers </h1>
+                      </Route>
+
+                      <Route exact={true} path="/admin_dashboard/:storeName/settings" >
+                          <h1> Settings  </h1>
+                      </Route>
+
                       <Route exact={true} path="/admin_dashboard/audit_item" >
                           <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
                           <AuditItem />
