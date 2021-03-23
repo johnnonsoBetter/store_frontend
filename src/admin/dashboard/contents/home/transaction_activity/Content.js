@@ -15,8 +15,11 @@ const useStyles = makeStyles((theme) => ({
          display: "flex",
         // flexWrap: "nowrap",
          overflowX: "auto",
-         overflowY: "hidden",
-         whiteSpace: "nowrap"
+         marginTop: theme.spacing(3),
+         whiteSpace: "nowrap",
+         [theme.breakpoints.up('lg')]: {
+            width: "70vw"
+         },
         // scrollBehavior: "smooth"
     },
     contItem: {
@@ -29,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
        display: "inline-block",
        marginRight: theme.spacing(2),
        marginLeft: theme.spacing(2),
+       
+
+
 
        
     }, 
@@ -63,22 +69,24 @@ function Content(){
     const matches = useMediaQuery('(max-width:1286px)')
     const [type, setType] = useState("Sales")
 
+    function updateSize() {
+      setWidth(window.innerWidth);
+      console.log("resizing it ", window.innerWidth)
+    }
+
     useEffect(()=> {
-       setWidth(window.innerWidth)
+       updateSize()
        console.log("i have made the width available")
-    }, )
+    }, [])
 
 
      useLayoutEffect(()=> {
-      function updateSize() {
-         setWidth(window.innerWidth);
-         console.log("resizing it ")
-       }
+      
        window.addEventListener('resize', updateSize);
        updateSize();
        
 
-       return () => window.removeEventListener('resize', updateSize);
+        return () => window.removeEventListener('resize', updateSize);
     }, [])
 
     const classes = useStyles()
@@ -87,26 +95,19 @@ function Content(){
          <>
    
            <Container className={classes.root}>
-               <Box width ={matches ? (width - 40): "100%"}  className={classes.cont} style={{flexWrap: "nowrap"}}>
+               <Box width="90vw" className={classes.cont}>
                   <ContentNav />
+                 
                </Box>
 
-               <Box marginTop={4}>
-
-                  <Box>
-                     <Overview />
-
-                  </Box>
-
-                  {/* <Box textAlign="left">
-                     <Typography variant="h6"> {type} </Typography>
-                  </Box> */}
+               <Box marginTop={4} >
+                  <Overview width={width}/>
                  
                </Box>
 
            </Container>
  
-      </>
+         </>
 
 
       // Sales

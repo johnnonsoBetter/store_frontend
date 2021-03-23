@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { DateTime } from "luxon";
+import { Box } from "@material-ui/core";
 
 
 class PastDayPreview extends Component {
@@ -35,11 +36,10 @@ class PastDayPreview extends Component {
     //     return `${date.monthShort} ${date.day}`
     //   })
 
-      const dataCategories = this.props.previews.map(data => data.amount)
+    //   const dataCategories = this.props.previews.map(data => data.amount)
    
 
-      console.log(dateCategories)
-      console.log(dataCategories)
+    
 
       this.setState({
         options: {
@@ -47,13 +47,13 @@ class PastDayPreview extends Component {
             id: "basic-bar"
           },
           xaxis: {
-            categories: dateCategories
+            categories: this.props.previews
           }
         },
         series: [
           {
             name: "series-1",
-            data: dataCategories
+            data: this.props.previews
           }
         ]
       }
@@ -64,18 +64,22 @@ class PastDayPreview extends Component {
   
     render() {
       return (
-        <div className="app">
-          <div className="row">
-            <div className="mixed-chart">
-              <Chart
-                options={this.state.options}
-                series={this.state.series}
-                type="bar"
-                width="100%"
-              />
+        <Box>
+            <div className="app">
+            <div className="row">
+                <div className="mixed-chart">
+                <Chart
+                    options={this.state.options}
+                    series={this.state.series}
+                    type="bar"
+                    width="100%"
+                />
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
+
+        </Box>
+       
       );
     }
   }
