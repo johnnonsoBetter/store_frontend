@@ -82,13 +82,12 @@ function FixedAppBar(props){
           
 
               {
-                location.pathname === "/admin_dashboard" ? 
+                
                   <div className={appBarPickerContainer}>
-                  <DatePicker />
+                  
                   <SelectStore />
                 
-                  </div> :
-                  null
+                  </div> 
               }
               
               

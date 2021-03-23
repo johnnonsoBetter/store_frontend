@@ -91,8 +91,7 @@ function UpdateItem({...props}){
             params: {item_name: name}
             
         }).then(response => {
-            console.log(response)
-
+            
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
             
             let updateItem = Object.assign({}, itemInfo)

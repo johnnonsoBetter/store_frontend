@@ -1,6 +1,6 @@
 import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, useMediaQuery, Drawer} from '@material-ui/core'
 import { SearchOutlined } from '@material-ui/icons';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useLayoutEffect } from 'react'
 import {AuditModeContextProvider} from '../../../../context/audit_item/AuditModeContext';
 import AuditMode from './audit_mode/AuditMode'
 import CreateItem from './CreateItem';
@@ -12,6 +12,21 @@ import axios from 'axios';
 
 
 const value = (input) => (input === "true" ? true : false) 
+
+
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
+
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -59,6 +74,9 @@ function AuditItem(){
 
     const storedMode = localStorage.getItem('audit')
     const classes = useStyles()
+    const [width, height] = useWindowSize()
+
+    console.log(width)
    
     
     if (storedMode === null) {
@@ -71,7 +89,7 @@ function AuditItem(){
     const [searchValue, setSearchValue] = useState("")
     const [showSearch, setShowSearch] = useState(false)
     const [itemDrawerOpened, setItemDrawerOpened] = useState(false)
-    const matches = useMediaQuery('(min-width:600px)')
+    const matches = useMediaQuery('(max-width:600px)')
     const [itemInfo, setItemInfo] = useState(null)
     const [categories, setCategories] = useState([])
     const [snackBarAction, setSnackBarAction] = useState({
@@ -211,7 +229,7 @@ function AuditItem(){
                         setItemInfo(null)
                         toggleItemDrawer()
                     }}>
-                        <Box width={matches ? 350 : "100%"}    >
+                        <Box width = {matches ? width : "100%"}   >
                           {itemInfo ? <Item /> : null}
 
                         </Box>

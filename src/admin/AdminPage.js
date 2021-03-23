@@ -8,6 +8,7 @@ import DrawerLinkList from './dashboard/DrawerLinkList'
 import Home from './dashboard/contents/home/Home'
 import FixedAppBar from './dashboard/FixedAppBar'
 import AuditItem from './dashboard/contents/audit_item/AuditItem'
+import Content from './dashboard/contents/home/transaction_activity/Content'
 
 
   const drawerWidth = 240;
@@ -330,8 +331,9 @@ function AdminPage(props){
                       <div className={classes.toolbar} />
                   <Switch>
 
-                      <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity" >
-                          <h1> Transaction Activity</h1>
+                      <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity/" >
+                      
+                         <Content />
                       </Route>
 
                       <Route exact={true} path="/admin_dashboard/:storeName/inventory_activity" >

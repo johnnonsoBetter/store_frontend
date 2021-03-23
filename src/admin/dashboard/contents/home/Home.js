@@ -167,17 +167,17 @@ function Home(){
                     </Grid>
 
                     <Grid item xs={12} sm={6} lg={4}>
-                    <Link className={theLink} to={`${url}/${storeName}/transaction_activity`}>
-                        <Box>
-                            <Card className={infoLinks}>
-                                <CardContent>
-                                <img src="static/images/transaction_activity.png" alt="transaction activity"/>
-                                <Typography className={textHeight}> Transaction Activity </Typography>
+                        <Link className={theLink} to={`${url}/${storeName}/transaction_activity/`}>
+                            <Box>
+                                <Card className={infoLinks}>
+                                    <CardContent>
+                                    <img src="static/images/transaction_activity.png" alt="transaction activity"/>
+                                    <Typography className={textHeight}> Transaction Activity </Typography>
 
-                                </CardContent>      
-                            </Card>
-                        </Box>
-                    </Link>
+                                    </CardContent>      
+                                </Card>
+                            </Box>
+                        </Link>
                     
                     </Grid>
 
