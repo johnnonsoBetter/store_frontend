@@ -40,11 +40,11 @@ function Overview(props){
         </AccordionSummary>
         <AccordionDetails >
             <Grid container spacing={4} justify="center">
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12} md={12} lg={6} >
                     <DailyPreview />
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12} md={12} lg={6}>
                     <PastDayPreview previews={previews}/>
                 </Grid>
             </Grid>
