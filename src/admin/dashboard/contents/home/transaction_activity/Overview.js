@@ -26,11 +26,11 @@ function Overview(props){
     const matches = useMediaQuery('(min-width:500px)')
 
     const classes = useStyles();
-    const previews = [900, 2000, 1300, 740]
+    const previews = [900, 200000, 1300, 740]
 
   return (
     <div className={classes.root} >
-      <Accordion >
+      <Accordion style={{backgroundColor: "rgb(0 4 10)"}}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -39,22 +39,12 @@ function Overview(props){
           <Typography className={classes.heading}>Trasanction Analysis</Typography>
         </AccordionSummary>
         <AccordionDetails >
-            {/* <Box display="flex"  >
-                <Box>
-                    
-                </Box>
-                <Box>
+            <Grid container spacing={4} justify="center">
+                <Grid item xs={12} sm={6}>
                     <DailyPreview />
-                </Box>
-               
-
-            </Box> */}
-            <Grid container justify="center">
-                <Grid item xs={12} sm={4}>
-                    <PastDayPreview previews={previews}/>
                 </Grid>
 
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <PastDayPreview previews={previews}/>
                 </Grid>
             </Grid>

@@ -50,6 +50,29 @@ class PastDayPreview extends Component {
             categories: this.props.previews
           }
         },
+        dataLabels: {
+          style: {
+            colors: ['black', '#E91E63', '#9C27B0']
+          }
+        },
+        grid: {
+          row: {
+            colors: ['#F44336', '#E91E63', '#9C27B0']
+          },
+          column: {
+            colors: ['#F44336', '#E91E63', '#9C27B0']
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
+            stops: [0, 90, 100]
+          },
+          colors: ['black']
+        },
         series: [
           {
             name: "series-1",
@@ -64,14 +87,14 @@ class PastDayPreview extends Component {
   
     render() {
       return (
-        <Box>
+        <Box p={4} style={{backgroundImage: "linear-gradient(to right, rgba(255,0,0,0), rgb(54 74 105))", color: "white"}} borderRadius={15}>
             <div className="app">
             <div className="row">
                 <div className="mixed-chart">
                 <Chart
                     options={this.state.options}
                     series={this.state.series}
-                    type="bar"
+                    type="area"
                     width="100%"
                 />
                 </div>

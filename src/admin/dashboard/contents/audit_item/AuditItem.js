@@ -74,10 +74,7 @@ function AuditItem(){
 
     const storedMode = localStorage.getItem('audit')
     const classes = useStyles()
-    const [width, height] = useWindowSize()
-
-    console.log(width)
-   
+    const [width] = useWindowSize()
     
     if (storedMode === null) {
         localStorage.setItem('audit', false)
@@ -224,7 +221,7 @@ function AuditItem(){
 
                   }
                 </AppBar>
-                  <main>
+                  <main className={classes.content}>
                     <Drawer anchor="right" open={itemDrawerOpened} onClose={() => {
                         setItemInfo(null)
                         toggleItemDrawer()

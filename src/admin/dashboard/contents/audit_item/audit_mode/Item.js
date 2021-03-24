@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     itemContainer: {
         minWidth: 270,
        
-        margin: theme.spacing(2),
+       
         backgroundColor: "blue",
         color: "white",
         fontSize: theme.typography.pxToRem(1),

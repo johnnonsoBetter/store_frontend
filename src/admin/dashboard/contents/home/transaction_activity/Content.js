@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Container, makeStyles, Typography, useMediaQuery} from '@material-ui/core'
+import { Box, ButtonBase, Container, makeStyles, useMediaQuery} from '@material-ui/core'
 import {React, useEffect, useLayoutEffect, useState} from 'react'
 import ContentNav from './ContentNav';
 import Overview from './Overview';
@@ -13,14 +13,13 @@ const useStyles = makeStyles((theme) => ({
 
     cont: {
          display: "flex",
-        // flexWrap: "nowrap",
          overflowX: "auto",
          marginTop: theme.spacing(3),
          whiteSpace: "nowrap",
          [theme.breakpoints.up('lg')]: {
             width: "70vw"
          },
-        // scrollBehavior: "smooth"
+
     },
     contItem: {
        backgroundColor: "green",
@@ -32,11 +31,7 @@ const useStyles = makeStyles((theme) => ({
        display: "inline-block",
        marginRight: theme.spacing(2),
        marginLeft: theme.spacing(2),
-       
-
-
-
-       
+   
     }, 
     link: {
        
@@ -46,19 +41,6 @@ const useStyles = makeStyles((theme) => ({
        color: "white"
     }
 }))
-
-function useWindowSize() {
-    const [size, setSize] = useState([0, 0]);
-    useEffect(() => {
-      function updateSize() {
-        setSize([window.innerWidth, window.innerHeight]);
-      }
-      window.addEventListener('resize', updateSize);
-      updateSize();
-      return () => window.removeEventListener('resize', updateSize);
-    }, []);
-    return size;
-  }
 
 
 
