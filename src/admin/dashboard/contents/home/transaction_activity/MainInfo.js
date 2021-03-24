@@ -12,7 +12,7 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales
+                            Sales
                         </Typography>
                         <Typography> 
                         {`₦ ${AmountFormater(total_sales).amount()}`}
@@ -24,7 +24,7 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Expenses
+                           Expenses
                         </Typography>
                         <Typography> 
                         {`₦ ${AmountFormater(total_expenses).amount()}`}
@@ -36,7 +36,7 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Debts
+                           Debts
                         </Typography>
                         <Typography> 
                         {`₦ ${AmountFormater(total_debts).amount()}`}
@@ -48,7 +48,7 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Recovered
+                           Recovered
                         </Typography>
                         <Typography> 
                             {`₦ ${AmountFormater(total_recovered).amount()}`}
@@ -60,7 +60,7 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                           Total Goods Returned
+                          Goods Returned
                         </Typography>
                         <Typography> 
                         {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}
@@ -72,7 +72,7 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Change
+                           Change
                         </Typography>
                         <Typography> 
                         {`₦ ${AmountFormater(total_change).amount()}`}

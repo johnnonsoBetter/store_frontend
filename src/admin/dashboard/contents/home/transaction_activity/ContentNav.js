@@ -1,6 +1,7 @@
-import React from 'react'
-import { Box, ButtonBase, Container, makeStyles, Typography, useMediaQuery} from '@material-ui/core'
-
+import React, { useContext } from 'react'
+import { Box, ButtonBase, makeStyles, Typography, useMediaQuery} from '@material-ui/core'
+import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
+import AmountFormater from '../../../../../helpers/AmountFormater'
 
 const useStyles = makeStyles((theme) => ({
     contItem: {
@@ -29,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 function ContentNav(){
 
     const classes = useStyles()
+    const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
+
 
     return (
 
@@ -40,7 +43,7 @@ function ContentNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> ₦8,000</Typography>
+                        <Typography variant="h6"> {`₦ ${AmountFormater(total_sales).amount()}`} </Typography>
                     </Box>
 
                 </Box>
@@ -57,7 +60,7 @@ function ContentNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> ₦8,000</Typography>
+                        <Typography variant="h6"> {`₦ ${AmountFormater(total_expenses).amount()}`}</Typography>
                     </Box>
 
                 </Box>
@@ -73,7 +76,7 @@ function ContentNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> ₦8,000</Typography>
+                        <Typography variant="h6">{`₦ ${AmountFormater(total_debts).amount()}`}</Typography>
                     </Box>
 
                 </Box>
@@ -88,12 +91,26 @@ function ContentNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> ₦4,000</Typography>
+                        <Typography variant="h6"> {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}</Typography>
                     </Box>
 
                 </Box>
                 
-            </ButtonBase>      
+            </ButtonBase>   
+
+            <ButtonBase style={{backgroundColor: "black"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+                <Box >
+                    <Box textAlign="left" top={20} left={30}  position="absolute">
+                        <Typography variant="h6"> Recovered </Typography>
+                    </Box>
+
+                    <Box textAlign="right" bottom={20} right={30} position="absolute">
+                        <Typography variant="h6"> {`₦ ${AmountFormater(total_recovered).amount()}`}</Typography>
+                    </Box>
+
+                </Box>
+                
+            </ButtonBase>  
         
 
         
@@ -104,7 +121,7 @@ function ContentNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> ₦1,000</Typography>
+                        <Typography variant="h6"> {`₦ ${AmountFormater(total_change).amount()}`}</Typography>
                     </Box>
 
                 </Box>
