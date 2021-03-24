@@ -27,7 +27,7 @@ class PriceTrackerChart extends Component {
 
     componentDidMount(){
      
-      console.log( DateTime.fromISO(this.props.trackers[0].created_at) )  
+     
 
       const dateCategories = this.props.trackers.map(track => {
         let date = DateTime.fromISO(track.created_at)
