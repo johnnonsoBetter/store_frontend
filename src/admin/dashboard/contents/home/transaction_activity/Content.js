@@ -1,7 +1,10 @@
 import { Box, ButtonBase, Container, makeStyles, useMediaQuery} from '@material-ui/core'
+import axios from 'axios';
 import {React, useEffect, useLayoutEffect, useState} from 'react'
+import { TransactionActivityContextProvider } from '../../../../../context/admin/transaction_activity/TransactionActivity';
 import ContentNav from './ContentNav';
 import Overview from './Overview';
+import SalesTable from './sales/SalesTable';
 
 
 
@@ -48,17 +51,37 @@ const useStyles = makeStyles((theme) => ({
 function Content(){
 
     const [width, setWidth] = useState(0)
-    const matches = useMediaQuery('(max-width:1286px)')
-    const [type, setType] = useState("Sales")
+    const storeName = "upright"
 
     function updateSize() {
       setWidth(window.innerWidth);
-      console.log("resizing it ", window.innerWidth)
+     
     }
 
     useEffect(()=> {
        updateSize()
-       console.log("i have made the width available")
+
+       axios({
+         method: 'GET',
+         url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
+         headers: JSON.parse(localStorage.getItem('admin'))
+       }).then(response => {
+         console.log(response)
+
+         const {transaction_activity} = response.data
+         
+         setTransactionActivity(transaction_activity)
+         setTableType('sales')
+       }).catch(err => {
+
+         console.log(err)
+       })
+       
+
+       return ()=> {
+          setWidth(0)
+
+       }
     }, [])
 
 
@@ -72,22 +95,40 @@ function Content(){
     }, [])
 
     const classes = useStyles()
+    const [preview, setPreview] = useState([])
+    const [transactionActivity, setTransactionActivity] = useState({})
+    const [tableType, setTableType] = useState(null)
+    const [loading, setLoading] = useState(false)
+
 
     return (
          <>
-   
-           <Container className={classes.root}>
-               <Box width="90vw" className={classes.cont}>
-                  <ContentNav />
-                 
-               </Box>
+         <TransactionActivityContextProvider 
+            value= {{
+               transactionActivity: transactionActivity,
+               preview: [],
+               tableType: ""
+            }}
+         >
+            <Container className={classes.root}>
+                  <Box width="90vw" className={classes.cont}>
+                     <ContentNav />
+                  
+                  </Box>
 
-               <Box marginTop={4} >
-                  <Overview width={width}/>
-                 
-               </Box>
+                  <Box marginTop={4} >
+                     <Overview width={width}/>
+                  
+                  </Box>
 
-           </Container>
+                  <Box marginTop={4}>
+                     <SalesTable />
+
+                  </Box>
+
+            </Container>
+         </TransactionActivityContextProvider>
+           
  
          </>
 

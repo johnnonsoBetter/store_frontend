@@ -1,18 +1,25 @@
 import { Box, Grid, Grow, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
+import AmountFormater from '../../../../../helpers/AmountFormater'
+import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
 
 function MainInfo(){
+    const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
+
+    console.log(total_sales)
+    
+
 
     return (
         <Grow in={true}>
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} >
-                    <Box p={2} boxShadow={2} borderRadius={5}> 
+                <Grid item xs={6} sm={4} >
+                    <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
                             Total Sales
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_sales).amount()}`}
                         </Typography>
                     </Box>
 
@@ -21,10 +28,10 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales
+                            Total Expenses
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_expenses).amount()}`}
                         </Typography>
                     </Box>
 
@@ -33,10 +40,10 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales
+                            Total Debts
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_debts).amount()}`}
                         </Typography>
                     </Box>
 
@@ -45,10 +52,10 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales
+                            Total Recovered
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                            {`₦ ${AmountFormater(total_recovered).amount()}`}
                         </Typography>
                     </Box>
 
@@ -57,10 +64,10 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales
+                           Total Goods Returned
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}
                         </Typography>
                     </Box>
 
@@ -69,26 +76,16 @@ function MainInfo(){
                 <Grid item xs={6} sm={4} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales
+                            Total Change
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_change).amount()}`}
                         </Typography>
                     </Box>
 
                 </Grid>
 
-                <Grid item xs={6} sm={4} >
-                    <Box p={3} boxShadow={2} borderRadius={5}> 
-                        <Typography variant="h6"> 
-                            Total Sales
-                        </Typography>
-                        <Typography> 
-                            ₦5,800
-                        </Typography>
-                    </Box>
-
-                </Grid>
+                
             </Grid>
 
         </Grow>

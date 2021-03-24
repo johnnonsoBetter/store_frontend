@@ -3,17 +3,13 @@ import React, { useState } from 'react'
 import PaymentInfo from './PaymentInfo'
 import MainInfo from './MainInfo'
 import InternalInfo from './InternalInfo'
-import Slide from '@material-ui/core/Slide';
+
 
 
 
 function DailyPreview(){
 
-    const [view, setView] = useState("mainInfo")
-
-    const changeView = (viewType) => setView(viewType)
-    const [checked, setChecked] = useState(false)
-
+    const [view, setView] = useState("mainInfo") 
     
 
     return (
@@ -21,9 +17,9 @@ function DailyPreview(){
            
             <Box display="flex">
                 <ButtonGroup disableElevation size="small" variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button style={{backgroundColor: "green"}} onClick={()=>  setView("mainInfo")} >Main Info</Button>
-                    <Button style={{backgroundColor: "#cc8504"}} onClick={()=>  setView("paymentInfo")}>Payment Info</Button>
-                    <Button style={{backgroundColor: "#177cc7ad"}} onClick={()=>  setView("internalInfo")}>Internal Info</Button>
+                    <Button style={{backgroundColor: "green"}} onClick={()=>  setView("mainInfo")} >Main</Button>
+                    <Button style={{backgroundColor: "#cc8504"}} onClick={()=>  setView("paymentInfo")}>Payment</Button>
+                    <Button style={{backgroundColor: "#177cc7ad"}} onClick={()=>  setView("internalInfo")}>Internal</Button>
                     
                 </ButtonGroup>
                 
@@ -36,7 +32,6 @@ function DailyPreview(){
                }
                
             </Box>
-
         </Box>
     )
 }
