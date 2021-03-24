@@ -1,8 +1,11 @@
 import { Box, Grid, Grow, Typography } from '@material-ui/core'
-import React from 'react'
+import {React, useContext} from 'react'
+import AmountFormater from '../../../../../helpers/AmountFormater'
+import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
 
 
 function InternalInfo(){
+    const {total_sales_profit, total_sales_cost, total_cashback_profit, total_net_profit} = useContext(TransactionActivityContext).transactionActivity
 
     return (
 
@@ -12,10 +15,10 @@ function InternalInfo(){
                 <Grid item xs={6} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales Cost
+                            Sales Cost
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                            {`₦ ${AmountFormater(total_sales_cost).amount()}`}
                         </Typography>
                     </Box>
 
@@ -24,10 +27,10 @@ function InternalInfo(){
                 <Grid item xs={6} >
                     <Box p={3} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Sales Profit
+                           Sales Profit
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_sales_profit).amount()}`}
                         </Typography>
                     </Box>
 
@@ -39,7 +42,7 @@ function InternalInfo(){
                             Cash Back Profit
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_cashback_profit).amount()}`}
                         </Typography>
                     </Box>
 
@@ -48,10 +51,10 @@ function InternalInfo(){
                 <Grid item xs={6} >
                     <Box p={5} boxShadow={2} borderRadius={5}> 
                         <Typography variant="h6"> 
-                            Total Net Profit
+                            Net Profit
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_net_profit).amount()}`}
                         </Typography>
                     </Box>
 
