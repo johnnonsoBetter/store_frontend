@@ -6,10 +6,6 @@ import TransactionActivityContext from '../../../../../context/admin/transaction
 function MainInfo(){
     const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
 
-    console.log(total_sales)
-    
-
-
     return (
         <Grow in={true}>
             <Grid container spacing={2}>

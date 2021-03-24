@@ -1,7 +1,11 @@
 import { Box, Grid, Grow, Typography } from '@material-ui/core'
-import React from 'react'
+import {React, useContext} from 'react'
+import AmountFormater from '../../../../../helpers/AmountFormater'
+import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
+
 
 function PaymentInfo(){
+    const {total_transfer, total_pos, total_cash_at_hand} = useContext(TransactionActivityContext).transactionActivity
 
     return (
         <Grow in={true}>
@@ -13,7 +17,7 @@ function PaymentInfo(){
                             Pos
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_pos).amount()}`}
                         </Typography>
                     </Box>
 
@@ -25,7 +29,7 @@ function PaymentInfo(){
                             Transfer
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_transfer).amount()}`}
                         </Typography>
                     </Box>
 
@@ -37,7 +41,7 @@ function PaymentInfo(){
                             Cash At Hand
                         </Typography>
                         <Typography> 
-                            ₦5,800
+                        {`₦ ${AmountFormater(total_cash_at_hand).amount()}`}
                         </Typography>
                     </Box>
 
