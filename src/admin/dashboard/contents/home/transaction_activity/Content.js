@@ -1,5 +1,6 @@
-import { Box, ButtonBase, Container, makeStyles, useMediaQuery} from '@material-ui/core'
+import { Box, ButtonBase, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails, Typography} from '@material-ui/core'
 import axios from 'axios';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import {React, useEffect, useLayoutEffect, useState} from 'react'
 import { TransactionActivityContextProvider } from '../../../../../context/admin/transaction_activity/TransactionActivity';
 import ContentNav from './ContentNav';
@@ -99,6 +100,7 @@ function Content(){
     const [transactionActivity, setTransactionActivity] = useState({})
     const [tableType, setTableType] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [show, setShow] = useState(false)
 
 
     return (
@@ -107,7 +109,11 @@ function Content(){
             value= {{
                transactionActivity: transactionActivity,
                preview: [],
-               tableType: ""
+               tableType: "",
+               show,
+               setShow: (show)=> {
+                  setShow(show)
+               }
             }}
          >
             <Container className={classes.root}>
@@ -121,8 +127,21 @@ function Content(){
                   
                   </Box>
 
-                  <Box marginTop={4}>
-                     <SalesTable />
+                  <Box marginTop={4} marginBottom={2}>
+                     <Accordion style={{backgroundColor: "rgb(0 4 10)"}} expanded={show}>
+                        <AccordionSummary
+                           expandIcon={<ExpandMoreIcon />}
+                           aria-controls="panel1a-content"
+                           id="panel1a-header"
+                        >
+                          
+                        </AccordionSummary>
+                        <AccordionDetails>
+                           <SalesTable />
+                           <Typography style={{backgroundColor: "white"}} > Console. how we are going to take the same time and </Typography>
+                        </AccordionDetails>
+                     </Accordion>
+                     
 
                   </Box>
 
