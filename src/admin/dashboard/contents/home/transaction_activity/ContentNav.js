@@ -33,15 +33,16 @@ function ContentNav(){
     const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
     const {setTableType, setShow} = useContext(TransactionActivityContext)
 
-
+    function handleTableType(type){
+        setTableType(type)
+        setShow(true)
+    }
 
     return (
 
         <>
-            <ButtonBase onClick={()=> {
-                setTableType("sales")
-                setShow(true)
-            }}  style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> handleTableType("sales") }
+              style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Sales</Typography>
@@ -58,7 +59,7 @@ function ContentNav(){
                             
             
         
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), rgb(41 138 175 / 68%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(41 138 175 / 68%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Expenses</Typography>
@@ -74,7 +75,7 @@ function ContentNav(){
         
             
         
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), #922721)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #922721)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Debts</Typography>
@@ -89,7 +90,7 @@ function ContentNav(){
             </ButtonBase>      
         
             
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(249 249 249 / 0%), #dabe8a94)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #dabe8a94)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Returns </Typography>
@@ -103,7 +104,7 @@ function ContentNav(){
                 
             </ButtonBase>   
             
-            <ButtonBase  style={{backgroundImage: "linear-gradient(to right, rgb(249 249 249 / 0%), rgb(0 0 0 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase  style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(0 0 0 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Recovered </Typography>
@@ -119,7 +120,7 @@ function ContentNav(){
         
             
         
-            <ButtonBase style={{backgroundImage: " linear-gradient(to right, rgba(255, 0, 0, 0), rgb(137 78 255 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase style={{backgroundImage: " linear-gradient(to right, rgb(0 0 0 / 67%), rgb(137 78 255 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Changes</Typography>
@@ -135,7 +136,7 @@ function ContentNav(){
         
            
         
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), rgb(175 146 41 / 68%))"}} borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(175 146 41 / 68%))"}} borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Cashier Report</Typography>

@@ -13,6 +13,8 @@ import clsx from 'clsx';
 import { ArrowForward, PrintDisabledRounded, SearchRounded, FlashOffRounded} from '@material-ui/icons';
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity';
 import axios from 'axios'
+import { DateTime } from 'luxon';
+import { addDays, format } from 'date-fns/fp'
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -87,9 +89,10 @@ function SalesTable() {
     }).then(response => {
       console.log(response)
 
-       const {transaction_activity} = response.data
+       const {transaction_activity, sales} = response.data
       
        setTransactionActivity(transaction_activity)
+       setSales(sales)
        setTableType('sales')
       console.log("this is the transaction activity ", response)
     }).catch(err => {
@@ -169,7 +172,28 @@ function SalesTable() {
           </TableRow>
         </TableHead>
         <TableBody style={{backgroundColor: "#040715"}}>
-          {rows.map((row) => (
+
+            {
+              sales.map((sale) => {
+                const {cashier_name, total_items_amount, transaction_type, created_at, issue} = sale
+
+                let date = DateTime.fromISO(created_at)
+                
+                console.log(date.hour)
+
+
+                return (
+                  <TableRow key={sale.id} style={{borderBottom: "none"}}>
+                    <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > J </Typography>  </Avatar>    </Box></TableCell>
+                    <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {total_items_amount} </Typography>   </Box></TableCell>
+                    <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {transaction_type} </Typography>   </Box></TableCell>
+                  </TableRow>
+
+                )
+              })
+            }
+
+          {/* {sales.map((row) => (
             <TableRow key={row.name} style={{borderBottom: "none"}}>
               <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > JN </Typography>  </Avatar>    </Box></TableCell>
               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > ₦5,600 </Typography>   </Box></TableCell>
@@ -182,7 +206,7 @@ function SalesTable() {
               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> 2 hours ago </Typography>   </Box></TableCell>
               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton> <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>
