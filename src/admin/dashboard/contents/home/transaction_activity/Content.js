@@ -138,7 +138,7 @@ function Content(){
                         </AccordionSummary>
                         <AccordionDetails>
                            <SalesTable />
-                           <Typography style={{backgroundColor: "white"}} > Console. how we are going to take the same time and </Typography>
+                          
                         </AccordionDetails>
                      </Accordion>
                      
@@ -152,12 +152,7 @@ function Content(){
          </>
 
 
-      // Sales
-      // Debts
-      // Changes
-      // Expenses
-      // Return
-      // Turnover Report
+  
            
             
      

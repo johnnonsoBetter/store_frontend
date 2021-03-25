@@ -13,7 +13,7 @@ function DailyPreview(){
     
 
     return (
-        <Box p={2} style={{backgroundImage: "linear-gradient(to left, rgba(255, 0, 0, 0), rgb(123 123 123))", color: "white"}} borderRadius={15}>
+        <Box p={2} style={{backgroundImage: "linear-gradient(to left, rgba(255, 0, 0, 0), rgb(123 123 123))", height: "100%", color: "white"}} borderRadius={15}>
            
             <Box display="flex">
                 <ButtonGroup disableElevation size="small" variant="contained" color="primary" aria-label="contained primary button group">
