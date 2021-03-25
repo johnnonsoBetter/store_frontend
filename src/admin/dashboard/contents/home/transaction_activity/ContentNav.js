@@ -31,12 +31,17 @@ function ContentNav(){
 
     const classes = useStyles()
     const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
+    const {setTableType, setShow} = useContext(TransactionActivityContext)
+
 
 
     return (
 
         <>
-            <ButtonBase  style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> {
+                setTableType("sales")
+                setShow(true)
+            }}  style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Sales</Typography>

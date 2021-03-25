@@ -54,6 +54,13 @@ function Content(){
     const [width, setWidth] = useState(0)
     const storeName = "upright"
 
+    const classes = useStyles()
+    const [preview, setPreview] = useState([])
+    const [transactionActivity, setTransactionActivity] = useState({})
+    const [tableType, setTableType] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [show, setShow] = useState(false)
+
     function updateSize() {
       setWidth(window.innerWidth);
      
@@ -72,7 +79,7 @@ function Content(){
          const {transaction_activity} = response.data
          
          setTransactionActivity(transaction_activity)
-         setTableType('sales')
+        
        }).catch(err => {
 
          console.log(err)
@@ -95,12 +102,7 @@ function Content(){
         return () => window.removeEventListener('resize', updateSize);
     }, [])
 
-    const classes = useStyles()
-    const [preview, setPreview] = useState([])
-    const [transactionActivity, setTransactionActivity] = useState({})
-    const [tableType, setTableType] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const [show, setShow] = useState(false)
+    
 
 
     return (
@@ -111,9 +113,12 @@ function Content(){
                preview: [],
                tableType: "",
                show,
-               setShow: (show)=> {
-                  setShow(show)
-               }
+               setTableType: (tableType)=> {
+                  setTableType(tableType)
+               },
+               setTransactionActivity,
+               setShow,
+               
             }}
          >
             <Container className={classes.root}>
@@ -137,7 +142,11 @@ function Content(){
                           
                         </AccordionSummary>
                         <AccordionDetails>
-                           <SalesTable />
+                           
+                           {
+                              tableType === "sales" ? <SalesTable /> : null
+                           }
+                          
                           
                         </AccordionDetails>
                      </Accordion>

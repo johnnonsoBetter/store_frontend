@@ -1,5 +1,5 @@
 
-import React from 'react';
+import {React, useContext, useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,10 +7,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {Paper, Avatar, Box, Typography, Badge, IconButton} from '@material-ui/core/';
+import {Paper, Avatar, Box, Typography, Badge, IconButton, MenuItem, Menu, Button} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
-import { ArrowForward } from '@material-ui/icons';
+import { ArrowForward, PrintDisabledRounded, SearchRounded, FlashOffRounded} from '@material-ui/icons';
+import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -60,9 +62,100 @@ const rows = [
 function SalesTable() {
   const classes = useStyles();
   const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
+  const storeName = "upright"
+  const {setTransactionActivity, setTableType} = useContext(TransactionActivityContext)
+
+
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [sales, setSales] = useState([])
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+  useEffect(()=> {
+
+    axios({
+      method: 'GET',
+      url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
+      headers: JSON.parse(localStorage.getItem('admin'))
+    }).then(response => {
+      console.log(response)
+
+       const {transaction_activity} = response.data
+      
+       setTransactionActivity(transaction_activity)
+       setTableType('sales')
+      console.log("this is the transaction activity ", response)
+    }).catch(err => {
+
+      console.log(err)
+    })
+
+    return ()=> {
+      setSales([])
+
+    }
+  }, [])
 
   return (
+    <>
+    
     <TableContainer component={Paper} style={{backgroundColor: "black"}}>
+    
+      <Box style={{backgroundColor: '#090A0A'}} alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
+
+        
+
+        <Box display="flex" flexGrow={1}>
+          <IconButton> 
+              <SearchRounded style={{color: "white"}}/>
+          </IconButton>
+          
+        </Box>
+
+        <Box   style={{color: "white"}} display="flex">
+          <Button aria-controls="simple-menu" className={classes.whiteText} aria-haspopup="true" onClick={handleClick}>
+            Transactions
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>All</MenuItem>
+            <MenuItem onClick={handleClose}>Cash</MenuItem>
+            <MenuItem onClick={handleClose}>Pos</MenuItem>
+            <MenuItem onClick={handleClose}>Transfer</MenuItem>
+            <MenuItem onClick={handleClose}>Pos Cashback</MenuItem>
+            <MenuItem onClick={handleClose}>Transfer Cashback</MenuItem>
+            <MenuItem onClick={handleClose}>Pos Cash</MenuItem>
+            <MenuItem onClick={handleClose}>Transfer Cash</MenuItem>
+            <MenuItem onClick={handleClose}>Pos Transfer</MenuItem>
+          </Menu>
+        </Box>
+
+        <Box display="flex" marginRight={1} marginLeft={1}>
+          <IconButton> 
+              <PrintDisabledRounded style={{color: "white"}}/>
+          </IconButton>
+          
+        </Box>
+
+        <Box display="flex" marginRight={1} marginLeft={1}>
+          <IconButton> 
+              <FlashOffRounded style={{color: "white"}}/>
+          </IconButton>
+          
+        </Box>
+      </Box>
       <Table className={classes.table} aria-label="simple table">
         <TableHead style={{backgroundColor: "black"}} className={classes.noBottom}>
           <TableRow>
@@ -93,6 +186,7 @@ function SalesTable() {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 }
 
