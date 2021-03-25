@@ -87,7 +87,7 @@ class PastDayPreview extends Component {
   
     render() {
       return (
-        <Box p={4} style={{backgroundImage: "linear-gradient(to right, rgba(255,0,0,0), rgb(54 74 105))", height: "100%", color: "white"}} borderRadius={15}>
+        <Box p={4} style={{backgroundImage: "linear-gradient(to right, rgba(255, 0, 0, 0), rgb(36 73 127))", height: "100%", color: "white"}} borderRadius={15}>
             <div className="app">
             <div className="row">
                 <div className="mixed-chart">

@@ -128,7 +128,7 @@ function Content(){
                   </Box>
 
                   <Box marginTop={4} marginBottom={2}>
-                     <Accordion style={{backgroundColor: "rgb(0 4 10)"}} expanded={show}>
+                     <Accordion style={{backgroundColor: "black"}} expanded={show}>
                         <AccordionSummary
                            expandIcon={<ExpandMoreIcon />}
                            aria-controls="panel1a-content"

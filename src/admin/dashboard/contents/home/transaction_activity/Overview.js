@@ -27,11 +27,11 @@ function Overview(props){
     const {show, setShow} = useContext(TransactionActivityContext)
   console.log(show)
     const classes = useStyles();
-    const previews = [900, 200000, 1300, 740]
+    const previews = [900, 856, 1300, 740]
 
   return (
     <div className={classes.root} >
-      <Accordion  expanded={!show}    style={{backgroundColor: "rgb(0 4 10)"}}>
+      <Accordion  expanded={!show}    style={{backgroundColor: "black"}}>
         <AccordionSummary onClick={()=> setShow(!show)}
           expandIcon={<ExpandMoreIcon style={{color: "white"}} />}
           aria-controls="panel1a-content"
