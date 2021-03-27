@@ -111,6 +111,7 @@ function SalesTable() {
   const [sales, setSales] = useState([])
   const [filteredSales, setFilteredSales] = useState(sales)
   const [showSearch, setShowSearch] = useState(false)
+  const [searchInput, setSearchInput] = useState('')
 
 
 
@@ -150,6 +151,22 @@ function SalesTable() {
    
       setFilteredSales(newlyfilteredSales)
       
+  }
+
+  const searchByAmount =(e) => {
+
+    e.preventDefault()
+    setSearchInput(e.target.value)
+
+    const newlyfilteredSales = sales.filter(sale => sale.total_items_amount === parseInt(searchInput))
+    setFilteredSales(newlyfilteredSales)
+
+    if(e.target.length <= 0){
+      setFilteredSales(sales)
+    
+    }
+    console.log(e.target.length)
+   
   }
 
 
@@ -206,7 +223,7 @@ function SalesTable() {
                 <Grow in={true}>
                     
                    <div>
-                   <BootstrapInput label="Search amount" type="number" id="demo-customized-textbox" />
+                   <BootstrapInput value={searchInput} onChange={searchByAmount} label="Search amount" type="number" id="demo-customized-textbox" />
                    <IconButton  onClick={()=> {
                       setShowSearch(!showSearch)
                     }}> 
@@ -274,6 +291,15 @@ function SalesTable() {
             
           </Box>
         </Box>
+       
+        
+
+        {
+          filteredSales.length === 0 ? <Box m={5}>
+              <Typography>  <div style={{color: "white"}}> No Data</div> </Typography>
+
+          </Box>  :
+
         <Table className={classes.table} aria-label="simple table">
           <TableHead style={{backgroundColor: "black"}} className={classes.noBottom}>
             <TableRow>
@@ -287,9 +313,11 @@ function SalesTable() {
             </TableRow>
           </TableHead>
          
+        
           <SalesList />
         
         </Table>
+       }
       </TableContainer>
 
 
