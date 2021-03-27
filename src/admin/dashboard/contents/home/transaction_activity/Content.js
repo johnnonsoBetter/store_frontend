@@ -6,6 +6,7 @@ import { TransactionActivityContextProvider } from '../../../../../context/admin
 import ContentNav from './ContentNav';
 import Overview from './Overview';
 import SalesTable from './sales/SalesTable';
+import DatePicker from '../../../DatePicker'
 
 
 
@@ -65,7 +66,7 @@ function Content(){
       setWidth(window.innerWidth);
      
     }
-
+   //  ?store=${storeName}`
     useEffect(()=> {
        updateSize()
 
@@ -122,6 +123,7 @@ function Content(){
             }}
          >
             <Container className={classes.root}>
+                  <DatePicker />
                   <Box width="90vw" className={classes.cont}>
                      <ContentNav />
                   

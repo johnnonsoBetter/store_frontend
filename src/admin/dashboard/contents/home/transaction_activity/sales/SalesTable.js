@@ -1,6 +1,6 @@
 
 import {React, useContext, useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,11 +10,26 @@ import TableRow from '@material-ui/core/TableRow';
 import {Paper, Avatar, Box, Typography, Badge, IconButton, MenuItem, Menu, Button} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
-import { ArrowForward, PrintDisabledRounded, SearchRounded, FlashOffRounded} from '@material-ui/icons';
+import { PrintDisabledRounded, SearchRounded, FlashOffRounded} from '@material-ui/icons';
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity';
 import axios from 'axios'
 import { DateTime } from 'luxon';
-import { addDays, format } from 'date-fns/fp'
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red'
+import {ThemeProvider} from '@material-ui/styles'
+import ArrowForward from '@material-ui/icons/ArrowForward'
+
+const theme = createMuiTheme({
+
+  palette: {
+    primary: {
+      main: green[600]
+    },
+    secondary: {
+      main: red[600]
+    }
+  }
+})
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -106,11 +121,14 @@ function SalesTable() {
     }
   }, [])
 
+
+
+
   return (
     <>
-    
-    <TableContainer component={Paper} style={{backgroundColor: "black"}}>
-    
+    <ThemeProvider theme={theme}>
+      <TableContainer component={Paper} style={{backgroundColor: "black"}}>
+      
       <Box style={{backgroundColor: '#090A0A'}} alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
 
         
@@ -162,7 +180,7 @@ function SalesTable() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead style={{backgroundColor: "black"}} className={classes.noBottom}>
           <TableRow>
-           
+          
             <TableCell align="center"> <Typography className={classes.whiteText}> Cashier </Typography></TableCell>
             <TableCell align="center"> <Typography className={classes.whiteText}> Sales Amount </Typography> </TableCell>
             <TableCell align="center"> <Typography className={classes.whiteText}> Transaction </Typography> </TableCell>
@@ -177,16 +195,27 @@ function SalesTable() {
               sales.map((sale) => {
                 const {cashier_name, total_items_amount, transaction_type, created_at, issue} = sale
 
-                let date = DateTime.fromISO(created_at)
+               
+                let shortName = cashier_name.toString().toUpperCase().charAt(0)
+                const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
                 
-                console.log(date.hour)
-
 
                 return (
                   <TableRow key={sale.id} style={{borderBottom: "none"}}>
-                    <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > J </Typography>  </Avatar>    </Box></TableCell>
+                    <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > {shortName} </Typography>  </Avatar>    </Box></TableCell>
                     <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {total_items_amount} </Typography>   </Box></TableCell>
                     <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {transaction_type} </Typography>   </Box></TableCell>
+                    <TableCell align="center" className={classes.noBottom}>
+                      <Box display="flex" justifyContent="center"> 
+                        {
+                          issue ? <Badge color="secondary" overlap="circle" badgeContent=" " variant="dot"> {circle}</Badge>
+                          : <Badge color="primary" overlap="circle" badgeContent=" " variant="dot"> {circle}</Badge>
+                        }
+                        
+                      </Box>
+                    </TableCell>
+                    <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
+                    <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton> <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
                   </TableRow>
 
                 )
@@ -210,6 +239,11 @@ function SalesTable() {
         </TableBody>
       </Table>
     </TableContainer>
+
+
+
+    </ThemeProvider>
+   
     </>
   );
 }
