@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Box, ButtonBase, makeStyles, Typography, useMediaQuery} from '@material-ui/core'
+import { Box, ButtonBase, CircularProgress, makeStyles, Typography, useMediaQuery} from '@material-ui/core'
 import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
 import AmountFormater from '../../../../../helpers/AmountFormater'
 
@@ -31,7 +31,8 @@ function ContentNav(){
 
     const classes = useStyles()
     const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
-    const {setTableType, setShow} = useContext(TransactionActivityContext)
+    const {setTableType, setShow, loading} = useContext(TransactionActivityContext)
+    
 
     function handleTableType(type){
         setTableType(type)
@@ -97,7 +98,9 @@ function ContentNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}</Typography>
+                       {
+                           loading ?  <CircularProgress /> : "hello"
+                       } <Typography variant="h6"> {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}</Typography>
                     </Box>
 
                 </Box>

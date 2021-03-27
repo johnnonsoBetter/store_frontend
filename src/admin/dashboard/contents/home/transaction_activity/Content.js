@@ -6,6 +6,7 @@ import { TransactionActivityContextProvider } from '../../../../../context/admin
 import ContentNav from './ContentNav';
 import Overview from './Overview';
 import SalesTable from './sales/SalesTable';
+
 import DatePicker from '../../../DatePicker'
 
 
@@ -59,7 +60,7 @@ function Content(){
     const [preview, setPreview] = useState([])
     const [transactionActivity, setTransactionActivity] = useState({})
     const [tableType, setTableType] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [show, setShow] = useState(false)
 
     function updateSize() {
@@ -114,6 +115,7 @@ function Content(){
                preview: [],
                tableType: "",
                show,
+               loading,
                setTableType: (tableType)=> {
                   setTableType(tableType)
                },
