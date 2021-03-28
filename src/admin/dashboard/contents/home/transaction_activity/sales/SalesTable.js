@@ -21,9 +21,14 @@ import ArrowForward from '@material-ui/icons/ArrowForward'
 import grey from '@material-ui/core/colors/grey'
 import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
-import purple from '@material-ui/core/colors/purple'
 
-const accent = purple['A200'];
+
+const searchButtonTheme = createMuiTheme({
+  palette: {
+    primary: green,
+  },
+  
+});
 
 
 const theme = createMuiTheme({
@@ -123,60 +128,29 @@ function SalesTable() {
   const [searchInput, setSearchInput] = useState('')
 
 
-
-  const handleClose = (e) => {
-    e.preventDefault()
-    sortSales(e)
-    console.log(e)
-    setAnchorEl(null);
-  };
-
-  const sortSales = (e) => {
-    e.preventDefault()
-
-    console.log(e.target.value)
-  }
-
-  const handleTransactionTypeChange = (e) => {
-    e.preventDefault()
-    const value = e.target.value
-
-    console.log(value)
-
-    if (value === "."){
-      setFilteredSales(sales)
-    }
-    else{
-      const newlyfilteredSales = sales.filter(sale => sale.transaction_type.toLowerCase() === value)
-      setFilteredSales(newlyfilteredSales)
-    }
-   
-
-  }
-
   const filterSalesByIssue = () => {
 
     const newlyfilteredSales = sales.filter(sale => sale.issue === true)
    
-      setFilteredSales(newlyfilteredSales)
+    setFilteredSales(newlyfilteredSales)
       
   }
 
-  const searchByAmount =(e) => {
+  const filterSalesByReceiptIssued = () => {
+    const newlyfilteredSales = sales.filter(sale => sale.receipt_was_issued === false)
+   
+    setFilteredSales(newlyfilteredSales)
+  }
 
-    e.preventDefault()
-    setSearchInput(e.target.value)
+  const filterBySearchAmount =  () => {
 
     const newlyfilteredSales = sales.filter(sale => sale.total_items_amount === parseInt(searchInput))
+    console.log(searchInput)
+    console.log(newlyfilteredSales)
     setFilteredSales(newlyfilteredSales)
-
-    if(e.target.length <= 0){
-      setFilteredSales(sales)
-    
-    }
-    console.log(e.target.length)
-   
   }
+
+ 
 
 
   useEffect(()=> {
@@ -202,6 +176,10 @@ function SalesTable() {
 
     return ()=> {
       setSales([])
+      setTransactionTypeFilter("all")
+      setFilteredSales([])
+      setShowSearch(false)
+      setSearchInput("")
 
     }
   }, [])
@@ -237,9 +215,6 @@ function SalesTable() {
       sales,
       classes,
       circle,
-
-
-
     }}> 
       <ThemeProvider theme={theme}>
         <TableContainer component={Paper} style={{backgroundColor: "black"}}>
@@ -251,21 +226,44 @@ function SalesTable() {
 
                 <Grow in={true}>
                       
-                <div>
-                <BootstrapInput value={searchInput} onChange={searchByAmount} label="Search amount" type="number" id="demo-customized-textbox" />
-                <IconButton  onClick={()=> {
-                  setShowSearch(!showSearch)
-                }}> 
-                  <CancelOutlined />
-                </IconButton>
+                <Box display="flex" width="100%" justifyContent="space-between">
+                  <Box display="flex" >
+                   
+                    <BootstrapInput  value={searchInput} onChange={(e) => setSearchInput(e.target.value)} label="Search amount" type="number" id="demo-customized-textbox" />
+                  
+                    <ThemeProvider theme={searchButtonTheme} >
+                        <Box display="flex" p={1}>
+                          <Button disabled={searchInput === '' ? true : false} variant="contained" color="primary" size="small" onClick={filterBySearchAmount}>
+                              <SearchRounded />
+                          </Button>
+
+                        </Box>
+                        
+                    </ThemeProvider>
+
+                  </Box>
+
+                  <Box display="flex">
+                    <IconButton style={{color: "white"}} onClick={()=> {
+                      setShowSearch(!showSearch)
+                      setFilteredSales(sales)
+                      setTransactionTypeFilter("all")
+                    }}> 
+                      <CancelOutlined />
+                    </IconButton>
 
 
-                </div>
+                  </Box>
+               
+                  
+
+
+                </Box>
                 </Grow>
            
                 :
-                <Box display="flex"> 
-                  <Box display="flex" marginRight={"auto"} flexGrow={1}>
+                <Box display="flex" width="100%"> 
+                  <Box display="flex"  flexGrow={1}>
                     
                       <IconButton onClick={()=> {
                         setShowSearch(!showSearch)
@@ -288,7 +286,7 @@ function SalesTable() {
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
-                      onClose={handleTransactionTypeFilter}
+                      onClose={()=>  setAnchorEl(null)}
                     >
                      
                       <MenuItem   onClick={()=> handleTransactionTypeFilter("all")}>All</MenuItem>
@@ -306,7 +304,7 @@ function SalesTable() {
                   </Box>
 
                   <Box display="flex" marginRight={1} marginLeft={1}>
-                    <IconButton> 
+                    <IconButton onClick={filterSalesByReceiptIssued}> 
                         <PrintDisabledRounded style={{color: "white"}}/>
                     </IconButton>
                     
