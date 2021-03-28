@@ -46,7 +46,12 @@ function SalesList(){
 
     const classes = useStyles()
     const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
-    const {filteredSales} = useContext(SalesContext)
+    const {filteredSales, toggleSaleDrawer} = useContext(SalesContext)
+
+    const setupSale = () => {
+
+      toggleSaleDrawer(true)
+    }
    
 
     return (
@@ -76,7 +81,7 @@ function SalesList(){
                   </Box>
                 </TableCell>
                 <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
-                <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton> <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick = {setupSale}> <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
               </TableRow>
 
             )

@@ -2,12 +2,11 @@
 import {React, useContext, useEffect, useState} from 'react';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {Paper, Avatar, Select, Box, Typography, Badge, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow} from '@material-ui/core/';
+import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
@@ -21,6 +20,7 @@ import ArrowForward from '@material-ui/icons/ArrowForward'
 import grey from '@material-ui/core/colors/grey'
 import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
+import Sale from './Sale';
 
 
 const searchButtonTheme = createMuiTheme({
@@ -126,6 +126,8 @@ function SalesTable() {
   const [filteredSales, setFilteredSales] = useState(sales)
   const [showSearch, setShowSearch] = useState(false)
   const [searchInput, setSearchInput] = useState('')
+  const [saleDrawerOpened, setSaleDrawerOpened] = useState(false)
+  const [receipt_id, setReceiptId] = useState('')
 
 
   const filterSalesByIssue = () => {
@@ -148,6 +150,11 @@ function SalesTable() {
     console.log(searchInput)
     console.log(newlyfilteredSales)
     setFilteredSales(newlyfilteredSales)
+  }
+
+  const toggleSaleDrawer = (saleDrawerOpened) => {
+
+    setSaleDrawerOpened(saleDrawerOpened)
   }
 
  
@@ -215,10 +222,19 @@ function SalesTable() {
       sales,
       classes,
       circle,
+      saleDrawerOpened,
+      toggleSaleDrawer,
+      receipt_id,
+      setReceiptId: (receipt_id)=> setReceiptId(receipt_id)
+
     }}> 
       <ThemeProvider theme={theme}>
+          <Drawer anchor="right" open={saleDrawerOpened} onClose={()=> toggleSaleDrawer(false)}>
+            <Box>
+              <Sale />
+            </Box>
+          </Drawer>
         <TableContainer component={Paper} style={{backgroundColor: "black"}}>
-        
           <Box style={{backgroundColor: '#090A0A'}} alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
 
             {
