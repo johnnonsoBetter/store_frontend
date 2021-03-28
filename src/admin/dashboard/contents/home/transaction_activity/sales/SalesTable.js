@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {Paper, Avatar, Select, Box, Typography, Badge, IconButton, MenuItem, InputBase, withStyles, Grow} from '@material-ui/core/';
+import {Paper, Avatar, Select, Box, Typography, Badge, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
@@ -18,8 +18,13 @@ import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red'
 import {ThemeProvider} from '@material-ui/styles'
 import ArrowForward from '@material-ui/icons/ArrowForward'
+import grey from '@material-ui/core/colors/grey'
 import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
+import purple from '@material-ui/core/colors/purple'
+
+const accent = purple['A200'];
+
 
 const theme = createMuiTheme({
 
@@ -29,6 +34,9 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: red[600]
+    },
+    success: {
+      main: grey[100]
     }
   },
   typography: {
@@ -108,6 +116,7 @@ function SalesTable() {
   const storeName = "upright"
   const {setTransactionActivity, setTableType} = useContext(TransactionActivityContext)
   const [anchorEl, setAnchorEl] = useState(null);
+  const [transactionTypeFilter, setTransactionTypeFilter] = useState('all')
   const [sales, setSales] = useState([])
   const [filteredSales, setFilteredSales] = useState(sales)
   const [showSearch, setShowSearch] = useState(false)
@@ -196,8 +205,29 @@ function SalesTable() {
 
     }
   }, [])
+
+  
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleTransactionTypeFilter =(filterType) => {
+    console.log(filterType)
+    if (filterType === "all"){
+      setFilteredSales(sales)
+      
+    }
+    else{
+      const newlyfilteredSales = sales.filter(sale => sale.transaction_type.toLowerCase() === filterType)
+      setFilteredSales(newlyfilteredSales)
+    }
+    setTransactionTypeFilter(filterType)
+    setAnchorEl(null)
+
+  }
  
-  const [transactionTypeFilter, setTransactionTypeFilter] = useState('all')
+  
   
   return (
     <>
@@ -214,83 +244,88 @@ function SalesTable() {
       <ThemeProvider theme={theme}>
         <TableContainer component={Paper} style={{backgroundColor: "black"}}>
         
-        <Box style={{backgroundColor: '#090A0A'}} alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
+          <Box style={{backgroundColor: '#090A0A'}} alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
 
-          
+            {
+              showSearch ? 
 
-          <Box display="flex" flexGrow={1}>
-            {showSearch ? 
                 <Grow in={true}>
-                    
-                   <div>
-                   <BootstrapInput value={searchInput} onChange={searchByAmount} label="Search amount" type="number" id="demo-customized-textbox" />
-                   <IconButton  onClick={()=> {
-                      setShowSearch(!showSearch)
-                    }}> 
-                     <CancelOutlined />
-                   </IconButton>
+                      
+                <div>
+                <BootstrapInput value={searchInput} onChange={searchByAmount} label="Search amount" type="number" id="demo-customized-textbox" />
+                <IconButton  onClick={()=> {
+                  setShowSearch(!showSearch)
+                }}> 
+                  <CancelOutlined />
+                </IconButton>
 
 
-                   </div>
+                </div>
                 </Grow>
-                :    
+           
+                :
+                <Box display="flex"> 
+                  <Box display="flex" marginRight={"auto"} flexGrow={1}>
+                    
+                      <IconButton onClick={()=> {
+                        setShowSearch(!showSearch)
+                      }}> 
+                        <SearchRounded style={{color: "white"}}/>
+                      </IconButton>
+
+
+                  </Box>
 
                
-                   <IconButton onClick={()=> {
-                      setShowSearch(!showSearch)
-                    }}> 
-                      <SearchRounded style={{color: "white"}}/>
+
+                  <Box display="flex" >
+                  
+                    <Button style={{color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                     {transactionTypeFilter}
+                    </Button>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleTransactionTypeFilter}
+                    >
+                     
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("all")}>All</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("cash")}>Cash</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("pos")}>Pos</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("transfer")} >Transfer</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("pos_cashback")} >Pos Cashback</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("transfer_cashback")}>Transfer Cashback</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("pos_cash")}>Pos Cash</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("transfer_cash")}>Transfer Cash</MenuItem>
+                      <MenuItem   onClick={()=> handleTransactionTypeFilter("pos_transfer")}>Pos Transfer</MenuItem>
+                    </Menu>
+               
+                    
+                  </Box>
+
+                  <Box display="flex" marginRight={1} marginLeft={1}>
+                    <IconButton> 
+                        <PrintDisabledRounded style={{color: "white"}}/>
                     </IconButton>
+                    
+                  </Box>
 
-             
-                
-
+                  <Box display="flex" marginRight={1} marginLeft={1}>
+                    <IconButton onClick={filterSalesByIssue}> 
+                        <FlashOffRounded style={{color: "white"}}/>
+                    </IconButton>
+                    
+                  </Box>
+                  
+                  </Box>
+                  
+           
+          
             }
-            
-            
-            
-            
-          </Box>
-
-          <Box   style={{color: "white"}} display="flex">
-            
-            <Select
-            labelId="demo-customized-select-label"
-            id="demo-customized-select"
-            value={"helo"}
-            onChange={handleTransactionTypeChange}
-            color="primary"
-            backgroundColor="secondary"
-            
-          >
-              <MenuItem   value=".">All</MenuItem>
-              <MenuItem  value="cash">Cash</MenuItem>
-              <MenuItem  value="pos">Pos</MenuItem>
-              <MenuItem  value="transfer">Transfer</MenuItem>
-              <MenuItem  value="pos_cashback">Pos Cashback</MenuItem>
-              <MenuItem  value="transfer_cashback">Transfer Cashback</MenuItem>
-              <MenuItem  value="pos_cash">Pos Cash</MenuItem>
-              <MenuItem  value="transfer_cash">Transfer Cash</MenuItem>
-              <MenuItem  value="pos_transfer">Pos Transfer</MenuItem>
-          </Select>
-
-    
-          </Box>
-
-          <Box display="flex" marginRight={1} marginLeft={1}>
-            <IconButton> 
-                <PrintDisabledRounded style={{color: "white"}}/>
-            </IconButton>
-            
-          </Box>
-
-          <Box display="flex" marginRight={1} marginLeft={1}>
-            <IconButton onClick={filterSalesByIssue}> 
-                <FlashOffRounded style={{color: "white"}}/>
-            </IconButton>
-            
-          </Box>
-        </Box>
+            </Box>
+         
        
         
 
@@ -300,8 +335,8 @@ function SalesTable() {
 
           </Box>  :
 
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead style={{backgroundColor: "black"}} className={classes.noBottom}>
+        <Table  className={classes.table} aria-label="simple table">
+          <TableHead  stickyHeader style={{backgroundColor: "black"}} className={classes.noBottom}>
             <TableRow>
             
               <TableCell align="center"> <Typography className={classes.whiteText}> Cashier </Typography></TableCell>

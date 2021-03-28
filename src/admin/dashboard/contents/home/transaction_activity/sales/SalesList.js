@@ -5,6 +5,7 @@ import {DateTime} from 'luxon'
 import ArrowForward from '@material-ui/icons/ArrowForward'
 import SalesContext from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import AmountFormater from '../../../../../../helpers/AmountFormater'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -63,7 +64,7 @@ function SalesList(){
             return (
               <TableRow key={sale.id} style={{borderBottom: "none"}}>
                 <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > {shortName} </Typography>  </Avatar>    </Box></TableCell>
-                <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {total_items_amount} </Typography>   </Box></TableCell>
+                <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(total_items_amount).amount()}`} </Typography>   </Box></TableCell>
                 <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {transaction_type} </Typography>   </Box></TableCell>
                 <TableCell align="center" className={classes.noBottom}>
                   <Box display="flex" justifyContent="center"> 
