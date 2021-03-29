@@ -25,7 +25,7 @@ function Home(){
             setDashboardData(data)
             setTimeout(() => {
                 setBackdropState(false)
-            }, 2000)
+            }, 500)
 
             setGeneralStoreInfos([
                 {

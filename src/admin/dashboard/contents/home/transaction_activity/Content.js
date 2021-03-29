@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails, Typography} from '@material-ui/core'
+import { Box, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 import axios from 'axios';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import {React, useEffect, useLayoutEffect, useState} from 'react'
@@ -8,6 +8,7 @@ import Overview from './Overview';
 import SalesTable from './sales/SalesTable';
 
 import DatePicker from '../../../DatePicker'
+import { useParams } from 'react-router-dom';
 
 
 
@@ -54,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
 function Content(){
 
     const [width, setWidth] = useState(0)
-    const storeName = "upright"
+    
+    const {storeName} = useParams()
 
     const classes = useStyles()
     const [preview, setPreview] = useState([])

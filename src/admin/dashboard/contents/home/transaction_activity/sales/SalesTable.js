@@ -21,6 +21,8 @@ import grey from '@material-ui/core/colors/grey'
 import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
 import Sale from './Sale';
+import { useParams } from 'react-router-dom';
+
 
 
 const searchButtonTheme = createMuiTheme({
@@ -145,7 +147,7 @@ function useWindowSize() {
 function SalesTable() {
   const classes = useStyles();
   const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
-  const storeName = "upright"
+  const {storeName} = useParams()
   const {setTransactionActivity, setTableType} = useContext(TransactionActivityContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [transactionTypeFilter, setTransactionTypeFilter] = useState('all')
