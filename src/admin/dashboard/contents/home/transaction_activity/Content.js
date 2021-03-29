@@ -127,7 +127,7 @@ function Content(){
             }}
          >
             <Container className={classes.root}>
-                  <DatePicker />
+                  
                   <Box width="90vw" className={classes.cont}>
                      <ContentNav />
                   

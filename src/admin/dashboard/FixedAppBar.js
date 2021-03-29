@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import {AppBar, Toolbar, IconButton} from '@material-ui/core'
+import React, { useContext, useEffect, useState } from 'react'
+import {AppBar, Toolbar, IconButton, Typography, Avatar, Box, makeStyles, Grow, Slide} from '@material-ui/core'
 import SelectStore from './SelectStore'
 import MenuIcon from '@material-ui/icons/Menu'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext'
@@ -10,10 +10,41 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker,
+  DatePicker,
 } from '@material-ui/pickers';
 
 import {useLocation} from 'react-router-dom'
+import { AccessTimeOutlined, CloseRounded } from '@material-ui/icons'
+
+const useStyles = makeStyles((theme) => ({
+  
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(4.5),
+      height: theme.spacing(4.5),
+    }
+  },
+
+  storeName: {
+    [theme.breakpoints.up('sm')]: {
+      paddingRight: theme.spacing(12)
+     }
+  },
+
+  time: {
+    [theme.breakpoints.up('sm')]: {
+     paddingLeft: theme.spacing(12)
+    }
+  },
+  dateSelector: {
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: theme.spacing(12)
+    }
+  }
+}));
+
 
 
 const defaultMaterialTheme = createMuiTheme({
@@ -24,34 +55,29 @@ const defaultMaterialTheme = createMuiTheme({
   color: "green"
 });
 
-function DatePicker() {
+function StoreDatePicker() {
   
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+ 
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
     console.log(date)
   };
 
+ 
+
   return (
     <ThemeProvider theme={defaultMaterialTheme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils} >
         
-        <KeyboardDatePicker
-            disableToolbar
-            variant="inline"
-            format="MM/dd/yyyy"
-            margin="normal"
-            id="date-picker-inline"
-            value={selectedDate}
-            onChange={handleDateChange}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
-            }}
-            disabled={true}
-           
-            style={{margin: 0, marginLeft: "20px", color: "white"}}
-          />
+        <DatePicker
+        disableToolbar
+        variant="inline"
+        color="primary"
+        value={selectedDate}
+        onChange={handleDateChange}
+      />
           
         </MuiPickersUtilsProvider>
 
@@ -61,20 +87,32 @@ function DatePicker() {
 }
 
 function FixedAppBar(props){
-
+    const classes = useStyles()
     const {appBar, menuButton, appBarPickerContainer, toolbar} = useContext(AdminDashboardContext).styles
+    const [openDateSelector, setOpenDateSelector] = useState(false)
+    
     const location = useLocation()
+    
+
+    useEffect(()=> {
+
+      return ()=> {
+        // setOpenDateSelector(false)
+      }
+    }, [])
    
     return (
 
         <AppBar position="fixed" className={appBar} >
-        <Toolbar display="flex" justifycontent="space-around" className={toolbar}>
+        <Toolbar display="flex" justifyContent="space-around" className={toolbar}>
           <IconButton
-            color="inherit"
+           
             aria-label="open drawer"
             edge="start"
             onClick={props.handleDrawerToggle}
             className={menuButton}
+           
+
           >
             
             <MenuIcon />
@@ -87,7 +125,46 @@ function FixedAppBar(props){
                     location.pathname === "/admin_dashboard" && <SelectStore />
                   }
                   
-                
+                  
+                  <Box display="flex" width="100%" alignItems="center" justifyContent="space-around">
+                    <Box display="flex" alignItems="center"  flexGrow={1}>
+                      {
+                        openDateSelector ?
+                        <Slide direction="down" in={true}>
+                          <Box className={classes.dateSelector} display="flex" alignItems="center" width="100%">
+                          <StoreDatePicker />
+                          <IconButton onClick={()=> setOpenDateSelector(!openDateSelector)} > <CloseRounded /> </IconButton>
+                        </Box>
+
+                        </Slide>
+                        
+                         : 
+                        <>
+                        <Box display="flex" className={classes.time}>
+                            <Typography > { new Date().toDateString()}</Typography>
+                        </Box>
+
+                        <Box display="flex">
+                          <IconButton style={{color: "white"}} onClick={()=> {
+                            setOpenDateSelector(!openDateSelector)  
+                           
+                          }
+                          } > 
+                            <AccessTimeOutlined />
+                          </IconButton>
+                        </Box>
+                        </>
+
+                      }
+                      
+                      
+                    </Box>
+
+                    <Box display="flex" className={classes.storeName} alignContent="center">
+                       <Avatar className={classes.small}> J</Avatar>
+                    </Box>
+                   
+                  </Box>
                   </div> 
               }
               
