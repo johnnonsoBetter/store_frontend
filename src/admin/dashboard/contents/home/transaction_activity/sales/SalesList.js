@@ -46,10 +46,10 @@ function SalesList(){
 
     const classes = useStyles()
     const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
-    const {filteredSales, toggleSaleDrawer} = useContext(SalesContext)
+    const {filteredSales, toggleSaleDrawer, setReceiptId} = useContext(SalesContext)
 
-    const setupSale = () => {
-
+    const setupSale = (receipt_id) => {
+      setReceiptId(receipt_id)
       toggleSaleDrawer(true)
     }
    
@@ -59,7 +59,7 @@ function SalesList(){
 
         {
           filteredSales.map((sale) => {
-            const {cashier_name, total_items_amount, transaction_type, created_at, issue} = sale
+            const {receipt_id, cashier_name, total_items_amount, transaction_type, created_at, issue} = sale
 
           
             let shortName = cashier_name.toString().toUpperCase().charAt(0)
@@ -81,7 +81,7 @@ function SalesList(){
                   </Box>
                 </TableCell>
                 <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
-                <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick = {setupSale}> <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick = {()=> setupSale(receipt_id)}> <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
               </TableRow>
 
             )

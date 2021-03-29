@@ -226,7 +226,7 @@ function AuditItem(){
                         setItemInfo(null)
                         toggleItemDrawer()
                     }}>
-                        <Box width = {matches ? width : "100%"}   >
+                        <Box width = {matches ? width : 320}   >
                           {itemInfo ? <Item /> : null}
 
                         </Box>

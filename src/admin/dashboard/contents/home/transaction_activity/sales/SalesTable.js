@@ -1,12 +1,12 @@
 
-import {React, useContext, useEffect, useState} from 'react';
+import {React, useContext, useEffect, useState, useLayoutEffect} from 'react';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow} from '@material-ui/core/';
+import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow, useMediaQuery} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
+
     root: {
       display: 'flex',
       '& > *': {
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: deepOrange[500],
 
     },
-
+ 
     whiteText:  { 
       color: "white",
       textTransform: "capitalize"
@@ -84,6 +85,18 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.getContrastText(deepPurple[500]),
       backgroundColor: deepPurple[500],
     },
+    saleContainer: {
+      // [theme.breakpoints.up('sm')]: {
+      //   width: "100%"
+      // },
+      // width: 320,
+    },
+    tableComponent: {
+      maxHeight: 440
+    },
+    cell: {
+      backgroundColor: "black"
+    }
   }));
 
   const BootstrapInput = withStyles((theme) => ({
@@ -114,6 +127,20 @@ const useStyles = makeStyles((theme) => ({
   }))(InputBase);
 
 
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
+
+
 
 function SalesTable() {
   const classes = useStyles();
@@ -128,6 +155,8 @@ function SalesTable() {
   const [searchInput, setSearchInput] = useState('')
   const [saleDrawerOpened, setSaleDrawerOpened] = useState(false)
   const [receipt_id, setReceiptId] = useState('')
+  const matches = useMediaQuery('(max-width:600px)')
+  const [width] = useWindowSize()
 
 
   const filterSalesByIssue = () => {
@@ -230,12 +259,12 @@ function SalesTable() {
     }}> 
       <ThemeProvider theme={theme}>
           <Drawer anchor="right" open={saleDrawerOpened} onClose={()=> toggleSaleDrawer(false)}>
-            <Box>
+            <Box width={matches ? width : 320 } className={classes.saleContainer}>
               <Sale />
             </Box>
           </Drawer>
-        <TableContainer component={Paper} style={{backgroundColor: "black"}}>
-          <Box style={{backgroundColor: '#090A0A'}} alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
+        <TableContainer className={classes.tableComponent} component={Paper} style={{backgroundColor: "black"}}>
+          <Box  alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
 
             {
               showSearch ? 
@@ -349,16 +378,16 @@ function SalesTable() {
 
           </Box>  :
 
-        <Table  className={classes.table} aria-label="simple table">
-          <TableHead  stickyHeader style={{backgroundColor: "black"}} className={classes.noBottom}>
+        <Table stickyHeader  className={classes.table} aria-label="simple table">
+          <TableHead   style={{backgroundColor: "black"}} className={classes.noBottom}>
             <TableRow>
             
-              <TableCell align="center"> <Typography className={classes.whiteText}> Cashier </Typography></TableCell>
-              <TableCell align="center"> <Typography className={classes.whiteText}> Sales Amount </Typography> </TableCell>
-              <TableCell align="center"> <Typography className={classes.whiteText}> Transaction </Typography> </TableCell>
-              <TableCell align="center"> <Typography className={classes.whiteText}> Issue </Typography> </TableCell>
-              <TableCell align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
-              <TableCell align="center"> <Typography className={classes.whiteText}> Info </Typography></TableCell>
+              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cashier </Typography></TableCell>
+              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Sales Amount </Typography> </TableCell>
+              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Transaction </Typography> </TableCell>
+              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Issue </Typography> </TableCell>
+              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
+              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography></TableCell>
             </TableRow>
           </TableHead>
          
