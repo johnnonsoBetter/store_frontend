@@ -96,17 +96,26 @@ function SaleInfo(){
               </Box>
               <Box>
                 {
-                  cash_amount > 0 && 
+                  cash_amount > 0 && (transaction_type !== "pos_cashback" && transaction_type !== "transfer_cashback")
+                   && 
                   <Box display="flex" p={1} justifyContent="space-between">
                     <Box> <Typography> Cash: </Typography> </Box>
                     <Box> <Typography> ₦{AmountFormater(cash_amount).amount()} </Typography> </Box>
                   </Box>
                 }
+                {
+                  (transaction_type === "pos_cashback" || transaction_type === "transfer_cashback") &&
+                  <Box display="flex" p={1} justifyContent="space-between">
+                    <Box> <Typography> Paid Out: </Typography> </Box>
+                    <Box> <Typography> ₦{AmountFormater(cash_amount).amount()} </Typography> </Box>
+                  </Box>
+
+                }
                 
                 {
                   transfer_amount > 0 &&
                   <Box display="flex" p={1} justifyContent="space-between">
-                    <Box> <Typography> Transfer: </Typography> </Box>
+                    <Box> <Typography> Transfer Recieved: </Typography> </Box>
                     <Box> <Typography> ₦{AmountFormater(transfer_amount).amount()} </Typography> </Box>
                   </Box>
                 }
@@ -114,7 +123,7 @@ function SaleInfo(){
                 {
                   pos_amount > 0 &&
                   <Box display="flex" p={1} justifyContent="space-between">
-                    <Box> <Typography> Pos:</Typography> </Box>
+                    <Box> <Typography> Pos Recieved:</Typography> </Box>
                     <Box> <Typography> ₦{AmountFormater(pos_amount).amount()} </Typography> </Box>
                   </Box>
                 }
