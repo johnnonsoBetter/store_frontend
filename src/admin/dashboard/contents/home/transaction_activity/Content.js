@@ -72,7 +72,7 @@ function Content(){
    //  ?store=${storeName}`
     useEffect(()=> {
        updateSize()
-
+       console.log("entering page")
        axios({
          method: 'GET',
          url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,

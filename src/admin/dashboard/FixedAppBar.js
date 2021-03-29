@@ -15,6 +15,8 @@ import {
 
 import {useLocation} from 'react-router-dom'
 import { AccessTimeOutlined, CloseRounded } from '@material-ui/icons'
+import AdminDashboardStyleContext from '../../context/admin/AdminDashboardContext'
+import { DateTime } from 'luxon'
 
 const useStyles = makeStyles((theme) => ({
   
@@ -58,10 +60,14 @@ const defaultMaterialTheme = createMuiTheme({
 function StoreDatePicker() {
   
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
+
+  
  
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setStaticDate(date)
     console.log(date)
   };
 
@@ -92,6 +98,22 @@ function FixedAppBar(props){
     const [openDateSelector, setOpenDateSelector] = useState(false)
     
     const location = useLocation()
+    const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
+    
+  
+
+    if (staticDate !== ""){
+      const newDate = new Date(staticDate).toGMTString()
+
+      console.log(DateTime.fromHTTP(newDate))
+      const d = DateTime.fromHTTP(newDate)
+      const newStaticDate  =  DateTime.utc(d.year, d.month, d.day).toISODate()
+     
+      console.log(newStaticDate)
+ 
+    }else{
+      console.log("you can not work here ")
+    }
     
 
     useEffect(()=> {

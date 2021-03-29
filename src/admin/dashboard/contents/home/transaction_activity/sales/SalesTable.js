@@ -193,6 +193,7 @@ function SalesTable() {
 
   useEffect(()=> {
 
+  
     axios({
       method: 'GET',
       url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,

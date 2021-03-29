@@ -237,6 +237,9 @@ function AdminPage(props){
     const [generalStoreInfos, setGeneralStoreInfos] = useState([])
     const [transactionReviewInfos, setTransactionReviewInfos] = useState([])
     const [inventoryManagerInfos, setInventoryManagerInfos] = useState([])
+    const [staticDate, setStaticDate] = useState('')
+
+
 
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -264,6 +267,7 @@ function AdminPage(props){
 
               
               store: {
+
                 storeName: storeName,
                 dashboardData: dashboardData,
                 generalStoreInfos: generalStoreInfos,
@@ -273,7 +277,9 @@ function AdminPage(props){
                 setDashboardData: data => setDashboardData(data),
                 setGeneralStoreInfos: generalStoreInfos => setGeneralStoreInfos(generalStoreInfos),
                 setTransactionReviewInfos: transactionReviewInfos => setTransactionReviewInfos(transactionReviewInfos),
-                setInventoryManagerInfos: inventoryManagerInfos => setInventoryManagerInfos(inventoryManagerInfos)
+                setInventoryManagerInfos: inventoryManagerInfos => setInventoryManagerInfos(inventoryManagerInfos),
+                staticDate,
+                setStaticDate: (static_date) => setStaticDate(static_date)
               }
               
             }}>
@@ -332,7 +338,7 @@ function AdminPage(props){
                   <Switch>
 
                       <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity/" >
-                      <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                        <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
 
                          <Content />
                       </Route>
