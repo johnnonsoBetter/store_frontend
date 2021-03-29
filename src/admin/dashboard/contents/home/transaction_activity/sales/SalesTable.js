@@ -252,7 +252,7 @@ function SalesTable() {
       classes,
       circle,
       saleDrawerOpened,
-      toggleSaleDrawer,
+      toggleSaleDrawer: (saleDrawerOpened) => setSaleDrawerOpened(saleDrawerOpened),
       receipt_id,
       setReceiptId: (receipt_id)=> setReceiptId(receipt_id)
 

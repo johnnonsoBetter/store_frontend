@@ -1,18 +1,18 @@
-import { Typography, Box, IconButton, Avatar, makeStyles, Divider, Badge, Button} from '@material-ui/core'
+import { Typography, Box, IconButton, CircularProgress} from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import SalesContext  from '../../../../../../context/admin/transaction_activity/sales/SalesContext'
 import axios from 'axios'
 import { ArrowBackOutlined, CloseOutlined } from '@material-ui/icons'
-import deepOrange from '@material-ui/core/colors/deepOrange'
-import clsx from 'clsx';
 import { SaleInfoContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
 import SaleInfo from './SaleInfo'
 import ItemsSold from './ItemsSold'
 
 function Sale(){
-    const {receipt_id, setReceiptId} = useContext(SalesContext)
+    const {receipt_id, setReceiptId, toggleSaleDrawer} = useContext(SalesContext)
     const [items_sold, setItemsSold] = useState([])
     const [display, setDisplay] = useState('sale_info')
+    const [loading, setLoading] = useState(true)
+    const [failedToLoad, setFailedToLoad] = useState(false)
    
     
     const [sale, setSale] = useState({
@@ -44,10 +44,13 @@ function Sale(){
             setSale(sale)
             setItemsSold(item_solds)
             setDisplay('sale_info')
+            setLoading(false)
       
           }).catch(err => {
       
             console.log(err)
+            setFailedToLoad(true)
+           
           })
         return ()=>{
             setReceiptId('')
@@ -65,11 +68,14 @@ function Sale(){
               cashier_name: ""
           })
             setItemsSold([])
+            setDisplay('sale_info')
+            
+            
             
         }
     }, [])
 
-    console.log(items_sold)
+
     return (
         <Box p={1}>
             <Box display="flex"  width="100%" justifyContent="space-between" >
@@ -79,7 +85,7 @@ function Sale(){
 
 
               <Box display="flex">
-                <IconButton> <CloseOutlined />  </IconButton>
+                <IconButton onClick={() => toggleSaleDrawer(false)}> <CloseOutlined />  </IconButton>
               </Box>
                
             </Box>
@@ -91,9 +97,22 @@ function Sale(){
               display,
             }}>
 
-            {
-              display === "sale_info" ? <SaleInfo /> : <ItemsSold />
-            }
+              {
+                loading ? 
+                <Box height={450} alignItems="center" display="flex" justifyContent="center">
+                   
+                       
+                        {failedToLoad ? <Typography> Failed to load </Typography> :  <CircularProgress /> }
+                    
+                </Box>
+               
+                
+                : SaleComponent(display)
+
+
+              }
+
+            
 
             </SaleInfoContextProvider>
             
@@ -101,6 +120,15 @@ function Sale(){
         </Box>
 
     )
+}
+
+const SaleComponent = (display) => {
+
+  return (
+    
+      display === "sale_info" ? <SaleInfo /> : <ItemsSold />
+    
+  )
 }
 
 

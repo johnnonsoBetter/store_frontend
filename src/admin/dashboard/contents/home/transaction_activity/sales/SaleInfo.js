@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import deepOrange from '@material-ui/core/colors/deepOrange'
 import clsx from 'clsx';
 import SaleInfoContext from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
+import AmountFormater from '../../../../../../helpers/AmountFormater';
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -72,19 +73,19 @@ function SaleInfo(){
             <Box p={1} marginTop={1}> 
               <Box display="flex" p={1} justifyContent="space-between">
                 <Box> <Typography> Total Items Amount:</Typography> </Box>
-                <Box> <Typography> ₦{total_items_amount} </Typography> </Box>
+                <Box> <Typography> ₦{ AmountFormater(total_items_amount).amount()} </Typography> </Box>
               </Box>
 
               
               <Box display="flex" p={1} justifyContent="space-between">
                 <Box> <Typography> Total Amount Paid:</Typography> </Box>
-                <Box> <Typography> ₦{total_amount_paid} </Typography> </Box>
+                <Box> <Typography> ₦{AmountFormater(total_amount_paid).amount()} </Typography> </Box>
               </Box>
               {
                 discount > 0 &&
                 <Box display="flex" p={1} justifyContent="space-between">
                   <Box> <Typography> Discount:</Typography> </Box>
-                  <Box> <Typography style={{color: "red"}}> ₦{discount} </Typography> </Box>
+                  <Box> <Typography style={{color: "red"}}> ₦{AmountFormater(discount).amount()} </Typography> </Box>
                 </Box>
 
               }
@@ -98,7 +99,7 @@ function SaleInfo(){
                   cash_amount > 0 && 
                   <Box display="flex" p={1} justifyContent="space-between">
                     <Box> <Typography> Cash: </Typography> </Box>
-                    <Box> <Typography> {cash_amount} </Typography> </Box>
+                    <Box> <Typography> ₦{AmountFormater(cash_amount).amount()} </Typography> </Box>
                   </Box>
                 }
                 
@@ -106,7 +107,7 @@ function SaleInfo(){
                   transfer_amount > 0 &&
                   <Box display="flex" p={1} justifyContent="space-between">
                     <Box> <Typography> Transfer: </Typography> </Box>
-                    <Box> <Typography> {transfer_amount} </Typography> </Box>
+                    <Box> <Typography> ₦{AmountFormater(transfer_amount).amount()} </Typography> </Box>
                   </Box>
                 }
 
@@ -114,7 +115,7 @@ function SaleInfo(){
                   pos_amount > 0 &&
                   <Box display="flex" p={1} justifyContent="space-between">
                     <Box> <Typography> Pos:</Typography> </Box>
-                    <Box> <Typography> {pos_amount} </Typography> </Box>
+                    <Box> <Typography> ₦{AmountFormater(pos_amount).amount()} </Typography> </Box>
                   </Box>
                 }
 
@@ -122,7 +123,7 @@ function SaleInfo(){
                   cashback_profit > 0 &&
                   <Box display="flex" p={1} justifyContent="space-between">
                     <Box> <Typography> Cashback Profit:</Typography> </Box>
-                    <Box> <Typography> {cashback_profit} </Typography> </Box>
+                    <Box> <Typography> ₦{AmountFormater(cashback_profit).amount()} </Typography> </Box>
                   </Box>
                 }
 
