@@ -1,4 +1,4 @@
-import { Box, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
+import { Box, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails, Typography} from '@material-ui/core'
 import axios from 'axios';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import {React, useContext, useEffect, useLayoutEffect, useState} from 'react'
@@ -14,6 +14,7 @@ import ExpensesTable from './expenses/ExpensesTable';
 import DebtTable from './debts/DebtTable';
 import TransactionFixedAppBar from './TransactionFIxedAppBar';
 import AdminDashboardStyleContext from '../../../../../context/admin/AdminDashboardContext';
+import NoActivity from '../NoActivity';
 
 
 
@@ -72,12 +73,46 @@ function Content(){
     const {handleDrawerToggle} = useContext(AdminDashboardStyleContext)
     const {staticDate, setStaticDate} = useContext(AdminDashboardStyleContext).store
 
+
+    function noTransaction(obj){
+       return Object.keys(obj).length === 0
+    }
+
     
 
     function updateSize() {
       setWidth(window.innerWidth);
      
     }
+
+    const setTransactionByDate = (date) => {
+       console.log("former static date ", staticDate)
+       console.log("are we allowed to know the cps", date)
+      axios({
+         method: 'GET',
+         url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
+         headers: JSON.parse(localStorage.getItem('admin')),
+         params: {static_date: date}
+       }).then(response => {
+         
+         const {transaction_activity} = response.data
+
+         setTableType(null)
+         setShow(false)
+
+         console.log(transaction_activity)
+         
+          setTransactionActivity(transaction_activity)
+        
+       }).catch(err => {
+
+         console.log(err)
+       })
+
+    }
+
+
+
    //  ?store=${storeName}`
     useEffect(()=> {
        updateSize()
@@ -90,6 +125,7 @@ function Content(){
          console.log(response)
 
          const {transaction_activity} = response.data
+
          
          setTransactionActivity(transaction_activity)
         
@@ -139,43 +175,51 @@ function Content(){
                }}
             >
                <Container className={classes.root}>
-                     <FixedAppBar handleDrawerToggle={handleDrawerToggle} resetContent={()=> {
-                        setTableType(null)
-                        setShow(false)
-
-                     }}/>
-                     <Box width="90vw" className={classes.cont}>
-                        <ContentNav />
-                     
-                     </Box>
-
-                     <Box marginTop={4} >
-                        <Overview width={width}/>
-                     
-                     </Box>
-
-                     <Box marginTop={4} marginBottom={2}>
-                        <Accordion style={{backgroundColor: "black"}} expanded={show}>
-                           <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls="panel1a-content"
-                              id="panel1a-header"
-                           >
+                     <FixedAppBar handleDrawerToggle={handleDrawerToggle} resetContent={setTransactionByDate}/>
+                     {
+                        noTransaction(transactionActivity) ? <NoActivity activity="Transaction" date={staticDate}/>
+                        :
+                        <div>
+                           <Box width="90vw" className={classes.cont}>
+                              <ContentNav />
                            
-                           </AccordionSummary>
-                           <AccordionDetails>
+                           </Box>
+
+                           <Box marginTop={4} >
+                              <Overview width={width}/>
+                           
+                           </Box>
+
+                           <Box marginTop={4} marginBottom={2}>
+                              <Accordion style={{backgroundColor: "black"}} expanded={show}>
+                                 <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                 >
+                                 
+                                 </AccordionSummary>
+                                 <AccordionDetails>
+                                    
+                                    {
+                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : null
+                                    }
+                                 
+                                 
+                                 </AccordionDetails>
+                              </Accordion>
                               
-                              {
-                                 tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : null
-                              }
-                           
-                           
-                           </AccordionDetails>
-                        </Accordion>
+
+                           </Box>
+
+
+
+
+                        </div>
                         
 
-                     </Box>
-
+                     }
+                    
                </Container>
             </TransactionActivityContextProvider>
       </>

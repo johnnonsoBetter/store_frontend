@@ -74,7 +74,7 @@ function StoreDatePicker(props) {
     
     const d = DateTime.fromHTTP(new Date(date).toGMTString())
     setStaticDate( d.toISODate())
-    resetContent()
+    resetContent(d.toISODate())
     console.log("this is the iso date ", d.toISODate())
   };
 
@@ -86,7 +86,7 @@ function StoreDatePicker(props) {
         
         <DatePicker
         disableToolbar
-        variant="inline"
+        
         color="primary"
         value={selectedDate}
         onChange={handleDateChange}
@@ -107,30 +107,7 @@ function FixedAppBar(props){
     const location = useLocation()
     const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
     
-  
 
-    if (staticDate !== ""){
-      const newDate = new Date(staticDate).toGMTString()
-
-    
-      const d = DateTime.fromHTTP(newDate)
-     
-      const newStaticDate  =  DateTime.utc(d.year, d.month, d.day).toISODate()
-      console.log("you can work here ")
-     
- 
-    }else{
-      console.log("you can not work here ")
-    }
-    
-
-    useEffect(()=> {
-
-      return ()=> {
-        // setOpenDateSelector(false)
-      }
-    }, [])
-   
     return (
 
         <AppBar position="fixed" className={appBar} >
