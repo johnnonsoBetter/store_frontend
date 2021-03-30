@@ -111,9 +111,6 @@ function Content(){
 
     }
 
-
-
-   //  ?store=${storeName}`
     useEffect(()=> {
        updateSize()
        console.log("entering page")
@@ -171,6 +168,7 @@ function Content(){
                   },
                   setTransactionActivity,
                   setShow,
+                  staticDate,
                   
                }}
             >

@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow, useMediaQuery} from '@material-ui/core/';
+import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow, useMediaQuery, CircularProgress} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
@@ -22,6 +22,7 @@ import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
 import Sale from './Sale';
 import { useParams } from 'react-router-dom';
+import FailedActivityLoader from '../../FailedActivitiyLoader';
 
 
 
@@ -148,7 +149,7 @@ function SalesTable() {
   const classes = useStyles();
   const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
   const {storeName} = useParams()
-  const {setTransactionActivity, setTableType} = useContext(TransactionActivityContext)
+  const {setTransactionActivity, setTableType, staticDate} = useContext(TransactionActivityContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const [transactionTypeFilter, setTransactionTypeFilter] = useState('all')
   const [sales, setSales] = useState([])
@@ -159,9 +160,8 @@ function SalesTable() {
   const [receipt_id, setReceiptId] = useState('')
   const matches = useMediaQuery('(max-width:600px)')
   const [width] = useWindowSize()
-
-
-  console.log("i am sales")
+  const [loading, setLoading] = useState(true)
+  const [failed, setFailed] = useState(false)
 
 
   const filterSalesByIssue = () => {
@@ -196,25 +196,62 @@ function SalesTable() {
 
   useEffect(()=> {
 
+    if (staticDate !== ""){
+      axios({
+        method: 'GET',
+        url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
+        headers: JSON.parse(localStorage.getItem('admin')),
+        params: {static_date: staticDate}
+      }).then(response => {
+        
+        const {transaction_activity, sales} = response.data
   
-    axios({
-      method: 'GET',
-      url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
-      headers: JSON.parse(localStorage.getItem('admin'))
-    }).then(response => {
-      console.log(response)
+        console.log(transaction_activity)
+        
+        setTransactionActivity(transaction_activity)
+        setSales(sales)
+        setFilteredSales(sales)
+        setTableType('sales')
+        setLoading(false)
+        setFailed(false)
+       
+      }).catch(err => {
+  
+        console.log(err)
+        setLoading(false)
+        setFailed(true)
+        
+      })
+  
 
-       const {transaction_activity, sales} = response.data
-      
-       setTransactionActivity(transaction_activity)
-       setSales(sales)
-       setFilteredSales(sales)
-       setTableType('sales')
-      
-    }).catch(err => {
+    }else{
+      axios({
+        method: 'GET',
+        url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
+        headers: JSON.parse(localStorage.getItem('admin'))
+      }).then(response => {
+        console.log(response)
+  
+         const {transaction_activity, sales} = response.data
+        
+         setTransactionActivity(transaction_activity)
+         setSales(sales)
+         setFilteredSales(sales)
+         setTableType('sales')
+         setLoading(false)
+        
+      }).catch(err => {
+  
+        console.log(err)
+        setFailed(true)
+      })
 
-      console.log(err)
-    })
+
+    }
+
+   
+  
+   
 
     return ()=> {
       setSales([])
@@ -222,6 +259,8 @@ function SalesTable() {
       setFilteredSales([])
       setShowSearch(false)
       setSearchInput("")
+      setLoading(true)
+      setFailed(false)
 
     }
   }, [])
@@ -376,9 +415,14 @@ function SalesTable() {
             </Box>
          
        
-        
+       
 
-        {
+         
+
+         {
+           loading ? <CircularProgress> </CircularProgress> : failed ? <FailedActivityLoader activity="Sales" /> :
+         
+       
           filteredSales.length === 0 ? <Box m={5}>
               <Typography>  <div style={{color: "white"}}> No Data</div> </Typography>
 
