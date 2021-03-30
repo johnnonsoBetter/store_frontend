@@ -1,7 +1,7 @@
 import { Box, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 import axios from 'axios';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import {React, useEffect, useLayoutEffect, useState} from 'react'
+import {React, useContext, useEffect, useLayoutEffect, useState} from 'react'
 import { TransactionActivityContextProvider } from '../../../../../context/admin/transaction_activity/TransactionActivity';
 import ContentNav from './ContentNav';
 import Overview from './Overview';
@@ -9,6 +9,11 @@ import SalesTable from './sales/SalesTable';
 
 import DatePicker from '../../../DatePicker'
 import { useParams } from 'react-router-dom';
+import FixedAppBar from '../../../FixedAppBar';
+import ExpensesTable from './expenses/ExpensesTable';
+import DebtTable from './debts/DebtTable';
+import TransactionFixedAppBar from './TransactionFIxedAppBar';
+import AdminDashboardStyleContext from '../../../../../context/admin/AdminDashboardContext';
 
 
 
@@ -64,6 +69,10 @@ function Content(){
     const [tableType, setTableType] = useState(null)
     const [loading, setLoading] = useState(true)
     const [show, setShow] = useState(false)
+    const {handleDrawerToggle} = useContext(AdminDashboardStyleContext)
+    const {staticDate, setStaticDate} = useContext(AdminDashboardStyleContext).store
+
+    
 
     function updateSize() {
       setWidth(window.innerWidth);
@@ -92,6 +101,9 @@ function Content(){
 
        return ()=> {
           setWidth(0)
+          setTableType(null)
+          setTransactionActivity({})
+          setStaticDate('')
 
        }
     }, [])
@@ -111,66 +123,63 @@ function Content(){
 
     return (
          <>
-         <TransactionActivityContextProvider 
-            value= {{
-               transactionActivity: transactionActivity,
-               preview: [],
-               tableType: "",
-               show,
-               loading,
-               setTableType: (tableType)=> {
-                  setTableType(tableType)
-               },
-               setTransactionActivity,
-               setShow,
-               
-            }}
-         >
-            <Container className={classes.root}>
+            <TransactionActivityContextProvider 
+               value= {{
+                  transactionActivity: transactionActivity,
+                  preview: [],
+                  tableType,
+                  show,
+                  loading,
+                  setTableType: (tableType)=> {
+                     setTableType(tableType)
+                  },
+                  setTransactionActivity,
+                  setShow,
                   
-                  <Box width="90vw" className={classes.cont}>
-                     <ContentNav />
-                  
-                  </Box>
+               }}
+            >
+               <Container className={classes.root}>
+                     <FixedAppBar handleDrawerToggle={handleDrawerToggle} resetContent={()=> {
+                        setTableType(null)
+                        setShow(false)
 
-                  <Box marginTop={4} >
-                     <Overview width={width}/>
-                  
-                  </Box>
-
-                  <Box marginTop={4} marginBottom={2}>
-                     <Accordion style={{backgroundColor: "black"}} expanded={show}>
-                        <AccordionSummary
-                           expandIcon={<ExpandMoreIcon />}
-                           aria-controls="panel1a-content"
-                           id="panel1a-header"
-                        >
-                          
-                        </AccordionSummary>
-                        <AccordionDetails>
-                           
-                           {
-                              tableType === "sales" ? <SalesTable /> : null
-                           }
-                          
-                          
-                        </AccordionDetails>
-                     </Accordion>
+                     }}/>
+                     <Box width="90vw" className={classes.cont}>
+                        <ContentNav />
                      
+                     </Box>
 
-                  </Box>
+                     <Box marginTop={4} >
+                        <Overview width={width}/>
+                     
+                     </Box>
 
-            </Container>
-         </TransactionActivityContextProvider>
-           
- 
-         </>
+                     <Box marginTop={4} marginBottom={2}>
+                        <Accordion style={{backgroundColor: "black"}} expanded={show}>
+                           <AccordionSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls="panel1a-content"
+                              id="panel1a-header"
+                           >
+                           
+                           </AccordionSummary>
+                           <AccordionDetails>
+                              
+                              {
+                                 tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : null
+                              }
+                           
+                           
+                           </AccordionDetails>
+                        </Accordion>
+                        
 
+                     </Box>
 
-  
-           
-            
-     
+               </Container>
+            </TransactionActivityContextProvider>
+      </>
+
     )
 }
 

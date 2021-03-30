@@ -60,7 +60,7 @@ function ContentNav(){
                             
             
         
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(41 138 175 / 68%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> handleTableType("expenses") }  style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(41 138 175 / 68%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Expenses</Typography>
@@ -76,7 +76,7 @@ function ContentNav(){
         
             
         
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #922721)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> handleTableType("debts") } style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #922721)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Debts</Typography>

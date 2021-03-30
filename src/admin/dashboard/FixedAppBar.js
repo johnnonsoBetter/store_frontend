@@ -57,18 +57,25 @@ const defaultMaterialTheme = createMuiTheme({
   color: "green"
 });
 
-function StoreDatePicker() {
+function StoreDatePicker(props) {
   
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
+  const {resetContent} = props
 
   
  
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setStaticDate(date)
-    console.log(date)
+    const newDate = new Date(staticDate).toGMTString()
+    
+
+    
+    const d = DateTime.fromHTTP(new Date(date).toGMTString())
+    setStaticDate( d.toISODate())
+    resetContent()
+    console.log("this is the iso date ", d.toISODate())
   };
 
  
@@ -105,11 +112,12 @@ function FixedAppBar(props){
     if (staticDate !== ""){
       const newDate = new Date(staticDate).toGMTString()
 
-      console.log(DateTime.fromHTTP(newDate))
+    
       const d = DateTime.fromHTTP(newDate)
-      const newStaticDate  =  DateTime.utc(d.year, d.month, d.day).toISODate()
      
-      console.log(newStaticDate)
+      const newStaticDate  =  DateTime.utc(d.year, d.month, d.day).toISODate()
+      console.log("you can work here ")
+     
  
     }else{
       console.log("you can not work here ")
@@ -132,6 +140,7 @@ function FixedAppBar(props){
             aria-label="open drawer"
             edge="start"
             onClick={props.handleDrawerToggle}
+            
             className={menuButton}
            
 
@@ -154,7 +163,7 @@ function FixedAppBar(props){
                         openDateSelector ?
                         <Slide direction="down" in={true}>
                           <Box className={classes.dateSelector} display="flex" alignItems="center" width="100%">
-                          <StoreDatePicker />
+                          <StoreDatePicker  resetContent={props.resetContent}/>
                           <IconButton onClick={()=> setOpenDateSelector(!openDateSelector)} > <CloseRounded /> </IconButton>
                         </Box>
 

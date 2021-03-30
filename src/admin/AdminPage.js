@@ -263,6 +263,8 @@ function AdminPage(props){
               muiTheme: muiTheme,
               styles: classes,
               drawerWidth: drawerWidth,
+
+              handleDrawerToggle,
               
 
               
@@ -338,8 +340,7 @@ function AdminPage(props){
                   <Switch>
 
                       <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity/" >
-                        <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
-
+                        
                          <Content />
                       </Route>
 

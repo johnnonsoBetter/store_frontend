@@ -161,6 +161,9 @@ function SalesTable() {
   const [width] = useWindowSize()
 
 
+  console.log("i am sales")
+
+
   const filterSalesByIssue = () => {
 
     const newlyfilteredSales = sales.filter(sale => sale.issue === true)
