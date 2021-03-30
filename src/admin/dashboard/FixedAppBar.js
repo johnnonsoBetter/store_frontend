@@ -66,17 +66,7 @@ function StoreDatePicker(props) {
   
  
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    const newDate = new Date(staticDate).toGMTString()
-    
-
-    
-    const d = DateTime.fromHTTP(new Date(date).toGMTString())
-    setStaticDate( d.toISODate())
-    resetContent(d.toISODate())
-    console.log("this is the iso date ", d.toISODate())
-  };
+  
 
  
 
@@ -88,8 +78,8 @@ function StoreDatePicker(props) {
         disableToolbar
         
         color="primary"
-        value={selectedDate}
-        onChange={handleDateChange}
+        value={props.selectedDate}
+        onChange={props.handleDateChange}
       />
           
         </MuiPickersUtilsProvider>
@@ -103,9 +93,21 @@ function FixedAppBar(props){
     const classes = useStyles()
     const {appBar, menuButton, appBarPickerContainer,  toolbar} = useContext(AdminDashboardContext).styles
     const [openDateSelector, setOpenDateSelector] = useState(false)
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
+    const {resetContent} = props
     
     const location = useLocation()
     const {storeName} = useContext(AdminDashboardStyleContext).store
+
+    const handleDateChange = (date) => {
+      setSelectedDate(date);
+      const newDate = new Date(staticDate).toGMTString()
+      const d = DateTime.fromHTTP(new Date(date).toGMTString())
+      setStaticDate( d.toISODate())
+      resetContent(d.toISODate())
+      setOpenDateSelector(!openDateSelector)
+    };
     
 
     return (
@@ -117,10 +119,7 @@ function FixedAppBar(props){
             aria-label="open drawer"
             edge="start"
             onClick={props.handleDrawerToggle}
-            
             className={menuButton}
-           
-
           >
             
             <MenuIcon />
@@ -140,7 +139,7 @@ function FixedAppBar(props){
                         openDateSelector ?
                         <Slide direction="down" in={true}>
                           <Box className={classes.dateSelector} display="flex" alignItems="center" width="100%">
-                          <StoreDatePicker  resetContent={props.resetContent}/>
+                          <StoreDatePicker handleDateChange={handleDateChange} selectedDate={selectedDate}  resetContent={props.resetContent}/>
                           <IconButton onClick={()=> setOpenDateSelector(!openDateSelector)} > <CloseRounded /> </IconButton>
                         </Box>
 
@@ -149,7 +148,7 @@ function FixedAppBar(props){
                          : 
                         <>
                         <Box display="flex" className={classes.time}>
-                            <Typography > { new Date().toDateString()}</Typography>
+                            <Typography > { selectedDate.toDateString()}</Typography>
                         </Box>
 
                         <Box display="flex">
