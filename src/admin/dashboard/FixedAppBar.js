@@ -101,11 +101,11 @@ function StoreDatePicker(props) {
 
 function FixedAppBar(props){
     const classes = useStyles()
-    const {appBar, menuButton, appBarPickerContainer, toolbar} = useContext(AdminDashboardContext).styles
+    const {appBar, menuButton, appBarPickerContainer,  toolbar} = useContext(AdminDashboardContext).styles
     const [openDateSelector, setOpenDateSelector] = useState(false)
     
     const location = useLocation()
-    const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
+    const {storeName} = useContext(AdminDashboardStyleContext).store
     
 
     return (
@@ -169,7 +169,7 @@ function FixedAppBar(props){
                     </Box>
 
                     <Box display="flex" className={classes.storeName} alignContent="center">
-                       <Avatar className={classes.small}> J</Avatar>
+                       <Avatar className={classes.small}> {storeName.charAt(0)}</Avatar>
                     </Box>
                    
                   </Box>

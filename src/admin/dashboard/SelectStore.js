@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {Box, Select, MenuItem, CircularProgress, Backdrop} from '@material-ui/core/'
+import {Box, Select, MenuItem, CircularProgress, Backdrop, Button, Menu} from '@material-ui/core/'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
 import AmountFormater from '../../helpers/AmountFormater'
@@ -12,13 +12,14 @@ function SelectStore(){
   const {changeStoreName, setDashboardData, setGeneralStoreInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
   const [backdropState, setBackdropState] = React.useState(false);
 
+
   
 
-    const handleChange = (event) => {
+    const handleChange = (store) => {
       setBackdropState(true)
       axios({
         method: "GET",
-        url: `http://localhost:3001/api/v1/admin_dashboard/?store=${event.target.value}`,
+        url: `http://localhost:3001/api/v1/admin_dashboard/?store=${store}`,
         headers: JSON.parse(localStorage.getItem('admin'))
       }).then(response => {
           const {data} = response
@@ -26,8 +27,8 @@ function SelectStore(){
       
           
             setDashboardData(data)
-            changeStoreName(event.target.value)
-            setStore(event.target.value);
+            changeStoreName(store)
+            setStore(store);
             setTimeout(() => {
               setBackdropState(false)
           }, 2000)
@@ -94,6 +95,16 @@ function SelectStore(){
       })
     };
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
    
 
 
@@ -108,20 +119,28 @@ function SelectStore(){
                 :
             <Box display="flex"  justifycontent="center" alignItems="center" color="white" className={selectStore} >
                     
-              <ShoppingCartIcon className={storeIcon}/>
-              <Select
-                labelId="demo-simple-select-label"
-               
-                value={store}
-                style={{color: "whitesmoke"}}
-                onChange={handleChange}
-              >
-                <MenuItem  value={"upright"}>Upright</MenuItem>
-                <MenuItem value={"dechoice"}>Dechoice</MenuItem>
-                
-              </Select>
+                <ShoppingCartIcon  aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={storeIcon}/>
+              
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  
+                  <MenuItem onClick={()=> {
+                    handleClose()
+                    handleChange("upright")
+                  }}>Upright</MenuItem>
+                  <MenuItem onClick={()=> {
+                    handleClose()
+                    handleChange("dechoice")
+                  }}>Dechoice</MenuItem>
+                </Menu>
             </Box>
             }
+            
            
             
             </div>
@@ -130,3 +149,4 @@ function SelectStore(){
 }
 
 export default SelectStore
+

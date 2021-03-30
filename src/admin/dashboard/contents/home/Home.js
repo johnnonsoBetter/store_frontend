@@ -98,7 +98,7 @@ function Home(){
             setDashboardData({})
             setGeneralStoreInfos([])
             setTransactionReviewInfos([])
-            changeStoreName("upright")
+            
         }
     }, [])
     
