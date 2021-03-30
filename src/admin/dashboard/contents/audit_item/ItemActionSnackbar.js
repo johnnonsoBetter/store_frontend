@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import {Snackbar} from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert'
@@ -12,7 +12,7 @@ function Alert(props) {
 function ItemActionSnackbar(){
 
    
-    const {itemName, action, snackBarOpened, snackBarAction, taskDone} = useContext(AuditModeContext).snackBarAction
+    const {itemName, action, snackBarOpened, taskDone} = useContext(AuditModeContext).snackBarAction
     const {setSnackBarAction} = useContext(AuditModeContext)
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

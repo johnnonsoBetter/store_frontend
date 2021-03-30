@@ -5,7 +5,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Box, makeStyles, useMediaQuery } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import PastDayPreview from './PastDayPreview';
 import DailyPreview from './DailyPreview';
 import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity';

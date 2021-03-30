@@ -1,22 +1,16 @@
 import {React, useState, useContext} from 'react'
-import {Box, Drawer, InputAdornment, InputLabel, OutlinedInput, TextField, Button, MenuItem, Typography, IconButton, useMediaQuery, Snackbar} from '@material-ui/core'
+import {Box, Drawer, InputAdornment, InputLabel, OutlinedInput, TextField, Button, MenuItem, Typography, IconButton, useMediaQuery} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import axios from 'axios'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
-import MuiAlert from '@material-ui/lab/Alert'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
-
-
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
   
 
 function CreateItem(){
 
     const matches = useMediaQuery('(min-width:600px)')
     const {items, setItems, setTotalItems, setSnackBarAction, categories} = useContext(AuditModeContext)
-    const {itemName, snackBarAction} = useContext(AuditModeContext).snackBarAction
+    const {snackBarAction} = useContext(AuditModeContext).snackBarAction
 
 
     const handleChange = (e) => {

@@ -1,5 +1,5 @@
-import { Typography, Box, IconButton, Avatar, makeStyles, Divider, Badge, Button} from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import { Typography, Box, Avatar, makeStyles, Divider, Badge, Button} from '@material-ui/core'
+import React, { useContext } from 'react'
 import deepOrange from '@material-ui/core/colors/deepOrange'
 import clsx from 'clsx';
 import SaleInfoContext from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
@@ -99,7 +99,7 @@ function SaleInfo(){
                   cash_amount > 0 && (transaction_type !== "pos_cashback" && transaction_type !== "transfer_cashback")
                    && 
                   <Box display="flex" p={1} justifyContent="space-between">
-                    <Box> <Typography> Cash: </Typography> </Box>
+                    <Box> <Typography> Cash Received: </Typography> </Box>
                     <Box> <Typography> ₦{AmountFormater(cash_amount).amount()} </Typography> </Box>
                   </Box>
                 }

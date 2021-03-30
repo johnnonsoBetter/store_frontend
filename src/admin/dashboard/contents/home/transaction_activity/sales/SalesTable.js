@@ -12,11 +12,9 @@ import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity';
 import axios from 'axios'
-import { DateTime } from 'luxon';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red'
 import {ThemeProvider} from '@material-ui/styles'
-import ArrowForward from '@material-ui/icons/ArrowForward'
 import grey from '@material-ui/core/colors/grey'
 import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';

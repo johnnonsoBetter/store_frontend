@@ -13,9 +13,6 @@ function UpdateItem({...props}){
     const {toggleUpdate} = props
     const {item, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
-
-    const [ setCategoryId] = useState(0)
-    const [setCategoryName] = useState(category['name'])
     
     const [updateItem, setItem] = useState({
         real_item: {

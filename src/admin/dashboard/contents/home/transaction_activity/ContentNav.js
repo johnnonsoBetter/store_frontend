@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Box, ButtonBase, CircularProgress, makeStyles, Typography, useMediaQuery} from '@material-ui/core'
+import { Box, ButtonBase, CircularProgress, makeStyles, Typography} from '@material-ui/core'
 import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
 import AmountFormater from '../../../../../helpers/AmountFormater'
 
@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
        width: 220,
        minWidth: 220,
        minHeight: 135,
-       display: "inline-block",
        borderRadius: "9px",
        display: "inline-block",
        marginRight: theme.spacing(2),

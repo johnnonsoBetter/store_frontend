@@ -1,4 +1,4 @@
-import { Box, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails, Typography} from '@material-ui/core'
+import { Box, Container, makeStyles, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
 import axios from 'axios';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import {React, useContext, useEffect, useLayoutEffect, useState} from 'react'
@@ -6,13 +6,10 @@ import { TransactionActivityContextProvider } from '../../../../../context/admin
 import ContentNav from './ContentNav';
 import Overview from './Overview';
 import SalesTable from './sales/SalesTable';
-
-import DatePicker from '../../../DatePicker'
 import { useParams } from 'react-router-dom';
 import FixedAppBar from '../../../FixedAppBar';
 import ExpensesTable from './expenses/ExpensesTable';
 import DebtTable from './debts/DebtTable';
-import TransactionFixedAppBar from './TransactionFIxedAppBar';
 import AdminDashboardStyleContext from '../../../../../context/admin/AdminDashboardContext';
 import NoActivity from '../NoActivity';
 
@@ -41,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
        minHeight: 135,
        display: "inline-block",
        borderRadius: "9px",
-       display: "inline-block",
        marginRight: theme.spacing(2),
        marginLeft: theme.spacing(2),
    

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import {AppBar, Toolbar, IconButton, Typography, Avatar, Box, makeStyles, Grow, Slide} from '@material-ui/core'
+import React, { useContext, useState } from 'react'
+import {AppBar, Toolbar, IconButton, Typography, Avatar, Box, makeStyles, Slide} from '@material-ui/core'
 import SelectStore from './SelectStore'
 import MenuIcon from '@material-ui/icons/Menu'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext'
@@ -59,17 +59,6 @@ const defaultMaterialTheme = createMuiTheme({
 
 function StoreDatePicker(props) {
   
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
-  const {resetContent} = props
-
-  
- 
-
-  
-
- 
-
   return (
     <ThemeProvider theme={defaultMaterialTheme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils} >
@@ -94,7 +83,7 @@ function FixedAppBar(props){
     const {appBar, menuButton, appBarPickerContainer,  toolbar} = useContext(AdminDashboardContext).styles
     const [openDateSelector, setOpenDateSelector] = useState(false)
     const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const {setStaticDate, staticDate} = useContext(AdminDashboardStyleContext).store
+    const {setStaticDate} = useContext(AdminDashboardStyleContext).store
     const {resetContent} = props
     
     const location = useLocation()
@@ -102,7 +91,6 @@ function FixedAppBar(props){
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
-      const newDate = new Date(staticDate).toGMTString()
       const d = DateTime.fromHTTP(new Date(date).toGMTString())
       setStaticDate( d.toISODate())
       resetContent(d.toISODate())
@@ -129,12 +117,13 @@ function FixedAppBar(props){
                 
                   <div className={appBarPickerContainer}>
                   {
-                    location.pathname === "/admin_dashboard" && <SelectStore />
+                    location.pathname === "/admin_dashboard" && <Box marginLeft={10} > <SelectStore /> </Box> 
                   }
                   
                   
                   <Box display="flex" width="100%" alignItems="center" justifyContent="space-around">
-                    <Box display="flex" alignItems="center"  flexGrow={1}>
+                    { location.pathname !== "/admin_dashboard" &&
+                      <Box display="flex" alignItems="center"  flexGrow={1}>
                       {
                         openDateSelector ?
                         <Slide direction="down" in={true}>
@@ -145,7 +134,7 @@ function FixedAppBar(props){
 
                         </Slide>
                         
-                         : 
+                          : 
                         <>
                         <Box display="flex" className={classes.time}>
                             <Typography > { selectedDate.toDateString()}</Typography>
@@ -154,7 +143,7 @@ function FixedAppBar(props){
                         <Box display="flex">
                           <IconButton style={{color: "white"}} onClick={()=> {
                             setOpenDateSelector(!openDateSelector)  
-                           
+                            
                           }
                           } > 
                             <AccessTimeOutlined />
@@ -165,7 +154,7 @@ function FixedAppBar(props){
                       }
                       
                       
-                    </Box>
+                    </Box>}
 
                     <Box display="flex" className={classes.storeName} alignContent="center">
                        <Avatar className={classes.small}> {storeName.charAt(0)}</Avatar>

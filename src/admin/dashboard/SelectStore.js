@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {Box, Select, MenuItem, CircularProgress, Backdrop, Button, Menu} from '@material-ui/core/'
+import {Box, MenuItem, CircularProgress, Backdrop, Menu} from '@material-ui/core/'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
 import AmountFormater from '../../helpers/AmountFormater'
@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 function SelectStore(){
-  const [store, setStore] = React.useState('upright');
+  const [setStore] = React.useState('upright');
   const {selectStore, storeIcon, backdrop} = useContext(AdminDashboardContext).styles
   const {changeStoreName, setDashboardData, setGeneralStoreInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
   const [backdropState, setBackdropState] = React.useState(false);
