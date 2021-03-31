@@ -21,6 +21,8 @@ import { SalesContextProvider } from '../../../../../../context/admin/transactio
 import Sale from './Sale';
 import { useParams } from 'react-router-dom';
 import FailedActivityLoader from '../../FailedActivitiyLoader';
+import Loader from '../../../../Loader';
+import NoData from '../../NoData';
 
 
 
@@ -418,12 +420,11 @@ function SalesTable() {
          
 
          {
-           loading ? <CircularProgress> </CircularProgress> : failed ? <FailedActivityLoader activity="Sales" /> :
+           loading ? <Loader minHeight={300}/> : failed ? <FailedActivityLoader activity="Sales" /> :
          
        
           filteredSales.length === 0 ? <Box m={5}>
-              <Typography>  <div style={{color: "white"}}> No Data</div> </Typography>
-
+              <NoData minHeight={300} activity="Sales" />
           </Box>  :
 
         <Table stickyHeader  className={classes.table} aria-label="simple table">

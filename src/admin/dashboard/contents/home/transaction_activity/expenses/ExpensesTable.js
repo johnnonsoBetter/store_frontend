@@ -9,6 +9,10 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {DateTime} from 'luxon'
+import Loader from '../../../../Loader'
+import FailedActivityLoader from '../../FailedActivitiyLoader'
+import NoData from '../../NoData'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
 function ExpensesTable(){
     const {storeName} = useParams()
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
-    
-   
+    const [loading, setLoading] = useState(true)
+    const [failed, setFailed] = useState(false)
     const [expenses, setExpenses] = useState([])
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -60,10 +64,13 @@ function ExpensesTable(){
              console.log(expenses)
              setTransactionActivity(transaction_activity)
              setExpenses(expenses)
+             setLoading(false)
             
             }).catch(err => {
         
               console.log(err)
+              setLoading(false)
+              setFailed(true)
              
               
             })
@@ -80,11 +87,14 @@ function ExpensesTable(){
               console.log(expenses)
               setTransactionActivity(transaction_activity)
               setExpenses(expenses)
+              setLoading(false)
         
               
             }).catch(err => {
         
               console.log(err)
+              setLoading(false)
+              setFailed(true)
               
             })
       
@@ -93,6 +103,8 @@ function ExpensesTable(){
 
           return ()=> {
               setExpenses([])
+              setLoading(true)
+              setFailed(false)
           }
           
           
@@ -101,56 +113,77 @@ function ExpensesTable(){
 
     return (
 
+      <Box width="100%">
+        {
+          loading ? <Loader  minHeight={300}/> :
+            failed ? <FailedActivityLoader activity="expenses" />
+          : 
 
-       <Box width="100%">
+       <Box widht="100%">
 
-         {
-           expenses.map(expense => {
-            const {cost, detail, created_at, cashier_name, id} = expense
-            const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+          {
 
-            return (
-               <Box width="100%"  key={id} id={id} p={1}>
-                <Accordion style={{backgroundColor: "rgb(31 41 84)", color: "white"}}  expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
-                <AccordionSummary 
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1bh-content"
-                  id= {`panel${id}-header`}
-                >
-                  <Typography className={classes.heading}>₦{cost}</Typography>
-                  <Box display="flex" width="100%" justifyContent="center" >
-                    <Typography className={classes.secondaryHeading}>{cashier_name}</Typography>
-                   </Box>
-                  
-                </AccordionSummary>
-                <AccordionDetails style={{backgroundColor: "rgb(31 41 84)", color: "white"}}>
-                  
-                  
+            expenses.length === 0 ? 
+            <NoData activity="Expenses" minHeight={300}/> :
+            <Box width="100%">
 
-                  <Grid spacing={3} container>
-                    <Grid  item xs={12} sm={8}>
-                      <Box >
-                        <Typography className={classes.detail}>
-                          {detail}
-                        </Typography>
+            {
+              expenses.map(expense => {
+               const {cost, detail, created_at, cashier_name, id} = expense
+               const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+   
+               return (
+                  <Box width="100%"  key={id} id={id} p={1}>
+                   <Accordion style={{backgroundColor: "rgb(31 41 84)", color: "white"}}  expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
+                   <AccordionSummary 
+                     expandIcon={<ExpandMoreIcon />}
+                     aria-controls="panel1bh-content"
+                     id= {`panel${id}-header`}
+                   >
+                     <Typography className={classes.heading}>₦{cost}</Typography>
+                     <Box display="flex" width="100%" justifyContent="center" >
+                       <Typography className={classes.secondaryHeading}>{cashier_name}</Typography>
                       </Box>
-                    </Grid>
+                     
+                   </AccordionSummary>
+                   <AccordionDetails style={{backgroundColor: "rgb(31 41 84)", color: "white"}}>
+                     
+                     
+   
+                     <Grid spacing={3} container>
+                       <Grid  item xs={12} sm={8}>
+                         <Box >
+                           <Typography className={classes.detail}>
+                             {detail}
+                           </Typography>
+                         </Box>
+                       </Grid>
+   
+                       <Grid  item xs={12} sm={4}>
+                         <Box >
+                           <Typography className={classes.detail}>
+                             {time}
+                           </Typography>
+                         </Box>
+                       </Grid>
+                     </Grid>
+                   </AccordionDetails>
+                 </Accordion>
+                 </Box>
+               )
+              })
+            }
+           </Box>
 
-                    <Grid  item xs={12} sm={4}>
-                      <Box >
-                        <Typography className={classes.detail}>
-                          {time}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
-              </Box>
-            )
-           })
-         }
+
+          }
+        
+
+
+      
        </Box>
+        }
+     </Box>
       
     )
 }
