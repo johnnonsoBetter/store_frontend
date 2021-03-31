@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
     textTransform: "capitalize"
    
   },
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 function ExpensesTable(){
     const {storeName} = useParams()
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
+    
    
     const [expenses, setExpenses] = useState([])
     const classes = useStyles();
@@ -110,23 +110,40 @@ function ExpensesTable(){
             const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
             return (
-               <Box width="100%" key={id} id={id} p={1}>
-                <Accordion expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
-                <AccordionSummary
+               <Box width="100%"  key={id} id={id} p={1}>
+                <Accordion style={{backgroundColor: "rgb(31 41 84)", color: "white"}}  expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
+                <AccordionSummary 
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1bh-content"
                   id= {`panel${id}-header`}
                 >
                   <Typography className={classes.heading}>₦{cost}</Typography>
-                  <Box display="flex" width="100%" justifyContent="center">
+                  <Box display="flex" width="100%" justifyContent="center" >
                     <Typography className={classes.secondaryHeading}>{cashier_name}</Typography>
                    </Box>
                   
                 </AccordionSummary>
-                <AccordionDetails>
-                  <Typography className={classes.detail}>
-                    {detail}
-                  </Typography>
+                <AccordionDetails style={{backgroundColor: "rgb(31 41 84)", color: "white"}}>
+                  
+                  
+
+                  <Grid spacing={3} container>
+                    <Grid  item xs={12} sm={8}>
+                      <Box >
+                        <Typography className={classes.detail}>
+                          {detail}
+                        </Typography>
+                      </Box>
+                    </Grid>
+
+                    <Grid  item xs={12} sm={4}>
+                      <Box >
+                        <Typography className={classes.detail}>
+                          {time}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </AccordionDetails>
               </Accordion>
               </Box>
