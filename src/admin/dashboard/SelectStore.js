@@ -1,17 +1,17 @@
 import React, { useContext } from 'react'
 import {Box, MenuItem, CircularProgress, Backdrop, Menu} from '@material-ui/core/'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
+import AdminDashboardContext, { AdminDashboardContextProvider } from '../../context/admin/AdminDashboardContext';
 import AmountFormater from '../../helpers/AmountFormater'
 import axios from 'axios'
+import AdminDashboardStyleContext from '../../context/admin/AdminDashboardContext';
 
 
 function SelectStore(){
   const [setStore] = React.useState('upright');
   const {selectStore, storeIcon, backdrop} = useContext(AdminDashboardContext).styles
-  const {changeStoreName, setDashboardData, setGeneralStoreInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
+  const {changeStoreName, setDashboardData, setGeneralStoreInfos, staticDate, setTransactionReviewInfos} = useContext(AdminDashboardStyleContext).store
   const [backdropState, setBackdropState] = React.useState(false);
-
 
   
 
@@ -28,7 +28,7 @@ function SelectStore(){
           
             setDashboardData(data)
             changeStoreName(store)
-            setStore(store);
+            
             setTimeout(() => {
               setBackdropState(false)
           }, 2000)
