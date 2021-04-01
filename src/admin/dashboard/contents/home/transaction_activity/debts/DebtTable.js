@@ -2,7 +2,6 @@ import { Box, Typography, createMuiTheme, TableContainer, makeStyles, Table, Pap
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
-import axios from 'axios'
 import {ThemeProvider} from '@material-ui/styles'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
 import Loader from '../../../../../dashboard/Loader'
@@ -60,7 +59,7 @@ const theme = createMuiTheme({
       ].join(','),
      
   }
-  })
+})
 
 
 function DebtTable(){
