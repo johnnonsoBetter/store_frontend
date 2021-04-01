@@ -34,10 +34,12 @@ function ChangeTable(){
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const [change_balances, setChangeBalances] = useState([])
-    const changeApi = activitiesApi(storeName, 'change_balances')
+   
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
     const [previousDayChange, setPreviousDayChange] = useState("")
     const classes = useStyles()
+    const [isToday, setIsToday] = useState(false)
+    const changeApi = activitiesApi(storeName, 'change_balances')
 
     
  
@@ -51,7 +53,7 @@ function ChangeTable(){
                 setPreviousDayChange(previous_day_change)
                 setTransactionActivity(transaction_activity)
                 setLoading(false)
-                console.log(change_balances)
+                setIsToday(new Date(staticDate).toDateString() === new Date().toDateString())
                 
             }).catch(err => {
                 setLoading(false)
@@ -68,6 +70,7 @@ function ChangeTable(){
                 setPreviousDayChange(previous_day_change)
                 setTransactionActivity(transaction_activity)
                 setLoading(false)
+                setIsToday(true)
                 console.log(response)
             }).catch(err => {
                 setLoading(false)
@@ -86,6 +89,8 @@ function ChangeTable(){
             setFailed(false)
             setLoading(true)
             setChangeBalances([])
+            setPreviousDayChange('')
+            setIsToday(false)
         }
     }, [])
 
@@ -96,7 +101,11 @@ function ChangeTable(){
                 
                 <Box width="100%" >
                     <Box display="flex" justifyContent="flex-end" width="100%"  >
-                        <Typography className={classes.previousDayChange} > Startup Change ₦{AmountFormater(previousDayChange).amount()}</Typography>
+                        {
+                             isToday && 
+                            <Typography className={classes.previousDayChange} > Startup Change ₦{AmountFormater(previousDayChange).amount()}</Typography>
+
+                        }
                     </Box>
 
                     <Box>
