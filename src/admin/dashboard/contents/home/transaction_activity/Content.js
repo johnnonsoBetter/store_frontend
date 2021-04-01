@@ -14,6 +14,8 @@ import AdminDashboardStyleContext from '../../../../../context/admin/AdminDashbo
 import NoActivity from '../NoActivity';
 import ChangeTable from './changes/ChangeTable';
 import ItemReturnTable from './item_returns/ItemReturnTable';
+import Loader from '../../../Loader';
+import FailedActivityLoader from '../FailedActivityLoader';
 
 
 
@@ -61,7 +63,6 @@ function Content(){
     const [width, setWidth] = useState(0)
     
     const {storeName} = useParams()
-
     const classes = useStyles()
     const [preview, setPreview] = useState([])
     const [transactionActivity, setTransactionActivity] = useState({})
@@ -70,6 +71,7 @@ function Content(){
     const [show, setShow] = useState(false)
     const {handleDrawerToggle} = useContext(AdminDashboardStyleContext)
     const {staticDate, setStaticDate} = useContext(AdminDashboardStyleContext).store
+    const [failed, setFailed] = useState(false)
 
 
     function noTransaction(obj){
@@ -97,6 +99,7 @@ function Content(){
 
          setTableType(null)
          setShow(false)
+        
 
          console.log(transaction_activity)
          
@@ -120,12 +123,13 @@ function Content(){
          console.log(response)
 
          const {transaction_activity} = response.data
-
+         setLoading(false)
          
          setTransactionActivity(transaction_activity)
         
        }).catch(err => {
-
+         setLoading(false)
+         setFailed(true)
          console.log(err)
        })
        
@@ -135,6 +139,8 @@ function Content(){
           setTableType(null)
           setTransactionActivity({})
           setStaticDate('')
+          setLoading(true)
+          setFailed(false)
 
        }
     }, [])
@@ -173,7 +179,7 @@ function Content(){
                <Container className={classes.root}>
                      <FixedAppBar handleDrawerToggle={handleDrawerToggle} resetContent={setTransactionByDate}/>
                      {
-                        noTransaction(transactionActivity) ? <NoActivity activity="Transaction" date={staticDate}/>
+                        loading ?  <Loader />  : failed ? <FailedActivityLoader activity="Activity" /> :  noTransaction(transactionActivity) ? <NoActivity activity="Transaction" date={staticDate}/>
                         :
                         <div>
                            <Box width="90vw" className={classes.cont}>
