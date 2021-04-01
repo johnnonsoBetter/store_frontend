@@ -12,6 +12,7 @@ import ExpensesTable from './expenses/ExpensesTable';
 import DebtTable from './debts/DebtTable';
 import AdminDashboardStyleContext from '../../../../../context/admin/AdminDashboardContext';
 import NoActivity from '../NoActivity';
+import ChangeTable from './changes/ChangeTable';
 
 
 
@@ -196,7 +197,7 @@ function Content(){
                                  <AccordionDetails>
                                     
                                     {
-                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : null
+                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : tableType === "changes" ? <ChangeTable /> : null
                                     }
                                  
                                  

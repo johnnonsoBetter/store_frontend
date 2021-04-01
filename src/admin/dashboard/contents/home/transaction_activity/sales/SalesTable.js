@@ -19,7 +19,7 @@ import SalesList from './SalesList';
 import { SalesContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SalesContext';
 import Sale from './Sale';
 import { useParams } from 'react-router-dom';
-import FailedActivityLoader from '../../FailedActivitiyLoader';
+import FailedActivityLoader from '../../FailedActivityLoader';
 import Loader from '../../../../Loader';
 import NoData from '../../NoData';
 import { activitiesApi } from '../../../../../../api/admin/activities/api';
@@ -206,6 +206,7 @@ function SalesTable() {
 
       }).catch(err => {
         setFailed(true)
+        setLoading(false)
       })
 
 

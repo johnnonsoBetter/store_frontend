@@ -10,7 +10,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {DateTime} from 'luxon'
 import Loader from '../../../../Loader'
-import FailedActivityLoader from '../../FailedActivitiyLoader'
+import FailedActivityLoader from '../../FailedActivityLoader'
 import NoData from '../../NoData'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
 
