@@ -12,6 +12,7 @@ import {DateTime} from 'luxon'
 import Loader from '../../../../Loader'
 import FailedActivityLoader from '../../FailedActivitiyLoader'
 import NoData from '../../NoData'
+import { activitiesApi } from '../../../../../../api/admin/activities/api'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +43,7 @@ function ExpensesTable(){
     const [expenses, setExpenses] = useState([])
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+    const expensesApi = activitiesApi(storeName, 'expenses')
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -52,16 +54,9 @@ function ExpensesTable(){
     useEffect(() => {
         
         if (staticDate !== ""){
-            axios({
-              method: 'GET',
-              url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/expenses`,
-              headers: JSON.parse(localStorage.getItem('admin')),
-              params: {static_date: staticDate}
-            }).then(response => {
-              
-             console.log(response)
+            expensesApi.loadDate(staticDate).then(response => {
+
              const {transaction_activity, expenses} = response.data
-             console.log(expenses)
              setTransactionActivity(transaction_activity)
              setExpenses(expenses)
              setLoading(false)
@@ -77,22 +72,14 @@ function ExpensesTable(){
         
       
           }else{
-            axios({
-              method: 'GET',
-              url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/expenses`,
-              headers: JSON.parse(localStorage.getItem('admin'))
-            }).then(response => {
-              console.log(response)
+            expensesApi.load().then(response => {
               const {transaction_activity, expenses} = response.data
-              console.log(expenses)
               setTransactionActivity(transaction_activity)
               setExpenses(expenses)
               setLoading(false)
-        
-              
+ 
             }).catch(err => {
-        
-              console.log(err)
+
               setLoading(false)
               setFailed(true)
               
