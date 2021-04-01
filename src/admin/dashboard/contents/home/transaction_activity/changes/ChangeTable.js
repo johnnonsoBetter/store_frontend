@@ -80,10 +80,6 @@ function ChangeTable(){
             })
         }
 
-
-
-
-
         return ()=> {
             // clean up
             setFailed(false)

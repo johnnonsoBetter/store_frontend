@@ -30,7 +30,7 @@ function ContentNav(){
 
     const classes = useStyles()
     const {total_sales, total_expenses, total_debts, total_change, total_recovered, total_goods_returned_cost} = useContext(TransactionActivityContext).transactionActivity
-    const {setTableType, setShow, loading} = useContext(TransactionActivityContext)
+    const {setTableType, setShow} = useContext(TransactionActivityContext)
     
 
     function handleTableType(type){
@@ -90,16 +90,15 @@ function ContentNav(){
             </ButtonBase>      
         
             
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #dabe8a94)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> handleTableType("item_returns") } style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #dabe8a94)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Returns </Typography>
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                       {
-                           loading ?  <CircularProgress /> : "hello"
-                       } <Typography variant="h6"> {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}</Typography>
+                      
+                         <Typography variant="h6"> {`₦ ${AmountFormater(total_goods_returned_cost).amount()}`}</Typography>
                     </Box>
 
                 </Box>
