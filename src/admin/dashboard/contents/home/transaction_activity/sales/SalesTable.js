@@ -11,7 +11,6 @@ import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity';
-import axios from 'axios'
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red'
 import {ThemeProvider} from '@material-ui/styles'
@@ -23,6 +22,7 @@ import { useParams } from 'react-router-dom';
 import FailedActivityLoader from '../../FailedActivitiyLoader';
 import Loader from '../../../../Loader';
 import NoData from '../../NoData';
+import { activitiesApi } from '../../../../../../api/admin/activities/api';
 
 
 
@@ -145,6 +145,8 @@ function useWindowSize() {
 
 
 
+
+
 function SalesTable() {
   const classes = useStyles();
   const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
@@ -162,34 +164,8 @@ function SalesTable() {
   const [width] = useWindowSize()
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
+  const salesApi = activitiesApi(storeName, 'sales')
 
-
-  const filterSalesByIssue = () => {
-
-    const newlyfilteredSales = sales.filter(sale => sale.issue === true)
-   
-    setFilteredSales(newlyfilteredSales)
-      
-  }
-
-  const filterSalesByReceiptIssued = () => {
-    const newlyfilteredSales = sales.filter(sale => sale.receipt_was_issued === false)
-   
-    setFilteredSales(newlyfilteredSales)
-  }
-
-  const filterBySearchAmount =  () => {
-
-    const newlyfilteredSales = sales.filter(sale => sale.total_items_amount === parseInt(searchInput))
-    console.log(searchInput)
-    console.log(newlyfilteredSales)
-    setFilteredSales(newlyfilteredSales)
-  }
-
-  const toggleSaleDrawer = (saleDrawerOpened) => {
-
-    setSaleDrawerOpened(saleDrawerOpened)
-  }
 
  
 
@@ -197,17 +173,10 @@ function SalesTable() {
   useEffect(()=> {
 
     if (staticDate !== ""){
-      axios({
-        method: 'GET',
-        url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
-        headers: JSON.parse(localStorage.getItem('admin')),
-        params: {static_date: staticDate}
-      }).then(response => {
+ 
+      salesApi.loadDate(staticDate).then(response => {
         
         const {transaction_activity, sales} = response.data
-  
-        console.log(transaction_activity)
-        
         setTransactionActivity(transaction_activity)
         setSales(sales)
         setFilteredSales(sales)
@@ -225,33 +194,22 @@ function SalesTable() {
   
 
     }else{
-      axios({
-        method: 'GET',
-        url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
-        headers: JSON.parse(localStorage.getItem('admin'))
-      }).then(response => {
-        console.log(response)
-  
-         const {transaction_activity, sales} = response.data
-        
-         setTransactionActivity(transaction_activity)
-         setSales(sales)
-         setFilteredSales(sales)
-         setTableType('sales')
-         setLoading(false)
-        
+    
+      salesApi.load()
+      .then(response => {
+          const {transaction_activity, sales} = response.data
+           setTransactionActivity(transaction_activity)
+           setSales(sales)
+           setFilteredSales(sales)
+           setTableType('sales')
+           setLoading(false)
+
       }).catch(err => {
-  
-        console.log(err)
         setFailed(true)
       })
 
 
-    }
-
-   
-  
-   
+      }
 
     return ()=> {
       setSales([])
@@ -285,6 +243,35 @@ function SalesTable() {
     setAnchorEl(null)
 
   }
+
+
+  const filterSalesByIssue = () => {
+
+    const newlyfilteredSales = sales.filter(sale => sale.issue === true)
+   
+    setFilteredSales(newlyfilteredSales)
+      
+  }
+
+  const filterSalesByReceiptIssued = () => {
+    const newlyfilteredSales = sales.filter(sale => sale.receipt_was_issued === false)
+   
+    setFilteredSales(newlyfilteredSales)
+  }
+
+  const filterBySearchAmount =  () => {
+
+    const newlyfilteredSales = sales.filter(sale => sale.total_items_amount === parseInt(searchInput))
+    console.log(searchInput)
+    console.log(newlyfilteredSales)
+    setFilteredSales(newlyfilteredSales)
+  }
+
+  const toggleSaleDrawer = (saleDrawerOpened) => {
+
+    setSaleDrawerOpened(saleDrawerOpened)
+  }
+
  
   
   
@@ -413,11 +400,6 @@ function SalesTable() {
           
             }
             </Box>
-         
-       
-       
-
-         
 
          {
            loading ? <Loader minHeight={300}/> : failed ? <FailedActivityLoader activity="Sales" /> :

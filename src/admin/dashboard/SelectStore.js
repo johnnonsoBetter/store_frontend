@@ -29,9 +29,7 @@ function SelectStore(){
             setDashboardData(data)
             changeStoreName(store)
             
-            setTimeout(() => {
-              setBackdropState(false)
-          }, 2000)
+           
 
           setGeneralStoreInfos([
             {
@@ -88,6 +86,10 @@ function SelectStore(){
             
         ])
 
+        setTimeout(() => {
+          setBackdropState(false)
+        }, 200)
+
         
 
       }).catch(err => {
@@ -95,7 +97,7 @@ function SelectStore(){
       })
     };
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
