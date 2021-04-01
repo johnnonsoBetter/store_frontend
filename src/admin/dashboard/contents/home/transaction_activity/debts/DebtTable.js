@@ -68,7 +68,7 @@ function DebtTable(){
     const [previousPendingDebts, setPreviousPendingDebts] = useState([])
     const [costOfTotalDebts, setCostOfTotalDebts] = useState('')
     const [costOfPreviousDebts, setCostOfPreviousDebts] = useState('')
-    const {staticDate} = useContext(TransactionActivityContext)
+    const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
     const {storeName} = useParams()
     const classes = useStyles()
     const debtApi = activitiesApi(storeName, 'debts')
@@ -84,8 +84,11 @@ function DebtTable(){
              setCostOfPreviousDebts(cost_of_previous_debts)
              setCostOfTotalDebts(cost_of_total_debts)
              setDailyDebts(daily_debts)
+
              setPreviousPendingDebts(previous_pending_debts)
+             setTransactionActivity(transaction_activity)
              setLoading(false)
+             
             
             
             }).catch(err => {
@@ -103,6 +106,7 @@ function DebtTable(){
               setCostOfTotalDebts(cost_of_total_debts)
               setDailyDebts(daily_debts)
               setPreviousPendingDebts(previous_pending_debts)
+              setTransactionActivity(transaction_activity)
               setLoading(false)
             }).catch(err => {
         
