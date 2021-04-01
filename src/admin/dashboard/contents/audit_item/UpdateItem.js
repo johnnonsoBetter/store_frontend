@@ -3,6 +3,7 @@ import { ArrowBack } from '@material-ui/icons'
 import SaveIcon from '@material-ui/icons/Save'
 import axios from 'axios'
 import {React, useContext, useEffect, useState} from  'react'
+import { itemApi } from '../../../../api/admin/item/api'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 
 
@@ -80,14 +81,7 @@ function UpdateItem({...props}){
         e.preventDefault()
 
         const newSnackBarAction = Object.assign({}, snackBarAction)
-        axios({
-            method: "PUT",
-            url: `http://localhost:3001/api/v1/real_items/name`,
-            headers: JSON.parse(localStorage.admin),
-            data: updateItem,
-            params: {item_name: name}
-            
-        }).then(response => {
+        itemApi().updateItem(name, updateItem).then(response => {
             
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
             

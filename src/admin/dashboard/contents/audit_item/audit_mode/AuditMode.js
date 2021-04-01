@@ -1,8 +1,8 @@
 import { Box, CircularProgress, Container, makeStyles} from '@material-ui/core'
-import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import AuditModeContext from '../../../../../context/audit_item/AuditModeContext'
 import ItemList from './ItemList'
+import {itemApi} from '../../../../../api/admin/item/api'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,15 +32,10 @@ function AuditMode(){
     const [loading, setLoading] = useState(true)
     const {setTotalItems, setItems, setSearchValue} = useContext(AuditModeContext)
     const classes = useStyles()
-    
+  
 
     useEffect(() => {
-        axios({
-            method: "GET",
-            headers: JSON.parse(localStorage.getItem('admin')),
-            url: `http://localhost:3001/api/v1/real_items/`
-
-        }).then(response => {
+        itemApi().fetchAll().then(response => {
             const {items, total_items} = response.data
            
             setLoading(false)

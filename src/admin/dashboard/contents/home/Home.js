@@ -6,6 +6,7 @@ import AdminDashboardContext from '../../../../context/admin/AdminDashboardConte
 import axios from 'axios'
 import StoreInfo from './StoreInfo'
 import AmountFormater from '../../../../helpers/AmountFormater'
+import { dashboardApi } from '../../../../api/admin/dashboard/api'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(true);
@@ -15,11 +16,7 @@ function Home(){
     const [isExpanded, setIsExpanded] = useState(true)
     useEffect(() => {
         
-        axios({
-            method: 'GET',
-            url: `http://localhost:3001/api/v1/admin_dashboard/?store=${storeName}`,
-            headers: JSON.parse(localStorage.getItem('admin'))
-        }).then(response => {
+        dashboardApi(storeName).load().then(response => {
             const {data} = response
             const {change_balance, transaction_activity, next_day_change, inventory_manager} = data
             setDashboardData(data)

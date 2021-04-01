@@ -9,6 +9,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Item from './Item';
 import ItemActionSnackbar from './ItemActionSnackbar';
 import axios from 'axios';
+import { categoryApi } from '../../../../api/admin/item/api';
 
 
 const value = (input) => (input === "true" ? true : false) 
@@ -116,11 +117,7 @@ function AuditItem(){
     
     useEffect(()=> {
 
-        axios({
-            method: "GET",
-            url: 'http://localhost:3001/api/v1/categories',
-            headers: JSON.parse(localStorage.admin),
-        }).then(response => {
+       categoryApi().fetchAll().then(response => {
             console.log(response.data)
             const {categories} = response.data
             console.log(categories)

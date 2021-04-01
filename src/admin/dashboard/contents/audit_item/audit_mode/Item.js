@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext } from "react";
 import AmountFormatter from '../../../../../helpers/AmountFormater'
 import AuditModeContext from '../../../../../context/audit_item/AuditModeContext'
+import { itemApi } from "../../../../../api/admin/item/api";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -32,24 +33,10 @@ function Item(props){
     const classes = useStyles()
 
     const handleShowItemFullDetail = () => {
-
-        
-        axios({
-            method: "GET",
-            headers: JSON.parse(localStorage.getItem('admin')),
-            url: `http://localhost:3001/api/v1/real_items/name`,
-            
-            params: {
-                item_name: name
-            }
-
-        }).then(response => {
+        itemApi().fetchItem(name).then(response => {
 
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
-            
-            
-            
-           // setItemName()
+
            setItemInfo({
                item,
                cost_price_trackers,

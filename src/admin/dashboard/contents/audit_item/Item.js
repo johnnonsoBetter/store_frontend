@@ -8,6 +8,7 @@ import AmountFormatter from '../../../../helpers/AmountFormater'
 import axios from 'axios'
 import DeleteConfirmation from './DeleteConfirmation'
 import UpdateItem from './UpdateItem'
+import { itemApi } from '../../../../api/admin/item/api'
  
 
 const useStyles = makeStyles((theme) => ({
@@ -54,14 +55,7 @@ function Item(){
     
     const deleteItem = ()=> {
         const newSnackBarAction = Object.assign({}, snackBarAction)
-        axios({
-            method: "DELETE",
-            url: `http://localhost:3001/api/v1/real_items/name`,
-            headers: JSON.parse(localStorage.getItem('admin')),
-            params: {item_name: name}
-        }).then(response => {
-           
-           
+        itemApi().deleteItem(name).then(response => {
             newSnackBarAction['itemName'] = name
             newSnackBarAction['action'] = "Deleted"
             newSnackBarAction['snackBarOpened'] = true

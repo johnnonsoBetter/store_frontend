@@ -4,6 +4,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import axios from 'axios'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
+import { itemApi } from '../../../../api/admin/item/api'
   
 
 function CreateItem(){
@@ -85,13 +86,7 @@ function CreateItem(){
     const handleSubmit = (e)=> {
         e.preventDefault()
         const newSnackBarAction = Object.assign({}, snackBarAction)
-        axios({
-            method: "POST",
-            url: 'http://localhost:3001/api/v1/real_items',
-            headers: JSON.parse(localStorage.admin),
-            data: item
-            
-        }).then(response => {
+        itemApi().createItem(item).then(response => {
             
             const new_item = response.data
             

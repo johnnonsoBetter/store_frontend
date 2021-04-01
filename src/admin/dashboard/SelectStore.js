@@ -3,8 +3,9 @@ import {Box, MenuItem, CircularProgress, Backdrop, Menu} from '@material-ui/core
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AdminDashboardContext, { AdminDashboardContextProvider } from '../../context/admin/AdminDashboardContext';
 import AmountFormater from '../../helpers/AmountFormater'
-import axios from 'axios'
+
 import AdminDashboardStyleContext from '../../context/admin/AdminDashboardContext';
+import { dashboardApi } from '../../api/admin/dashboard/api';
 
 
 function SelectStore(){
@@ -17,11 +18,7 @@ function SelectStore(){
 
     const handleChange = (store) => {
       setBackdropState(true)
-      axios({
-        method: "GET",
-        url: `http://localhost:3001/api/v1/admin_dashboard/?store=${store}`,
-        headers: JSON.parse(localStorage.getItem('admin'))
-      }).then(response => {
+        dashboardApi(store).load().then(response => {
           const {data} = response
           const {change_balance, next_day_change, transaction_activity, inventory_manager} = data
       

@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/'
+import { getBaseURL } from '../../../baseUrl'
+const baseUrl = getBaseURL()
 
 
 
