@@ -1,4 +1,4 @@
-import { Box, Typography, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, Divider } from '@material-ui/core'
+import { Box, Typography, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, Divider } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -6,6 +6,9 @@ import {ThemeProvider} from '@material-ui/styles'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
 import Loader from '../../../../../dashboard/Loader'
 import FailedActivityLoader from '../../FailedActivityLoader'
+import ArrowForward from '@material-ui/icons/ArrowForward'
+import AmountFormater from '../../../../../../helpers/AmountFormater'
+import { DateTime } from 'luxon'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
  
     whiteText:  { 
       color: "white",
+      textTransform: "capitalize"
+    },
+    blackText:  { 
+      color: "black",
       textTransform: "capitalize"
     },
 
@@ -154,33 +161,66 @@ function DebtTable(){
                            
                             </TableRow>
                         </TableHead>
+
+                        <TableBody style={{backgroundColor: "#040715"}}>
+
+                              {
+                                  dailyDebts.map(debt => {
+
+                                      const {id, cost, debtor_name, created_at} = debt
+                                     
+                                      const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+
+                                      return (
+                                          <TableRow key={id} style={{borderBottom: "none"}}>
+                                      
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {debtor_name} </Typography>   </Box></TableCell>
+
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                                          
+                                          
+                                          </TableRow>
+                                      )
+                                  })
+                              }
+
+{
+                                  previousPendingDebts.map(debt => {
+
+                                      const {id, cost, debtor_name, created_at} = debt
+                                     
+                                      const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+
+                                      return (
+                                          <TableRow key={id} style={{borderBottom: "none", backgroundColor: "#d89b2e"}}>
+                                      
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} > {debtor_name} </Typography>   </Box></TableCell>
+
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText}> {time} </Typography>   </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
+                                          
+                                          
+                                          </TableRow>
+                                      )
+                                  })
+                              }
+
+                        
+                      </TableBody>
+
+
+
+
+
                         
         
                     </Table>
                     </TableContainer>
                 </Box>
-                <Divider />
-
-                <Box width="100%" marginTop={2}>
-                    <Typography style={{color: "white", textAlign:"left"}} > Previous Debts </Typography>
-                    <TableContainer className={classes.tableComponent} component={Paper} style={{backgroundColor: "black"}}>
-                    <Table stickyHeader  className={classes.table} aria-label="simple table">
-                        <TableHead   style={{backgroundColor: "black"}} className={classes.noBottom}>
-                            <TableRow>
-                            
-                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cost </Typography></TableCell>
-                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Debtor </Typography> </TableCell>
-                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
-                             <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
-                           
-                            </TableRow>
-                        </TableHead>
-                        
-        
-                    </Table>
-                    </TableContainer>
-                </Box>
-
+                
                 
             </ThemeProvider>
             </>
