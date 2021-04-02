@@ -7,8 +7,8 @@ import { SaleInfoContextProvider } from '../../../../../../context/admin/transac
 import SaleInfo from './SaleInfo'
 import ItemsSold from './ItemsSold'
 
-function Sale(){
-    const {receipt_id, setReceiptId, toggleSaleDrawer} = useContext(SalesContext)
+function Sale(props){
+    const {receipt_id, setReceiptId, toggleSaleDrawer} = props
     const [items_sold, setItemsSold] = useState([])
     const [display, setDisplay] = useState('sale_info')
     const [loading, setLoading] = useState(true)

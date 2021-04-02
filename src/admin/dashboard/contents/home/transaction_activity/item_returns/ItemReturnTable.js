@@ -1,5 +1,5 @@
-import { Box, makeStyles, createMuiTheme, Typography, TableContainer, Paper, Table, TableHead, TableRow, TableCell} from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import { Box, makeStyles, createMuiTheme, Typography, TableContainer, Drawer, Paper, Table, TableHead, TableRow, TableCell, useMediaQuery} from '@material-ui/core'
+import React, { useContext, useEffect, useState, useLayoutEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -8,7 +8,7 @@ import FailedActivityLoader from '../../FailedActivityLoader'
 import {ThemeProvider} from '@material-ui/styles'
 import NoData from '../../NoData'
 import ItemReturnList from './ItemReturnList'
-import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import { deepOrange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -53,6 +53,20 @@ const theme = createMuiTheme({
   }
 })
 
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
+  
+
 
 function ItemReturnTable(){
 
@@ -63,6 +77,14 @@ function ItemReturnTable(){
     const [failed, setFailed] = useState(false)
     const classes = useStyles()
     const itemReturnApi = activitiesApi(storeName, 'item_returns')
+    const [itemReturnDrawerOpened, setItemReturnDrawerOpened] = useState(true)
+    const matches = useMediaQuery('(max-width:600px)')
+    const [width] = useWindowSize()
+
+
+    const toggleItemReturnDrawer = (itemReturnDrawerOpened) => {
+        setItemReturnDrawerOpened(itemReturnDrawerOpened)
+    }
 
     useEffect(()=> {
 
@@ -104,6 +126,11 @@ function ItemReturnTable(){
 
     return (
         <Box className={classes.root}>
+             <Drawer anchor="right" open={itemReturnDrawerOpened} onClose={()=> toggleItemReturnDrawer(false)}>
+                <Box width={matches ? "100%" : 320 } >
+                    <Typography> This is why i really like the whole motion of the same time ad </Typography>
+                </Box>
+            </Drawer>
             {
                 loading ? <Loader /> : failed ? <FailedActivityLoader activity="Items Returned"/>: 
                 

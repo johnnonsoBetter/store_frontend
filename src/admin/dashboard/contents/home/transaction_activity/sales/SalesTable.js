@@ -88,12 +88,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.getContrastText(deepPurple[500]),
       backgroundColor: deepPurple[500],
     },
-    saleContainer: {
-      // [theme.breakpoints.up('sm')]: {
-      //   width: "100%"
-      // },
-      // width: 320,
-    },
     tableComponent: {
       maxHeight: 440
     },
@@ -293,7 +287,7 @@ function SalesTable() {
       <ThemeProvider theme={theme}>
           <Drawer anchor="right" open={saleDrawerOpened} onClose={()=> toggleSaleDrawer(false)}>
             <Box width={matches ? width : 320 } className={classes.saleContainer}>
-              <Sale />
+              <Sale receipt_id={receipt_id} setReceiptId={setReceiptId} toggleSaleDrawer={toggleSaleDrawer} />
             </Box>
           </Drawer>
         <TableContainer className={classes.tableComponent} component={Paper} style={{backgroundColor: "black"}}>
