@@ -26,13 +26,7 @@ function DatePicker() {
   
     const handleDateChange = (date) => {
       setSelectedDate(date);
-      console.log(date.toString())
-      // let d = DateTime.fromRFC2822(date)
-      // console.log(d)
-
-     let format = new Date(date).toGMTString()
-     console.log(DateTime.fromRFC2822(format).toISODate())
-     console.log(DateTime.now().toLocaleString(DateTime.TIME_SIMPLE))
+  
     };
   
     return (

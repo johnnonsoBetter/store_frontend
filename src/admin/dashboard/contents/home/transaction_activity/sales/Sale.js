@@ -1,6 +1,5 @@
 import { Typography, Box, IconButton, CircularProgress, createMuiTheme} from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
-import SalesContext  from '../../../../../../context/admin/transaction_activity/sales/SalesContext'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ArrowBackOutlined, CloseOutlined } from '@material-ui/icons'
 import { SaleInfoContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
@@ -10,6 +9,7 @@ import {ThemeProvider} from '@material-ui/styles'
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red'
 import grey from '@material-ui/core/colors/grey'
+import { salesApi } from '../../../../../../api/shared/sale/api'
 
 const theme = createMuiTheme({
 
@@ -39,6 +39,7 @@ function Sale(props){
     const [display, setDisplay] = useState('sale_info')
     const [loading, setLoading] = useState(true)
     const [failedToLoad, setFailedToLoad] = useState(false)
+    const saleApi = salesApi()
    
     
     const [sale, setSale] = useState({
@@ -52,7 +53,8 @@ function Sale(props){
         total_amount_paid: 0,
         issue: false,
         receipt_was_issued: false,
-        cashier_name: ""
+        cashier_name: "",
+        created_at: ''
     })
 
     
@@ -60,13 +62,9 @@ function Sale(props){
    
 
     useEffect(()=> {
-        axios({
-            method: 'GET',
-            url: `http://localhost:3001/api/v1/sales/${receipt_id}`,
-            headers: JSON.parse(localStorage.getItem('admin'))
-          }).then(response => {
+       salesApi().fetchByReceiptId(receipt_id).then(response => {
             const {sale, item_solds} = response.data
-           
+            console.log(sale)
             setSale(sale)
             setItemsSold(item_solds)
             setDisplay('sale_info')
@@ -91,7 +89,8 @@ function Sale(props){
               total_amount_paid: 0,
               issue: false,
               receipt_was_issued: false,
-              cashier_name: ""
+              cashier_name: "",
+              created_at: ''
           })
             setItemsSold([])
             setDisplay('sale_info')
@@ -128,8 +127,7 @@ function Sale(props){
                 loading ? 
                 <Box height={450} alignItems="center" display="flex" justifyContent="center">
                    
-                       
-                        {failedToLoad ? <Typography> Failed to load </Typography> :  <CircularProgress /> }
+                      {failedToLoad ? <Typography> Failed to load </Typography> :  <CircularProgress /> }
                     
                 </Box>
                

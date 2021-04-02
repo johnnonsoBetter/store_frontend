@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import SaleInfoContext from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
 import AmountFormater from '../../../../../../helpers/AmountFormater';
 
+
 const useStyles = makeStyles((theme) => ({
     large: {
       width: theme.spacing(9),
@@ -21,7 +22,7 @@ function SaleInfo(){
 
     const classes = useStyles()
 
-    const {receipt_id, total_items_amount, discount, cashback_profit, pos_amount, cash_amount, transfer_amount, transaction_type, total_amount_paid, issue, receipt_was_issued, cashier_name} = useContext(SaleInfoContext).sale
+    const {receipt_id, total_items_amount, discount, cashback_profit, pos_amount, cash_amount, transfer_amount, transaction_type, total_amount_paid, issue, receipt_was_issued, cashier_name, created_at} = useContext(SaleInfoContext).sale
     const {setDisplay} = useContext(SaleInfoContext)
     let shortName = cashier_name.toString().toUpperCase().charAt(0)
     const circle = <div className={clsx(classes.shape, classes.shapeCircle)} />;
@@ -39,6 +40,10 @@ function SaleInfo(){
 
             <Box display="flex" textAlign="center" justifyContent="center"  marginTop={1} width="100%"> 
               <Typography variant="h6" > Receipt ID: {receipt_id} </Typography> 
+            </Box>
+
+            <Box display="flex" textAlign="center" justifyContent="center"  marginTop={1} width="100%"> 
+              <Typography  > Date: {new Date(created_at).toDateString()} </Typography> 
             </Box>
 
             <Box p={1} >
