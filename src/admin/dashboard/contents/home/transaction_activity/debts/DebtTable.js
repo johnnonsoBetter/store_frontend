@@ -153,6 +153,8 @@ function DebtTable(){
             debtInfo,
             setDebtInfoOpened,
             setDebtInfo,
+            toggleDrawerOpened,
+            setReceiptId,
             
           }}
         
@@ -177,6 +179,7 @@ function DebtTable(){
                     debtInfoOpened ? <DebtInfo /> : <Sale receipt_id={receipt_id} setReceiptId={setReceiptId} toggleSaleDrawer={toggleDrawerOpened} />
                   }
                   
+
                 </Box>
               </Drawer>
               <Box width="100%" display="flex" justifyContent="space-between">
@@ -218,9 +221,10 @@ function DebtTable(){
 
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=>  {
-                                                  setReceiptId(receipt_id)
+                                                 
                                                   toggleDrawerOpened(true)
                                                   setDebtInfo(debt)
+                                                  setDebtInfoOpened(true)
 
                                               }
                                                 
@@ -247,9 +251,10 @@ function DebtTable(){
 
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText}> {time} </Typography>   </Box></TableCell>
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
-                                                setReceiptId(receipt_id)
+                                               
                                                 toggleDrawerOpened(true)
                                                 setDebtInfo(debt)
+                                                setDebtInfoOpened(true)
                                               }} > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
                                           
                                           
