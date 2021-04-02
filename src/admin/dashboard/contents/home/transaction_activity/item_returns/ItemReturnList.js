@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {Avatar, TableBody, TableCell, TableRow, Typography, Box, IconButton, makeStyles} from '@material-ui/core'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 import { DateTime } from 'luxon'
 import ArrowForward from '@material-ui/icons/ArrowForward'
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import ItemReturnContext from '../../../../../../context/admin/transaction_activity/item_returns/ItemReturnContext'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +37,8 @@ function ItemReturnList(props){
 
     const {itemReturns} = props
     const classes = useStyles()
+    const { setSaleReceiptId, toggleItemReturnDrawer} = useContext(ItemReturnContext)
+
     return (
         <TableBody style={{backgroundColor: "#040715"}}>
 
@@ -54,7 +57,9 @@ function ItemReturnList(props){
                             <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
                             
                             <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
-                            <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                            <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
+                              setSaleReceiptId(sale_receipt_id)
+                              toggleItemReturnDrawer(true)}} > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
                         
                         
                         </TableRow>

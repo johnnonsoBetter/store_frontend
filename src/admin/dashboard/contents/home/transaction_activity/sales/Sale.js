@@ -1,4 +1,4 @@
-import { Typography, Box, IconButton, CircularProgress} from '@material-ui/core'
+import { Typography, Box, IconButton, CircularProgress, createMuiTheme} from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import SalesContext  from '../../../../../../context/admin/transaction_activity/sales/SalesContext'
 import axios from 'axios'
@@ -6,6 +6,32 @@ import { ArrowBackOutlined, CloseOutlined } from '@material-ui/icons'
 import { SaleInfoContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
 import SaleInfo from './SaleInfo'
 import ItemsSold from './ItemsSold'
+import {ThemeProvider} from '@material-ui/styles'
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red'
+import grey from '@material-ui/core/colors/grey'
+
+const theme = createMuiTheme({
+
+  palette: {
+    primary: {
+      main: green[600]
+    },
+    secondary: {
+      main: red[600]
+    },
+    success: {
+      main: grey[100]
+    }
+  },
+  typography: {
+    fontFamily: [
+      'Kanit',
+      'cursive',
+    ].join(','),
+   
+}
+})
 
 function Sale(props){
     const {receipt_id, setReceiptId, toggleSaleDrawer} = props
@@ -77,6 +103,7 @@ function Sale(props){
 
 
     return (
+      <ThemeProvider theme={theme}>
         <Box p={1}>
             <Box display="flex"  width="100%" justifyContent="space-between" >
               { display !== "sale_info" && <Box display="flex">
@@ -118,6 +145,7 @@ function Sale(props){
             
         
         </Box>
+        </ThemeProvider>
 
     )
 }
