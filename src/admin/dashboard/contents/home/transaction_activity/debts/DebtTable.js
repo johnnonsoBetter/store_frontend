@@ -83,7 +83,7 @@ function DebtTable(){
              setCostOfPreviousDebts(cost_of_previous_debts)
              setCostOfTotalDebts(cost_of_total_debts)
              setDailyDebts(daily_debts)
-
+             
              setPreviousPendingDebts(previous_pending_debts)
              setTransactionActivity(transaction_activity)
              setLoading(false)

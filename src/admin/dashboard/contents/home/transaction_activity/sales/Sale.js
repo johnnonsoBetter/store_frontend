@@ -1,6 +1,5 @@
 import { Typography, Box, IconButton, CircularProgress, createMuiTheme} from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { ArrowBackOutlined, CloseOutlined } from '@material-ui/icons'
 import { SaleInfoContextProvider } from '../../../../../../context/admin/transaction_activity/sales/SaleInfoContext'
 import SaleInfo from './SaleInfo'

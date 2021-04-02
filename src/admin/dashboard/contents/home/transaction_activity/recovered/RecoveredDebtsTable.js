@@ -20,26 +20,21 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         textTransform: "capitalize"
     },
-    previousDayChange: {
-        backgroundColor: "orange",
-        color: "black",
-        padding: theme.spacing(0.5),
-        borderRadius: "3px"
-    }
 }))
 
-function ChangeTable(){
+
+
+
+
+function RecoveredDebtsTable(){
 
     const {storeName} = useParams()
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
-    const [change_balances, setChangeBalances] = useState([])
-   
+    const [recovered_debts, setRecoveredDebts] = useState([])
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
-    const [previousDayChange, setPreviousDayChange] = useState("")
     const classes = useStyles()
-    const [isToday, setIsToday] = useState(false)
-    const changeApi = activitiesApi(storeName, 'change_balances')
+    const recoveredDebtApi = activitiesApi(storeName, 'recovered_debts')
 
     
  
@@ -47,13 +42,11 @@ function ChangeTable(){
 
         if (staticDate !== ""){
 
-            changeApi.loadDate(staticDate).then(response => {
-                const {change_balances, transaction_activity, previous_day_change} = response.data
-                setChangeBalances(change_balances)
-                setPreviousDayChange(previous_day_change)
+            recoveredDebtApi.loadDate(staticDate).then(response => {
+                const {recovered_debts, transaction_activity} = response.data
+                setRecoveredDebts(recovered_debts)
                 setTransactionActivity(transaction_activity)
                 setLoading(false)
-                setIsToday(new Date(staticDate).toDateString() === new Date().toDateString())
                 
             }).catch(err => {
                 setLoading(false)
@@ -63,14 +56,13 @@ function ChangeTable(){
 
         }else{
 
-            changeApi.load().then(response => {
+            recoveredDebtApi.load().then(response => {
              
-                const {change_balances, transaction_activity, previous_day_change} = response.data
-                setChangeBalances(change_balances)                
-                setPreviousDayChange(previous_day_change)
+                const {recovered_debts, transaction_activity} = response.data
+                setRecoveredDebts(recovered_debts)                
                 setTransactionActivity(transaction_activity)
                 setLoading(false)
-                setIsToday(true)
+                
                 console.log(response)
             }).catch(err => {
                 setLoading(false)
@@ -84,41 +76,32 @@ function ChangeTable(){
             // clean up
             setFailed(false)
             setLoading(true)
-            setChangeBalances([])
-            setPreviousDayChange('')
-            setIsToday(false)
+            setRecoveredDebts([])
         }
     }, [])
 
     return (
         <Box className={classes.root} width="100%">
             {
-                loading ? <Loader /> : failed ? <FailedActivityLoader activity="Changes" /> : 
+                loading ? <Loader /> : failed ? <FailedActivityLoader activity="recovered_debts" /> : 
                 
                 <Box width="100%" >
-                    <Box display="flex" justifyContent="flex-end" width="100%"  >
-                        {
-                             isToday && 
-                            <Typography className={classes.previousDayChange} > Startup Change ₦{AmountFormater(previousDayChange).amount()}</Typography>
-
-                        }
-                    </Box>
 
                     <Box>
                         {
-                            change_balances.length === 0 ? <NoData activity="Changes" /> :
+                            recovered_debts.length === 0 ? <NoData activity="Recovered Debt" /> :
                              <Grid spacing={3} container>
                                 {
-                                    change_balances.map(change => {
+                                    recovered_debts.map(recovered_debt => {
 
-                                        const {id, amount, cashier_name, created_at} = change
+                                        const {id, amount, cashier_name, created_at} = recovered_debt
                                         const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
                                         return (
                                             <Grid key={id} item xs={12} sm={6} md={6} >
                                                 <Paper className={classes.infoContainer} width="100%">
                                                     <Box p={1}>
-                                                        <Typography className={classes.info}> {cashier_name} Collected ₦{AmountFormater(amount).amount()} at {time}  </Typography>
+                                                        <Typography className={classes.info}> {cashier_name} Recovered ₦{AmountFormater(amount).amount()} at {time}  </Typography>
                                                     </Box>
                                                    
                                                 </Paper>
@@ -137,4 +120,4 @@ function ChangeTable(){
     )
 }
 
-export default ChangeTable
+export default RecoveredDebtsTable

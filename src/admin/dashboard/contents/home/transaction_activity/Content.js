@@ -16,6 +16,7 @@ import ChangeTable from './changes/ChangeTable';
 import ItemReturnTable from './item_returns/ItemReturnTable';
 import Loader from '../../../Loader';
 import FailedActivityLoader from '../FailedActivityLoader';
+import RecoveredDebtsTable from './recovered/RecoveredDebtsTable';
 
 
 
@@ -204,7 +205,8 @@ function Content(){
                                  <AccordionDetails>
                                     
                                     {
-                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : tableType === "changes" ? <ChangeTable /> : tableType === "item_returns" ? <ItemReturnTable /> : null
+                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : tableType === "changes" ? 
+                                       <ChangeTable /> : tableType === "item_returns" ? <ItemReturnTable /> : tableType === "recovered_debts" ? <RecoveredDebtsTable /> : null
                                     }
                                  
                                  
