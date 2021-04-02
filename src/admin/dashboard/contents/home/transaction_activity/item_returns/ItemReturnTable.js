@@ -55,20 +55,6 @@ const theme = createMuiTheme({
   }
 })
 
-function useWindowSize() {
-    const [size, setSize] = useState([0, 0]);
-    useLayoutEffect(() => {
-      function updateSize() {
-        setSize([window.innerWidth, window.innerHeight]);
-      }
-      window.addEventListener('resize', updateSize);
-      updateSize();
-      return () => window.removeEventListener('resize', updateSize);
-    }, []);
-    return size;
-  }
-  
-
 
 function ItemReturnTable(){
 
@@ -81,7 +67,6 @@ function ItemReturnTable(){
     const itemReturnApi = activitiesApi(storeName, 'item_returns')
     const [itemReturnDrawerOpened, setItemReturnDrawerOpened] = useState(false)
     const matches = useMediaQuery('(max-width:600px)')
-    const [width] = useWindowSize()
     const [sale_receipt_id, setSaleReceiptId] = useState('')
 
     const toggleItemReturnDrawer = (itemReturnDrawerOpened) => {

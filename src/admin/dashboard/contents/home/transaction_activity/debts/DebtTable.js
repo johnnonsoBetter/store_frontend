@@ -1,4 +1,4 @@
-import { Box, Typography, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, Divider } from '@material-ui/core'
+import { Box, Typography, Drawer, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, Divider, useMediaQuery } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -9,6 +9,9 @@ import FailedActivityLoader from '../../FailedActivityLoader'
 import ArrowForward from '@material-ui/icons/ArrowForward'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 import { DateTime } from 'luxon'
+import Sale from '../sales/Sale'
+import { DebtContextProvider } from '../../../../../../context/admin/transaction_activity/debts/DebtContext'
+import DebtInfo from './DebtInfo'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +83,16 @@ function DebtTable(){
     const debtApi = activitiesApi(storeName, 'debts')
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
+    const [drawerOpened, setDrawerOpened] = useState(false)
+    const [receipt_id, setReceiptId] = useState('')
+    const [debtInfo, setDebtInfo] = useState(null)
+    const [debtInfoOpened, setDebtInfoOpened] = useState(true)
+    const matches = useMediaQuery('(max-width:600px)')
 
+
+    const toggleDrawerOpened = (drawerOpened) => {
+      setDrawerOpened(drawerOpened)
+    }
 
     useEffect(()=> {
         if (staticDate !== ""){
@@ -90,6 +102,7 @@ function DebtTable(){
              setCostOfPreviousDebts(cost_of_previous_debts)
              setCostOfTotalDebts(cost_of_total_debts)
              setDailyDebts(daily_debts)
+
              
              setPreviousPendingDebts(previous_pending_debts)
              setTransactionActivity(transaction_activity)
@@ -130,23 +143,49 @@ function DebtTable(){
               setCostOfTotalDebts('')
               setDailyDebts([])
               setPreviousPendingDebts([])
+              setReceiptId('')
           }
     }, [])
 
     return (
-        <Box flexGrow={1}>
+        <DebtContextProvider
+          value={{
+            debtInfo,
+            setDebtInfoOpened,
+            setDebtInfo,
+            
+          }}
+        
+        >
+
+        
+        <Box flexGrow={1}
+        
+        >
 
             {
               loading ? <Loader /> : 
               failed ? <FailedActivityLoader activity="Debts"/> :
-              <>
-            <Box width="100%" display="flex" justifyContent="space-between">
-                <Typography style={{color: "white"}}> All: ₦{costOfTotalDebts} </Typography>
-                <Typography style={{color: "white"}}> Previous: ₦{costOfPreviousDebts} </Typography>
-            </Box>
+              
+  
+
+            <>
+            <ThemeProvider theme={theme}>
+              <Drawer anchor="right" open={drawerOpened} onClose={()=> toggleDrawerOpened(false)}>
+                <Box width={matches ? "100%" : 320 } className={classes.saleContainer}>
+                  {
+                    debtInfoOpened ? <DebtInfo /> : <Sale receipt_id={receipt_id} setReceiptId={setReceiptId} toggleSaleDrawer={toggleDrawerOpened} />
+                  }
+                  
+                </Box>
+              </Drawer>
+              <Box width="100%" display="flex" justifyContent="space-between">
+                  <Typography style={{color: "white"}}> All: ₦{costOfTotalDebts} </Typography>
+                  <Typography style={{color: "white"}}> Previous: ₦{costOfPreviousDebts} </Typography>
+              </Box>
 
             
-            <ThemeProvider theme={theme}>
+           
                 <Box width="100%" marginTop={1}>
                     <Typography style={{color: "white", textAlign:"left"}} > Current Debts </Typography>
                     <TableContainer className={classes.tableComponent} component={Paper} style={{backgroundColor: "black"}}>
@@ -167,7 +206,7 @@ function DebtTable(){
                               {
                                   dailyDebts.map(debt => {
 
-                                      const {id, cost, debtor_name, created_at} = debt
+                                      const {id, cost, debtor_name, created_at, receipt_id} = debt
                                      
                                       const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
@@ -178,7 +217,14 @@ function DebtTable(){
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {debtor_name} </Typography>   </Box></TableCell>
 
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
-                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=>  {
+                                                  setReceiptId(receipt_id)
+                                                  toggleDrawerOpened(true)
+                                                  setDebtInfo(debt)
+
+                                              }
+                                                
+                                              } > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
                                           
                                           
                                           </TableRow>
@@ -189,7 +235,7 @@ function DebtTable(){
 {
                                   previousPendingDebts.map(debt => {
 
-                                      const {id, cost, debtor_name, created_at} = debt
+                                      const {id, cost, debtor_name, created_at, receipt_id} = debt
                                      
                                       const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
@@ -200,7 +246,11 @@ function DebtTable(){
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} > {debtor_name} </Typography>   </Box></TableCell>
 
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText}> {time} </Typography>   </Box></TableCell>
-                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
+                                                setReceiptId(receipt_id)
+                                                toggleDrawerOpened(true)
+                                                setDebtInfo(debt)
+                                              }} > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
                                           
                                           
                                           </TableRow>
@@ -224,10 +274,13 @@ function DebtTable(){
                 
             </ThemeProvider>
             </>
+         
               }
             
             
+        
         </Box>
+        </DebtContextProvider>
         
     )
 }
