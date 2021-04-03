@@ -3,8 +3,9 @@ import React, { useContext } from 'react'
 import DebtContext from '../../../../../../context/admin/transaction_activity/debts/DebtContext'
 import clsx from 'clsx';
 import deepOrange from '@material-ui/core/colors/deepOrange'
-import { CloseOutlined, LocationCity, MonetizationOn, Person, Phone } from '@material-ui/icons';
+import { CloseOutlined, DateRange, LocationCity, MonetizationOn, Person, Phone } from '@material-ui/icons';
 import AmountFormater from '../../../../../../helpers/AmountFormater';
+import { DateTime } from 'luxon';
 
 
 
@@ -31,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
 
 function DebtInfo(){
     const {debtInfo, setDebtInfoOpened, setReceiptId, toggleDrawerOpened} = useContext(DebtContext)
-    const {debtor_name, cashier_name, receipt_id, debtor_address, debtor_telephone, cost} = debtInfo
+    const {debtor_name, cashier_name, receipt_id, debtor_address, debtor_telephone, cost, created_at} = debtInfo
+    console.log(debtInfo)
+    const debtDate = new Date(created_at).toDateString()
+    const debtIsToday = new Date(created_at).toDateString() === new Date().toDateString()
+    console.log(debtIsToday)
     const classes = useStyles()
     let shortName = cashier_name.toString().toUpperCase().charAt(0)
    
@@ -55,7 +60,11 @@ function DebtInfo(){
             </Box>
     
             <Box display="flex"  justifyContent="center" marginTop={1} width="100%"> 
-            <Typography variant="h6" className={classes.boldText} > Cashier:  {cashier_name} </Typography> 
+                <Typography variant="h6" className={classes.boldText} > Cashier:  {cashier_name} </Typography> 
+            </Box>
+
+            <Box display="flex"  justifyContent="center" marginTop={1} width="100%"> 
+                <Typography  className={classes.boldText} > Receipt Id:  {receipt_id} </Typography> 
             </Box>
 
             <Box marginTop={1} p={1}>
@@ -92,6 +101,19 @@ function DebtInfo(){
                     </Box>
                     <Box>
                         <Typography className={classes.boldText}>₦{AmountFormater(cost).amount()}</Typography>
+                    </Box>
+                </Box>
+
+                <Box display="flex" p={1} justifyContent="space-between"> 
+                    <Box>
+                        <Typography className={classes.boldText}><DateRange /> </Typography>
+                    </Box>
+                    <Box>
+                        <Typography className={classes.boldText}>{
+
+                            debtIsToday ? "Today" : debtDate
+
+                        } </Typography>
                     </Box>
                 </Box>
 
