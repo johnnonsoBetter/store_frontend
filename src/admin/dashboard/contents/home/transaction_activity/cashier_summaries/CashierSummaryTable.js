@@ -1,5 +1,5 @@
 
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Typography } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -14,11 +14,14 @@ import Loader from '../../../../Loader'
 import FailedActivityLoader from '../../FailedActivityLoader'
 import NoData from '../../NoData'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
+import { Check, Mood, MoodBadOutlined, Person, TrackChangesOutlined } from '@material-ui/icons'
+import AmountFormater from '../../../../../../helpers/AmountFormater'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    flexGrow: 1
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -33,6 +36,25 @@ const useStyles = makeStyles((theme) => ({
   },
   detail: {
     textTransform: "capitalize"
+  },
+  summaryContainer: {
+      backgroundColor: "#090E1E",
+      borderRadius: 10
+
+  },
+  cashierName: {
+      color: "#094595",
+      textTransform: "capitalize"
+  },
+  reportButton: {
+      backgroundColor: "#1265C8",
+      width: "100%"
+  },
+  amount: {
+      color: "#DEDEDE"
+  },
+  cashierIcon: {
+      color: "#BE9D3D"
   }
 }));
 
@@ -43,14 +65,8 @@ function CashierSummaryTable(){
     const [failed, setFailed] = useState(false)
     const [cashier_summaries, setCashierSummaries] = useState([])
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
     const cashierSummaryApi = activitiesApi(storeName, 'cashier_sales_summaries')
 
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
-    
 
     useEffect(() => {
         
@@ -102,7 +118,7 @@ function CashierSummaryTable(){
 
     return (
 
-      <Box width="100%">
+      <Box  className={classes.root}>
         {
           loading ? <Loader  minHeight={300}/> :
             failed ? <FailedActivityLoader activity="expenses" />
@@ -110,7 +126,37 @@ function CashierSummaryTable(){
 
             <Box widht="100%">
                     {
-                        cashier_summaries.length === 0 ? <NoData activity="Cashier Summary"/> : <Typography> Hello Please tell </Typography> 
+                        cashier_summaries.length === 0 ? <NoData activity="Cashier Summary"/> : 
+                        <Grid container>
+
+                            {
+                                cashier_summaries.map(cashier_summary => {
+                                    const {cashier_name, total_amount_difference, id, final_outcome} = cashier_summary
+                                    return (
+                                        <Grid key={id} id={id} item xs={12} sm={3}>
+                                            <Box className={classes.summaryContainer} width="100%" >
+                                                <Box display="flex"  p={1} justifyContent="flex-end"> <Person  className={classes.cashierIcon}/> </Box>
+                                                <Box textAlign="center" p={1} className={classes.cashierName}> <Typography > {cashier_name} </Typography> </Box>
+                                                <Box textAlign="center" p={1} className={classes.amount}> <Typography > ₦{AmountFormater(total_amount_difference).amount()} </Typography> </Box>
+                                                <Box textAlign="center" p={1} className={classes.amount}> 
+                                                    <Typography >
+                                                        {
+                                                            final_outcome === "shortage" ? <TrackChangesOutlined style={{color: "red"}} /> : final_outcome === "excess" ? <TrackChangesOutlined style={{color: "grey"}} /> :
+                                                            final_outcome === "balance" ? <TrackChangesOutlined style={{color: "green"}} /> : null
+                                                        }
+                                                        
+                                                    </Typography> </Box>
+                                                <Box textAlign="center" p={1}> <Button className={classes.reportButton}> View Report </Button>  </Box>
+                                            </Box>
+                                        </Grid>
+
+                                    )
+                                })
+                            }
+
+                            
+                        </Grid>
+
                     }     
                 
             </Box>
