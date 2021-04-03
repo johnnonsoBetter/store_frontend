@@ -1,6 +1,6 @@
 
 import { Box, Button, Drawer, Grid, Typography, useMediaQuery } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,6 +54,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
+
 function CashierSummaryTable(){
     const {storeName} = useParams()
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
@@ -65,6 +79,7 @@ function CashierSummaryTable(){
     const [cashierSummaryId, setCashierSummaryId] = useState('')
     const matches = useMediaQuery('max-width:600px')
     const [drawerOpened, setDrawerOpened] = useState(false)
+    const [width] = useWindowSize()
 
     useEffect(() => {
         
@@ -132,8 +147,8 @@ function CashierSummaryTable(){
                   setDrawerOpened,
                 }}
               > 
-              <Drawer anchor="right" open={drawerOpened} onClose={()=> setDrawerOpened(false)}>
-                <Box width={matches ? "100%" : 320 } >
+              <Drawer anchor="right" width={width} open={drawerOpened} onClose={()=> setDrawerOpened(false)}>
+                <Box width={matches ? width : 320 } >
                   <CashierSummaryInfo />
                 </Box>
               </Drawer>
