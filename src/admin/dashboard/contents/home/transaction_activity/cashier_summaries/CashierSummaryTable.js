@@ -1,21 +1,17 @@
 
-import { Box, Button, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Drawer, Grid, Typography, useMediaQuery } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
-import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {DateTime} from 'luxon'
 import Loader from '../../../../Loader'
 import FailedActivityLoader from '../../FailedActivityLoader'
 import NoData from '../../NoData'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
 import { Check, Mood, MoodBadOutlined, Person, TrackChangesOutlined } from '@material-ui/icons'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
+import { CashierSummaryContextProvider } from '../../../../../../context/admin/transaction_activity/cashier_summaries/CashierSummaryContext';
+import CashierSummaryInfo from './CashierSummaryInfo';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +62,9 @@ function CashierSummaryTable(){
     const [cashier_summaries, setCashierSummaries] = useState([])
     const classes = useStyles();
     const cashierSummaryApi = activitiesApi(storeName, 'cashier_sales_summaries')
-
+    const [cashierSummaryId, setCashierSummaryId] = useState('')
+    const matches = useMediaQuery('max-width:600px')
+    const [drawerOpened, setDrawerOpened] = useState(false)
 
     useEffect(() => {
         
@@ -80,7 +78,6 @@ function CashierSummaryTable(){
             
             }).catch(err => {
         
-              console.log(err)
               setLoading(false)
               setFailed(true)
              
@@ -94,7 +91,7 @@ function CashierSummaryTable(){
               setTransactionActivity(transaction_activity)
               setCashierSummaries(cashier_sales_summaries)
               setLoading(false)
-              console.log(response)
+
  
             }).catch(err => {
 
@@ -110,6 +107,8 @@ function CashierSummaryTable(){
               setCashierSummaries([])
               setLoading(true)
               setFailed(false)
+              setCashierSummaryId('')
+              setDrawerOpened(false)
           }
           
           
@@ -118,6 +117,7 @@ function CashierSummaryTable(){
 
     return (
 
+
       <Box  className={classes.root}>
         {
           loading ? <Loader  minHeight={300}/> :
@@ -125,6 +125,18 @@ function CashierSummaryTable(){
           : 
 
             <Box widht="100%">
+              <CashierSummaryContextProvider
+                value={{
+                  cashierSummaryId,
+                  setCashierSummaryId,
+                  setDrawerOpened,
+                }}
+              > 
+              <Drawer anchor="right" open={drawerOpened} onClose={()=> setDrawerOpened(false)}>
+                <Box width={matches ? "100%" : 320 } >
+                  <CashierSummaryInfo />
+                </Box>
+              </Drawer>
                     {
                         cashier_summaries.length === 0 ? <NoData activity="Cashier Summary"/> : 
                         <Grid container>
@@ -146,7 +158,10 @@ function CashierSummaryTable(){
                                                         }
                                                         
                                                     </Typography> </Box>
-                                                <Box textAlign="center" p={1}> <Button className={classes.reportButton}> View Report </Button>  </Box>
+                                                <Box textAlign="center" p={1}> <Button onClick={()=> {
+                                                  setCashierSummaryId(id)
+                                                  setDrawerOpened(true)
+                                                }} className={classes.reportButton}> View Report </Button>  </Box>
                                             </Box>
                                         </Grid>
 
@@ -158,7 +173,7 @@ function CashierSummaryTable(){
                         </Grid>
 
                     }     
-                
+                </CashierSummaryContextProvider>
             </Box>
         }
 
