@@ -17,6 +17,7 @@ import ItemReturnTable from './item_returns/ItemReturnTable';
 import Loader from '../../../Loader';
 import FailedActivityLoader from '../FailedActivityLoader';
 import RecoveredDebtsTable from './recovered/RecoveredDebtsTable';
+import CashierSummaryTable from './cashier_summaries/CashierSummaryTable';
 
 
 
@@ -206,7 +207,7 @@ function Content(){
                                     
                                     {
                                        tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : tableType === "changes" ? 
-                                       <ChangeTable /> : tableType === "item_returns" ? <ItemReturnTable /> : tableType === "recovered_debts" ? <RecoveredDebtsTable /> : null
+                                       <ChangeTable /> : tableType === "item_returns" ? <ItemReturnTable /> : tableType === "recovered_debts" ? <RecoveredDebtsTable /> : tableType === "cashier_summaries" ? <CashierSummaryTable /> : null
                                     }
                                  
                                  

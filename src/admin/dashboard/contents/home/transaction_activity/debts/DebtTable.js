@@ -236,7 +236,7 @@ function DebtTable(){
                                   })
                               }
 
-{
+                              {
                                   previousPendingDebts.map(debt => {
 
                                       const {id, cost, debtor_name, created_at, receipt_id} = debt

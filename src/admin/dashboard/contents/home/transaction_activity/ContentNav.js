@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Box, ButtonBase, CircularProgress, makeStyles, Typography} from '@material-ui/core'
 import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
 import AmountFormater from '../../../../../helpers/AmountFormater'
+import { AssessmentOutlined, ShowChartRounded } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
     contItem: {
@@ -137,14 +138,14 @@ function ContentNav(){
         
            
         
-            <ButtonBase style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(175 146 41 / 68%))"}} borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> handleTableType("cashier_summaries") } style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(175 146 41 / 68%))"}} borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Cashier Report</Typography>
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> ₦8,000</Typography>
+                        <AssessmentOutlined /> 
                     </Box>
 
                 </Box>
