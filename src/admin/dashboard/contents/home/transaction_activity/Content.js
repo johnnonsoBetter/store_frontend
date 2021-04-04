@@ -18,6 +18,9 @@ import Loader from '../../../Loader';
 import FailedActivityLoader from '../FailedActivityLoader';
 import RecoveredDebtsTable from './recovered/RecoveredDebtsTable';
 import CashierSummaryTable from './cashier_summaries/CashierSummaryTable';
+import { activitiesApi } from '../../../../../api/admin/activities/api';
+import { DateTime } from 'luxon';
+
 
 
 
@@ -74,7 +77,9 @@ function Content(){
     const {handleDrawerToggle} = useContext(AdminDashboardStyleContext)
     const {staticDate, setStaticDate} = useContext(AdminDashboardStyleContext).store
     const [failed, setFailed] = useState(false)
-
+    const d = DateTime.fromHTTP(new Date().toGMTString())
+   
+    const transactionActivityApi = activitiesApi(storeName, `transaction_activities/${d.toISODate()}`)
 
     function noTransaction(obj){
        return Object.keys(obj).length === 0
@@ -88,14 +93,8 @@ function Content(){
     }
 
     const setTransactionByDate = (date) => {
-       console.log("former static date ", staticDate)
-       console.log("are we allowed to know the cps", date)
-      axios({
-         method: 'GET',
-         url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
-         headers: JSON.parse(localStorage.getItem('admin')),
-         params: {static_date: date}
-       }).then(response => {
+      
+       activitiesApi(storeName, `transaction_activities/${date}`).load().then(response => {
          
          const {transaction_activity} = response.data
 
@@ -116,12 +115,8 @@ function Content(){
 
     useEffect(()=> {
        updateSize()
-       console.log("entering page")
-       axios({
-         method: 'GET',
-         url: `http://localhost:3001/api/v1/admin_dashboards/${storeName}/sales`,
-         headers: JSON.parse(localStorage.getItem('admin'))
-       }).then(response => {
+       
+       transactionActivityApi.load().then(response => {
          console.log(response)
 
          const {transaction_activity} = response.data
