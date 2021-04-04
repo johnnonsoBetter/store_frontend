@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { Box } from "@material-ui/core";
+import { DateTime } from "luxon";
 
 
 class PastDayPreview extends Component {
@@ -29,15 +30,14 @@ class PastDayPreview extends Component {
      
     
 
-    //   const dateCategories = this.props.previews.map(track => {
-    //     let date = DateTime.fromISO(track.created_at)
+      const dateCategories = this.props.previews.map(track => {
+        let date = DateTime.fromISO(track.created_at)
 
-    //     return `${date.monthShort} ${date.day}`
-    //   })
+        return `${date.weekdayShort}`
+      })
 
-    //   const dataCategories = this.props.previews.map(data => data.amount)
-   
-
+      const dataCategories = this.props.previews.map(data => data.total_sales)
+     
     
 
       this.setState({
@@ -46,22 +46,11 @@ class PastDayPreview extends Component {
             id: "basic-bar"
           },
           xaxis: {
-            categories: this.props.previews
+            categories: dateCategories
           }
         },
-        dataLabels: {
-          style: {
-            colors: ['black', '#E91E63', '#9C27B0']
-          }
-        },
-        grid: {
-          row: {
-            colors: ['#F44336', '#E91E63', '#9C27B0']
-          },
-          column: {
-            colors: ['#F44336', '#E91E63', '#9C27B0']
-          }
-        },
+       
+       
         fill: {
           type: "gradient",
           gradient: {
@@ -70,12 +59,12 @@ class PastDayPreview extends Component {
             opacityTo: 0.9,
             stops: [0, 90, 100]
           },
-          colors: ['black']
+          colors: ['yellow']
         },
         series: [
           {
             name: "series-1",
-            data: this.props.previews
+            data: dataCategories
           }
         ]
       }

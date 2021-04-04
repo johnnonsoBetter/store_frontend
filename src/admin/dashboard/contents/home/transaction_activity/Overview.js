@@ -24,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Overview(props){
 
-    const {show, setShow} = useContext(TransactionActivityContext)
+    const {show, setShow, previews} = useContext(TransactionActivityContext)
   console.log(show)
     const classes = useStyles();
-    const previews = [900, 856, 1300, 740]
+    
+    
 
   return (
     <div className={classes.root} >

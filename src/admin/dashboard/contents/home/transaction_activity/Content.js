@@ -69,7 +69,7 @@ function Content(){
     
     const {storeName} = useParams()
     const classes = useStyles()
-    const [preview, setPreview] = useState([])
+    const [previews, setPreviews] = useState([])
     const [transactionActivity, setTransactionActivity] = useState({})
     const [tableType, setTableType] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -96,15 +96,12 @@ function Content(){
       
        activitiesApi(storeName, `transaction_activities/${date}`).load().then(response => {
          
-         const {transaction_activity} = response.data
+         const {transaction_activity, past_sales} = response.data
 
          setTableType(null)
          setShow(false)
-        
-
-         console.log(transaction_activity)
-         
-          setTransactionActivity(transaction_activity)
+         setTransactionActivity(transaction_activity)
+         setPreviews(past_sales)
         
        }).catch(err => {
 
@@ -119,15 +116,17 @@ function Content(){
        transactionActivityApi.load().then(response => {
          console.log(response)
 
-         const {transaction_activity} = response.data
+         const {transaction_activity, past_sales} = response.data
          setLoading(false)
-         
+      
          setTransactionActivity(transaction_activity)
+         setPreviews(past_sales)
         
        }).catch(err => {
          setLoading(false)
          setFailed(true)
-         console.log(err)
+         setPreviews([])
+         
        })
        
 
@@ -170,6 +169,7 @@ function Content(){
                   setTransactionActivity,
                   setShow,
                   staticDate,
+                  previews,
                   
                }}
             >
