@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
    root: {
      
-       borderRadius: "15px",
+   
        flexGrow: 1,
        height: "calc(100vh - 50px)"
        
