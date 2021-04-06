@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import { Button } from '@material-ui/core';
+import CashierPage from './cashier/CashierPage';
 
 
 
@@ -65,15 +66,3 @@ function Linker({history}){
   )
 
 }
-
-
-function CashierPage(){
-
-  return (
-    <div>
-      This is the cashier page
-    </div>
-  )
-}
-
-

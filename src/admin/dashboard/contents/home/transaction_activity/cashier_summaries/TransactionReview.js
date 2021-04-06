@@ -127,11 +127,6 @@ function TransactionReview(props){
                                 </Box>
                             </Box>
 
-                            
-
-                                
-                            
-
                         </Box>
                         
 
@@ -145,12 +140,7 @@ function TransactionReview(props){
                     <Box>
                     <Typography> ₦{ AmountFormater(transactionReviewInfo['money_remitted']).amount() } </Typography>
                     </Box>
-                </Box>
-                
-                
-
-                
-                               
+                </Box>          
                
             </Box>
         </Slide>
