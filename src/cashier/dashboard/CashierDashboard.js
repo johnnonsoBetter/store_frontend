@@ -7,6 +7,7 @@ import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
 import { DashboardContextProvider } from '../../context/cashier/DashboardContext';
 import { Clear } from '@material-ui/icons';
+import ActivityNav from './activity/ActivityNav';
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -77,13 +78,27 @@ function CashierDashboard(){
 
 
                         <Drawer anchor="left" open={drawerOpened} >
-                            <Box width={width} > 
+                            <Box width={width} flexGrow={1} style={{backgroundColor: "#0b1225"}} > 
                                 <Box display="flex" p={1} justifyContent="flex-end">
                                     <IconButton onClick={toggleDrawer} >
                                         <Clear />
                                     </IconButton>
-
                                 </Box>
+
+                                <Grid container >
+
+                                    <Grid item xs={3}>
+                                        <Box borderRadius={8} marginLeft={4} height={700} flexGrow={1}  width={100} display="flex" flexDirection="column" style={{backgroundColor: "black"}} >
+                                            <ActivityNav />
+                                        </Box>
+                                    </Grid>
+
+                                    <Grid item xs={9}>
+                                        <Typography> HEllo how are we going to make the same </Typography>
+                                    </Grid>
+                                </Grid>
+
+                                
                                 
                              </Box>
                         </Drawer>
