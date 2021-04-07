@@ -3,6 +3,12 @@ import { AttachMoneyRounded, CreateSharp, PersonRounded } from '@material-ui/ico
 import React, { useContext, useEffect, useState } from 'react'
 import { expensesApi } from '../../../../api/cashier/activity/expenses';
 import DashboardContext from '../../../../context/cashier/DashboardContext';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { green } from '@material-ui/core/colors';
+import Fab from '@material-ui/core/Fab';
+import CheckIcon from '@material-ui/icons/Check';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -19,7 +25,32 @@ const useStyles = makeStyles((theme) => ({
     inputContainer: {
         backgroundColor: "black",
         color: "white"
-    }
+    },
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+      },
+      buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+          backgroundColor: green[700],
+        },
+      },
+      fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+      },
+      buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
   
 }))
 
@@ -60,15 +91,32 @@ function CreateExpense(props){
 
     const {expenses,  setTotalExpenses, setExpenses} = props.createExpenseProps
     const {showSnackBar} = useContext(DashboardContext)
+    const [loading, setLoading] = React.useState(false);
     const [expense, setExpense] = useState({
         cost: '',
         detail: ''
 
     })
+
+   
     
     const [cost, setCost] = useState('')
     const [collector, setCollector] = useState('')
     const [usage, setUsage] = useState('')
+
+
+    useEffect(()=> {
+        return ()=> {
+            setExpense({
+                cost: '',
+                detail: ''
+        
+            })
+            setCollector('')
+            setCost('')
+            setUsage('')
+        }
+    }, [])
 
     const handleChange = (e) => {
 
@@ -103,16 +151,30 @@ function CreateExpense(props){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        setLoading(true)
         expensesApi().createExpense(expense).then(response => {
             console.log(response)
+            
             showSnackBar('Successfully created new expenses', true)
+            setLoading(false)
+            setExpense({
+                cost: '',
+                detail: ''
+        
+            })
+            setCollector('')
+            setCost('')
+            setUsage('')
+
         }).catch(err => {
             showSnackBar('Failed to create Expense', false)
-            console.log(err)
+            setLoading(false)
+            
         })
 
     }
+
+
 
 
     return (
@@ -178,7 +240,19 @@ function CreateExpense(props){
 
                     <Grid item xs={12}>
                         <Box  display="flex" justifyContent="flex-start">
-                            <Button type="submit" style={{width: "100%", backgroundColor: "#3f51b5", color: "white"}} > Add </Button>
+                            {/* <Button type="submit" style={{width: "100%", backgroundColor: "#3f51b5", color: "white"}} > Add </Button> */}
+                            <div className={classes.wrapper}>
+                                <Button
+                                variant="contained"
+                                color="primary"
+                                
+                                disabled={loading}
+                                type="submit"
+                                >
+                                Accept terms
+                                </Button>
+                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                            </div>
                         </Box>
                     </Grid>
                 </Grid>
