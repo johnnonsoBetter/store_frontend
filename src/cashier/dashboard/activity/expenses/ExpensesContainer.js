@@ -29,11 +29,12 @@ function ExpensesContainer(){
 
         expensesApi().fetchAll().then(response => {
 
-            const {expenses, total_expenses} = response.data
+            const {expenses, total_expenses_cost} = response.data
             setExpenses(expenses)
-            setTotalExpenses(total_expenses)
+            setTotalExpenses(total_expenses_cost)
+            
             setLoading(false)
-            console.log(expenses)
+            console.log(response.data)
 
         }).catch(err => {
             console.log(err)
@@ -54,7 +55,7 @@ function ExpensesContainer(){
             
             <Grid spacing={7} container>
                 <Grid item xs={8}>
-                    <Box className={classes.box}   >
+                    <Box className={classes.box} display="flex" alignItems="center"   >
 
                         {
                             loading ? 
@@ -74,8 +75,9 @@ function ExpensesContainer(){
                             </Box>
 
                             : 
-                            <Box>
-                                <ExpensesList />
+                            <Box >
+                                <Typography style={{color: "white"}} variant="h6"> Total Expenses {totalExpenses} </Typography>
+                                <ExpensesList expenses={expenses}  />
                             </Box>
                         
 
