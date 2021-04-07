@@ -12,7 +12,7 @@ export const expensesApi = ()=> {
 
           return  axios({
                 method: "GET",
-                headers: JSON.parse(localStorage.getItem('admin')),
+                headers: JSON.parse(localStorage.getItem('cashier')),
                 url: `${baseUrl}/api/v1/cashier_expenses`
             })
         },
