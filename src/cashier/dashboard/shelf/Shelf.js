@@ -1,4 +1,4 @@
-import { Box, Divider, makeStyles, Typography } from '@material-ui/core'
+import { Box, Divider, makeStyles } from '@material-ui/core'
 import React from 'react'
 import ItemList from '../shelf/items/ItemList'
 import ItemSearchInput from './ItemSearchInput'

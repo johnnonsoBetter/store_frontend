@@ -72,7 +72,6 @@ export default function ActivityNav() {
         <Tabs
           value={value}
           onChange={handleChange}
-          variant="scrollable"
           scrollButtons="on"
           indicatorColor="primary"
           variant="fullWidth"

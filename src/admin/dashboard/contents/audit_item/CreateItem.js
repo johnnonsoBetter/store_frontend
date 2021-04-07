@@ -1,7 +1,6 @@
 import {React, useState, useContext} from 'react'
 import {Box, Drawer, InputAdornment, InputLabel, OutlinedInput, TextField, Button, MenuItem, Typography, IconButton, useMediaQuery} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import axios from 'axios'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { itemApi } from '../../../../api/admin/item/api'

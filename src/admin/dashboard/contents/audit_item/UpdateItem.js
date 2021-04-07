@@ -1,7 +1,6 @@
 import { Box, IconButton, Slide, Typography, TextField, MenuItem, OutlinedInput, InputLabel, InputAdornment, Button} from '@material-ui/core'
 import { ArrowBack } from '@material-ui/icons'
 import SaveIcon from '@material-ui/icons/Save'
-import axios from 'axios'
 import {React, useContext, useEffect, useState} from  'react'
 import { itemApi } from '../../../../api/admin/item/api'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
@@ -15,7 +14,7 @@ function UpdateItem({...props}){
     const {item, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
     
-    const [updateItem, setItem] = useState({
+    const [itemUpdate, setItem] = useState({
         real_item: {
             name: "",
             cost_price: 0,
@@ -35,14 +34,26 @@ function UpdateItem({...props}){
                 category_id: category['id'],
             }
         })
-     }, [])
+
+        return ()=> {
+            setItem({
+                real_item: {
+                    name: "",
+                    cost_price: 0,
+                    selling_price: 0,
+                    barcode: "",
+                    category_id: 1,
+                }
+            })
+        }
+     }, [name, barcode, cost_price, selling_price, category, id])
 
     const handleChange = (e) => {
         e.preventDefault()
 
        
     
-        let new_item = Object.assign({}, updateItem);  
+        let new_item = Object.assign({}, itemUpdate);  
         const field_name = e.target.name
         switch(field_name){
             case "name":
@@ -54,7 +65,7 @@ function UpdateItem({...props}){
             break;
             case "cost_price": 
                 new_item['real_item']['cost_price'] = e.target.value
-                console.log(e.target)
+                
             break;
             case "selling_price": 
                 new_item['real_item']['selling_price'] = e.target.value
@@ -81,15 +92,15 @@ function UpdateItem({...props}){
         e.preventDefault()
 
         const newSnackBarAction = Object.assign({}, snackBarAction)
-        itemApi().updateItem(name, updateItem).then(response => {
+        itemApi().updateItem(name, itemUpdate).then(response => {
             
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
             
-            let updateItem = Object.assign({}, itemInfo)
-            updateItem['item'] = item
-            updateItem['cost_price_trackers'] = cost_price_trackers
-            updateItem['selling_price_trackers'] = selling_price_trackers
-            updateItem['category'] = category
+            let itemUpdate = Object.assign({}, itemInfo)
+            itemUpdate['item'] = item
+            itemUpdate['cost_price_trackers'] = cost_price_trackers
+            itemUpdate['selling_price_trackers'] = selling_price_trackers
+            itemUpdate['category'] = category
             console.log(response)
 
             const new_items = items.map((this_item) => (id === this_item.id) ? item : this_item)
@@ -103,7 +114,7 @@ function UpdateItem({...props}){
             setItems(new_items)
 
             console.log(newSnackBarAction)
-            setItemInfo(updateItem)
+            setItemInfo(itemUpdate)
             toggleUpdate()
             setSnackBarAction(newSnackBarAction)
             
@@ -144,11 +155,11 @@ function UpdateItem({...props}){
                      
                      <Box display="flex" m={1} justifyContent="center">
                          <Box m={1}> 
-                             <TextField id="outlined-basic" name="name" label="Name" variant="outlined"  value={updateItem['real_item'].name} onChange={handleChange}/>
+                             <TextField id="outlined-basic" name="name" label="Name" variant="outlined"  value={itemUpdate['real_item'].name} onChange={handleChange}/>
                          </Box>
 
                          <Box m={1}>
-                             <TextField id="outlined-basic" name="barcode"  label="Barcode" variant="outlined"  value={updateItem['real_item'].barcode} onChange={handleChange}/>
+                             <TextField id="outlined-basic" name="barcode"  label="Barcode" variant="outlined"  value={itemUpdate['real_item'].barcode} onChange={handleChange}/>
                          </Box>
                      </Box>
 
@@ -158,7 +169,7 @@ function UpdateItem({...props}){
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type={"number"}
-                                    value={updateItem['real_item'].cost_price}
+                                    value={itemUpdate['real_item'].cost_price}
                                     name="cost_price"
                                     onChange={handleChange}
                                     placeholder={0}
@@ -173,7 +184,7 @@ function UpdateItem({...props}){
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type={"number"}
-                                    value={updateItem['real_item'].selling_price}
+                                    value={itemUpdate['real_item'].selling_price}
                                     name="selling_price"
                                     placeholder={0}
                                     onChange={handleChange}

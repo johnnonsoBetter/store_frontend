@@ -1,12 +1,9 @@
 import { Typography, makeStyles, Box, Avatar, IconButton, Button} from '@material-ui/core'
 import React, { useContext } from 'react'
 import DebtContext from '../../../../../../context/admin/transaction_activity/debts/DebtContext'
-import clsx from 'clsx';
 import deepOrange from '@material-ui/core/colors/deepOrange'
 import { CloseOutlined, DateRange, LocationCity, MonetizationOn, Person, Phone } from '@material-ui/icons';
 import AmountFormater from '../../../../../../helpers/AmountFormater';
-import { DateTime } from 'luxon';
-
 
 
 
@@ -33,10 +30,8 @@ const useStyles = makeStyles((theme) => ({
 function DebtInfo(){
     const {debtInfo, setDebtInfoOpened, setReceiptId, toggleDrawerOpened} = useContext(DebtContext)
     const {debtor_name, cashier_name, receipt_id, debtor_address, debtor_telephone, cost, created_at} = debtInfo
-    console.log(debtInfo)
     const debtDate = new Date(created_at).toDateString()
     const debtIsToday = new Date(created_at).toDateString() === new Date().toDateString()
-    console.log(debtIsToday)
     const classes = useStyles()
     let shortName = cashier_name.toString().toUpperCase().charAt(0)
    
@@ -45,8 +40,6 @@ function DebtInfo(){
         setDebtInfoOpened(false)
     }
 
-
-    console.log(debtInfo)
 
     return (
         <Box className={classes.root}>

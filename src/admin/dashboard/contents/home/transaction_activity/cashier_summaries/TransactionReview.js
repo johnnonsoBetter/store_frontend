@@ -1,13 +1,10 @@
-import { Box, Paper, Slide, Typography, Badge} from '@material-ui/core'
+import { Box, Paper, Slide, Typography} from '@material-ui/core'
 import React from 'react'
-import clsx from 'clsx';
-import deepOrange from '@material-ui/core/colors/deepOrange'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 import { Check, Remove } from '@material-ui/icons';
 
 function TransactionReview(props){
-    const {setView, transactionReviewInfo} = props
-    const circle = <div className={clsx()} />;
+    const {transactionReviewInfo} = props
 
     
     return (   

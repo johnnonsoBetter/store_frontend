@@ -1,6 +1,7 @@
-import { Box, Button, Card, CardContent, CardHeader, Grid, Grow, InputBase, makeStyles, Paper, TextField, Typography, withStyles } from '@material-ui/core'
-import { AttachMoneyRounded, CreateSharp, MonetizationOnRounded, MoneyRounded, Person, PersonRounded } from '@material-ui/icons'
-import React from 'react'
+import { Box, Button, Grid, Grow, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core'
+import { AttachMoneyRounded, CreateSharp, PersonRounded } from '@material-ui/icons'
+import React, { useEffect, useState } from 'react'
+import { expensesApi } from '../../../../api/cashier/activity/expenses';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -53,8 +54,70 @@ const Input = withStyles((theme) => ({
 
 
 
-function CreateExpense(){
+function CreateExpense(props){
     const classes = useStyles()
+
+    const {expenses, setTotalExpenses, setExpenses} = props.createExpenseProps
+    const [expense, setExpense] = useState(null)
+
+
+    useEffect(()=> {
+        setExpense({
+            cost: '',
+            detail: ''
+
+        })
+
+        return ()=> {}
+    }, [])
+    
+    const [cost, setCost] = useState('')
+    const [collector, setCollector] = useState('')
+    const [usage, setUsage] = useState('')
+
+    const handleChange = (e) => {
+
+        e.preventDefault()
+        const new_expense = Object.assign({}, expense)
+        console.log(new_expense)
+
+        const field_name = e.target.name
+
+        if (field_name === "cost"){
+            setCost(e.target.value)
+            new_expense['cost'] = e.target.value
+            const detail = `${collector} Collected ₦${e.target.value} for ${usage}`
+            new_expense['detail'] = detail
+            
+        }else if(field_name === "collector"){
+            setCollector(e.target.value)
+            const detail = `${e.target.value} Collected ₦${cost} for ${usage}`
+            new_expense['detail'] = detail
+            
+        }else {
+            setUsage(e.target.value)
+            const detail = `${collector} Collected ₦${cost} for ${e.target.value}`
+            new_expense['detail'] = detail
+        }
+        
+        
+        console.log(expense)
+        setExpense(new_expense)
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        expensesApi().createExpense(expense).then(response => {
+            console.log(response)
+        }).catch(err => {
+
+            console.log(err)
+        })
+
+    }
+
 
     return (
        <Grow in={true}>
@@ -63,7 +126,7 @@ function CreateExpense(){
        <Box className={classes.root} display="flex" justifyContent="center" alignItems="center">
            <Paper elevation={6} className={classes.paper} >
                
-           <form  noValidate autoComplete="off">
+           <form onSubmit={handleSubmit}  noValidate autoComplete="off">
               
 
                
@@ -79,7 +142,7 @@ function CreateExpense(){
                                     <Typography variant="h5"> <PersonRounded /> </Typography>
                                 </Box>
                                 <Box textAlign="center" >
-                                    <Input />
+                                    <Input name="collector" value={collector} onChange={handleChange} />
                                 </Box>
                             </Box>
                         </Box>
@@ -89,13 +152,13 @@ function CreateExpense(){
                         <Box display="flex" justifyContent="flex-end">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
-                                    <Typography variant="h5"> Amount </Typography>
+                                    <Typography variant="h5"> Cost </Typography>
                                 </Box>
                                 <Box textAlign="center" >
                                     <Typography variant="h5"> <AttachMoneyRounded /> </Typography>
                                 </Box>
                                 <Box textAlign="center" >
-                                    <Input />
+                                    <Input name="cost" value={cost} onChange={handleChange}  />
                                 </Box>
                             </Box>
                         </Box>
@@ -111,15 +174,15 @@ function CreateExpense(){
                                     <Typography variant="h5"> <CreateSharp /> </Typography>
                                 </Box>
                                 <Box textAlign="center" >
-                                    <Input />
+                                    <Input name="usage" value={usage} onChange={handleChange} />
                                 </Box>
                             </Box>
                         </Box>
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Box display="flex" justifyContent="flex-start">
-                            <Button  style={{width: "100%", backgroundColor: "#3f51b5", color: "white"}} > Add </Button>
+                        <Box  display="flex" justifyContent="flex-start">
+                            <Button type="submit" style={{width: "100%", backgroundColor: "#3f51b5", color: "white"}} > Add </Button>
                         </Box>
                     </Grid>
                 </Grid>

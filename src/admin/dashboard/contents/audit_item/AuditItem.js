@@ -8,7 +8,6 @@ import NoAuditMode from './no_audit_mode/NoAuditMode'
 import ClearIcon from '@material-ui/icons/Clear';
 import Item from './Item';
 import ItemActionSnackbar from './ItemActionSnackbar';
-import axios from 'axios';
 import { categoryApi } from '../../../../api/admin/item/api';
 
 

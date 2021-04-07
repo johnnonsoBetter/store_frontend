@@ -1,21 +1,6 @@
 
 import React from 'react';
-import { Box, Container, Button, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, ButtonGroup } from '@material-ui/core';
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      
-        flexGrow: 1,
-        padding: theme.spacing(1)
-    },
-    toolbar: theme.mixins.toolbar,
-
-    paper: {
-        height: "calc(95vh - 50px)",
-        backgroundColor: "#050310"
-    }
- }))
+import { Box, Button, ButtonGroup } from '@material-ui/core';
 
 
 

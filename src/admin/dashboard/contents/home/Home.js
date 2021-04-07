@@ -3,7 +3,6 @@ import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularP
 import {Link, useRouteMatch} from 'react-router-dom'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
-import axios from 'axios'
 import StoreInfo from './StoreInfo'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import { dashboardApi } from '../../../../api/admin/dashboard/api'
@@ -15,7 +14,7 @@ function Home(){
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
 
-    
+
     useEffect(() => {
         setBackdropState(true)
         dashboardApi(storeName).load().then(response => {
