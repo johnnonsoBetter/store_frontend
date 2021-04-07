@@ -1,7 +1,6 @@
 
 import React, { useLayoutEffect, useState } from 'react';
-import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton } from '@material-ui/core';
-
+import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip } from '@material-ui/core';
 import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
@@ -44,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         height: "calc(95vh - 50px)",
         backgroundColor: "#050310"
+    }, 
+    closeDrawerButton: {
+        color: "white"
     }
  }))
 
@@ -79,26 +81,21 @@ function CashierDashboard(){
 
                         <Drawer anchor="left" open={drawerOpened} >
                             <Box width={width} flexGrow={1} style={{backgroundColor: "#0b1225"}} > 
-                                <Box display="flex" p={1} justifyContent="flex-end">
-                                    <IconButton onClick={toggleDrawer} >
+                                <Box display="flex" p={2} justifyContent="space-between" alignItems="center">
+                                    <Box display="flex" justifyContent="center">
+                                        <Chip
+                                             avatar={<Avatar>U</Avatar>}
+                                             label="Upright Supermarket"
+                                             style={{backgroundColor: "#ff9347"}}
+                                             variant="outlined"
+                                        />
+                                        
+                                    </Box>
+                                    <IconButton className={classes.closeDrawerButton} onClick={toggleDrawer} >
                                         <Clear />
                                     </IconButton>
                                 </Box>
                                 <ActivityNav />
-                                {/* <Grid container >
-
-                                    <Grid item xs={3}>
-                                        <Box borderRadius={8} p={1} marginLeft={4}  flexGrow={1}  width={100} display="flex" flexDirection="column" style={{backgroundColor: "black", height: "calc(95vh - 50px)"}} >
-                                           
-                                        </Box>
-                                    </Grid>
-
-                                    <Grid item xs={9}>
-                                        <Typography> HEllo how are we going to make the same </Typography>
-                                    </Grid>
-                                </Grid> */}
-
-                                
                                 
                              </Box>
                         </Drawer>
