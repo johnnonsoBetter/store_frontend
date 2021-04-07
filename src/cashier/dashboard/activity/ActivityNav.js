@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import ExpensesContainer from './expenses/ExpensesContainer';
 
 
 
@@ -103,7 +104,7 @@ export default function ActivityNav() {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <ExpensesContainer />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
