@@ -88,7 +88,7 @@ function ExpensesContainer(){
                 </Grid>
 
                 <Grid item xs={4}>
-                    <CreateExpense createExpenseProps = {expenses, setTotalExpenses, setExpenses} />
+                    <CreateExpense createExpenseProps = {expenses, setTotalExpenses, setExpenses, totalExpenses} />
                 </Grid>
             </Grid>
         </Container>

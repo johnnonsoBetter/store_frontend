@@ -89,7 +89,9 @@ const Input = withStyles((theme) => ({
 function CreateExpense(props){
     const classes = useStyles()
 
-    const {expenses,  setTotalExpenses, setExpenses} = props.createExpenseProps
+    const {expenses,  setTotalExpenses, setExpenses, totalExpenses} = props.createExpenseProps
+
+    console.log("this is the whole xpe" , props.createExpenseProps)
     const {showSnackBar} = useContext(DashboardContext)
     const [loading, setLoading] = React.useState(false);
     const [expense, setExpense] = useState({
@@ -153,8 +155,23 @@ function CreateExpense(props){
         e.preventDefault()
         setLoading(true)
         expensesApi().createExpense(expense).then(response => {
-            console.log(response)
             
+            console.log(response)
+            const {id, cost, detail, created_at} = response.data
+            const newExpense = {
+                id: id,
+                cost: cost,
+                detail: detail,
+                created_at: created_at
+            }
+            
+
+            console.log(expenses)
+
+            console.log(newExpense)
+
+            // setExpenses(newExpenses)
+            // setTotalExpenses((totalExpenses + parseInt(cost)))
             showSnackBar('Successfully created new expenses', true)
             setLoading(false)
             setExpense({
