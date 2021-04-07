@@ -61,7 +61,7 @@ function ItemList(){
 
             {
                 items.map(shelf_item => {
-                    const {name, selling_price, barcode} = shelf_item
+                    const {name, selling_price} = shelf_item
 
                     return (
                         <Grid item  md={6} lg={4} xl={4}  >

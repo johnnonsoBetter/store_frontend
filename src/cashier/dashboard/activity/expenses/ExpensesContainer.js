@@ -1,5 +1,5 @@
 import { Box, Container, Grid, makeStyles, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateExpense from './CreateExpense'
 
 const useStyles = makeStyles((theme) => ({
@@ -12,6 +12,17 @@ const useStyles = makeStyles((theme) => ({
 function ExpensesContainer(){   
 
     const classes = useStyles()
+    const [expenses, setExpenses] = useState([])
+
+    useEffect(()=> {
+
+        return ()=> {
+            setExpenses([])
+        }
+    }, [expenses])
+
+
+
 
     return (
         <Container className={classes.root} >

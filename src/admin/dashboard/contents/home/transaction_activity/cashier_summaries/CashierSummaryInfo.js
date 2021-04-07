@@ -135,6 +135,11 @@ function CashierSummaryInfo(){
                                 <Box>  <Typography> Transfer Submitted </Typography>    </Box>
                                 <Box>  <Typography> ₦{ AmountFormater(cashierSummary['total_transfer']).amount() } </Typography>    </Box>
                             </Box>
+
+                            <Box  marginTop={2} display="flex"  justifyContent="space-between">
+                                <Box>  <Typography> Next Day Change </Typography>    </Box>
+                                <Box>  <Typography> ₦{ AmountFormater(cashierSummary['next_day_change']).amount() } </Typography>    </Box>
+                            </Box>
                        </Box>
                     </Paper>
     

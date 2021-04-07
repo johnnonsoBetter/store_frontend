@@ -9,21 +9,23 @@ import AmountFormater from '../../../../helpers/AmountFormater'
 import { dashboardApi } from '../../../../api/admin/dashboard/api'
 
 function Home(){
-    const [backdropState, setBackdropState] = React.useState(true);
+    const [backdropState, setBackdropState] = React.useState(false);
     const {infoLinksContainer, infoLinks, theLink, backdrop, storeBaseInfoHeader, storeBaseInfo, textHeight, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
-    const {setDashboardData, generalStoreInfos, changeStoreName, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
+    const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
+
+    
     useEffect(() => {
-        
+        setBackdropState(true)
         dashboardApi(storeName).load().then(response => {
             const {data} = response
             const {change_balance, transaction_activity, next_day_change, inventory_manager} = data
             setDashboardData(data)
-            setTimeout(() => {
-                setBackdropState(false)
-            }, 500)
-
+         
+            setBackdropState(false)
+        
+            
             setGeneralStoreInfos([
                 {
                     infoName: "Reserve Change",
@@ -95,9 +97,10 @@ function Home(){
             setDashboardData({})
             setGeneralStoreInfos([])
             setTransactionReviewInfos([])
+            setBackdropState(false)
             
         }
-    }, [])
+    }, [storeName])
     
 
     const routes = useRouteMatch()

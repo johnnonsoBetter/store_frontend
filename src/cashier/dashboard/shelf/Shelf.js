@@ -17,8 +17,6 @@ function Shelf(){
 
     return (
        <Box>
-           
-
            <Box p={1}>
                 <Box width="100%" display="flex" justifyContent="space-between" alignContent="center">
                         <ShelfContentNav />
