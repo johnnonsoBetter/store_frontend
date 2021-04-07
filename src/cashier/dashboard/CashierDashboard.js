@@ -1,12 +1,13 @@
 
 import React, { useLayoutEffect, useState } from 'react';
-import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip } from '@material-ui/core';
+import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip, Snackbar } from '@material-ui/core';
 import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
 import { DashboardContextProvider } from '../../context/cashier/DashboardContext';
 import { Clear } from '@material-ui/icons';
 import ActivityNav from './activity/ActivityNav';
+import CashierActionSnackBar from './CashierActionSnackBar';
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -56,6 +57,10 @@ function CashierDashboard(){
     const classes = useStyles()
     const [drawerOpened, setDrawerOpened] = useState(false)
     const [width] = useWindowSize()
+    const [snackBarOpened, setSnackbarOpened] = useState(false)
+    const [taskDone, setTaskDone] = useState(false)
+    const [message, setMessage] = useState('')
+    
 
     const toggleDrawer = () => {
         setDrawerOpened(!drawerOpened)
@@ -70,6 +75,18 @@ function CashierDashboard(){
                 <DashboardContextProvider
                 value={{
                     toggleDrawer,
+                    taskDone,
+                    message,
+                    setTaskDone,
+                    snackBarOpened,
+                    setSnackbarOpened,
+                    showSnackBar: (message, taskDone)=> {
+                        setMessage(message)
+                        setTaskDone(taskDone)
+                        setSnackbarOpened(true)
+                    }
+
+
                 }}>
 
 
@@ -96,8 +113,10 @@ function CashierDashboard(){
                                     </IconButton>
                                 </Box>
                                 <ActivityNav />
+                                <CashierActionSnackBar  />
                                 
                              </Box>
+                             
                         </Drawer>
                         <CashierAppBar />
                     

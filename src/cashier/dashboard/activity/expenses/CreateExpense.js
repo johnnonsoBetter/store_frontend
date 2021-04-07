@@ -1,7 +1,8 @@
 import { Box, Button, Grid, Grow, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core'
 import { AttachMoneyRounded, CreateSharp, PersonRounded } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { expensesApi } from '../../../../api/cashier/activity/expenses';
+import DashboardContext from '../../../../context/cashier/DashboardContext';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -57,19 +58,13 @@ const Input = withStyles((theme) => ({
 function CreateExpense(props){
     const classes = useStyles()
 
-    const {expenses, setTotalExpenses, setExpenses} = props.createExpenseProps
-    const [expense, setExpense] = useState(null)
+    const {expenses,  setTotalExpenses, setExpenses} = props.createExpenseProps
+    const {showSnackBar} = useContext(DashboardContext)
+    const [expense, setExpense] = useState({
+        cost: '',
+        detail: ''
 
-
-    useEffect(()=> {
-        setExpense({
-            cost: '',
-            detail: ''
-
-        })
-
-        return ()=> {}
-    }, [])
+    })
     
     const [cost, setCost] = useState('')
     const [collector, setCollector] = useState('')
@@ -111,8 +106,9 @@ function CreateExpense(props){
 
         expensesApi().createExpense(expense).then(response => {
             console.log(response)
+            showSnackBar('Successfully created new expenses', true)
         }).catch(err => {
-
+            showSnackBar('Failed to create Expense', false)
             console.log(err)
         })
 
@@ -158,7 +154,7 @@ function CreateExpense(props){
                                     <Typography variant="h5"> <AttachMoneyRounded /> </Typography>
                                 </Box>
                                 <Box textAlign="center" >
-                                    <Input name="cost" value={cost} onChange={handleChange}  />
+                                    <Input name="cost" type="number" value={cost} onChange={handleChange}  />
                                 </Box>
                             </Box>
                         </Box>
