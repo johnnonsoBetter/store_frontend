@@ -52,7 +52,7 @@ function CashierDashboard(){
 
     const matches = useMediaQuery('(max-width:900px)')
     const classes = useStyles()
-    const [drawerOpened, setDrawerOpened] = useState(true)
+    const [drawerOpened, setDrawerOpened] = useState(false)
     const [width] = useWindowSize()
 
     const toggleDrawer = () => {
@@ -84,19 +84,19 @@ function CashierDashboard(){
                                         <Clear />
                                     </IconButton>
                                 </Box>
-
-                                <Grid container >
+                                <ActivityNav />
+                                {/* <Grid container >
 
                                     <Grid item xs={3}>
-                                        <Box borderRadius={8} marginLeft={4} height={700} flexGrow={1}  width={100} display="flex" flexDirection="column" style={{backgroundColor: "black"}} >
-                                            <ActivityNav />
+                                        <Box borderRadius={8} p={1} marginLeft={4}  flexGrow={1}  width={100} display="flex" flexDirection="column" style={{backgroundColor: "black", height: "calc(95vh - 50px)"}} >
+                                           
                                         </Box>
                                     </Grid>
 
                                     <Grid item xs={9}>
                                         <Typography> HEllo how are we going to make the same </Typography>
                                     </Grid>
-                                </Grid>
+                                </Grid> */}
 
                                 
                                 
