@@ -9,6 +9,7 @@ import {Input} from '../../CustomInput'
 import { salesApi } from '../../../../api/shared/sale/api';
 import { CreateItemReturnContextProvider } from '../../../../context/cashier/CreateItemReturnContext';
 import ItemsSold from './ItemsSold';
+import ItemReturnForm from './ItemReturnForm';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -67,17 +68,34 @@ function CreateItemReturn(props){
     const [itemsSoldListDisplayed, setItemSoldListDisplayed] = useState(false)
     const [itemsSold, setItemsSold] = useState([])
     const [notFound, setNotFound] = useState(false)
+    const [itemReturn, setItemReturn] = useState(null)
 
-    
-    
-
+    const [itemSoldData, setItemSoldData] = useState(null)
+    const [formDisplayed, setFormDisplayed] = useState(false)
 
     useEffect(()=> {
+
+        setItemSoldData({
+            name: '',
+            quantitySold: '',
+            priceSoldPerUnit: ''
+        })
+
+        setItemReturn({
+            item_name: '',
+            cost: '',
+            sale_receipt_id: '',
+            quantity: '',
+            reason_for_return: ''
+        })
+
         return ()=> {
             setReceiptId('')
             setLoading(true)
             setItemsSold([])
             setItemSoldListDisplayed(false)
+            setItemSoldData(null)
+            setItemReturn(null)
 
         }
     }, [])
@@ -107,6 +125,7 @@ function CreateItemReturn(props){
 
         
             const {item_solds} = response.data
+            console.log(item_solds)
             setItemsSold(item_solds)
             setItemSoldListDisplayed(true)
             setLoading(false)
@@ -161,53 +180,62 @@ function CreateItemReturn(props){
 
     }
 
-
-
-
     return (
         <CreateItemReturnContextProvider
             value={{
                 itemsSold,
+                setItemReturn,
+                itemReturn,
+                setFormDisplayed,
+                setItemSoldData,
             }}
         >
        <Grow in={true}>
         <Box className={classes.root} display="flex" justifyContent="center" >
             <Paper elevation={6} className={classes.paper} >
-                
-                <form onSubmit={handleSubmit}  noValidate autoComplete="off">
-                    
-                    <Box display="flex" >
-                        <Input disabled={loading} placeholder="Receipt Id" value={receiptId} onChange={handleChange}  />
+
+                { 
+
+                    formDisplayed ? <ItemReturnForm /> :
+
+
+                   <Box> 
+                    <form onSubmit={handleSubmit}  noValidate autoComplete="off">
                         
-                            <div className={classes.wrapper}>
-                                <Button
-                                variant="contained"
-                                color="primary"
-                                
-                                disabled={loading}
-                                type="submit"
-                                >
-                                <SearchRounded />
-                                </Button>
-                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                            </div>
+                        <Box display="flex" >
+                            <Input disabled={loading} placeholder="Receipt Id" value={receiptId} onChange={handleChange}  />
+                            
+                                <div className={classes.wrapper}>
+                                    <Button
+                                    variant="contained"
+                                    color="primary"
+                                    
+                                    disabled={loading}
+                                    type="submit"
+                                    >
+                                    <SearchRounded />
+                                    </Button>
+                                    {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                </div>
+                        </Box>
+                        
+
+                    </form>
+                    {
+                        itemsSoldListDisplayed ?
+                        
+                        <ItemsSold /> : notFound ? 
+                        <Box display="flex" justifyContent="center" alignItems="center" minHeight={600}>
+
+                            <Typography style={{color: "white"}}> Sale Not Found </Typography>
+
+                        </Box>
+                        : null
+                    }
                     </Box>
                     
-
-                </form>
-                {
-                    itemsSoldListDisplayed ?
-                
-                    <ItemsSold /> : notFound ? 
-                    <Box display="flex" justifyContent="center" alignItems="center" minHeight={600}>
-
-                        <Typography style={{color: "white"}}> Sale Not Found </Typography>
-
-                    </Box>
-                    : null
                 }
-
-
+                
             </Paper>
 
         </Box>

@@ -5,7 +5,9 @@ import CreateItemReturnContext from '../../../../context/cashier/CreateItemRetur
 
 function ItemsSold(){
 
-    const {itemsSold} = useContext(CreateItemReturnContext)
+    const {itemsSold, setItemSoldData, setFormDisplayed} = useContext(CreateItemReturnContext)
+
+    
    
 
     return(
@@ -22,7 +24,10 @@ function ItemsSold(){
                             <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
                                 
                                 <Typography style={{color: "wheat"}}> {name} </Typography>
-                                <IconButton style={{color: "#ff9a00c4"}}> <Launch /> </IconButton>
+                                <IconButton onClick={() => {
+                                    setItemSoldData(itemSold)
+                                    setFormDisplayed(true)
+                                }}  style={{color: "#ff9a00c4"}}> <Launch /> </IconButton>
                             </Box>
                         
                         </ListItem>
