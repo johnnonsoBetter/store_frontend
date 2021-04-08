@@ -1,10 +1,12 @@
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import { DateTime } from 'luxon'
 import React, { useContext } from 'react'
-import ExpensesContext from '../../../../context/cashier/ExpensesContext'
+import ChangeContext from '../../../../context/cashier/ChangeContext'
+
+import AmountFormater from '../../../../helpers/AmountFormater'
 
 const useStyles = makeStyles((theme) => ({
-    expense: {
+    change: {
         minWidth: 380,
         backgroundColor: "#08081dd9",
         marginTop: theme.spacing(2),
@@ -22,32 +24,32 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-// function ChangeList(){
-//     const {expenses} = useContext(ExpensesContext)
-//     const classes = useStyles()
+function ChangeList(){
+    const {changes} = useContext(ChangeContext)
+    const classes = useStyles()
     
-//     return (
-//        <>
-//        <Box p={1} className={classes.listContainer} >
-//         {
-//                 expenses.map((expense) => {
-//                     const {id, detail, created_at} = expense
-//                     const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
-//                     return (
-//                         <Box p={3} display="flex" justifyContent="space-between" alignContent="center" className={classes.expense} key={id}>
-//                             <Typography className={classes.whiteText} > {detail} at </Typography>
-//                             <Typography className={classes.whiteText}>{time}</Typography>
-//                         </Box>
-//                     )
-//                 })
-//             }
+    return (
+       <>
+       <Box p={1} className={classes.listContainer} >
+        {
+                changes.map((change) => {
+                    const {id, amount, created_at} = change
+                    const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+                    return (
+                        <Box p={3} display="flex" justifyContent="space-between" alignContent="center" className={classes.change} key={id}>
+                            <Typography className={classes.whiteText} > Collected ₦{AmountFormater(amount).amount()} Change at </Typography>
+                            <Typography className={classes.whiteText}>{time}</Typography>
+                        </Box>
+                    )
+                })
+            }
             
 
 
-//        </Box>
+       </Box>
         
-//        </>
-//     )
-// }
+       </>
+    )
+}
 
 export default ChangeList

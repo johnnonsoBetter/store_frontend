@@ -43,12 +43,12 @@ export const changeApi = ()=> {
             })
         },
 
-        createExpense: (expense)=> {
+        createChange: (change)=> {
             return axios({
                 method: "POST",
                 url: `${baseUrl}/api/v1/change_balances`,
                 headers: JSON.parse(localStorage.cashier),
-                data: {expense: expense}
+                data: {change_balance: change}
                 
             })
         },

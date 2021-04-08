@@ -4,6 +4,8 @@ import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@
 import React, { useEffect, useState } from 'react'
 import { changeApi } from '../../../../api/cashier/activity/api'
 import { ChangeContextProvider } from '../../../../context/cashier/ChangeContext'
+import ChangeList from './ChangeList'
+import CreateChange from './CreateChange'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -90,7 +92,7 @@ function ChangeContainer(){
                             <Box  >
                                  <Typography style={{color: "white"}} variant="h6"> Total Changes {totalChangeBalance} </Typography>
                                 <Box className={classes.box} display="flex" >
-                                {/* <ChangesList Changes={Changes}  /> */}
+                                    <ChangeList />
                                 </Box>
                                
                                
@@ -103,7 +105,7 @@ function ChangeContainer(){
                 </Grid>
 
                 <Grid item xs={4}>
-                    {/* <CreateExpense createExpenseProps = {Changes, setTotalChanges, setChanges, totalChanges} /> */}
+                    <CreateChange />
                 </Grid>
             </Grid>
         </Container>
