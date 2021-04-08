@@ -1,7 +1,9 @@
 import { Box, Grid, IconButton, makeStyles, Button, CircularProgress, Slide, Typography } from '@material-ui/core'
 import { ArrowBack, CreateSharp } from '@material-ui/icons'
 import React, { useContext, useEffect, useState } from 'react'
+import { itemReturnApi } from '../../../../api/cashier/activity/api'
 import CreateItemReturnContext from '../../../../context/cashier/CreateItemReturnContext'
+import DashboardContext from '../../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import {Input} from '../../CustomInput'
 
@@ -30,28 +32,53 @@ const useStyles = makeStyles((theme) => ({
 function ItemReturnForm(){
 
     const classes = useStyles()
+    const {showSnackBar} = useContext(DashboardContext)
     const [loading, setLoading] = useState(false)
     const {itemSoldData, setFormDisplayed, receiptId} = useContext(CreateItemReturnContext)
     const {name, quantity_sold, price_sold_per_unit} = itemSoldData
-    const [quantity, setQuantity] = useState('')
+    const [quantity, setQuantity] = useState('1')
     const [reason, setReason] = useState('')
-    const [itemReturn, setItemReturn] = useState({})
+    const [itemReturn, setItemReturn] = useState(null)
 
     useEffect(()=> {
         setItemReturn({
             sale_receipt_id: receiptId,
-            item_name: '',
-            quantity: '',
-            cost: '',
+            item_name: name,
+            quantity: quantity,
+            cost: parseInt(price_sold_per_unit),
             reason_for_return: ''
         })
         return ()=> {
             setItemReturn(null)
+            setQuantity('1')
+            setReason('')
+            setItemReturn(null)
+            
         }
     }, [])
 
-    const handleSubmit =() => {
+    const handleSubmit =(e) => {
+        e.preventDefault()
 
+        itemReturnApi().createItemReturn(itemReturn).then(response => {
+            console.log(response)
+            setReason('')
+            setQuantity('')
+            setItemReturn({
+                sale_receipt_id: receiptId,
+                item_name: name,
+                quantity: quantity,
+                cost: parseInt(price_sold_per_unit),
+                reason_for_return: ''
+            })
+            setFormDisplayed(false)
+            showSnackBar('Successfully Return Item', true)
+            
+            
+        }).catch(err => {
+            console.log(err)
+            showSnackBar('Failed to Return Item', false)
+        })
     }
 
     const handleChange = (e) => {
@@ -67,10 +94,17 @@ function ItemReturnForm(){
             setReason(e.target.value)
             setItemReturn(newItemReturn)
         }else {
-            newItemReturn['quantity'] = e.target.value
-            const cost = (parseInt(e.target.value) * price_sold_per_unit)
+
+            let value = e.target.value
+
+            if ((value < 1 || value > quantity_sold))
+                return
+
+
+            newItemReturn['quantity'] = value
+            const cost = (parseInt(value) * price_sold_per_unit)
             newItemReturn['cost'] = cost
-            setQuantity(e.target.value)
+            setQuantity(value)
             setItemReturn(newItemReturn)
         }
 
