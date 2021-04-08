@@ -3,6 +3,7 @@ import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@
 import React, { useEffect, useState } from 'react'
 import { expensesApi, itemReturnApi } from '../../../../api/cashier/activity/api'
 import { ItemReturnContextProvider } from '../../../../context/cashier/ItemReturnContext'
+import CreateItemReturn from './CreateItemReturn'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -89,7 +90,7 @@ function ItemReturnContainer(){
                             <Box  >
                                  <Typography style={{color: "white"}} variant="h6"> Total Item Return {totalItemReturned} </Typography>
                                 <Box className={classes.box} display="flex" >
-                                {/* <ExpensesList expenses={expenses}  /> */}
+                                
                                 </Box>
                                
                                
@@ -102,7 +103,7 @@ function ItemReturnContainer(){
                 </Grid>
 
                 <Grid item xs={4}>
-                    {/* <CreateExpense createExpenseProps = {expenses, setTotalExpenses, setItemReturns, totalExpenses} /> */}
+                    <CreateItemReturn />
                 </Grid>
             </Grid>
         </Container>

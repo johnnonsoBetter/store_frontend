@@ -6,6 +6,7 @@ import DashboardContext from '../../../../context/cashier/DashboardContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import ChangeContext from '../../../../context/cashier/ChangeContext';
+import {Input} from '../../CustomInput'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -51,34 +52,6 @@ const useStyles = makeStyles((theme) => ({
   
 }))
 
-
-
-const Input = withStyles((theme) => ({
-    root: {
-      'label + &': {
-        marginTop: theme.spacing(3),
-      },
-    },
-    input: {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.background.paper,
-      border: '0px solid #ced4da',
-      fontSize: 16,
-      padding: '5px 10px 5px 7px',
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      // Use the system font instead of the default Roboto font.
-      fontFamily: [
-        'Kanit',
-        'cursive',
-      ].join(','),
-      '&:focus': {
-        borderRadius: 4,
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-      },
-    },
-  }))(InputBase);
 
 
 
@@ -193,7 +166,7 @@ function CreateChange(){
                                     <Typography variant="h5"> <MonetizationOnRounded /> </Typography>
                                 </Box>
                                 <Box textAlign="center" >
-                                    <Input name="collector" type="number" value={amount} onChange={handleChange} />
+                                    <Input name="collector" placeholder="Amount?" type="number" value={amount} onChange={handleChange} />
                                 </Box>
                             </Box>
                         </Box>
