@@ -1,11 +1,14 @@
-import { Box, Button, ButtonBase, Grid, Grow, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core'
-import { AttachMoneyRounded, CreateSharp, PersonRounded, SearchRounded } from '@material-ui/icons'
+import { Box, Button, ButtonBase, Divider, Grid, Grow, IconButton, InputBase, List, ListItem, ListItemText, makeStyles, Paper, Typography, withStyles } from '@material-ui/core'
+import { AttachMoneyRounded, CreateSharp, Launch, PersonRounded, SearchRounded } from '@material-ui/icons'
 import React, { useContext, useEffect, useState } from 'react'
-import { expensesApi } from '../../../../api/cashier/activity/api';
+import { cashierSalesApi, expensesApi } from '../../../../api/cashier/activity/api';
 import DashboardContext from '../../../../context/cashier/DashboardContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import {Input} from '../../CustomInput'
+import { salesApi } from '../../../../api/shared/sale/api';
+import { CreateItemReturnContextProvider } from '../../../../context/cashier/CreateItemReturnContext';
+import ItemsSold from './ItemsSold';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -55,64 +58,70 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-// const Input = withStyles((theme) => ({
-//     root: {
-//       'label + &': {
-//         marginTop: theme.spacing(3),
-//       },
-//     },
-//     input: {
-//       borderRadius: 4,
-//       position: 'relative',
-//       backgroundColor: '',
-//       border: '1px solid #ced4da',
-//       borderColor: '#a0a0a0a1',
-//       color: "#e0bb30",
-//       fontSize: 16,
-//       padding: '7px 10px 5px 7px',
-//       borderRadius: 5,
-//       transition: theme.transitions.create(['border-color', 'box-shadow']),
-//       // Use the system font instead of the default Roboto font.
-//       fontFamily: [
-//         'Kanit',
-//         'cursive',
-//       ].join(','),
-//       '&:focus': {
-//         borderRadius: 5,
-        
-        
-//       },
-//     },
-//   }))(InputBase);
-
-
-
-
 function CreateItemReturn(props){
     const classes = useStyles()
   
     const {showSnackBar} = useContext(DashboardContext)
     const [loading, setLoading] = useState(false);
     const [receiptId, setReceiptId] = useState('')
+    const [itemsSoldListDisplayed, setItemSoldListDisplayed] = useState(false)
+    const [itemsSold, setItemsSold] = useState([])
+    const [notFound, setNotFound] = useState(false)
+
+    
     
 
 
     useEffect(()=> {
         return ()=> {
-            
+            setReceiptId('')
+            setLoading(true)
+            setItemsSold([])
+            setItemSoldListDisplayed(false)
+
         }
     }, [])
+
 
     const handleChange = (e) => {
 
         e.preventDefault()
+
+        setReceiptId(e.target.value)
         
     }
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if (receiptId === '')
+            return
+
         setLoading(true)
+        setItemSoldListDisplayed(false)
+        setNotFound(true)
+        
+
+        cashierSalesApi().fetchByReceiptId(receiptId).then((response) => {
+
+        
+            const {item_solds} = response.data
+            setItemsSold(item_solds)
+            setItemSoldListDisplayed(true)
+            setLoading(false)
+            setReceiptId('')
+        }).catch((err) => {
+
+           
+            setLoading(false)
+            setNotFound(true)
+
+            
+        })
+
+        // {item_return: {sale_receipt_id: sale.receipt_id, item_name: "milo", quantity: 2, cost: 200, reason_for_return: "the item was not good"}}}
+        
         // expensesApi().createExpense(expense).then(response => {
             
         //     console.log(response)
@@ -156,17 +165,20 @@ function CreateItemReturn(props){
 
 
     return (
+        <CreateItemReturnContextProvider
+            value={{
+                itemsSold,
+            }}
+        >
        <Grow in={true}>
-
-       
-       <Box className={classes.root} display="flex" justifyContent="center" >
-           <Paper elevation={6} className={classes.paper} >
-            
-           <form onSubmit={handleSubmit}  noValidate autoComplete="off">
-              
-                <Box display="flex" >
-                    <Input placeholder="Receipt Id" value={receiptId}  />
+        <Box className={classes.root} display="flex" justifyContent="center" >
+            <Paper elevation={6} className={classes.paper} >
+                
+                <form onSubmit={handleSubmit}  noValidate autoComplete="off">
                     
+                    <Box display="flex" >
+                        <Input disabled={loading} placeholder="Receipt Id" value={receiptId} onChange={handleChange}  />
+                        
                             <div className={classes.wrapper}>
                                 <Button
                                 variant="contained"
@@ -179,15 +191,28 @@ function CreateItemReturn(props){
                                 </Button>
                                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </div>
-                       
-                </Box>
-               
+                    </Box>
+                    
 
-            </form>
-        </Paper>
+                </form>
+                {
+                    itemsSoldListDisplayed ?
+                
+                    <ItemsSold /> : notFound ? 
+                    <Box display="flex" justifyContent="center" alignItems="center" minHeight={600}>
 
-       </Box>
+                        <Typography style={{color: "white"}}> Sale Not Found </Typography>
+
+                    </Box>
+                    : null
+                }
+
+
+            </Paper>
+
+        </Box>
        </Grow>
+       </CreateItemReturnContextProvider>
     )
 }
 

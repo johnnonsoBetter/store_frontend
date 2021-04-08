@@ -82,3 +82,18 @@ export const itemReturnApi = ()=> {
         
     }
 }
+
+
+export const cashierSalesApi = () => {
+
+    return {
+        fetchByReceiptId: (receipt_id) => {
+            return  axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/cashier_sales/${receipt_id}`
+            })
+        }
+    }
+
+}
