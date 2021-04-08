@@ -1,6 +1,7 @@
-import {Box, CircularProgress, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { expensesApi } from '../../../../api/cashier/activity/expenses'
+import { ExpensesContextProvider } from '../../../../context/cashier/ExpensesContext'
 import CreateExpense from './CreateExpense'
 import ExpensesList from './ExpensesList'
 
@@ -11,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     box: {
         flexGrow: 1,
-        height: "calc(80vh - 50px)",
+        height: "calc(75vh - 50px)",
        
     },
     
@@ -51,11 +52,21 @@ function ExpensesContainer(){
     
 
     return (
+        <ExpensesContextProvider
+            value={{
+                expenses,
+                totalExpenses,
+                setExpenses,
+                setTotalExpenses
+            }}
+        >
+
+        
         <Container className={classes.root} >
             
             <Grid spacing={7} container>
                 <Grid item xs={8}>
-                    <Box className={classes.box} display="flex" alignItems="center"   >
+                    <Box    >
 
                         {
                             loading ? 
@@ -75,16 +86,19 @@ function ExpensesContainer(){
                             </Box>
 
                             : 
-                            <Box >
-                                <Typography style={{color: "white"}} variant="h6"> Total Expenses {totalExpenses} </Typography>
+                            <Box  >
+                                 <Typography style={{color: "white"}} variant="h6"> Total Expenses {totalExpenses} </Typography>
+                                <Box className={classes.box} display="flex" >
                                 <ExpensesList expenses={expenses}  />
+                                </Box>
+                               
+                               
                             </Box>
                         
 
                         }
                     </Box>
-                   
-                    
+      
                 </Grid>
 
                 <Grid item xs={4}>
@@ -92,6 +106,7 @@ function ExpensesContainer(){
                 </Grid>
             </Grid>
         </Container>
+        </ExpensesContextProvider>
     )
 }
 

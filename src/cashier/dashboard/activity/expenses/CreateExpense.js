@@ -3,12 +3,9 @@ import { AttachMoneyRounded, CreateSharp, PersonRounded } from '@material-ui/ico
 import React, { useContext, useEffect, useState } from 'react'
 import { expensesApi } from '../../../../api/cashier/activity/expenses';
 import DashboardContext from '../../../../context/cashier/DashboardContext';
-import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
+import ExpensesContext from '../../../../context/cashier/ExpensesContext';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -89,7 +86,7 @@ const Input = withStyles((theme) => ({
 function CreateExpense(props){
     const classes = useStyles()
 
-    const {expenses,  setTotalExpenses, setExpenses, totalExpenses} = props.createExpenseProps
+    const {expenses,  setTotalExpenses, setExpenses, totalExpenses} = useContext(ExpensesContext)
 
     console.log("this is the whole xpe" , props.createExpenseProps)
     const {showSnackBar} = useContext(DashboardContext)
@@ -168,10 +165,12 @@ function CreateExpense(props){
 
             console.log(expenses)
 
-            console.log(newExpense)
+            const newExpenses = [...expenses, newExpense]
 
-            // setExpenses(newExpenses)
-            // setTotalExpenses((totalExpenses + parseInt(cost)))
+            console.log(newExpenses)
+
+            setExpenses(newExpenses)
+            setTotalExpenses((totalExpenses + parseInt(cost)))
             showSnackBar('Successfully created new expenses', true)
             setLoading(false)
             setExpense({
@@ -266,7 +265,7 @@ function CreateExpense(props){
                                 disabled={loading}
                                 type="submit"
                                 >
-                                Accept terms
+                                Create Expense
                                 </Button>
                                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </div>

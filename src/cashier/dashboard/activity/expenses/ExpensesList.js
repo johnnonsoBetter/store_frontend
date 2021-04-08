@@ -1,9 +1,11 @@
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core'
-import React from 'react'
+import { Box, makeStyles, Typography } from '@material-ui/core'
+import { DateTime } from 'luxon'
+import React, { useContext } from 'react'
+import ExpensesContext from '../../../../context/cashier/ExpensesContext'
 
 const useStyles = makeStyles((theme) => ({
     expense: {
-        width: 350,
+        minWidth: 380,
         backgroundColor: "#08081dd9",
         marginTop: theme.spacing(2),
         borderRight: "2px solid green",
@@ -14,23 +16,27 @@ const useStyles = makeStyles((theme) => ({
 
         maxHeight: "calc(80vh - 50px)",
         overflowY: "auto"
+    },
+    whiteText: {
+        color: "white"
     }
 }))
 
-function ExpensesList(props){
-    const {expenses} = props
+function ExpensesList(){
+    const {expenses} = useContext(ExpensesContext)
     const classes = useStyles()
-
+    
     return (
        <>
        <Box p={1} className={classes.listContainer} >
         {
                 expenses.map((expense) => {
-                    const {id, cost, detail, created_at} = expense
-
+                    const {id, detail, created_at} = expense
+                    const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
                     return (
-                        <Box p={3} className={classes.expense} key={id}>
-                            <Typography style={{color: "white"}}> {detail} </Typography>
+                        <Box p={3} display="flex" justifyContent="space-between" alignContent="center" className={classes.expense} key={id}>
+                            <Typography className={classes.whiteText} > {detail} at </Typography>
+                            <Typography className={classes.whiteText}>{time}</Typography>
                         </Box>
                     )
                 })
