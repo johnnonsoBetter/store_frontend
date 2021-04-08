@@ -56,3 +56,29 @@ export const changeApi = ()=> {
         
     }
 }
+
+export const itemReturnApi = ()=> {
+    
+    return {
+        fetchAll: ()=> {
+
+          return  axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/cashier_item_returns`
+            })
+        },
+
+        createItemReturn: (item_return)=> {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}/api/v1/item_returns`,
+                headers: JSON.parse(localStorage.cashier),
+                data: {item_return: item_return}
+                
+            })
+        },
+
+        
+    }
+}

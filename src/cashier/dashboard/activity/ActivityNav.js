@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ExpensesContainer from './expenses/ExpensesContainer';
 import ChangeContainer from './change/ChangeContainer';
+import ItemReturnContainer from './item_return/ItemReturnContainer';
 
 
 
@@ -110,7 +111,7 @@ export default function ActivityNav() {
         
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <ItemReturnContainer />
       </TabPanel>
       <TabPanel value={value} index={4}>
       <ChangeContainer />
