@@ -7,9 +7,6 @@ function ItemsSold(){
 
     const {itemsSold, setItemSoldData, setFormDisplayed} = useContext(CreateItemReturnContext)
 
-    
-   
-
     return(
         <Box>
             <List>

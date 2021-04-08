@@ -129,7 +129,7 @@ function CreateItemReturn(props){
             setItemsSold(item_solds)
             setItemSoldListDisplayed(true)
             setLoading(false)
-            setReceiptId('')
+            
         }).catch((err) => {
 
            
@@ -188,6 +188,8 @@ function CreateItemReturn(props){
                 itemReturn,
                 setFormDisplayed,
                 setItemSoldData,
+                itemSoldData,
+                receiptId,
             }}
         >
        <Grow in={true}>
