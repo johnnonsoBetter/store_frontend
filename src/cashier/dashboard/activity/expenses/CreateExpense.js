@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Grow, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core'
 import { AttachMoneyRounded, CreateSharp, PersonRounded } from '@material-ui/icons'
 import React, { useContext, useEffect, useState } from 'react'
-import { expensesApi } from '../../../../api/cashier/activity/expenses';
+import { expensesApi } from '../../../../api/cashier/activity/api';
 import DashboardContext from '../../../../context/cashier/DashboardContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';

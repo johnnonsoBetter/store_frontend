@@ -30,3 +30,29 @@ export const expensesApi = ()=> {
         
     }
 }
+
+export const changeApi = ()=> {
+    
+    return {
+        fetchAll: ()=> {
+
+          return  axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/cashier_changes`
+            })
+        },
+
+        createExpense: (expense)=> {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}/api/v1/change_balances`,
+                headers: JSON.parse(localStorage.cashier),
+                data: {expense: expense}
+                
+            })
+        },
+
+        
+    }
+}

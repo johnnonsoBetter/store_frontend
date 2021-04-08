@@ -1,9 +1,10 @@
+
+
 import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { expensesApi } from '../../../../api/cashier/activity/api'
-import { ExpensesContextProvider } from '../../../../context/cashier/ExpensesContext'
-import CreateExpense from './CreateExpense'
-import ExpensesList from './ExpensesList'
+import { changeApi } from '../../../../api/cashier/activity/api'
+import { ChangeContextProvider } from '../../../../context/cashier/ChangeContext'
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -18,21 +19,21 @@ const useStyles = makeStyles((theme) => ({
     
 }))
 
-function ExpensesContainer(){   
+function ChangeContainer(){   
 
     const classes = useStyles()
-    const [expenses, setExpenses] = useState([])
+    const [changes, setChanges] = useState([])
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
-    const [totalExpenses, setTotalExpenses] = useState('')
+    const [totalChangeBalance, setTotalChangeBalance] = useState('')
     
     useEffect(()=> {
 
-        expensesApi().fetchAll().then(response => {
+        changeApi().fetchAll().then(response => {
 
-            const {expenses, total_expenses_cost} = response.data
-            setExpenses(expenses)
-            setTotalExpenses(total_expenses_cost)
+            const {changes, total_change} = response.data
+             setChanges(changes)
+            setTotalChangeBalance(total_change)
             
             setLoading(false)
             console.log(response.data)
@@ -45,19 +46,19 @@ function ExpensesContainer(){
 
 
         return ()=> {
-            setExpenses([])
+            setChanges([])
             setLoading(true)
         }
     }, [])
     
 
     return (
-        <ExpensesContextProvider
+        <ChangeContextProvider
             value={{
-                expenses,
-                totalExpenses,
-                setExpenses,
-                setTotalExpenses
+                changes,
+                totalChangeBalance,
+                setChanges,
+                setTotalChangeBalance
             }}
         >
 
@@ -82,14 +83,14 @@ function ExpensesContainer(){
                             
                             <Box width="100%"  minHeight={400} alignItems="center" display="flex" justifyContent="center">
                                 
-                                <Typography style={{color: "white"}}> Failed To Load Expenses </Typography>
+                                <Typography style={{color: "white"}}> Failed To Load Changes </Typography>
                             </Box>
 
                             : 
                             <Box  >
-                                 <Typography style={{color: "white"}} variant="h6"> Total Expenses {totalExpenses} </Typography>
+                                 <Typography style={{color: "white"}} variant="h6"> Total Changes {totalChangeBalance} </Typography>
                                 <Box className={classes.box} display="flex" >
-                                <ExpensesList expenses={expenses}  />
+                                {/* <ChangesList Changes={Changes}  /> */}
                                 </Box>
                                
                                
@@ -102,13 +103,13 @@ function ExpensesContainer(){
                 </Grid>
 
                 <Grid item xs={4}>
-                    <CreateExpense createExpenseProps = {expenses, setTotalExpenses, setExpenses, totalExpenses} />
+                    {/* <CreateExpense createExpenseProps = {Changes, setTotalChanges, setChanges, totalChanges} /> */}
                 </Grid>
             </Grid>
         </Container>
-        </ExpensesContextProvider>
+        </ChangeContextProvider>
     )
 }
 
 
-export default ExpensesContainer
+export default ChangeContainer
