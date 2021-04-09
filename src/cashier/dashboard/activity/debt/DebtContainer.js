@@ -32,6 +32,7 @@ function DebtContainer(){
     const [failed, setFailed] = useState(false)
     const [loading, setLoading] = useState(true)
     const {showSnackBar} = useContext(DashboardContext)
+    const [recoverBtnDisabled, setRecoverBtnDisabled] = useState(false)
 
 
     const recoverDebt = (debtReceiptId, amount, debtType) => {
@@ -42,6 +43,18 @@ function DebtContainer(){
 
         cashierRecoverDebtApi().recoverDebt(recoveredDebt).then((response) => {
             console.log(response)
+            if(debtType === "current"){
+                const newCurrentDebts = currentDebts.filter((debt) => debt.receipt_id !== debtReceiptId)
+                let sum = newCurrentDebts.map((debt) => debt.cost).reduce((accumulator, currentValue) => accumulator + currentValue)
+                setCurrentDebts(newCurrentDebts)
+                setTodayTotal(sum)
+            }else{
+                const newPendingDebts = pendingDebts.filter((debt) => debt.receipt_id !== debtReceiptId)
+                let sum = newPendingDebts.map((debt) => debt.cost).reduce((accumulator, currentValue) => accumulator + currentValue)
+                setPendingDebts(newPendingDebts)
+                setTotalPending(sum)
+            }
+            setRecoverBtnDisabled(false)
             showSnackBar('Successfully Recovered Debt', true)
         }).catch(err => {
             showSnackBar('Failed to Recover Debt ', false)
@@ -76,6 +89,7 @@ function DebtContainer(){
             setTodayTotal('')
             setTotalPending('')
             setLoading(true)
+            setRecoverBtnDisabled(false)
         }
     }, [])
     
@@ -93,6 +107,8 @@ function DebtContainer(){
                 currentDebts,
                 setCurrentDebts,
                 recoverDebt,
+                recoverBtnDisabled,
+                setRecoverBtnDisabled
                 
             }}
         >

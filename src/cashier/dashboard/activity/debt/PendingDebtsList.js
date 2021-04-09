@@ -7,9 +7,11 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DebtContext from '../../../../context/cashier/DebtContext';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, CircularProgress } from '@material-ui/core';
 import AmountFormater from '../../../../helpers/AmountFormater';
 import {  CalendarTodayRounded, LocationCity, Phone } from '@material-ui/icons';
+import { green } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,13 +29,39 @@ const useStyles = makeStyles((theme) => ({
   debtBody: {
       backgroundColor: "#000e23",
       color: "#ff572fd4"
-  }
+  },
+  
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  fabProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 export default function PendingDebtsList() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const {pendingDebts, recoverDebt} = useContext(DebtContext)
+  const {pendingDebts, recoverDebt, recoverBtnDisabled, setRecoverBtnDisabled} = useContext(DebtContext)
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -83,10 +111,21 @@ export default function PendingDebtsList() {
                                 </Box>
 
                                 <Box display="flex" alignItems="center" >
+                                <div className={classes.wrapper}>
+                                    <Button
+                                    variant="contained"
+                                    color="primary"
                                     
-                                    <Button onClick={() => {
+                                    disabled={recoverBtnDisabled}
+                                    onClick={()=> {
+                                        setRecoverBtnDisabled(true)
                                         recoverDebt(receipt_id, cost, 'pending')
-                                    }} style={{backgroundColor: "#008ffb"}}> Recover </Button>
+                                    }}
+                                    >
+                                    Recover
+                                    </Button>
+                                    {recoverBtnDisabled && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                </div>
                                 </Box>
 
 

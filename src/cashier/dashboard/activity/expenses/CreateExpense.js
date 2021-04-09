@@ -221,7 +221,6 @@ function CreateExpense(props){
 
                     <Grid item xs={12}>
                         <Box  display="flex" justifyContent="flex-start">
-                            {/* <Button type="submit" style={{width: "100%", backgroundColor: "#3f51b5", color: "white"}} > Add </Button> */}
                             <div className={classes.wrapper}>
                                 <Button
                                 variant="contained"

@@ -127,6 +127,8 @@ function DebtTable(){
               setPreviousPendingDebts(previous_pending_debts)
               setTransactionActivity(transaction_activity)
               setLoading(false)
+
+              console.log(response)
             }).catch(err => {
         
              
