@@ -11,6 +11,7 @@ import ExpensesContainer from './expenses/ExpensesContainer';
 import ChangeContainer from './change/ChangeContainer';
 import ItemReturnContainer from './item_return/ItemReturnContainer';
 import DebtContainer from './debt/DebtContainer';
+import RecoveredDebtContainer from './recovered_debts/RecoveredDebtContainer';
 
 
 
@@ -88,8 +89,9 @@ export default function ActivityNav() {
           <Tab className={classes.tab_headers} label="Debts" icon={<img src={`/${base_imageUrl}payday.png`}  alt="payday"/>} {...a11yProps(2)} />
           <Tab className={classes.tab_headers} label="Return Goods" icon={<img src={`/${base_imageUrl}return.png`}  alt="return"/>} {...a11yProps(3)} />
           <Tab className={classes.tab_headers} label="Change" icon={<img src={`/${base_imageUrl}changing-money.png`}  alt="change"/>} {...a11yProps(4)} />
-          <Tab className={classes.tab_headers} label="Account" icon={<img src={`/${base_imageUrl}accounting.png`}  alt="account"/>} {...a11yProps(5)} />
-          <Tab className={classes.tab_headers} label="Me" icon={<img src={`/${base_imageUrl}user.png`}  alt="user"/>} {...a11yProps(6)} />
+          <Tab className={classes.tab_headers} label="Recovered Debts" icon={<img src={`/${base_imageUrl}borrow.png`}  alt="account"/>} {...a11yProps(5)} />
+          <Tab className={classes.tab_headers} label="Account" icon={<img src={`/${base_imageUrl}accounting.png`}  alt="user"/>} {...a11yProps(6)} />
+          <Tab className={classes.tab_headers} label="Me" icon={<img src={`/${base_imageUrl}user.png`}  alt="user"/>} {...a11yProps(7)} />
           
         </Tabs>
       </AppBar>
@@ -118,10 +120,13 @@ export default function ActivityNav() {
       <ChangeContainer />
       </TabPanel>
       <TabPanel value={value} index={5}>
-        Item Six
+        <RecoveredDebtContainer />
       </TabPanel>
       <TabPanel value={value} index={6}>
-        Item Six
+        item 6
+      </TabPanel>
+      <TabPanel value={value} index={7}>
+        Item seven
       </TabPanel>
       
     </div>

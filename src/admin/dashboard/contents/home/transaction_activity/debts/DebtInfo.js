@@ -2,7 +2,7 @@ import { Typography, makeStyles, Box, Avatar, IconButton, Button} from '@materia
 import React, { useContext } from 'react'
 import DebtContext from '../../../../../../context/admin/transaction_activity/debts/DebtContext'
 import deepOrange from '@material-ui/core/colors/deepOrange'
-import { CloseOutlined, DateRange, LocationCity, MonetizationOn, Person, Phone } from '@material-ui/icons';
+import { Check, CloseOutlined, DateRange, LocationCity, MonetizationOn, Person, Phone } from '@material-ui/icons';
 import AmountFormater from '../../../../../../helpers/AmountFormater';
 
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DebtInfo(){
     const {debtInfo, setDebtInfoOpened, setReceiptId, toggleDrawerOpened} = useContext(DebtContext)
-    const {debtor_name, cashier_name, receipt_id, debtor_address, debtor_telephone, cost, created_at} = debtInfo
+    const {debtor_name, cashier_name, receipt_id, debtor_address, debtor_telephone, cost, created_at,  paid} = debtInfo
     const debtDate = new Date(created_at).toDateString()
     const debtIsToday = new Date(created_at).toDateString() === new Date().toDateString()
     const classes = useStyles()
@@ -109,6 +109,23 @@ function DebtInfo(){
                         } </Typography>
                     </Box>
                 </Box>
+
+
+                {
+                    paid && 
+
+                    <Box display="flex" p={1} justifyContent="space-between"> 
+
+                        
+                        <Box>
+                            <Typography className={classes.boldText}> Paid </Typography>
+                        </Box>
+                        <Box>
+                        <Typography className={classes.boldText} >  <Check style={{color: "green"}} />  </Typography>
+                        </Box>
+                    </Box>
+            
+                }
 
                 <Box display="flex" p={1} marginTop={2} width="100%">
                     <Button onClick={()=> setUpSale()}  style={{width: "100%", color: "white", backgroundColor: "#654ab9"}} > View Sales </Button>

@@ -211,7 +211,7 @@ function DebtTable(){
                               {
                                   dailyDebts.map(debt => {
 
-                                      const {id, cost, debtor_name, created_at, receipt_id} = debt
+                                      const {id, cost, debtor_name, created_at} = debt
                                      
                                       const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
