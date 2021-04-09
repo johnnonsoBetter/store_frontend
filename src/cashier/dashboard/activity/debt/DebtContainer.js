@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { cashierDebtApi } from '../../../../api/cashier/activity/api'
 import {DebtContextProvider} from '../../../../context/cashier/DebtContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
+import CreateDebtContainer from './CreateDebtContainer'
 import CurrentDebtsList from './CurrentDebtsList'
 import PendingDebtsList from './PendingDebtsList'
 
@@ -134,7 +135,7 @@ function DebtContainer(){
                 </Grid>
 
                 <Grid item xs={4}>
-                    {/* <CreateExpense createExpenseProps = {debts, setTotaldebts, setDebts, totaldebts} /> */}
+                    <CreateDebtContainer />
                 </Grid>
             </Grid>
         </Container>
