@@ -1,6 +1,7 @@
 import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
-import { cashierDebtApi } from '../../../../api/cashier/activity/api'
+import React, { useContext, useEffect, useState } from 'react'
+import { cashierDebtApi, cashierRecoverDebtApi } from '../../../../api/cashier/activity/api'
+import DashboardContext from '../../../../context/cashier/DashboardContext'
 import {DebtContextProvider} from '../../../../context/cashier/DebtContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import CreateDebtContainer from './CreateDebtContainer'
@@ -30,6 +31,22 @@ function DebtContainer(){
     const [totalPending, setTotalPending] = useState('0')
     const [failed, setFailed] = useState(false)
     const [loading, setLoading] = useState(true)
+    const {showSnackBar} = useContext(DashboardContext)
+
+
+    const recoverDebt = (debtReceiptId, amount, debtType) => {
+        const recoveredDebt = {
+            debt_receipt_id: debtReceiptId,
+            amount: amount
+        }
+
+        cashierRecoverDebtApi().recoverDebt(recoveredDebt).then((response) => {
+            console.log(response)
+            showSnackBar('Successfully Recovered Debt', true)
+        }).catch(err => {
+            showSnackBar('Failed to Recover Debt ', false)
+        })
+    }
  
     
     useEffect(()=> {
@@ -75,6 +92,7 @@ function DebtContainer(){
                 todayTotal,
                 currentDebts,
                 setCurrentDebts,
+                recoverDebt,
                 
             }}
         >

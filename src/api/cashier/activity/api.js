@@ -84,6 +84,8 @@ export const itemReturnApi = ()=> {
 }
 
 
+
+
 export const cashierDebtApi = ()=> {
     
     return {
@@ -102,6 +104,33 @@ export const cashierDebtApi = ()=> {
                 url: `${baseUrl}/api/v1/debts`,
                 headers: JSON.parse(localStorage.cashier),
                 data: {debt: debt}
+                
+            })
+        },
+
+        
+    }
+}
+
+
+export const cashierRecoverDebtApi = ()=> {
+    
+    return {
+        fetchAll: ()=> {
+
+          return  axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/cashier_recovered_debts`
+            })
+        },
+
+        recoverDebt: (recovered_debt)=> {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}/api/v1/recovered_debts`,
+                headers: JSON.parse(localStorage.cashier),
+                data: {recovered_debt: recovered_debt}
                 
             })
         },

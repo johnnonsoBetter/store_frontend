@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CurrentDebtsList() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const {currentDebts} = useContext(DebtContext)
+  const {currentDebts, recoverDebt} = useContext(DebtContext)
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -84,7 +84,9 @@ export default function CurrentDebtsList() {
 
                                 <Box display="flex" alignItems="center" >
                                     
-                                    <Button style={{backgroundColor: "#008ffb"}}> Recover </Button>
+                                    <Button onClick={()=> {
+                                        recoverDebt(receipt_id, cost, 'current')
+                                    }} style={{backgroundColor: "#008ffb"}}> Recover </Button>
                                 </Box>
 
 
