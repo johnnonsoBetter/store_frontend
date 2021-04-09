@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import ExpensesContext from '../../../../context/cashier/ExpensesContext';
 import {Input} from '../../CustomInput'
+import DebtContext from '../../../../context/cashier/DebtContext';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -58,22 +59,17 @@ const useStyles = makeStyles((theme) => ({
 function CreateDebtContainer(){
     const classes = useStyles()
 
-    // let(:debt_params){{debt: {receipt_id: @sale.receipt_id, debtor_name: "paul",
-    //     debtor_address: "1 ogbili street afromedia", debtor_telephone: "0903924389923"
-    //     }}}
-
-
     const {showSnackBar} = useContext(DashboardContext)
     const [loading, setLoading] = React.useState(false);
+    const {currentDebts, setCurrentDebts, setTodayTotal, todayTotal} = useContext(DebtContext)
     const [debt, setDebt] = useState({
-        saleReceiptId: '',
-        debtorName: '',
-        debtorAddress: '',
-        debtorTelephone: ''
+        sale_receipt_id: '',
+        debtor_name: '',
+        debtor_address: '',
+        debtor_telephone: ''
 
     })
 
-   
     
     const [saleReceiptId, setSaleReceiptId] = useState('')
     const [debtorName, setDebtorName] = useState('')
@@ -84,10 +80,10 @@ function CreateDebtContainer(){
     useEffect(()=> {
         return ()=> {
             setDebt({
-                saleReceiptId: '',
-                debtorName: '',
-                debtorAddress: '',
-                debtorTelephone: ''
+                receipt_id: '',
+                debtor_name: '',
+                debtor_address: '',
+                debtor_telephone: ''
         
             })
             setSaleReceiptId('')
@@ -105,26 +101,27 @@ function CreateDebtContainer(){
 
         const field_name = e.target.name
 
-        // if (field_name === "saleReceiptId"){
-        //     setsaleReceiptId(e.target.value)
-        //     new_expense['saleReceiptId'] = e.target.value
-        //     const detail = `${collector} Collected ₦${e.target.value} for ${usage}`
-        //     new_expense['detail'] = detail
+        if (field_name === "saleReceiptId"){
+            setSaleReceiptId(e.target.value)
+            new_debt['receipt_id'] = e.target.value
             
-        // }else if(field_name === "collector"){
-        //     setCollector(e.target.value)
-        //     const detail = `${e.target.value} Collected ₦${saleReceiptId} for ${usage}`
-        //     new_expense['detail'] = detail
             
-        // }else {
-        //     setUsage(e.target.value)
-        //     const detail = `${collector} Collected ₦${saleReceiptId} for ${e.target.value}`
-        //     new_expense['detail'] = detail
-        // }
+        }else if(field_name === "debtorName"){
+            setDebtorName(e.target.value)
+            new_debt['debtor_name'] = e.target.value
+            
+        }else if(field_name === "debtorAddress"){
+            setDebtorAddress(e.target.value)
+            new_debt['debtor_address'] = e.target.value
+
+        }else  {
+            setDebtorTelephone(e.target.value)
+            new_debt['debtor_telephone'] = e.target.value
+        }
         
         
        
-        // setDebt(new_expense)
+         setDebt(new_debt)
     }
 
 
@@ -133,32 +130,30 @@ function CreateDebtContainer(){
         setLoading(true)
         cashierDebtApi().createDebt(debt).then(response => {
             
-        
-            // const {id, saleReceiptId, detail, created_at} = response.data
-            // const newExpense = {
-            //     id: id,
-            //     saleReceiptId: saleReceiptId,
-            //     detail: detail,
-            //     created_at: created_at
-            // }
-            
-            // const newExpenses = [...expenses, newExpense]
+            const newDebt = response.data
+            const newCurrentDebts = [...currentDebts, newDebt]
 
-            // setDebts(newExpenses)
-            // setTotalExpenses((totalExpenses + parseInt(saleReceiptId)))
-            // showSnackBar('Successfully created new expenses', true)
-            // setLoading(false)
-            // setDebt({
-            //     saleReceiptId: '',
-            //     detail: ''
+            showSnackBar('Successfully Created Debt', true)
+            setLoading(false)
+            setCurrentDebts(newCurrentDebts)
+            setTodayTotal((parseInt(todayTotal) + parseInt(newDebt['cost'])))
+            setDebt({
+                receipt_id: '',
+                debtor_name: '',
+                debtor_address: '',
+                debtor_telephone: ''
         
-            // })
-            // setCollector('')
-            // setsaleReceiptId('')
-            // setUsage('')
+            })
+            setSaleReceiptId('')
+            setDebtorName('')
+            setDebtorTelephone('')
+            setDebtorAddress('')
+
+            
 
         }).catch(err => {
-            showSnackBar('Failed to create Expense', false)
+            console.log(debt)
+            showSnackBar('Failed to create Debt', false)
             setLoading(false)
             
         })
@@ -223,7 +218,7 @@ function CreateDebtContainer(){
                                     <Typography variant="h5"> <Phone /> </Typography>
                                 </Box>
                                 <Box textAlign="center" >
-                                    <Input placeholder="phone" name="debtorTelephone" type="telephone" value={debtorTelephone} onChange={handleChange} />
+                                    <Input placeholder="phone" name="debtorTelephone" type="number" value={debtorTelephone} onChange={handleChange} />
                                 </Box>
                             </Box>
                         </Box>

@@ -37,10 +37,7 @@ function DebtContainer(){
         cashierDebtApi().fetchAll().then(response => {
 
             const {current_debts, total_pending_debts, today_total, total_pending_cost} = response.data
-            // setDebts(debts)
-            
-            
-             
+ 
              setCurrentDebts(current_debts)
              setPendingDebts(total_pending_debts)
              setTotalPending(total_pending_cost)
@@ -49,7 +46,7 @@ function DebtContainer(){
             console.log(response.data)
 
         }).catch(err => {
-            console.log(err)
+
             setLoading(false)
             setFailed(true)
         })
@@ -74,6 +71,8 @@ function DebtContainer(){
                 
                 pendingDebts,
                 setPendingDebts,
+                setTodayTotal,
+                todayTotal,
                 currentDebts,
                 setCurrentDebts,
                 
