@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { expensesApi, itemReturnApi } from '../../../../api/cashier/activity/api'
 import { ItemReturnContextProvider } from '../../../../context/cashier/ItemReturnContext'
 import CreateItemReturn from './CreateItemReturn'
+import ItemReturnList from './ItemReturnList'
 
 
 
@@ -32,9 +33,9 @@ function ItemReturnContainer(){
 
         itemReturnApi().fetchAll().then(response => {
 
-            const {expenses, total_expenses_cost} = response.data
-            // setItemReturns(expenses)
-            // setTotalExpenses(total_expenses_cost)
+            const {item_returns} = response.data
+            setItemReturns(item_returns)
+            //setTotalExpenses(total_expenses_cost)
             
             setLoading(false)  
             console.log(response.data)
@@ -91,7 +92,7 @@ function ItemReturnContainer(){
                             <Box  >
                                  <Typography style={{color: "white"}} variant="h6"> Total Item Return {totalItemReturned} </Typography>
                                 <Box className={classes.box} display="flex" >
-                                
+                                    <ItemReturnList />
                                 </Box>
                                
                                
