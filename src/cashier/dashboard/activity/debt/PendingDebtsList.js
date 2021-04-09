@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DebtContext from '../../../../context/cashier/DebtContext';
 import { Box, Button } from '@material-ui/core';
 import AmountFormater from '../../../../helpers/AmountFormater';
-import { CalendarTodayOutlined, CalendarTodayRounded, LocationCity, Phone } from '@material-ui/icons';
+import {  CalendarTodayRounded, LocationCity, Phone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     
   },
   debtBody: {
-      backgroundColor: "#001d23",
-      color: "#fffa2fd4"
+      backgroundColor: "#000e23",
+      color: "#ff572fd4"
   }
 }));
 

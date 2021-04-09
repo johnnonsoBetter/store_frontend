@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { cashierDebtApi } from '../../../../api/cashier/activity/api'
 import {DebtContextProvider} from '../../../../context/cashier/DebtContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
+import CurrentDebtsList from './CurrentDebtsList'
 import PendingDebtsList from './PendingDebtsList'
 
 
@@ -38,8 +39,12 @@ function DebtContainer(){
             // setDebts(debts)
             
             
-             setLoading(false)
+             
+             setCurrentDebts(current_debts)
              setPendingDebts(total_pending_debts)
+             setTotalPending(total_pending_cost)
+             setTodayTotal(today_total)
+             setLoading(false)
             console.log(response.data)
 
         }).catch(err => {
@@ -64,7 +69,11 @@ function DebtContainer(){
         <DebtContextProvider
             value={{
                 
+                
+                
                 pendingDebts,
+                setPendingDebts,
+                currentDebts,
                 setCurrentDebts,
                 
             }}
@@ -102,8 +111,17 @@ function DebtContainer(){
                                  <Typography style={{color: "white"}} variant="h6"> Total Pending ₦{AmountFormater(totalPending).amount()} </Typography>
                                  
                                  </Box>
-                                <Box className={classes.box} display="flex" >
-                                    <PendingDebtsList />
+                                <Box className={classes.box}  >
+                                    
+                                    <Box >
+                                        <CurrentDebtsList />
+                                    </Box>
+
+                                    <Box marginTop={3}>
+                                        
+                                        <PendingDebtsList />
+                                        
+                                    </Box>
                                 </Box>
                                
                                
