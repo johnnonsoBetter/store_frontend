@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Grow, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core'
+import { Box, Button, Grid, Grow, makeStyles, Paper, Typography } from '@material-ui/core'
 import { AttachMoneyRounded, CreateSharp, PersonRounded } from '@material-ui/icons'
 import React, { useContext, useEffect, useState } from 'react'
 import { expensesApi } from '../../../../api/cashier/activity/api';
@@ -59,8 +59,6 @@ function CreateExpense(props){
     const classes = useStyles()
 
     const {expenses,  setTotalExpenses, setExpenses, totalExpenses} = useContext(ExpensesContext)
-
-    console.log("this is the whole xpe" , props.createExpenseProps)
     const {showSnackBar} = useContext(DashboardContext)
     const [loading, setLoading] = React.useState(false);
     const [expense, setExpense] = useState({
@@ -93,7 +91,7 @@ function CreateExpense(props){
 
         e.preventDefault()
         const new_expense = Object.assign({}, expense)
-        console.log(new_expense)
+     
 
         const field_name = e.target.name
 
@@ -115,7 +113,7 @@ function CreateExpense(props){
         }
         
         
-        console.log(expense)
+       
         setExpense(new_expense)
     }
 
@@ -125,7 +123,7 @@ function CreateExpense(props){
         setLoading(true)
         expensesApi().createExpense(expense).then(response => {
             
-            console.log(response)
+        
             const {id, cost, detail, created_at} = response.data
             const newExpense = {
                 id: id,
@@ -134,12 +132,7 @@ function CreateExpense(props){
                 created_at: created_at
             }
             
-
-            console.log(expenses)
-
             const newExpenses = [...expenses, newExpense]
-
-            console.log(newExpenses)
 
             setExpenses(newExpenses)
             setTotalExpenses((totalExpenses + parseInt(cost)))

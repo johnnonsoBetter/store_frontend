@@ -134,50 +134,12 @@ function CreateItemReturn(props){
 
            
             setLoading(false)
+
+            console.log(err)
             setNotFound(true)
 
             
         })
-
-        // {item_return: {sale_receipt_id: sale.receipt_id, item_name: "milo", quantity: 2, cost: 200, reason_for_return: "the item was not good"}}}
-        
-        // expensesApi().createExpense(expense).then(response => {
-            
-        //     console.log(response)
-        //     const {id, cost, detail, created_at} = response.data
-        //     const newExpense = {
-        //         id: id,
-        //         cost: cost,
-        //         detail: detail,
-        //         created_at: created_at
-        //     }
-            
-
-        //     console.log(expenses)
-
-        //     const newExpenses = [...expenses, newExpense]
-
-        //     console.log(newExpenses)
-
-        //     setExpenses(newExpenses)
-        //     setTotalExpenses((totalExpenses + parseInt(cost)))
-        //     showSnackBar('Successfully created new expenses', true)
-        //     setLoading(false)
-        //     setExpense({
-        //         cost: '',
-        //         detail: ''
-        
-        //     })
-        //     setCollector('')
-        //     setCost('')
-        //     setUsage('')
-
-        // }).catch(err => {
-        //     showSnackBar('Failed to create Expense', false)
-        //     setLoading(false)
-            
-        // })
-
     }
 
     return (

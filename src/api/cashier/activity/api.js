@@ -84,6 +84,33 @@ export const itemReturnApi = ()=> {
 }
 
 
+export const cashierDebtApi = ()=> {
+    
+    return {
+        fetchAll: ()=> {
+
+          return  axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/cashier_debts`
+            })
+        },
+
+        createDebt: (debt)=> {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}/api/v1/debts`,
+                headers: JSON.parse(localStorage.cashier),
+                data: {debt: debt}
+                
+            })
+        },
+
+        
+    }
+}
+
+
 export const cashierSalesApi = () => {
 
     return {
@@ -97,3 +124,4 @@ export const cashierSalesApi = () => {
     }
 
 }
+

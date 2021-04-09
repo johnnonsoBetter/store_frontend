@@ -63,8 +63,7 @@ function ItemReturnForm(){
         e.preventDefault()
 
         itemReturnApi().createItemReturn(itemReturn).then(response => {
-            console.log(response)
-
+            
             const newItemReturn = response.data
 
             const newItemReturns = [...itemReturns, newItemReturn]
@@ -84,7 +83,7 @@ function ItemReturnForm(){
             
             
         }).catch(err => {
-            console.log(err)
+            
             showSnackBar('Failed to Return Item', false)
         })
     }

@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import ExpensesContainer from './expenses/ExpensesContainer';
 import ChangeContainer from './change/ChangeContainer';
 import ItemReturnContainer from './item_return/ItemReturnContainer';
+import DebtContainer from './debt/DebtContainer';
 
 
 
@@ -108,7 +109,7 @@ export default function ActivityNav() {
         <ExpensesContainer />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        
+        <DebtContainer />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <ItemReturnContainer />
