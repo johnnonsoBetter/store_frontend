@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { itemReturnApi } from '../../../../api/cashier/activity/api'
 import CreateItemReturnContext from '../../../../context/cashier/CreateItemReturnContext'
 import DashboardContext from '../../../../context/cashier/DashboardContext'
+import ItemReturnContext from '../../../../context/cashier/ItemReturnContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import {Input} from '../../CustomInput'
 
@@ -35,6 +36,7 @@ function ItemReturnForm(){
     const {showSnackBar} = useContext(DashboardContext)
     const [loading, setLoading] = useState(false)
     const {itemSoldData, setFormDisplayed, receiptId} = useContext(CreateItemReturnContext)
+    const {itemReturns, setItemReturns} = useContext(ItemReturnContext)
     const {name, quantity_sold, price_sold_per_unit} = itemSoldData
     const [quantity, setQuantity] = useState('1')
     const [reason, setReason] = useState('')
@@ -62,6 +64,11 @@ function ItemReturnForm(){
 
         itemReturnApi().createItemReturn(itemReturn).then(response => {
             console.log(response)
+
+            const newItemReturn = response.data
+
+            const newItemReturns = [...itemReturns, newItemReturn]
+
             setReason('')
             setQuantity('')
             setItemReturn({
@@ -72,6 +79,7 @@ function ItemReturnForm(){
                 reason_for_return: ''
             })
             setFormDisplayed(false)
+            setItemReturns(newItemReturns)
             showSnackBar('Successfully Return Item', true)
             
             
