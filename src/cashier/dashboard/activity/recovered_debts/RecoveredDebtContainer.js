@@ -1,8 +1,9 @@
-import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@material-ui/core'
+import {Box, CircularProgress, Container, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { cashierRecoverDebtApi } from '../../../../api/cashier/activity/api'
 import { RecoveredDebtContextProvider } from '../../../../context/cashier/RecoveredDebtContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
+import RecoveredDebtList from './RecoveredDebtsList'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,10 +39,9 @@ function RecoveredDebtContainer(){
             setTotalAmountRecovered(total_recovered_amount)
             setLoading(false)
             
-            console.log(response.data)
 
         }).catch(err => {
-            console.log(err)
+
             setLoading(false)
             setFailed(true)
         })
@@ -51,6 +51,7 @@ function RecoveredDebtContainer(){
             setRecoveredDebts([])
             setTotalAmountRecovered('0')
             setLoading(true)
+            setFailed(false)
         }
     }, [])
     
@@ -65,8 +66,7 @@ function RecoveredDebtContainer(){
         
         <Container className={classes.root} >
             
-            <Grid spacing={7} container>
-                <Grid item xs={8}>
+           
                     <Box    >
 
                         {
@@ -90,7 +90,7 @@ function RecoveredDebtContainer(){
                             <Box  >
                                  <Typography style={{color: "white"}} variant="h6"> Total Amount Recovered ₦{AmountFormater(totalAmountRecovered).amount()} </Typography>
                                 <Box className={classes.box} display="flex" >
-                                
+                                    <RecoveredDebtList />
                                 </Box>
                                
                                
@@ -100,10 +100,6 @@ function RecoveredDebtContainer(){
                         }
                     </Box>
       
-                </Grid>
-
-               
-            </Grid>
         </Container>
         </RecoveredDebtContextProvider>
     )

@@ -34,7 +34,7 @@ function ExpensesList(){
                     const {id, detail, created_at} = expense
                     const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
                     return (
-                        <Box p={3} display="flex" justifyContent="space-between" alignContent="center" className={classes.expense} key={id}>
+                        <Box key={id} p={3} display="flex" justifyContent="space-between" alignContent="center" className={classes.expense} key={id}>
                             <Typography className={classes.whiteText} > {detail} at </Typography>
                             <Typography className={classes.whiteText}>{time}</Typography>
                         </Box>
