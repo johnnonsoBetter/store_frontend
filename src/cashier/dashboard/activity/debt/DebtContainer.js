@@ -2,6 +2,8 @@ import {Box, CircularProgress, Container, Grid, makeStyles, Typography } from '@
 import React, { useEffect, useState } from 'react'
 import { cashierDebtApi } from '../../../../api/cashier/activity/api'
 import {DebtContextProvider} from '../../../../context/cashier/DebtContext'
+import AmountFormater from '../../../../helpers/AmountFormater'
+import PendingDebtsList from './PendingDebtsList'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,20 +22,24 @@ const useStyles = makeStyles((theme) => ({
 function DebtContainer(){   
 
     const classes = useStyles()
-    const [debts, setDebts] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [currentDebts, setCurrentDebts] = useState([])
+    const [pendingDebts, setPendingDebts] = useState([])
+    const [todayTotal, setTodayTotal] = useState('0')
+    const [totalPending, setTotalPending] = useState('0')
     const [failed, setFailed] = useState(false)
+    const [loading, setLoading] = useState(true)
  
     
     useEffect(()=> {
 
         cashierDebtApi().fetchAll().then(response => {
 
-            // const {debts, total_debts_cost} = response.data
+            const {current_debts, total_pending_debts, today_total, total_pending_cost} = response.data
             // setDebts(debts)
-            // setTotaldebts(total_debts_cost)
             
-            // setLoading(false)
+            
+             setLoading(false)
+             setPendingDebts(total_pending_debts)
             console.log(response.data)
 
         }).catch(err => {
@@ -44,7 +50,11 @@ function DebtContainer(){
 
 
         return ()=> {
-            setDebts([])
+           
+            setCurrentDebts([])
+            setPendingDebts([])
+            setTodayTotal('')
+            setTotalPending('')
             setLoading(true)
         }
     }, [])
@@ -54,7 +64,8 @@ function DebtContainer(){
         <DebtContextProvider
             value={{
                 
-                setDebts,
+                pendingDebts,
+                setCurrentDebts,
                 
             }}
         >
@@ -85,9 +96,14 @@ function DebtContainer(){
 
                             : 
                             <Box  >
-                                 <Typography style={{color: "white"}} variant="h6"> Total debts </Typography>
+                                 
+                                 <Box display="flex" justifyContent="space-around" >
+                                 <Typography style={{color: "white"}} variant="h6"> Total Current  ₦{AmountFormater(todayTotal).amount()} </Typography>
+                                 <Typography style={{color: "white"}} variant="h6"> Total Pending ₦{AmountFormater(totalPending).amount()} </Typography>
+                                 
+                                 </Box>
                                 <Box className={classes.box} display="flex" >
-                                {/* <debtsList debts={debts}  /> */}
+                                    <PendingDebtsList />
                                 </Box>
                                
                                
