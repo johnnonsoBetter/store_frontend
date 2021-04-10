@@ -45,12 +45,12 @@ function DebtContainer(){
             console.log(response)
             if(debtType === "current"){
                 const newCurrentDebts = currentDebts.filter((debt) => debt.receipt_id !== debtReceiptId)
-                let sum = newCurrentDebts.map((debt) => debt.cost).reduce((accumulator, currentValue) => accumulator + currentValue)
+                let sum = (todayTotal - amount)
                 setCurrentDebts(newCurrentDebts)
                 setTodayTotal(sum)
             }else{
                 const newPendingDebts = pendingDebts.filter((debt) => debt.receipt_id !== debtReceiptId)
-                let sum = newPendingDebts.map((debt) => debt.cost).reduce((accumulator, currentValue) => accumulator + currentValue)
+                let sum = (totalPending - amount)
                 setPendingDebts(newPendingDebts)
                 setTotalPending(sum)
             }
