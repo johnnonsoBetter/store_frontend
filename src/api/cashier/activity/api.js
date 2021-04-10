@@ -154,3 +154,30 @@ export const cashierSalesApi = () => {
 
 }
 
+export const cashierApi = () => {
+
+    return {
+        login: (email, password) => {
+            return axios({
+                method: 'POST',
+                url: `${baseUrl}/api/v1/auth/sign_in`,
+                data: {
+                    email: email,
+                    password: password
+                }
+            })
+        },
+
+        logout: () => {
+            return axios({
+                method: "DELETE",
+                url: `${baseUrl}/api/v1/auth/sign_out`,
+                data: JSON.parse(localStorage.cashier)
+              })
+        },
+
+        loadStoreResource: () => {
+
+        }
+    }
+}

@@ -42,7 +42,7 @@ function DebtContainer(){
         }
 
         cashierRecoverDebtApi().recoverDebt(recoveredDebt).then((response) => {
-            console.log(response)
+      
             if(debtType === "current"){
                 const newCurrentDebts = currentDebts.filter((debt) => debt.receipt_id !== debtReceiptId)
                 let sum = (todayTotal - amount)

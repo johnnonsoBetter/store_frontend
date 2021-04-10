@@ -3,6 +3,7 @@ import {TextField, Container, Grid, CssBaseline, Button, Box, Typography, Paper}
 import {makeStyles} from '@material-ui/core/styles'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios'
+import { cashierApi } from '../api/cashier/activity/api';
 
 const font = 'Kanit'
 
@@ -56,14 +57,7 @@ function CashierLoginForm(){
     // handles form submit
     const handleSubmit = (e)=>{
         e.preventDefault()
-            axios({
-                method: 'POST',
-                url: 'http://localhost:3001/api/v1/auth/sign_in',
-                data: {
-                    email: email,
-                    password: password
-                }
-            }).then(response => {
+            cashierApi().login(email, password).then(response => {
                 
                 localStorage.setItem('cashier', 
                     JSON.stringify({
