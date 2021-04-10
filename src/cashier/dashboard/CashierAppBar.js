@@ -33,6 +33,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+// <Box style={style} className={classes.item}> 
+// <Card className={classes.item}>
+//     <ButtonBase style={{width: "100%"}} onClick={()=> {
+        
+//  }}>
+//        <CardContent style={{padding: "0" , width: "100%"}}>
+//              <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
+            
+//                  <Typography  > {product.name} </Typography>
+//             </Box>
+
+//              <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
+//              <Typography variant="h5" style={{color: "#DEC429"}}> ₦{AmountFormater(product.selling_price).amount() } </Typography>
+//              </Box>
+//        </CardContent>
+//      </ButtonBase>
+//  </Card> 
+// </Box>
+
+
 
 
 export default function CashierAppBar() {

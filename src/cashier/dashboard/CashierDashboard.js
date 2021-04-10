@@ -1,5 +1,4 @@
-
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip, Snackbar } from '@material-ui/core';
 import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
@@ -8,6 +7,7 @@ import { DashboardContextProvider } from '../../context/cashier/DashboardContext
 import { Clear } from '@material-ui/icons';
 import ActivityNav from './activity/ActivityNav';
 import CashierActionSnackBar from './CashierActionSnackBar';
+import { cashierApi } from '../../api/cashier/activity/api';
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -60,7 +60,30 @@ function CashierDashboard(){
     const [snackBarOpened, setSnackbarOpened] = useState(false)
     const [taskDone, setTaskDone] = useState(false)
     const [message, setMessage] = useState('')
+    const [products, setProducts] = useState([])
+
+
+
+
+    useEffect(()=> {
+
+        cashierApi().fetchStoreResource().then(response => {
+            console.log(response)
+
+           const {items, store_info} = response.data
+           setProducts(items)
+        }).catch(err => {
+            console.log(err)
+        })
+       
+
+        return ()=> {
+            setProducts([])
+        }
+    }, [])
     
+
+
 
     const toggleDrawer = () => {
         setDrawerOpened(!drawerOpened)
@@ -84,7 +107,9 @@ function CashierDashboard(){
                         setMessage(message)
                         setTaskDone(taskDone)
                         setSnackbarOpened(true)
-                    }
+                    },
+                    products,
+                    setProducts,
 
 
                 }}>

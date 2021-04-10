@@ -176,8 +176,12 @@ export const cashierApi = () => {
               })
         },
 
-        loadStoreResource: () => {
-
+        fetchStoreResource: () => {
+            return axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/sale_boards`
+            })
         }
     }
 }
