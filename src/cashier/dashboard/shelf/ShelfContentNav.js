@@ -73,7 +73,7 @@ export default function ActivityNav() {
           variant="fullWidth"
           textColor="primary"
           aria-label="scrollable force tabs example"
-          style={{backgroundColor: "rgb(11, 18, 37)", color: "white"}}
+          style={{backgroundColor: "#050310", color: "white"}}
         >
           
           <Tab className={classes.tab_headers} label="Shelf"  {...a11yProps(0)} />

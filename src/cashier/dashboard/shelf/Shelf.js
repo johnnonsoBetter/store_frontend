@@ -1,6 +1,7 @@
 import { Box, Divider, makeStyles } from '@material-ui/core'
 import React from 'react'
 import ItemList from '../shelf/items/ItemList'
+import BarcodeProcessor from './items/BarcodeProcessor'
 import ItemSearchInput from './ItemSearchInput'
 import ShelfContentNav from './ShelfContentNav'
 
@@ -19,6 +20,7 @@ function Shelf(){
        <Box>
            <Box p={1}>
                 <Box width="100%" display="flex" justifyContent="space-between" alignContent="center">
+                    <BarcodeProcessor />
                         <ShelfContentNav />
                 </Box>
            </Box>

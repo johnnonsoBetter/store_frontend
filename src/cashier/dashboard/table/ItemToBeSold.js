@@ -1,6 +1,7 @@
 import { Badge, Box, Divider, IconButton, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
 import { Cancel, CancelOutlined, Clear, ShoppingCart } from '@material-ui/icons';
 import React from 'react'
+import AmountFormater from '../../../helpers/AmountFormater';
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -55,37 +56,41 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function ItemToBeSold(){
+function ItemToBeSold(props){
 
     const classes = useStyles()
+
+    const {name, price_sold_per_unit, quantity_sold} = props.item
+
+    const totalItemAmount = (price_sold_per_unit * quantity_sold)
 
     return (
         <Box className={classes.itemContainer   } p={1}> 
             <Box className={classes.itemName} p={1} textAlign="center">
-                <Typography variant="h6">Hollandia yogurth plain</Typography>
+                <Typography variant="h6">{name} </Typography>
             </Box>
             <Box display="flex" justifyContent="space-around">
                 <Box>
-                    <Input value="200"/>
+                    <Input value={price_sold_per_unit}/>
                 </Box>
 
                 <Divider orientation="vertical" flexItem />
 
 
                 <Box>
-                    <Input value="9" />
+                    <Input value={quantity_sold} />
                 </Box>
             </Box>
 
             <Box display="flex" alignItems="center" justifyContent="space-around" p={1} >
                 <Box display="flex" alignItems="center">
-                    <StyledBadge style={{color: "gold"}} badgeContent={9} > 
+                    <StyledBadge style={{color: "gold"}} badgeContent={quantity_sold} > 
                         <ShoppingCart />
                     </StyledBadge>
                 </Box>
 
                 <Box textAlign="center" >
-                    <Typography variant="h6"> ₦1,800 </Typography>
+                    <Typography variant="h6"> ₦{AmountFormater(totalItemAmount).amount()} </Typography>
                 </Box>
 
                 <Box display="flex" alignItems="center">

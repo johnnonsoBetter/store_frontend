@@ -1,40 +1,25 @@
 import { Box, Grid, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
+import DashboardContext from '../../../context/cashier/DashboardContext'
 import ItemToBeSold from './ItemToBeSold'
 
 function ItemToBeSoldList(){
 
-
+    const {itemsToBeSold} = useContext(DashboardContext)
     return (
         <Grid spacing={3} container>
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-            <Grid item xs={6}> 
-                <ItemToBeSold />
-            </Grid>
-
-
-            
             
 
+            {
+                itemsToBeSold.map(item => {
+
+                    return (
+                        <Grid key={item.barcode} item xs={6}> 
+                            <ItemToBeSold item={item}/>
+                        </Grid>
+                    )
+                })
+            }
         </Grid>
     )
 }

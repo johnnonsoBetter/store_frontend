@@ -65,13 +65,21 @@ function CashierDashboard(){
 
     // table states
     const [itemsToBeSold, setItemsToBeSold] = useState([])
-    
-
+    const [sale, setSale] = useState(null)
+    const [counterInfo, setCounterInfo] = useState(null)
 
 
 
     useEffect(()=> {
 
+        setCounterInfo({
+            productCount: 0,
+            itemsSoldCount: 0,
+        })
+
+      
+
+       
         cashierApi().fetchStoreResource().then(response => {
             console.log(response)
 
@@ -84,9 +92,28 @@ function CashierDashboard(){
 
         return ()=> {
             setProducts([])
+            setSale(null)
         }
     }, [])
     
+
+    const addItemToTable  = (newProduct) => {
+
+     
+       const newItemsToBeSold = [...itemsToBeSold, {
+            name: newProduct['name'],
+            price_sold_per_unit: newProduct['selling_price'],
+            quantity_sold: 1,
+            price_was_edited: false,
+            barcode: newProduct['barcode']
+        }]
+
+   
+       setItemsToBeSold(newItemsToBeSold)
+
+
+
+    }
 
 
 
@@ -114,7 +141,12 @@ function CashierDashboard(){
                         setSnackbarOpened(true)
                     },
                     products,
+                    itemsToBeSold,
                     setProducts,
+                    counterInfo,
+                    setCounterInfo,
+                    setItemsToBeSold,
+                    addItemToTable,
 
 
                 }}>

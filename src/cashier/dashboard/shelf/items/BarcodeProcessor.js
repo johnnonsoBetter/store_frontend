@@ -4,24 +4,25 @@ import BarcodeReader from 'react-barcode-reader'
 import DashboardContext from '../../../../context/cashier/DashboardContext'
 
 
-function Test(){
+function BarcodeProcessor(){
     const [result, setResult] = useState('No Result')
-    const {setProducts, products} = useContext(DashboardContext)
+    const {addItemToTable, setProducts, products, itemsToBeSold, counterInfo, setCounterInfo, setItemsToBeSold} = useContext(DashboardContext)
 
     const handleScan = (data)=> {
-       console.log("this is the same time and the same people that i would really like to know and let the whole people ")
-       const newProducts = [...products].filter((product) => product.barcode === data)
+      
+       const newProduct = [...products].find((product) => product.barcode === data)
 
-       setProducts(newProducts)
-       console.log(newProducts)
-       setResult(newProducts[0].name)
+       addItemToTable(newProduct)
+
+
+       
     }
 
     const handleError = (err) => {
         console.error(err)
+        console.log("made some error")
     }
 
-   
 
     return (
         <div>
@@ -30,10 +31,11 @@ function Test(){
             onError={handleError}
             onScan={handleScan}
             />
-            <Typography style={{color: "white"}}> {result} </Typography>
+          
+
         </div>
     )
 }
 
 
-export default Test
+export default BarcodeProcessor

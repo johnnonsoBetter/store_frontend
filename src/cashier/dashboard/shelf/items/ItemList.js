@@ -1,10 +1,8 @@
-import { Box, ButtonBase, Grid, Typography, Card, CardContent, makeStyles} from '@material-ui/core'
+import { Box, ButtonBase, Typography, Card, CardContent, makeStyles} from '@material-ui/core'
 import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import DashboardContext from '../../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import {List, AutoSizer, CellMeasurer, CellMeasurerCache} from 'react-virtualized'
-import QrReader from 'react-qr-scanner'
-import Test from './Test'
 
 
 function useWindowSize() {
@@ -82,68 +80,59 @@ function ItemList(){
 
        
             
-                <Box height={height} className={classes.box}>
-                   
+            <Box height={height} className={classes.box}>
+                
 
-                    <AutoSizer> 
-                        {
-                            ({width, height}) => (
-                                <List
-                                 width={width}
-                                 height={height} 
-                                 rowHeight={cache.current.rowHeight} 
-                                 defferedMeasurementCache = {cache.current}
-                                 rowCount={products.length}
-                                 rowRenderer={({key, index, style, parent})=> {
-                                    const product = products[index]
+                <AutoSizer> 
+                    {
+                        ({width, height}) => (
+                            <List
+                                width={width}
+                                height={height} 
+                                rowHeight={cache.current.rowHeight} 
+                                defferedMeasurementCache = {cache.current}
+                                rowCount={products.length}
+                                rowRenderer={({key, index, style, parent})=> {
+                                const product = products[index]
 
-                                    return(
-                                        <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>
-                                            <Box  style={style}>
-                                                    <Card className={classes.itemContainer}>
-                                                        <ButtonBase style={{width: "100%"}} onClick={()=> {
+                                return(
+                                    <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>
+                                        <Box  style={style}>
+                                                <Card className={classes.itemContainer}>
+                                                    <ButtonBase style={{width: "100%"}} onClick={()=> {
+                                                        
+                                                    }}>
+                                                        <CardContent style={{padding: "0" , width: "100%"}}>
+                                                                <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
                                                             
-                                                     }}>
-                                                           <CardContent style={{padding: "0" , width: "100%"}}>
-                                                                 <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
-                                                                
-                                                                     <Typography  > {product.name} </Typography>
+                                                                    <Typography  > {product.name} </Typography>
+                                                            </Box>
+
+                                                                <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
+                                                                <Typography variant="h5" style={{color: "#DEC429"}}> ₦{AmountFormater(product.selling_price).amount() } </Typography>
                                                                 </Box>
+                                                        </CardContent>
+                                                        </ButtonBase>
+                                                    </Card> 
+                                        </Box>
 
-                                                                 <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
-                                                                 <Typography variant="h5" style={{color: "#DEC429"}}> ₦{AmountFormater(product.selling_price).amount() } </Typography>
-                                                                 </Box>
-                                                           </CardContent>
-                                                         </ButtonBase>
-                                                     </Card> 
-                                            </Box>
+                                </CellMeasurer>
 
-                                    </CellMeasurer>
-
-                                    ) 
-                                    
-                                   
-                                 }}
+                                ) 
                                 
-                                 /> 
                                 
-                                // <Grid
-                                //     cellRenderer={cellRenderer}
-                                //     columnCount={products.length}
-                                //     columnWidth={200}
-                                //     height={300}
-                                //     rowCount={products.length}
-                                //     rowHeight={100}
-                                //     width={300}
-                                // />
-                            )
-                        }
+                                }}
+                            
+                                /> 
+                
+                        )
+                    }
 
 
-                    </AutoSizer>
+                </AutoSizer>
 
-                </Box>
-               
+            </Box>
+            
                
         
     )
