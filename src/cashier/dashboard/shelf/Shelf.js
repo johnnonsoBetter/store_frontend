@@ -20,17 +20,7 @@ function Shelf(){
            <Box p={1}>
                 <Box width="100%" display="flex" justifyContent="space-between" alignContent="center">
                         <ShelfContentNav />
-                        <ItemSearchInput />
-                    
                 </Box>
-            
-                <Divider light className={classes.light} />
-                <Box width="100%"  marginTop={2} >
-                    <ItemList />
-                </Box>
-
-
-            
            </Box>
            
        </Box>

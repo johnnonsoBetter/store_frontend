@@ -63,6 +63,10 @@ function CashierDashboard(){
     const [message, setMessage] = useState('')
     const [products, setProducts] = useState([])
 
+    // table states
+    const [itemsToBeSold, setItemsToBeSold] = useState([])
+    
+
 
 
 

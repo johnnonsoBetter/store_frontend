@@ -47,7 +47,8 @@ export const Input = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
         backgroundImage: "linear-gradient(to right, rgb(15 22 37 / 67%), rgb(121 121 121 / 68%))",
-        color: "white"
+        color: "white",
+        borderRadius: 5
     },
     itemName: {
         color: "white"

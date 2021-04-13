@@ -142,7 +142,7 @@ function TableContainer(){
             <Box className={classes.tableItemsContainer}>
                 <ItemToBeSoldList />
             </Box>
-            <Box position="absolute" bottom={-10} left={-80} marginTop={3} className={classes.tableActionContainer}>
+            <Box position="absolute" bottom={20} left={-80} marginTop={3} className={classes.tableActionContainer}>
                 <Box  height={160} justifyContent="center"  display="flex" flexDirection="column">
 
                         <Box  marginBottom={2}>
