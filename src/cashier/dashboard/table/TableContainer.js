@@ -1,6 +1,7 @@
 import { Box, makeStyles, Typography, Button, Menu, InputBase, MenuItem, withStyles, Badge, IconButton, Avatar, TextField} from '@material-ui/core'
 import { Clear, Print, Search, ShoppingCart, ShoppingCartOutlined } from '@material-ui/icons';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import DashboardContext from '../../../context/cashier/DashboardContext';
 import ItemToBeSoldList from './ItemToBeSoldList';
 
 
@@ -87,6 +88,7 @@ const StyledBadge = withStyles((theme) => ({
 function TableContainer(){
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
+    const {counterInfo, setCounterInfo} = useContext(DashboardContext)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -102,7 +104,7 @@ function TableContainer(){
             <Box className={classes.tableInfoContainer}>
                 <Box className={classes.tableInfo}>
                     <Typography > 
-                        <StyledBadge  badgeContent={1} color="primary">
+                        <StyledBadge  badgeContent={counterInfo['productCount']} color="primary">
                         Products
                         </StyledBadge>    
                      </Typography>

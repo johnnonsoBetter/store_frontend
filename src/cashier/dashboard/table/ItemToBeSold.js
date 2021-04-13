@@ -1,4 +1,4 @@
-import { Badge, Box, Divider, IconButton, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
+import { Badge, Box, Divider, Grow, IconButton, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
 import { Cancel, CancelOutlined, Clear, ShoppingCart } from '@material-ui/icons';
 import React from 'react'
 import AmountFormater from '../../../helpers/AmountFormater';
@@ -65,7 +65,8 @@ function ItemToBeSold(props){
     const totalItemAmount = (price_sold_per_unit * quantity_sold)
 
     return (
-        <Box className={classes.itemContainer   } p={1}> 
+        <Grow in={true}>
+            <Box className={classes.itemContainer   } p={1}> 
             <Box className={classes.itemName} p={1} textAlign="center">
                 <Typography variant="h6">{name} </Typography>
             </Box>
@@ -103,6 +104,9 @@ function ItemToBeSold(props){
 
             
         </Box>
+
+        </Grow>
+        
     )
 }
 

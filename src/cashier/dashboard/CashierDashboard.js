@@ -66,7 +66,10 @@ function CashierDashboard(){
     // table states
     const [itemsToBeSold, setItemsToBeSold] = useState([])
     const [sale, setSale] = useState(null)
-    const [counterInfo, setCounterInfo] = useState(null)
+    const [counterInfo, setCounterInfo] = useState({
+        productCount: 0,
+        itemsSoldCount: 0,
+    })
 
 
 
@@ -97,6 +100,19 @@ function CashierDashboard(){
     }, [])
     
 
+    function caculateTotalProductCount() {
+
+        function getTotalProduct(total, item){
+            return total + item.quantity_sold
+        }
+        const sum = itemsToBeSold.reduce(getTotalProduct, 1)
+
+        const newCounterInfo = Object.assign({}, counterInfo)
+
+        newCounterInfo['productCount'] = sum
+        setCounterInfo(newCounterInfo)
+    }
+
     const addItemToTable  = (newProduct) => {
 
      
@@ -110,6 +126,7 @@ function CashierDashboard(){
 
    
        setItemsToBeSold(newItemsToBeSold)
+       caculateTotalProductCount()
 
 
 
