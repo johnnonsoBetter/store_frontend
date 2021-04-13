@@ -25,7 +25,7 @@ function Shelf(){
                 </Box>
             
                 <Divider light className={classes.light} />
-                <Box width="100%" marginTop={2} >
+                <Box width="100%"  marginTop={2} >
                     <ItemList />
                 </Box>
 

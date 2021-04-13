@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip, Snackbar } from '@material-ui/core';
+import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip } from '@material-ui/core';
 import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
@@ -8,6 +8,7 @@ import { Clear } from '@material-ui/icons';
 import ActivityNav from './activity/ActivityNav';
 import CashierActionSnackBar from './CashierActionSnackBar';
 import { cashierApi } from '../../api/cashier/activity/api';
+import TableContainer from './table/TableContainer'
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
 
     paper: {
-        height: "calc(95vh - 50px)",
+        height: "calc(100vh - 100px)",
         backgroundColor: "#050310"
     }, 
     closeDrawerButton: {
@@ -156,7 +157,8 @@ function CashierDashboard(){
 
                                 <Grid item xs={5} >
                                     <Paper className={classes.paper}>
-                                    <Typography style={{color: "white"}}> Please l</Typography>
+                                        <TableContainer />
+                                       
                                     </Paper>
                                 </Grid>
 

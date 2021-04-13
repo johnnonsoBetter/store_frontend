@@ -1,5 +1,5 @@
 import { Box, ButtonBase, Grid, Typography, Card, CardContent, makeStyles} from '@material-ui/core'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import DashboardContext from '../../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import {List, AutoSizer, CellMeasurer, CellMeasurerCache} from 'react-virtualized'
@@ -7,11 +7,25 @@ import QrReader from 'react-qr-scanner'
 import Test from './Test'
 
 
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
+  
+
 
 const useStyles = makeStyles((theme) => ({
     box: {
         
-        height: "calc(85vh - 50px)"
+       height: "75vh"
     },
     light: {
         backgroundColor: "#9a9a9a8f"
@@ -38,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ItemList(){
 
+    const [width, height] = useWindowSize()
     const [items, setItems] = useState([])
     const classes = useStyles()
     const {products} = useContext(DashboardContext)
@@ -53,7 +68,7 @@ function ItemList(){
     }
     function cellRenderer({columnIndex, key, rowIndex, style}) {
         return (
-          <Box width="100%" p={3} key={key} style={style}>
+          <Box  p={3} key={key} style={style}>
             {products[rowIndex][columnIndex]}
             <Typography style={{color: "white"}}> HEllo </Typography>
           </Box>
@@ -67,8 +82,8 @@ function ItemList(){
 
        
             
-                <Box className={classes.box}>
-                    <Test />
+                <Box height={height} className={classes.box}>
+                   
 
                     <AutoSizer> 
                         {
