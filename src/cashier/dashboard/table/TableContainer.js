@@ -1,6 +1,7 @@
 import { Box, makeStyles, Typography, Button, Menu, InputBase, MenuItem, withStyles, Badge, IconButton, Avatar, TextField} from '@material-ui/core'
 import { Clear, Print, Search, ShoppingCart, ShoppingCartOutlined } from '@material-ui/icons';
 import React, { useState } from 'react'
+import ItemToBeSoldList from './ItemToBeSoldList';
 
 
 export const Input = withStyles((theme) => ({
@@ -13,9 +14,9 @@ export const Input = withStyles((theme) => ({
       borderRadius: 4,
       position: 'relative',
       backgroundColor: '',
-      border: '1px solid #ced4da',
+      border: '0px solid #ced4da',
       borderColor: 'orange',
-      color: "black",
+      color: "white",
       width: 80,
       fontSize: 16,
       padding: '7px 10px 5px 7px',
@@ -51,13 +52,14 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         alignContent: 'center',
         alignItems: 'center',
-        backgroundColor: "grey",
+        backgroundColor: "#050310",
         padding: theme.spacing(1)
     },
     tableItemsContainer: {
         backgroundColor: "",
         height: "calc(100vh - 170px)",
-        overflowY: 'auto'
+        overflowY: 'auto',
+        padding: theme.spacing(2)
     }, 
     tableActionContainer: {
         backgroundColor: "#1b1b1b",
@@ -138,7 +140,7 @@ function TableContainer(){
             </Box>
 
             <Box className={classes.tableItemsContainer}>
-
+                <ItemToBeSoldList />
             </Box>
             <Box position="absolute" bottom={-10} left={-80} marginTop={3} className={classes.tableActionContainer}>
                 <Box  height={160} justifyContent="center"  display="flex" flexDirection="column">
@@ -154,17 +156,11 @@ function TableContainer(){
                         <Box >
                             <IconButton>
                                 <Avatar className={classes.square} style={{backgroundColor: "red"}} variant="rounded">
-                                    
                                     <Clear />
                                 </Avatar>
                             </IconButton>
 
                         </Box>
-                    
-
-                   
-                       
-                    
 
                 </Box>
             </Box>
