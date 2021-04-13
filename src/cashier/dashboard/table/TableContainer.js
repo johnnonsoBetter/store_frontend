@@ -55,13 +55,19 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1)
     },
     tableItemsContainer: {
-        backgroundColor: "green",
+        backgroundColor: "",
         height: "calc(100vh - 170px)",
         overflowY: 'auto'
     }, 
     tableActionContainer: {
-        backgroundColor: "red"
-    }
+        backgroundColor: "#1b1b1b",
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
+    },
+    square: {
+        width: theme.spacing(7)
+        
+      },
 }))
 
 
@@ -134,24 +140,31 @@ function TableContainer(){
             <Box className={classes.tableItemsContainer}>
 
             </Box>
-            <Box p={2} position="absolute" bottom={0} left={-70} marginTop={3} className={classes.tableActionContainer}>
-                <Box display="flex" flexDirection="column">
+            <Box position="absolute" bottom={-10} left={-80} marginTop={3} className={classes.tableActionContainer}>
+                <Box  height={160} justifyContent="center"  display="flex" flexDirection="column">
 
-                    <Avatar variant="square">
-                        <IconButton>
-                            <Clear />
-                        </IconButton>
-                    </Avatar>
+                        <Box  marginBottom={2}>
+                            <IconButton>
+                                <Avatar className={classes.square} style={{backgroundColor: "green"}} variant="rounded">
+                                    <Print />
+                                </Avatar>
+                            </IconButton>
+                        </Box>
+                       
+                        <Box >
+                            <IconButton>
+                                <Avatar className={classes.square} style={{backgroundColor: "red"}} variant="rounded">
+                                    
+                                    <Clear />
+                                </Avatar>
+                            </IconButton>
 
-                    <Avatar variant="square">
-                        <IconButton>
-                           <Print />
-                        </IconButton>
-                    </Avatar>
+                        </Box>
+                    
 
                    
-
-                  
+                       
+                    
 
                 </Box>
             </Box>
