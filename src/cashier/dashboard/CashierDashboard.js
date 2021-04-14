@@ -84,8 +84,7 @@ function CashierDashboard(){
 
        
         cashierApi().fetchStoreResource().then(response => {
-            console.log(response)
-
+          
            const {items, store_info} = response.data
            setProducts(items)
         }).catch(err => {
@@ -100,18 +99,28 @@ function CashierDashboard(){
     }, [])
     
 
-    function caculateTotalProductCount() {
+    function caculateCounterInfo() {
 
-        function getTotalProduct(total, item){
+        function getTotalItemsOnSHelf(total, item){
             return total + item.quantity_sold
         }
-        const sum = itemsToBeSold.reduce(getTotalProduct, 1)
+      
+        const product_sum = itemsToBeSold.length + 1
 
         const newCounterInfo = Object.assign({}, counterInfo)
+       
+        const items_sum = itemsToBeSold.reduce(getTotalItemsOnSHelf, 1)
 
-        newCounterInfo['productCount'] = sum
+
+        newCounterInfo['productCount'] = product_sum
+        newCounterInfo['itemsSoldCount'] = items_sum
+
+        console.log(newCounterInfo)
+       
         setCounterInfo(newCounterInfo)
     }
+
+   
 
     const addItemToTable  = (newProduct) => {
 
@@ -126,7 +135,8 @@ function CashierDashboard(){
 
    
        setItemsToBeSold(newItemsToBeSold)
-       caculateTotalProductCount()
+       caculateCounterInfo()
+      
 
 
 

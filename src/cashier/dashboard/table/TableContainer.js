@@ -110,7 +110,7 @@ function TableContainer(){
                      </Typography>
                 </Box>
                 <Box className={classes.tableInfo}>
-                <StyledBadge badgeContent={1} color="secondary">
+                <StyledBadge badgeContent={counterInfo['itemsSoldCount']} color="secondary">
                     <ShoppingCart />
                 </StyledBadge>
                 </Box>
