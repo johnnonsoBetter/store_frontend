@@ -86,14 +86,26 @@ function TableContainer(){
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
     const {counterInfo, setCounterInfo} = useContext(DashboardContext)
+    const {sale, setSale, process, discount, setDiscount, processTransaction} = useContext(DashboardContext)
+  
+
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-      };
+    };
     
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
+    const handleClose = () => {
+         setAnchorEl(null);
+    };
+
+    const handleChange = (e) => {
+        e.preventDefault()
+        
+        
+
+        setDiscount(e.target.value)
+       
+    }
     
 
     return (
@@ -134,7 +146,7 @@ function TableContainer(){
                 </Box>
 
                 <Box display="flex"  alignItems="center">
-                    <Input type="number" placeholder="Discount"/>
+                    <Input onChange={handleChange} value={discount}  type="number" placeholder="Discount"/>
                 </Box>
             </Box>
 

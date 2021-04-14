@@ -72,6 +72,7 @@ function CashierDashboard(){
     const [itemsToBeSold, setItemsToBeSold] = useState([])
     const [sale, setSale] = useState({})
     const [transactionOnProcess, setTransactionOnProcess] = useState(false)
+    const [discount, setDiscount] = useState('0')
     const [counterInfo, setCounterInfo] = useState({
         productCount: 0,
         itemsSoldCount: 0,
@@ -105,10 +106,19 @@ function CashierDashboard(){
         caculateCounterInfo()
         processTransaction()
 
+        console.log("i am  calculatin and")
         return ()=> {
-
+            // clean up
         }
     }, [itemsToBeSold])
+
+
+    useEffect(()=> {
+        processTransaction()
+        console.log("i am performing the discount transaction ")
+
+    }, [discount])
+
 
 
     useEffect(()=> {
@@ -135,9 +145,6 @@ function CashierDashboard(){
 
         })
 
-      
-
-       
         cashierApi().fetchStoreResource().then(response => {
           
            const {items, store_info} = response.data
@@ -154,6 +161,17 @@ function CashierDashboard(){
     }, [])
 
 
+    const applyDefault = (itemsToBeSold) => {
+
+        if (itemsToBeSold.length === 0){
+            setTransactionOnProcess(false)
+            setDiscount('0')
+
+        }
+           
+    }
+
+
     const processTransaction = () => {
 
         function getTotalItemAmount(total, item){
@@ -163,12 +181,14 @@ function CashierDashboard(){
         
 
         const total_items_amount = itemsToBeSold.reduce(getTotalItemAmount, 0)
-        const total_amount_paid = total_items_amount - sale['discount']
+        const total_amount_paid = total_items_amount - discount
 
         const new_sale = Object.assign({}, sale)
 
         new_sale['total_items_amount'] = total_items_amount
         new_sale['total_amount_paid'] = total_amount_paid
+        new_sale['items'] = itemsToBeSold
+        new_sale['discount'] = discount
         
         console.log(new_sale)
         console.log(itemsToBeSold)
@@ -223,8 +243,7 @@ function CashierDashboard(){
 
         const newItemsToBeSold = itemsToBeSold.filter(product => product.barcode != theProduct.barcode)
 
-        if (newItemsToBeSold.length === 0) 
-            setTransactionOnProcess(false)
+        applyDefault(newItemsToBeSold)
        setItemsToBeSold(newItemsToBeSold)
     }
 
@@ -263,6 +282,9 @@ function CashierDashboard(){
                     sale,
                     setSale,
                     removeItemFromTable,
+                    processTransaction,
+                    discount,
+                    setDiscount,
 
 
                 }}>
