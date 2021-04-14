@@ -107,9 +107,7 @@ function CashierDashboard(){
         processTransaction()
 
         console.log("i am  calculatin and")
-        return ()=> {
-            // clean up
-        }
+       
     }, [itemsToBeSold])
 
 
@@ -175,13 +173,16 @@ function CashierDashboard(){
     const processTransaction = () => {
 
         function getTotalItemAmount(total, item){
-            return total + item.price_sold_per_unit
+            return total + (item.price_sold_per_unit * item.quantity_sold)
         }
 
         
-
+        console.log("this is the it sold", itemsToBeSold)
         const total_items_amount = itemsToBeSold.reduce(getTotalItemAmount, 0)
         const total_amount_paid = total_items_amount - discount
+
+        console.log(total_items_amount)
+        console.log(total_amount_paid)
 
         const new_sale = Object.assign({}, sale)
 
@@ -223,12 +224,13 @@ function CashierDashboard(){
 
     const addItemToTable  = (newProduct) => {
 
+        console.log(newProduct)
      
        const newItemsToBeSold = [...itemsToBeSold, {
             name: newProduct['name'],
             price_sold_per_unit: newProduct['selling_price'],
             quantity_sold: 1,
-            price_was_edited: false,
+            selling_price_was_altered: false,
             barcode: newProduct['barcode']
         }]
 

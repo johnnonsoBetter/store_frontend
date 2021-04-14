@@ -59,12 +59,36 @@ const useStyles = makeStyles((theme) => ({
 
 function ItemToBeSold(props){
 
+
+
     const classes = useStyles()
-    const {removeItemFromTable} = useContext(DashboardContext)
-
-    const {name, price_sold_per_unit, quantity_sold} = props.item
-
+    const {removeItemFromTable,  setItemsToBeSold, itemsToBeSold } = useContext(DashboardContext)
+    //const [quantity, setQuantity] = useState('1')
+    const {name, price_sold_per_unit, quantity_sold, selling_price_was_altered, barcode} = props.item
+    
     const totalItemAmount = (price_sold_per_unit * quantity_sold)
+
+
+
+    const handleQuantityChange = (e) => {
+
+        const value = e.target.value
+
+        const newitemsToBeSold = itemsToBeSold.map((item) => {
+            if (item.barcode === barcode){
+                const newItemToBeSold = Object.assign({}, item)
+                newItemToBeSold.quantity_sold = value
+                return newItemToBeSold
+            }
+
+            return item
+        })
+
+        console.log(newitemsToBeSold)
+
+        setItemsToBeSold(newitemsToBeSold)
+
+    }
 
     return (
         <Grow in={true}>
@@ -81,7 +105,7 @@ function ItemToBeSold(props){
 
 
                 <Box>
-                    <Input value={quantity_sold} />
+                    <Input onChange={handleQuantityChange} value={quantity_sold} />
                 </Box>
             </Box>
 
