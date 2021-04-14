@@ -1,6 +1,7 @@
 import { Badge, Box, Divider, Grow, IconButton, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
 import { Cancel, CancelOutlined, Clear, ShoppingCart } from '@material-ui/icons';
-import React from 'react'
+import React, { useContext } from 'react'
+import DashboardContext from '../../../context/cashier/DashboardContext';
 import AmountFormater from '../../../helpers/AmountFormater';
 
 
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 function ItemToBeSold(props){
 
     const classes = useStyles()
+    const {removeItemFromTable} = useContext(DashboardContext)
 
     const {name, price_sold_per_unit, quantity_sold} = props.item
 
@@ -95,7 +97,7 @@ function ItemToBeSold(props){
                 </Box>
 
                 <Box display="flex" alignItems="center">
-                    <IconButton style={{color: "#ff3b3bd1"}}>
+                    <IconButton onClick={()=> {removeItemFromTable(props.item)}} style={{color: "#ff3b3bd1"}}>
                         <Clear /> 
                     </IconButton>
                 </Box>

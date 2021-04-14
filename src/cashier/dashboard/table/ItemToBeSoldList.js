@@ -11,11 +11,11 @@ function ItemToBeSoldList(){
             
 
             {
-                itemsToBeSold.map(item => {
+                itemsToBeSold.map((the_item, index) => {
 
                     return (
-                        <Grid key={item.barcode} item xs={6}> 
-                            <ItemToBeSold item={item}/>
+                        <Grid key={index} item xs={6}> 
+                            <ItemToBeSold item={the_item}/>
                         </Grid>
                     )
                 })

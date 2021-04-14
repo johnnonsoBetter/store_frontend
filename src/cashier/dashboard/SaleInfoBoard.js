@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
 function SaleInfoBoard(){
 
     const classes = useStyles()
-    const {sale} = useContext(DashboardContext)
+    const {sale, counterInfo} = useContext(DashboardContext)
+    
     
     const {receipt_id, receipt_was_issued, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount} = sale
 
@@ -82,11 +83,13 @@ function SaleInfoBoard(){
 
                 <Box p={2} display="flex" justifyItems="center" flexDirection="column">
                     <Box>
-                        <Typography variant="h4"> 12 </Typography>
+                        <Typography > Products </Typography>
+                        <Typography variant="h4"> {counterInfo['productCount']} </Typography>
                     </Box>
 
                     <Box m={2}>
-                        <Typography variant="h4"> 12 </Typography>
+                         <Typography > Items </Typography>
+                        <Typography variant="h4"> {counterInfo['itemsSoldCount']} </Typography>
                     </Box>
 
                     <Box >

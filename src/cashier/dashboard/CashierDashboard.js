@@ -100,6 +100,15 @@ function CashierDashboard(){
                
     // }
 
+    useEffect(()=> {
+
+        caculateCounterInfo()
+        processTransaction()
+
+        return ()=> {
+
+        }
+    }, [itemsToBeSold])
 
 
     useEffect(()=> {
@@ -143,6 +152,31 @@ function CashierDashboard(){
             setSale(null)
         }
     }, [])
+
+
+    const processTransaction = () => {
+
+        function getTotalItemAmount(total, item){
+            return total + item.price_sold_per_unit
+        }
+
+        
+
+        const total_items_amount = itemsToBeSold.reduce(getTotalItemAmount, 0)
+        const total_amount_paid = total_items_amount - sale['discount']
+
+        const new_sale = Object.assign({}, sale)
+
+        new_sale['total_items_amount'] = total_items_amount
+        new_sale['total_amount_paid'] = total_amount_paid
+        
+        console.log(new_sale)
+        console.log(itemsToBeSold)
+
+        setSale(new_sale)
+
+
+    }
     
 
     function caculateCounterInfo() {
@@ -151,17 +185,16 @@ function CashierDashboard(){
             return total + item.quantity_sold
         }
       
-        const product_sum = itemsToBeSold.length + 1
+        const product_sum = itemsToBeSold.length
 
         const newCounterInfo = Object.assign({}, counterInfo)
        
-        const items_sum = itemsToBeSold.reduce(getTotalItemsOnSHelf, 1)
+        const items_sum = itemsToBeSold.reduce(getTotalItemsOnSHelf, 0)
 
 
         newCounterInfo['productCount'] = product_sum
         newCounterInfo['itemsSoldCount'] = items_sum
 
-        console.log(newCounterInfo)
        
         setCounterInfo(newCounterInfo)
     }
@@ -182,11 +215,17 @@ function CashierDashboard(){
    
        setItemsToBeSold(newItemsToBeSold)
        setTransactionOnProcess(true)
-       caculateCounterInfo()
-      
+       
+    }
 
 
+    const removeItemFromTable = (theProduct) => {
 
+        const newItemsToBeSold = itemsToBeSold.filter(product => product.barcode != theProduct.barcode)
+
+        if (newItemsToBeSold.length === 0) 
+            setTransactionOnProcess(false)
+       setItemsToBeSold(newItemsToBeSold)
     }
 
 
@@ -223,6 +262,7 @@ function CashierDashboard(){
                     addItemToTable,
                     sale,
                     setSale,
+                    removeItemFromTable,
 
 
                 }}>
