@@ -110,6 +110,7 @@ function CashierDashboard(){
        
     }, [itemsToBeSold])
 
+   
 
     useEffect(()=> {
         processTransaction()
@@ -177,12 +178,9 @@ function CashierDashboard(){
         }
 
         
-        console.log("this is the it sold", itemsToBeSold)
+       
         const total_items_amount = itemsToBeSold.reduce(getTotalItemAmount, 0)
         const total_amount_paid = total_items_amount - discount
-
-        console.log(total_items_amount)
-        console.log(total_amount_paid)
 
         const new_sale = Object.assign({}, sale)
 
@@ -190,9 +188,6 @@ function CashierDashboard(){
         new_sale['total_amount_paid'] = total_amount_paid
         new_sale['items'] = itemsToBeSold
         new_sale['discount'] = discount
-        
-        console.log(new_sale)
-        console.log(itemsToBeSold)
 
         setSale(new_sale)
 
@@ -203,7 +198,8 @@ function CashierDashboard(){
     function caculateCounterInfo() {
 
         function getTotalItemsOnSHelf(total, item){
-            return total + item.quantity_sold
+           
+            return total + parseInt(item.quantity_sold)
         }
       
         const product_sum = itemsToBeSold.length
@@ -211,6 +207,14 @@ function CashierDashboard(){
         const newCounterInfo = Object.assign({}, counterInfo)
        
         const items_sum = itemsToBeSold.reduce(getTotalItemsOnSHelf, 0)
+
+
+    //     let total = 0
+    //    itemsToBeSold.forEach((item=> {
+    //        console.log(item.quantity_sold)
+    //         total += item.quantity_sold
+    //    }))
+    //     console.log("this is my own total ", total)
 
 
         newCounterInfo['productCount'] = product_sum
