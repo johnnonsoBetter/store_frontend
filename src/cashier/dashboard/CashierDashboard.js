@@ -4,11 +4,12 @@ import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
 import { DashboardContextProvider } from '../../context/cashier/DashboardContext';
-import { Clear } from '@material-ui/icons';
+import { Clear, Print } from '@material-ui/icons';
 import ActivityNav from './activity/ActivityNav';
 import CashierActionSnackBar from './CashierActionSnackBar';
 import { cashierApi } from '../../api/cashier/activity/api';
 import TableContainer from './table/TableContainer'
+import SaleInfoBoard from './SaleInfoBoard';
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -48,7 +49,11 @@ const useStyles = makeStyles((theme) => ({
     }, 
     closeDrawerButton: {
         color: "white"
-    }
+    },
+    square: {
+        width: theme.spacing(7)
+        
+      },
  }))
 
 
@@ -228,6 +233,8 @@ function CashierDashboard(){
 
                             </Grid>
                         </Box>
+
+                        <SaleInfoBoard />
 
 
                         

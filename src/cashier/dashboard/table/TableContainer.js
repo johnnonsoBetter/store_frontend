@@ -67,10 +67,7 @@ const useStyles = makeStyles((theme) => ({
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10
     },
-    square: {
-        width: theme.spacing(7)
-        
-      },
+    
 }))
 
 
@@ -145,15 +142,15 @@ function TableContainer(){
                 <ItemToBeSoldList />
             </Box>
             <Box position="absolute" bottom={20} left={-80} marginTop={3} className={classes.tableActionContainer}>
-                <Box  height={160} justifyContent="center"  display="flex" flexDirection="column">
+                <Box  height={100} justifyContent="center"  display="flex" flexDirection="column">
 
-                        <Box  marginBottom={2}>
+                        {/* <Box  marginBottom={2}>
                             <IconButton>
                                 <Avatar className={classes.square} style={{backgroundColor: "green"}} variant="rounded">
                                     <Print />
                                 </Avatar>
                             </IconButton>
-                        </Box>
+                        </Box> */}
                        
                         <Box >
                             <IconButton>
