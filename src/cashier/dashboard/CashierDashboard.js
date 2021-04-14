@@ -70,11 +70,35 @@ function CashierDashboard(){
 
     // table states
     const [itemsToBeSold, setItemsToBeSold] = useState([])
-    const [sale, setSale] = useState(null)
+    const [sale, setSale] = useState({})
+    const [transactionOnProcess, setTransactionOnProcess] = useState(false)
     const [counterInfo, setCounterInfo] = useState({
         productCount: 0,
         itemsSoldCount: 0,
     })
+
+    // {
+   
+    //     "log_issue_type": "sale",
+    //     "sale": {
+    //         "receipt_id": "bbbeea3f2f",
+    //         "issue": true,
+    //         "receipt_was_issued": true,
+    //         "total_items_amount": 600,
+    //         "discount": 0,
+    //         "total_amount_paid": 600,
+    //         "transaction_type": "cash",
+    //         "cash_amount": 600,
+    //         "cashback_profit": 0,
+    //         "pos_amount": 0,
+    //         "transfer_amount": 0,
+    //         "items": [ {"name": "Snicker Chocolate", "quantity_sold": 1, "price_sold_per_unit": 600, "selling_price_was_altered": true}
+    //         ]
+                
+    //     }
+                                
+               
+    // }
 
 
 
@@ -83,6 +107,23 @@ function CashierDashboard(){
         setCounterInfo({
             productCount: 0,
             itemsSoldCount: 0,
+        })
+
+        setSale({
+            receipt_id: "",
+            issue: true,
+            receipt_was_issued: false,
+            total_items_amount: 0,
+            discount: 0,
+            total_amount_paid: 0,
+            transaction_type: 'cash',
+            cash_amount: 0,
+            transfer_amount: 0,
+            pos_amount: 0,
+            cashback_profit: 0,
+            items: []
+
+
         })
 
       
@@ -140,6 +181,7 @@ function CashierDashboard(){
 
    
        setItemsToBeSold(newItemsToBeSold)
+       setTransactionOnProcess(true)
        caculateCounterInfo()
       
 
@@ -179,6 +221,8 @@ function CashierDashboard(){
                     setCounterInfo,
                     setItemsToBeSold,
                     addItemToTable,
+                    sale,
+                    setSale,
 
 
                 }}>
@@ -234,7 +278,10 @@ function CashierDashboard(){
                             </Grid>
                         </Box>
 
-                        <SaleInfoBoard />
+                        {
+                            transactionOnProcess && <SaleInfoBoard />
+                        }
+                        
 
 
                         
