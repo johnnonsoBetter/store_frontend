@@ -229,19 +229,39 @@ function CashierDashboard(){
     const addItemToTable  = (newProduct) => {
 
         console.log(newProduct)
-     
-       const newItemsToBeSold = [...itemsToBeSold, {
-            name: newProduct['name'],
-            price_sold_per_unit: newProduct['selling_price'],
-            quantity_sold: 1,
-            selling_price_was_altered: false,
-            barcode: newProduct['barcode'],
-            fixed_price: newProduct['selling_price']
-        }]
 
-   
-       setItemsToBeSold(newItemsToBeSold)
-       setTransactionOnProcess(true)
+        function itemAlreadyExistOnCounter(){
+           return itemsToBeSold.some((item) => item.barcode === newProduct.barcode)
+           
+        }
+
+        function addItem(){
+
+            const newItemsToBeSold = [...itemsToBeSold, {
+                name: newProduct['name'],
+                price_sold_per_unit: newProduct['selling_price'],
+                quantity_sold: 1,
+                selling_price_was_altered: false,
+                barcode: newProduct['barcode'],
+                fixed_price: newProduct['selling_price']
+            }]
+    
+       
+            setItemsToBeSold(newItemsToBeSold)
+            setTransactionOnProcess(true)
+          
+           
+        }
+
+
+
+       if (itemAlreadyExistOnCounter()){
+
+       }else{
+            addItem()
+       }
+     
+      
        
     }
 
