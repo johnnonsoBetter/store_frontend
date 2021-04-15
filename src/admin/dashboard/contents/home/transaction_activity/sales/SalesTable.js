@@ -225,7 +225,7 @@ function SalesTable() {
   };
 
   const handleTransactionTypeFilter =(filterType) => {
-    console.log(filterType)
+   
     if (filterType === "all"){
       setFilteredSales(sales)
       

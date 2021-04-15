@@ -1,9 +1,42 @@
-import { Box, makeStyles, Typography, Button, Menu, InputBase, MenuItem, withStyles, Badge, IconButton, Avatar, TextField} from '@material-ui/core'
+import { Box, makeStyles, Typography, Button, Menu, InputBase, MenuItem, withStyles, Badge, IconButton, Avatar, TextField, Popper, Fade, Paper, Grow} from '@material-ui/core'
 import { Clear, Print, Search, ShoppingCart, ShoppingCartOutlined } from '@material-ui/icons';
 import React, { useContext, useState } from 'react'
 import DashboardContext from '../../../context/cashier/DashboardContext';
 import ItemToBeSoldList from './ItemToBeSoldList';
 
+
+
+export const TransactionCashInput = withStyles((theme) => ({
+    root: {
+      'label + &': {
+        marginTop: theme.spacing(3),
+      },
+    },
+    input: {
+      borderRadius: 4,
+      position: 'relative',
+      backgroundColor: '',
+      border: '2px solid #ced4da',
+      borderColor: 'orange',
+      color: "white",
+      width: 80,
+      textAlign: "center",
+      fontSize: 16,
+      padding: '7px 10px 5px 7px',
+      borderRadius: 5,
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      // Use the system font instead of the default Roboto font.
+      fontFamily: [
+        'Kanit',
+        'cursive',
+      ].join(','),
+      '&:focus': {
+        borderRadius: 5,
+        
+        
+      },
+    },
+  }))(InputBase);
 
 export const Input = withStyles((theme) => ({
     root: {
@@ -14,7 +47,6 @@ export const Input = withStyles((theme) => ({
     input: {
       borderRadius: 4,
       position: 'relative',
-      backgroundColor: '',
       border: '0px solid #ced4da',
       borderColor: 'orange',
       color: "white",
@@ -42,6 +74,9 @@ export const Input = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
+    },
+    popper: {
+        width: 500
     },
     tableInfo: {
       
@@ -86,13 +121,24 @@ function TableContainer(){
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
     const {counterInfo, clearAllItemsOnCounter, setCounterInfo} = useContext(DashboardContext)
+    const [inputOpened, setInputOpened] = useState(false)
+
     const {sale, setSale, process, discount, setDiscount, processTransaction} = useContext(DashboardContext)
   
 
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+       
     };
+
+    const handleTransactionType = (type)=> {
+
+        console.log(type)
+        setAnchorEl(null)
+    }
+
+
     
     const handleClose = () => {
          setAnchorEl(null);
@@ -110,11 +156,22 @@ function TableContainer(){
 
     return (
         <Box className={classes.root} position="relative">
+
+             {
+                 inputOpened &&
+                 <Grow in={true}>
+                    <Box position="absolute" top={-50} left="50%" p={1}>
+                        <TransactionCashInput />
+                    </Box>
+                 </Grow> 
+                 
+             }
+            
             <Box className={classes.tableInfoContainer}>
                 <Box className={classes.tableInfo}>
                     <Typography > 
                         <StyledBadge  badgeContent={counterInfo['productCount']} color="primary">
-                        Products
+                            Products
                         </StyledBadge>    
                      </Typography>
                 </Box>
@@ -124,25 +181,50 @@ function TableContainer(){
                 </StyledBadge>
                 </Box>
                 <Box className={classes.tableInfo}>
-                <Button disabled={false} style={{backgroundColor: "teal", color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                    Cash
-                </Button>
-                <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                >
-                    <MenuItem   onClick={handleClick}>Cash</MenuItem>
-                    <MenuItem   onClick={handleClick}>Pos</MenuItem>
-                    <MenuItem   onClick={handleClick} >Transfer</MenuItem>
-                    <MenuItem   onClick={handleClick} >Pos Cashback</MenuItem>
-                    <MenuItem   onClick={handleClick}>Transfer Cashback</MenuItem>
-                    <MenuItem   onClick={handleClick}>Pos Cash</MenuItem>
-                    <MenuItem   onClick={handleClick}>Transfer Cash</MenuItem>
-                    <MenuItem   onClick={handleClick}>Pos Transfer</MenuItem>
-                </Menu>
+
+                    <Button disabled={false} style={{backgroundColor: "teal", color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        Cash
+                    </Button>
+                    <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    >
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(false)
+                        }}>Cash</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(false)
+                        }}>Pos</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(false)
+                        }} >Transfer</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(true)
+                        }} >Pos Cashback</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(true)
+                        }}>Transfer Cashback</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(true)
+                        }}>Pos Cash</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(true)
+                        }}>Transfer Cash</MenuItem>
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("")
+                            setInputOpened(false)
+                        }}>Pos Transfer</MenuItem>
+                    </Menu>
                 </Box>
 
                 <Box display="flex"  alignItems="center">
@@ -155,15 +237,6 @@ function TableContainer(){
             </Box>
             <Box position="absolute" bottom={20} left={-80} marginTop={3} className={classes.tableActionContainer}>
                 <Box  height={100} justifyContent="center"  display="flex" flexDirection="column">
-
-                        {/* <Box  marginBottom={2}>
-                            <IconButton>
-                                <Avatar className={classes.square} style={{backgroundColor: "green"}} variant="rounded">
-                                    <Print />
-                                </Avatar>
-                            </IconButton>
-                        </Box> */}
-                       
                         <Box >
                             <IconButton onClick={clearAllItemsOnCounter}>
                                 <Avatar className={classes.square} style={{backgroundColor: "red"}} variant="rounded">

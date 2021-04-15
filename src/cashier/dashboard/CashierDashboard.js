@@ -85,6 +85,7 @@ function CashierDashboard(){
     const [sale, setSale] = useState({})
     const [transactionOnProcess, setTransactionOnProcess] = useState(false)
     const [discount, setDiscount] = useState('0')
+    const [transactionType, setTransactionType] = useState('cash')
     const [counterInfo, setCounterInfo] = useState({
         productCount: 0,
         itemsSoldCount: 0,
@@ -126,8 +127,7 @@ function CashierDashboard(){
 
     useEffect(()=> {
         processTransaction()
-        console.log("i am performing the discount transaction ")
-
+       
     }, [discount])
 
 
@@ -168,6 +168,14 @@ function CashierDashboard(){
         return ()=> {
             setProducts([])
             setSale(null)
+            setTransactionOnProcess(false)
+            setTransactionType('cash')
+            setItemsToBeSold([])
+            setProducts([])
+            setCounterInfo({
+                productCount: 0,
+                itemsSoldCount: 0,
+            })
         }
     }, [])
 
@@ -196,6 +204,10 @@ function CashierDashboard(){
 
         const new_sale = Object.assign({}, sale)
 
+        new_sale['pos_amount'] = 0
+        new_sale['cash_amount'] = 0
+        new_sale['transfer_amount'] = 0
+
         new_sale['total_items_amount'] = total_items_amount
         new_sale['total_amount_paid'] = total_amount_paid
         new_sale['items'] = itemsToBeSold.map((item) => {
@@ -208,6 +220,22 @@ function CashierDashboard(){
             }
         })
         new_sale['discount'] = discount
+
+
+        // processes the transaction type
+
+        switch(transactionType){
+            case "cash": 
+                new_sale['cash_amount'] = (total_amount_paid)
+            break
+            
+
+        }
+
+
+
+
+
 
         setSale(new_sale)
 
@@ -347,6 +375,8 @@ function CashierDashboard(){
                     setSeverity,
                     setMessage,
                     launchSnackBar,
+                    transactionType,
+                    setTransactionType,
 
 
                 }}>
