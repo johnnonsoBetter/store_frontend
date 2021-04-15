@@ -209,14 +209,6 @@ function CashierDashboard(){
         const items_sum = itemsToBeSold.reduce(getTotalItemsOnSHelf, 0)
 
 
-    //     let total = 0
-    //    itemsToBeSold.forEach((item=> {
-    //        console.log(item.quantity_sold)
-    //         total += item.quantity_sold
-    //    }))
-    //     console.log("this is my own total ", total)
-
-
         newCounterInfo['productCount'] = product_sum
         newCounterInfo['itemsSoldCount'] = items_sum
 
@@ -249,8 +241,16 @@ function CashierDashboard(){
 
         const newItemsToBeSold = itemsToBeSold.filter(product => product.barcode != theProduct.barcode)
 
-        applyDefault(newItemsToBeSold)
+        
        setItemsToBeSold(newItemsToBeSold)
+       applyDefault(newItemsToBeSold)
+    }
+
+    const clearAllItemsOnCounter = () => {
+
+        setItemsToBeSold([])
+        applyDefault([])
+
     }
 
 
@@ -291,6 +291,7 @@ function CashierDashboard(){
                     processTransaction,
                     discount,
                     setDiscount,
+                    clearAllItemsOnCounter,
 
 
                 }}>

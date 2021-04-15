@@ -85,7 +85,7 @@ const StyledBadge = withStyles((theme) => ({
 function TableContainer(){
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
-    const {counterInfo, setCounterInfo} = useContext(DashboardContext)
+    const {counterInfo, clearAllItemsOnCounter, setCounterInfo} = useContext(DashboardContext)
     const {sale, setSale, process, discount, setDiscount, processTransaction} = useContext(DashboardContext)
   
 
@@ -165,7 +165,7 @@ function TableContainer(){
                         </Box> */}
                        
                         <Box >
-                            <IconButton>
+                            <IconButton onClick={clearAllItemsOnCounter}>
                                 <Avatar className={classes.square} style={{backgroundColor: "red"}} variant="rounded">
                                     <Clear />
                                 </Avatar>
