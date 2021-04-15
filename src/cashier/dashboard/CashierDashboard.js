@@ -10,6 +10,8 @@ import CashierActionSnackBar from './CashierActionSnackBar';
 import { cashierApi } from '../../api/cashier/activity/api';
 import TableContainer from './table/TableContainer'
 import SaleInfoBoard from './SaleInfoBoard';
+import MuiAlert from '@material-ui/lab/Alert';
+
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -18,6 +20,14 @@ const muiTheme = createMuiTheme({
         'cursive',
       ].join(','),
 },});
+
+const snackBarTheme = createMuiTheme({
+
+})
+
+function SaleAlert(props) {
+   return <MuiAlert elevation={6} variant="filled" {...props} /> 
+}
 
 
 function useWindowSize() {
@@ -66,7 +76,9 @@ function CashierDashboard(){
     const [snackBarOpened, setSnackbarOpened] = useState(false)
     const [taskDone, setTaskDone] = useState(false)
     const [message, setMessage] = useState('')
+    const [severity, setSeverity] = useState('')
     const [products, setProducts] = useState([])
+    
 
     // table states
     const [itemsToBeSold, setItemsToBeSold] = useState([])
@@ -224,6 +236,13 @@ function CashierDashboard(){
         setCounterInfo(newCounterInfo)
     }
 
+    const launchSnackBar =(s_message, severity)=> {
+        setSnackbarOpened(true)
+        setMessage(s_message)
+        setSeverity(severity)
+        setTaskDone(true)
+    }
+
    
 
     const addItemToTable  = (newProduct) => {
@@ -250,13 +269,16 @@ function CashierDashboard(){
             setItemsToBeSold(newItemsToBeSold)
             setTransactionOnProcess(true)
           
+            launchSnackBar(`Added ${newProduct['name']}`,'success')
+          
            
         }
 
 
 
        if (itemAlreadyExistOnCounter()){
-
+            
+            launchSnackBar("Item Already Added for sale", "info")
        }else{
             addItem()
        }
@@ -321,6 +343,10 @@ function CashierDashboard(){
                     discount,
                     setDiscount,
                     clearAllItemsOnCounter,
+                    severity,
+                    setSeverity,
+                    setMessage,
+                    launchSnackBar,
 
 
                 }}>
@@ -331,7 +357,7 @@ function CashierDashboard(){
                         
                     >
 
-
+                        <CashierActionSnackBar  />
                         <Drawer anchor="left" open={drawerOpened} >
                             <Box width={width} flexGrow={1} style={{backgroundColor: "#0b1225"}} > 
                                 <Box display="flex" p={2} justifyContent="space-between" alignItems="center">
@@ -349,7 +375,7 @@ function CashierDashboard(){
                                     </IconButton>
                                 </Box>
                                 <ActivityNav />
-                                <CashierActionSnackBar  />
+                               
                                 
                              </Box>
                              
