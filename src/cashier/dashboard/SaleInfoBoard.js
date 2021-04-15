@@ -29,6 +29,18 @@ function SaleInfoBoard(){
     
     const {receipt_id, receipt_was_issued, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount} = sale
 
+    const actualPayment = () => {
+        if (transaction_type === "pos_cashback"){
+            return pos_amount
+        }else if(transaction_type === "transfer_cashback"){
+            return transfer_amount
+        }
+            
+        return total_amount_paid
+    }
+
+
+
     return (
         <Slide direction="up" in={true} > 
         <Box className={classes.infoContainer} borderRadius={10} style={{}} width={450} bottom={20} p={2} position="absolute">
@@ -49,24 +61,29 @@ function SaleInfoBoard(){
                     <Box p={1} display="flex" justifyContent="space-between">
 
                         <Box>
-                            <Typography variant="h5"> To Pay:</Typography>
+                            <Typography variant="h5"> Items Payment:</Typography>
                         </Box>
                         <Box>
-                            <Typography variant="h5" style={{color: "gold"}}> ₦{AmountFormater(total_amount_paid).amount()}</Typography>
+                            <Typography variant="h5" > ₦{AmountFormater(total_amount_paid).amount()}</Typography>
                         </Box>
 
                     </Box>
 
-                    <Box p={1} display="flex" justifyContent="space-between">
+                    {
+                        parseInt(discount) !== 0 && 
+                   
 
-                        <Box>
-                            <Typography variant="h6"> Discount:</Typography>
-                        </Box>
-                        <Box>
-                            <Typography variant="h6" style={{color: "red"}}>  ₦{AmountFormater(discount).amount()}</Typography>
-                        </Box>
+                        <Box p={1} display="flex" justifyContent="space-between">
 
-                    </Box>
+                            <Box>
+                                <Typography variant="h6"> Discount:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6" style={{color: "red"}}>  ₦{AmountFormater(discount).amount()}</Typography>
+                            </Box>
+
+                        </Box>
+                    }
 
                     <Box p={1} display="flex" justifyContent="space-between">
 
@@ -84,7 +101,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Cash Received:</Typography>
+                                <Typography variant="h6"> Cash:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6"> ₦{AmountFormater(cash_amount).amount()} </Typography>
@@ -96,7 +113,7 @@ function SaleInfoBoard(){
                             <Box p={1} display="flex" justifyContent="space-between">
 
                                 <Box>
-                                    <Typography variant="h6"> Pos Received:</Typography>
+                                    <Typography variant="h6"> Pos:</Typography>
                                 </Box>
                                 <Box>
                                     <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
@@ -108,7 +125,7 @@ function SaleInfoBoard(){
                             <Box p={1} display="flex" justifyContent="space-between">
 
                                 <Box>
-                                    <Typography variant="h6"> Transfer Received:</Typography>
+                                    <Typography variant="h6"> Transfer:</Typography>
                                 </Box>
                                 <Box>
                                     <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
@@ -121,7 +138,7 @@ function SaleInfoBoard(){
                             <Box p={1} display="flex" justifyContent="space-between">
 
                                 <Box>
-                                    <Typography variant="h6"> Pos Received:</Typography>
+                                    <Typography variant="h6"> Pos:</Typography>
                                 </Box>
                                 <Box>
                                     <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
@@ -157,7 +174,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Transfer Received:</Typography>
+                                <Typography variant="h6"> Transfer:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
@@ -193,7 +210,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Transfer Received:</Typography>
+                                <Typography variant="h6"> Transfer:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
@@ -204,7 +221,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Cash Received:</Typography>
+                                <Typography variant="h6"> Cash:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
@@ -218,7 +235,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Pos Received:</Typography>
+                                <Typography variant="h6"> Pos:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
@@ -229,7 +246,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Cash Received:</Typography>
+                                <Typography variant="h6"> Cash:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
@@ -243,7 +260,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Pos Received:</Typography>
+                                <Typography variant="h6"> Pos:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
@@ -254,7 +271,7 @@ function SaleInfoBoard(){
                         <Box p={1} display="flex" justifyContent="space-between">
 
                             <Box>
-                                <Typography variant="h6"> Transfer Received:</Typography>
+                                <Typography variant="h6"> Transfer:</Typography>
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
@@ -267,6 +284,17 @@ function SaleInfoBoard(){
  
                         
                     }
+
+                    <Box p={1} display="flex" alignItems="center" justifyContent="space-between">
+
+                        <Box>
+                            <Typography > Actual Payment:</Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant="h4" style={{color: "yellow"}}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
+                        </Box>
+
+                    </Box>
 
                     
                     
