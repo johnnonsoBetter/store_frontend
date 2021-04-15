@@ -92,6 +92,12 @@ function ItemToBeSold(props){
                 if (item.barcode === barcode){
                     const newItemToBeSold = Object.assign({}, item)
                     newItemToBeSold.price_sold_per_unit = value
+                    if (item.fixed_price != parseInt(value)){
+                        newItemToBeSold.selling_price_was_altered = true
+                    }else{
+                        newItemToBeSold.selling_price_was_altered = false
+                    }
+                    
                     return newItemToBeSold
                 }
     

@@ -227,7 +227,8 @@ function CashierDashboard(){
             price_sold_per_unit: newProduct['selling_price'],
             quantity_sold: 1,
             selling_price_was_altered: false,
-            barcode: newProduct['barcode']
+            barcode: newProduct['barcode'],
+            fixed_price: newProduct['selling_price']
         }]
 
    
