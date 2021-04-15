@@ -91,6 +91,7 @@ function CashierDashboard(){
         itemsSoldCount: 0,
     })
     const [transactionAmount, setTransactionaAmount] = useState('0')
+    const [inputOpened, setInputOpened] = useState(false)
 
 
     // {
@@ -190,6 +191,7 @@ function CashierDashboard(){
             setTransactionOnProcess(false)
             setDiscount('0')
             setTransactionType('cash')
+            setInputOpened(false)
 
         }
            
@@ -394,6 +396,9 @@ function CashierDashboard(){
                     setTransactionType,
                     setTransactionaAmount,
                     transactionAmount,
+                    transactionOnProcess,
+                    inputOpened,
+                    setInputOpened,
 
 
                 }}>

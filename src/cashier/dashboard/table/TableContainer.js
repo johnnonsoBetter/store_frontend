@@ -120,10 +120,10 @@ const StyledBadge = withStyles((theme) => ({
 function TableContainer(){
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
-    const {counterInfo, clearAllItemsOnCounter, setCounterInfo} = useContext(DashboardContext)
-    const [inputOpened, setInputOpened] = useState(false)
+    const {counterInfo, inputOpened, setInputOpened, clearAllItemsOnCounter, setCounterInfo} = useContext(DashboardContext)
+    
 
-    const {discount, setDiscount, setTransactionAmount, transactionAmount, transactionType, setTransactionType} = useContext(DashboardContext)
+    const {discount, setDiscount, transactionOnProcess, setTransactionAmount, transactionAmount, transactionType, setTransactionType} = useContext(DashboardContext)
   
 
 
@@ -159,7 +159,7 @@ function TableContainer(){
                  inputOpened &&
                  <Grow in={true}>
                     <Box position="absolute" top={-50} left="50%" p={1}>
-                        <TransactionCashInput />
+                        <TransactionCashInput  disabled={!transactionOnProcess} />
                     </Box>
                  </Grow> 
                  
@@ -180,7 +180,7 @@ function TableContainer(){
                 </Box>
                 <Box className={classes.tableInfo}>
 
-                    <Button disabled={false} style={{backgroundColor: "teal", color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                    <Button disabled={!transactionOnProcess} style={{backgroundColor: "teal", color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         {transactionType}
                     </Button>
                     <Menu
@@ -226,7 +226,7 @@ function TableContainer(){
                 </Box>
 
                 <Box display="flex"  alignItems="center">
-                    <Input onChange={handleChange} value={discount}  type="number" placeholder="Discount"/>
+                    <Input onChange={handleChange} disabled={!transactionOnProcess} value={discount}  type="number" placeholder="Discount"/>
                 </Box>
             </Box>
 
