@@ -186,7 +186,15 @@ function CashierDashboard(){
 
         new_sale['total_items_amount'] = total_items_amount
         new_sale['total_amount_paid'] = total_amount_paid
-        new_sale['items'] = itemsToBeSold
+        new_sale['items'] = itemsToBeSold.map((item) => {
+            const {name, price_sold_per_unit, quantity_sold, selling_price_was_altered} = item
+            return {
+                name,
+                price_sold_per_unit,
+                quantity_sold,
+                selling_price_was_altered,
+            }
+        })
         new_sale['discount'] = discount
 
         setSale(new_sale)

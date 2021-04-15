@@ -53,7 +53,8 @@ function ItemList(){
     const [width, height] = useWindowSize()
     const [items, setItems] = useState([])
     const classes = useStyles()
-    const {products} = useContext(DashboardContext)
+    const {products, addItemToTable} = useContext(DashboardContext)
+
     const cache = useRef(new CellMeasurerCache({
         fixedWidth: true,
         defaultHeight: 100,
@@ -100,7 +101,7 @@ function ItemList(){
                                         <Box  style={style}>
                                                 <Card className={classes.itemContainer}>
                                                     <ButtonBase style={{width: "100%"}} onClick={()=> {
-                                                        
+                                                        addItemToTable(product)
                                                     }}>
                                                         <CardContent style={{padding: "0" , width: "100%"}}>
                                                                 <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
