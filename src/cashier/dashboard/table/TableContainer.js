@@ -134,7 +134,7 @@ function TableContainer(){
 
     const handleTransactionType = (type)=> {
 
-        console.log(type)
+        setTransactionAmount('0')
         setTransactionType(type)
         setAnchorEl(null)
     }
@@ -159,7 +159,10 @@ function TableContainer(){
                  inputOpened &&
                  <Grow in={true}>
                     <Box position="absolute" top={-50} left="50%" p={1}>
-                        <TransactionCashInput  disabled={!transactionOnProcess} />
+                        <TransactionCashInput type="number" value={transactionAmount} onChange={(e)=>{
+                            e.preventDefault()
+                            setTransactionAmount(e.target.value)
+                        }}  disabled={!transactionOnProcess} />
                     </Box>
                  </Grow> 
                  
@@ -220,7 +223,7 @@ function TableContainer(){
                         }}>Transfer Cash</MenuItem>
                         <MenuItem   onClick={()=> {
                             handleTransactionType("pos_transfer")
-                            setInputOpened(false)
+                            setInputOpened(true)
                         }}>Pos Transfer</MenuItem>
                     </Menu>
                 </Box>

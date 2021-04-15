@@ -139,6 +139,17 @@ function SaleInfoBoard(){
                                 </Box>
 
                             </Box>
+
+                            <Box p={1} display="flex" justifyContent="space-between">
+
+                                <Box>
+                                    <Typography variant="h6"> Charges:</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">  ₦{AmountFormater(cashback_profit).amount()} </Typography>
+                                </Box>
+
+                            </Box>
                              </>
 
                         : transaction_type === "transfer_cashback" ? 
@@ -161,6 +172,17 @@ function SaleInfoBoard(){
                             </Box>
                             <Box>
                                 <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Charges:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(cashback_profit).amount()} </Typography>
                             </Box>
 
                         </Box>

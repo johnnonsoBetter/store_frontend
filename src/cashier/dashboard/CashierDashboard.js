@@ -90,7 +90,7 @@ function CashierDashboard(){
         productCount: 0,
         itemsSoldCount: 0,
     })
-    const [transactionAmount, setTransactionaAmount] = useState('0')
+    const [transactionAmount, setTransactionAmount] = useState('0')
     const [inputOpened, setInputOpened] = useState(false)
 
 
@@ -131,7 +131,7 @@ function CashierDashboard(){
     useEffect(()=> {
         processTransaction()
         
-    }, [discount, transactionType])
+    }, [discount, transactionType, transactionAmount])
 
     
 
@@ -192,6 +192,7 @@ function CashierDashboard(){
             setDiscount('0')
             setTransactionType('cash')
             setInputOpened(false)
+            setTransactionAmount('0')
 
         }
            
@@ -230,7 +231,7 @@ function CashierDashboard(){
         })
         new_sale['discount'] = discount
 
-
+        const cashbackAmount = 100
         // processes the transaction type
 
         switch(transactionType){
@@ -242,6 +243,40 @@ function CashierDashboard(){
             break
             case "transfer":
                 new_sale['transfer_amount'] = (total_amount_paid)
+            break
+            case "pos_cashback":    
+                const totalPos = (total_amount_paid + cashbackAmount + (parseInt(transactionAmount)))
+
+                new_sale['pos_amount'] = totalPos
+                new_sale['cash_amount'] = parseInt(transactionAmount)
+                new_sale['cashback_profit'] = cashbackAmount
+
+            break
+            case "transfer_cashback":
+                const totalTransfer = (total_amount_paid + cashbackAmount + (parseInt(transactionAmount)))
+
+                new_sale['transfer_amount'] = totalTransfer
+                new_sale['cash_amount'] = parseInt(transactionAmount)
+                new_sale['cashback_profit'] = cashbackAmount
+
+            break
+            case "pos_cash":
+                const pos = (total_amount_paid - (parseInt(transactionAmount)))
+                new_sale['pos_amount'] = pos
+                new_sale['cash_amount'] = parseInt(transactionAmount)
+
+            break
+            case "transfer_cash":
+                const transfer = (total_amount_paid - (parseInt(transactionAmount)))
+                new_sale['transfer_amount'] = transfer
+                new_sale['cash_amount'] = parseInt(transactionAmount)
+
+            break
+            case "pos_transfer": 
+                const pos_ = (total_amount_paid - (parseInt(transactionAmount)))
+                new_sale['pos_amount'] = pos_
+                new_sale['transfer_amount'] = parseInt(transactionAmount)
+
             break
             
 
@@ -394,7 +429,7 @@ function CashierDashboard(){
                     launchSnackBar,
                     transactionType,
                     setTransactionType,
-                    setTransactionaAmount,
+                    setTransactionAmount,
                     transactionAmount,
                     transactionOnProcess,
                     inputOpened,
