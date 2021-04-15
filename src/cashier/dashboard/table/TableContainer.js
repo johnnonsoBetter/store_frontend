@@ -123,7 +123,7 @@ function TableContainer(){
     const {counterInfo, clearAllItemsOnCounter, setCounterInfo} = useContext(DashboardContext)
     const [inputOpened, setInputOpened] = useState(false)
 
-    const {sale, setSale, process, discount, setDiscount, processTransaction} = useContext(DashboardContext)
+    const {discount, setDiscount, setTransactionAmount, transactionAmount, transactionType, setTransactionType} = useContext(DashboardContext)
   
 
 
@@ -135,6 +135,7 @@ function TableContainer(){
     const handleTransactionType = (type)=> {
 
         console.log(type)
+        setTransactionType(type)
         setAnchorEl(null)
     }
 
@@ -146,9 +147,6 @@ function TableContainer(){
 
     const handleChange = (e) => {
         e.preventDefault()
-        
-        
-
         setDiscount(e.target.value)
        
     }
@@ -183,7 +181,7 @@ function TableContainer(){
                 <Box className={classes.tableInfo}>
 
                     <Button disabled={false} style={{backgroundColor: "teal", color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        Cash
+                        {transactionType}
                     </Button>
                     <Menu
                     id="simple-menu"
@@ -193,35 +191,35 @@ function TableContainer(){
                     onClose={handleClose}
                     >
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("cash")
                             setInputOpened(false)
                         }}>Cash</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("pos")
                             setInputOpened(false)
                         }}>Pos</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("transfer")
                             setInputOpened(false)
                         }} >Transfer</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("pos_cashback")
                             setInputOpened(true)
                         }} >Pos Cashback</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("transfer_cashback")
                             setInputOpened(true)
                         }}>Transfer Cashback</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("pos_cash")
                             setInputOpened(true)
                         }}>Pos Cash</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("transfer_cash")
                             setInputOpened(true)
                         }}>Transfer Cash</MenuItem>
                         <MenuItem   onClick={()=> {
-                            handleTransactionType("")
+                            handleTransactionType("pos_transfer")
                             setInputOpened(false)
                         }}>Pos Transfer</MenuItem>
                     </Menu>

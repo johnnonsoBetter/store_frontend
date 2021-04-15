@@ -90,6 +90,8 @@ function CashierDashboard(){
         productCount: 0,
         itemsSoldCount: 0,
     })
+    const [transactionAmount, setTransactionaAmount] = useState('0')
+
 
     // {
    
@@ -119,7 +121,7 @@ function CashierDashboard(){
         caculateCounterInfo()
         processTransaction()
 
-        console.log("i am  calculatin and")
+       
        
     }, [itemsToBeSold])
 
@@ -127,8 +129,10 @@ function CashierDashboard(){
 
     useEffect(()=> {
         processTransaction()
-       
-    }, [discount])
+        
+    }, [discount, transactionType])
+
+    
 
 
 
@@ -185,6 +189,7 @@ function CashierDashboard(){
         if (itemsToBeSold.length === 0){
             setTransactionOnProcess(false)
             setDiscount('0')
+            setTransactionType('cash')
 
         }
            
@@ -207,9 +212,11 @@ function CashierDashboard(){
         new_sale['pos_amount'] = 0
         new_sale['cash_amount'] = 0
         new_sale['transfer_amount'] = 0
+        new_sale['cashback_profit'] = 0
 
         new_sale['total_items_amount'] = total_items_amount
         new_sale['total_amount_paid'] = total_amount_paid
+        new_sale['transaction_type'] = transactionType
         new_sale['items'] = itemsToBeSold.map((item) => {
             const {name, price_sold_per_unit, quantity_sold, selling_price_was_altered} = item
             return {
@@ -228,6 +235,14 @@ function CashierDashboard(){
             case "cash": 
                 new_sale['cash_amount'] = (total_amount_paid)
             break
+            case "pos":
+                new_sale['pos_amount'] = (total_amount_paid)
+            break
+            case "transfer":
+                new_sale['transfer_amount'] = (total_amount_paid)
+            break
+            
+
             
 
         }
@@ -377,6 +392,8 @@ function CashierDashboard(){
                     launchSnackBar,
                     transactionType,
                     setTransactionType,
+                    setTransactionaAmount,
+                    transactionAmount,
 
 
                 }}>

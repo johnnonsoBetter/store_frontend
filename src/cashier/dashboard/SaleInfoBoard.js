@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+
+const actualPayment = (transaction_type) => {
+    
+}
+
 function SaleInfoBoard(){
 
     const classes = useStyles()
@@ -73,6 +78,173 @@ function SaleInfoBoard(){
                         </Box>
 
                     </Box>
+
+                    {
+                        transaction_type === "cash" ?
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Cash Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6"> ₦{AmountFormater(cash_amount).amount()} </Typography>
+                            </Box>
+ 
+                        </Box>
+
+                        : transaction_type === "pos" ? 
+                            <Box p={1} display="flex" justifyContent="space-between">
+
+                                <Box>
+                                    <Typography variant="h6"> Pos Received:</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
+                                </Box>
+
+                            </Box>
+
+                        : transaction_type === "transfer" ? 
+                            <Box p={1} display="flex" justifyContent="space-between">
+
+                                <Box>
+                                    <Typography variant="h6"> Transfer Received:</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
+                                </Box>
+
+                            </Box>
+                        
+                        : transaction_type === "pos_cashback" ? 
+                            <>
+                            <Box p={1} display="flex" justifyContent="space-between">
+
+                                <Box>
+                                    <Typography variant="h6"> Pos Received:</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
+                                </Box>
+
+                            </Box>
+
+                            <Box p={1} display="flex" justifyContent="space-between">
+
+                                <Box>
+                                    <Typography variant="h6"> Cash Payout:</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
+                                </Box>
+
+                            </Box>
+                             </>
+
+                        : transaction_type === "transfer_cashback" ? 
+                        <>
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Transfer Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Cash Payout:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+                        </>
+
+                        : transaction_type === "transfer_cash" ? 
+                        <>
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Transfer Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Cash Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+                        </>
+
+                        : transaction_type === "pos_cash" ? 
+                        <>
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Pos Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Cash Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(cash_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+                        </>
+
+                        : transaction_type === "pos_transfer" ? 
+                        <>
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Pos Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(pos_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+
+                        <Box p={1} display="flex" justifyContent="space-between">
+
+                            <Box>
+                                <Typography variant="h6"> Transfer Received:</Typography>
+                            </Box>
+                            <Box>
+                                <Typography variant="h6">  ₦{AmountFormater(transfer_amount).amount()} </Typography>
+                            </Box>
+
+                        </Box>
+                        </>
+                        : null
+                        
+ 
+                        
+                    }
 
                     
                     
