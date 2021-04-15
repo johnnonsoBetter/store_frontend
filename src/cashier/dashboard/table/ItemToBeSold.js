@@ -73,18 +73,32 @@ function ItemToBeSold(props){
     const handleQuantityChange = (e) => {
 
         const value = e.target.value
+        let newitemsToBeSold = null
 
-        const newitemsToBeSold = itemsToBeSold.map((item) => {
-            if (item.barcode === barcode){
-                const newItemToBeSold = Object.assign({}, item)
-                newItemToBeSold.quantity_sold = value
-                return newItemToBeSold
-            }
 
-            return item
-        })
+        if (e.target.name === "quantity_sold"){
 
-        console.log(newitemsToBeSold)
+            newitemsToBeSold = itemsToBeSold.map((item) => {
+                if (item.barcode === barcode){
+                    const newItemToBeSold = Object.assign({}, item)
+                    newItemToBeSold.quantity_sold = value
+                    return newItemToBeSold
+                }
+    
+                return item
+            })
+        }else{
+            newitemsToBeSold = itemsToBeSold.map((item) => {
+                if (item.barcode === barcode){
+                    const newItemToBeSold = Object.assign({}, item)
+                    newItemToBeSold.price_sold_per_unit = value
+                    return newItemToBeSold
+                }
+    
+                return item
+            })
+        }
+
 
         setItemsToBeSold(newitemsToBeSold)
 
@@ -98,14 +112,14 @@ function ItemToBeSold(props){
             </Box>
             <Box display="flex" justifyContent="space-around">
                 <Box>
-                    <Input value={price_sold_per_unit}/>
+                    <Input  onChange={handleQuantityChange} value={price_sold_per_unit} name="price_sold_per_unit" />
                 </Box>
 
                 <Divider orientation="vertical" flexItem />
 
 
                 <Box>
-                    <Input onChange={handleQuantityChange} value={quantity_sold} />
+                    <Input onChange={handleQuantityChange} name="quantity_sold" value={quantity_sold} />
                 </Box>
             </Box>
 
