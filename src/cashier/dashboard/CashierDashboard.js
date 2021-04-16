@@ -11,6 +11,7 @@ import { cashierApi } from '../../api/cashier/activity/api';
 import TableContainer from './table/TableContainer'
 import SaleInfoBoard from './SaleInfoBoard';
 import MuiAlert from '@material-ui/lab/Alert';
+import CashierLoader from './CashierLoader';
 
 
 const muiTheme = createMuiTheme({
@@ -78,6 +79,7 @@ function CashierDashboard(){
     const [message, setMessage] = useState('')
     const [severity, setSeverity] = useState('')
     const [products, setProducts] = useState([])
+    const [dashboardLoading, setDashboardLoading] = useState(true)
     
 
     // table states
@@ -165,6 +167,7 @@ function CashierDashboard(){
           
            const {items, store_info} = response.data
            setProducts(items)
+           setDashboardLoading(false)
         }).catch(err => {
             console.log(err)
         })
@@ -181,6 +184,7 @@ function CashierDashboard(){
                 productCount: 0,
                 itemsSoldCount: 0,
             })
+            setDashboardLoading(true)
         }
     }, [])
 
@@ -438,12 +442,17 @@ function CashierDashboard(){
 
                 }}>
 
+                  {
 
+                    dashboardLoading ?
+                    <CashierLoader />:
+
+                 
                 
                     <Box maxWidth="xl" className={classes.root}  fixed
                         
                     >
-
+                        
                         <CashierActionSnackBar  />
                         <Drawer anchor="left" open={drawerOpened} >
                             <Box width={width} flexGrow={1} style={{backgroundColor: "#0b1225"}} > 
@@ -497,6 +506,7 @@ function CashierDashboard(){
 
                         
                     </Box>
+                    }
                 </DashboardContextProvider>
                 </ThemeProvider>
             }
