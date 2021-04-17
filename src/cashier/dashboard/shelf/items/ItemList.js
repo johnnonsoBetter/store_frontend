@@ -53,22 +53,17 @@ function ItemList(){
     const [width, height] = useWindowSize()
     const [items, setItems] = useState([])
     const classes = useStyles()
-    const {products, addItemToTable} = useContext(DashboardContext)
+    const {filteredProducts, addItemToTable} = useContext(DashboardContext)
 
     const cache = useRef(new CellMeasurerCache({
         fixedWidth: true,
         defaultHeight: 100,
     }))
-    function handleScan(data){
-        console.log(data)
-      }
-    function handleError(err){
-        console.error(err)
-    }
+  
     function cellRenderer({columnIndex, key, rowIndex, style}) {
         return (
           <Box  p={3} key={key} style={style}>
-            {products[rowIndex][columnIndex]}
+            {filteredProducts[rowIndex][columnIndex]}
             <Typography style={{color: "white"}}> HEllo </Typography>
           </Box>
         );
@@ -92,9 +87,9 @@ function ItemList(){
                                 height={height} 
                                 rowHeight={cache.current.rowHeight} 
                                 defferedMeasurementCache = {cache.current}
-                                rowCount={products.length}
+                                rowCount={filteredProducts.length}
                                 rowRenderer={({key, index, style, parent})=> {
-                                const product = products[index]
+                                const product = filteredProducts[index]
 
                                 return(
                                     <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>

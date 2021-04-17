@@ -75,6 +75,7 @@ function CashierDashboard(){
     const [message, setMessage] = useState('')
     const [severity, setSeverity] = useState('')
     const [products, setProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState([])
     const [dashboardLoading, setDashboardLoading] = useState(true)
     const [storeInfo, setStoreInfo] = useState({
         name: ''
@@ -179,10 +180,10 @@ function CashierDashboard(){
           
            const {items, store_info} = response.data
            setProducts(items)
+           setFilteredProducts(items)
            setDashboardLoading(false)
            setStoreInfo(store_info)
-            console.log(storeInfo)
-            console.log(store_info)
+            
           
 
         }).catch(err => {
@@ -205,6 +206,7 @@ function CashierDashboard(){
             setStoreInfo({
                 name: ''
             })
+            setFilteredProducts([])
         }
     }, [])
 
@@ -504,6 +506,8 @@ function CashierDashboard(){
                     setReceiptOpened,
                     storeInfo,
                     actualPayment,
+                    filteredProducts,
+                    setFilteredProducts,
                 
 
 
