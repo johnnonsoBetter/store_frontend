@@ -10,6 +10,7 @@ import DashboardContext from '../../context/cashier/DashboardContext';
 import { Avatar, Box, Button, InputBase, Menu, MenuItem } from '@material-ui/core';
 import { cashierApi } from '../../api/cashier/activity/api';
 import { useHistory } from 'react-router-dom';
+import { Cached } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,9 +49,9 @@ export const Input = withStyles((theme) => ({
     borderBottom: "1px solid wheat",
     borderColor: 'orange',
     color: "wheat",
-    width: 150,
+    width: 200,
     fontSize: 16,
-    padding: '7px 10px 5px 7px',
+    padding: '1px 10px 5px 7px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
@@ -118,18 +119,36 @@ export default function CashierAppBar() {
           <Typography variant="h6" className={classes.storeName} color="inherit">
             {storeInfo['name']}
           </Typography>
-          
-            
-            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-              <Box marginLeft={6} display="flex" >
-                <Input placeholder="name or code" value={filterValue} onChange={(e) => {
-                    e.preventDefault()
 
-                    setFilterValue(e.target.value)
-                }} />
+          
+            <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                <Box marginLeft={6} display="flex" >
+                  <Input placeholder="Item name or code ?" value={filterValue} onChange={(e) => {
+                      e.preventDefault()
+
+                      setFilterValue(e.target.value)
+
+                      if (e.target.value === ""){
+                        setFilteredProducts(products)
+                      }
+                  }} />
+                </Box>
+              </form>
+
+              <Box width="10%" display="flex" marginLeft={0} display="flex" justifyContent="center" marginLeft={5}>
+                <IconButton size="small" style={{backgroundColor: "#0a4ea2f7", color: "white"}}>
+                  <Cached />
+                </IconButton>
               </Box>
-            </form>
+
+         
             
+
+              
+              
+
+            
+           
           
           <Box width="100%" display="flex" justifyContent="flex-end">
             
