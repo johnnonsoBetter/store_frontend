@@ -35,7 +35,7 @@ export default function SaleReceipt() {
 
   const [scroll, setScroll] = React.useState('paper');
   const receiptRef = useRef()
-  const {receiptOpened, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
+  const {receiptOpened, launchSnackBar, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
   const {receipt_id, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, items} = sale
   const seller = JSON.parse(localStorage.cashier)['name']
 
@@ -423,9 +423,11 @@ export default function SaleReceipt() {
                clearAllItemsOnCounter()
 
                cashierSalesApi().performTransaction(sale).then(response => {
-                   console.log("sales is being processed")
+                    launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
+          
                }).catch(err => {
-                   console.log("sales failed")
+                    launchSnackBar(`Oopss Something went wrong! But Sales Being Saved`,'warning')
+          
                })
 
                console.log("task completed")
