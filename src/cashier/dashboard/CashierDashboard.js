@@ -1,16 +1,15 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip } from '@material-ui/core';
 import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
 import { DashboardContextProvider } from '../../context/cashier/DashboardContext';
-import { Clear, Print, Receipt } from '@material-ui/icons';
+import { Clear } from '@material-ui/icons';
 import ActivityNav from './activity/ActivityNav';
 import CashierActionSnackBar from './CashierActionSnackBar';
 import { cashierApi } from '../../api/cashier/activity/api';
 import TableContainer from './table/TableContainer'
 import SaleInfoBoard from './SaleInfoBoard';
-import MuiAlert from '@material-ui/lab/Alert';
 import CashierLoader from './CashierLoader';
 import Dexie from 'dexie'
 import SaleReceipt from './SaleReceipt';

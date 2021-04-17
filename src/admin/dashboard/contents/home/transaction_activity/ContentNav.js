@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { Box, ButtonBase, CircularProgress, makeStyles, Typography} from '@material-ui/core'
+import { Box, ButtonBase, makeStyles, Typography} from '@material-ui/core'
 import TransactionActivityContext from '../../../../../context/admin/transaction_activity/TransactionActivity'
 import AmountFormater from '../../../../../helpers/AmountFormater'
-import { AssessmentOutlined, ShowChartRounded } from '@material-ui/icons'
+import { AssessmentOutlined } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
     contItem: {

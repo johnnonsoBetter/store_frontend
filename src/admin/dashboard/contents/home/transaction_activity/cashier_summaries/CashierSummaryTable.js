@@ -8,7 +8,7 @@ import Loader from '../../../../Loader'
 import FailedActivityLoader from '../../FailedActivityLoader'
 import NoData from '../../NoData'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
-import { Check, Mood, MoodBadOutlined, Person, TrackChangesOutlined } from '@material-ui/icons'
+import {Person, TrackChangesOutlined } from '@material-ui/icons'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 import { CashierSummaryContextProvider } from '../../../../../../context/admin/transaction_activity/cashier_summaries/CashierSummaryContext';
 import CashierSummaryInfo from './CashierSummaryInfo';

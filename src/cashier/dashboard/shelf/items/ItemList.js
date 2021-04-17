@@ -1,5 +1,5 @@
 import { Box, ButtonBase, Typography, Card, CardContent, makeStyles} from '@material-ui/core'
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useContext, useLayoutEffect, useRef, useState } from 'react'
 import DashboardContext from '../../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import {List, AutoSizer, CellMeasurer, CellMeasurerCache} from 'react-virtualized'
@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 function ItemList(){
 
-    const [width, height] = useWindowSize()
-    const [items, setItems] = useState([])
+    const [ height] = useWindowSize()
+    
     const classes = useStyles()
     const {filteredProducts, addItemToTable} = useContext(DashboardContext)
 
@@ -60,15 +60,7 @@ function ItemList(){
         defaultHeight: 100,
     }))
   
-    function cellRenderer({columnIndex, key, rowIndex, style}) {
-        return (
-          <Box  p={3} key={key} style={style}>
-            {filteredProducts[rowIndex][columnIndex]}
-            <Typography style={{color: "white"}}> HEllo </Typography>
-          </Box>
-        );
-      }
-      
+    
 
 
     return (

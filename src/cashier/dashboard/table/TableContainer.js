@@ -1,5 +1,5 @@
-import { Box, makeStyles, Typography, Button, Menu, InputBase, MenuItem, withStyles, Badge, IconButton, Avatar, TextField, Popper, Fade, Paper, Grow} from '@material-ui/core'
-import { Clear, Print, Search, ShoppingCart, ShoppingCartOutlined } from '@material-ui/icons';
+import { Box, makeStyles, Typography, Button, Menu, InputBase, MenuItem, withStyles, Badge, IconButton, Avatar, Grow} from '@material-ui/core'
+import { Clear, ShoppingCart } from '@material-ui/icons';
 import React, { useContext, useState } from 'react'
 import DashboardContext from '../../../context/cashier/DashboardContext';
 import ItemToBeSoldList from './ItemToBeSoldList';
@@ -13,7 +13,7 @@ export const TransactionCashInput = withStyles((theme) => ({
       },
     },
     input: {
-      borderRadius: 4,
+     
       position: 'relative',
       backgroundColor: '',
       border: '2px solid #ced4da',
@@ -31,7 +31,7 @@ export const TransactionCashInput = withStyles((theme) => ({
         'cursive',
       ].join(','),
       '&:focus': {
-        borderRadius: 5,
+    
         
         
       },
@@ -45,7 +45,7 @@ export const Input = withStyles((theme) => ({
       },
     },
     input: {
-      borderRadius: 4,
+    
       position: 'relative',
       border: '0px solid #ced4da',
       borderColor: 'orange',
@@ -61,7 +61,7 @@ export const Input = withStyles((theme) => ({
         'cursive',
       ].join(','),
       '&:focus': {
-        borderRadius: 5,
+     
         
         
       },
@@ -120,7 +120,7 @@ const StyledBadge = withStyles((theme) => ({
 function TableContainer(){
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null)
-    const {counterInfo, inputOpened, setInputOpened, clearAllItemsOnCounter, setCounterInfo} = useContext(DashboardContext)
+    const {counterInfo, inputOpened, setInputOpened, clearAllItemsOnCounter} = useContext(DashboardContext)
     
 
     const {discount, setDiscount, transactionOnProcess, setTransactionAmount, transactionAmount, transactionType, setTransactionType} = useContext(DashboardContext)

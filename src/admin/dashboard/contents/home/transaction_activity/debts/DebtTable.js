@@ -1,4 +1,4 @@
-import { Box, Typography, Drawer, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, Divider, useMediaQuery } from '@material-ui/core'
+import { Box, Typography, Drawer, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, useMediaQuery } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -241,7 +241,7 @@ function DebtTable(){
                               {
                                   previousPendingDebts.map(debt => {
 
-                                      const {id, cost, debtor_name, created_at, receipt_id} = debt
+                                      const {id, cost, debtor_name, created_at} = debt
                                      
                                       const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 

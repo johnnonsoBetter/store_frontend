@@ -38,8 +38,7 @@ function Sale(props){
     const [display, setDisplay] = useState('sale_info')
     const [loading, setLoading] = useState(true)
     const [failedToLoad, setFailedToLoad] = useState(false)
-    const saleApi = salesApi()
-   
+
     
     const [sale, setSale] = useState({
         total_items_amount: 0,

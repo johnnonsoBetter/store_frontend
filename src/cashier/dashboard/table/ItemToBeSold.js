@@ -1,5 +1,5 @@
 import { Badge, Box, Divider, Grow, IconButton, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
-import { Cancel, CancelOutlined, Clear, ShoppingCart } from '@material-ui/icons';
+import { Clear, ShoppingCart } from '@material-ui/icons';
 import React, { useContext } from 'react'
 import DashboardContext from '../../../context/cashier/DashboardContext';
 import AmountFormater from '../../../helpers/AmountFormater';
@@ -21,7 +21,7 @@ export const Input = withStyles((theme) => ({
       },
     },
     input: {
-      borderRadius: 4,
+      
       position: 'relative',
       backgroundColor: '',
       border: '0px solid #ced4da',
@@ -39,7 +39,7 @@ export const Input = withStyles((theme) => ({
         'cursive',
       ].join(','),
       '&:focus': {
-        borderRadius: 5,
+      
         
         
       },
@@ -64,7 +64,7 @@ function ItemToBeSold(props){
     const classes = useStyles()
     const {removeItemFromTable,  setItemsToBeSold, itemsToBeSold } = useContext(DashboardContext)
     //const [quantity, setQuantity] = useState('1')
-    const {name, price_sold_per_unit, quantity_sold, selling_price_was_altered, barcode} = props.item
+    const {name, price_sold_per_unit, quantity_sold, barcode} = props.item
     
     const totalItemAmount = (price_sold_per_unit * quantity_sold)
 
@@ -92,7 +92,7 @@ function ItemToBeSold(props){
                 if (item.barcode === barcode){
                     const newItemToBeSold = Object.assign({}, item)
                     newItemToBeSold.price_sold_per_unit = value
-                    if (item.fixed_price != parseInt(value)){
+                    if (item.fixed_price !== parseInt(value)){
                         newItemToBeSold.selling_price_was_altered = true
                     }else{
                         newItemToBeSold.selling_price_was_altered = false
