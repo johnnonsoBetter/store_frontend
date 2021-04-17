@@ -75,7 +75,9 @@ function CashierDashboard(){
     const [severity, setSeverity] = useState('')
     const [products, setProducts] = useState([])
     const [dashboardLoading, setDashboardLoading] = useState(true)
-    const [storeInfo, setStoreInfo] = useState({name: ''})
+    const [storeInfo, setStoreInfo] = useState({
+        name: ''
+    })
     
 
     // table states
@@ -117,6 +119,16 @@ function CashierDashboard(){
                                 
                
     // }
+
+    const actualPayment = () => {
+        if (sale['transaction_type'] === "pos_cashback"){
+            return sale['pos_amount']
+        }else if(sale['transaction_type'] === "transfer_cashback"){
+            return sale['transfer_amount']
+        }
+            
+        return sale['total_amount_paid']
+    }
 
     useEffect(()=> {
 
@@ -168,7 +180,8 @@ function CashierDashboard(){
            setProducts(items)
            setDashboardLoading(false)
            setStoreInfo(store_info)
-
+            console.log(storeInfo)
+            console.log(store_info)
           
 
         }).catch(err => {
@@ -491,6 +504,7 @@ function CashierDashboard(){
                     receiptOpened,
                     setReceiptOpened,
                     storeInfo,
+                    actualPayment,
 
 
                 }}>

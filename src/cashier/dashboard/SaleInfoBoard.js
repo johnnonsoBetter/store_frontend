@@ -26,28 +26,14 @@ const actualPayment = (transaction_type) => {
 function SaleInfoBoard(){
 
     const classes = useStyles()
-    const {sale, counterInfo, setReceiptOpened} = useContext(DashboardContext)
+    const {sale, counterInfo, actualPayment, setReceiptOpened} = useContext(DashboardContext)
     const receiptRef = useRef()
     const display = useRef('none')
 
     console.log(display.current)
     
     
-    const {receipt_id, receipt_was_issued, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount} = sale
-
-
-
-    const actualPayment = () => {
-        if (transaction_type === "pos_cashback"){
-            return pos_amount
-        }else if(transaction_type === "transfer_cashback"){
-            return transfer_amount
-        }
-            
-        return total_amount_paid
-    }
-
-
+    const { total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount} = sale
 
     return (
         <Slide direction="up" in={true} > 
@@ -63,18 +49,6 @@ function SaleInfoBoard(){
                         <Box>
                             <Typography variant="h5">  ₦{AmountFormater(total_items_amount).amount()}</Typography>
                         </Box>
-                        <Box  style={{display: `${display.current}`}} >
-                            <Typography> Item </Typography>
-                            {console.log(display.current)}
-                            {
-                                
-                                display.current === 'block' && <Typography> Please get to the same time and the same people </Typography>
-
-                            }
-                            
-                        </Box>
-
-                       
 
                     </Box>
 
@@ -341,7 +315,7 @@ function SaleInfoBoard(){
                             setReceiptOpened(true)
 
 
-                            
+
                         }}>
                             <Avatar className={classes.square}  variant="rounded">
                                 <Print />
