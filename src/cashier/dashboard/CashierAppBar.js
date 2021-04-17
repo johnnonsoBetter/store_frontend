@@ -30,37 +30,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "orange",
     color: "black"
   },
+  storeName: {
+    textTransform: "capitalize"
+  }
 }));
-
-
-// <Box style={style} className={classes.item}> 
-// <Card className={classes.item}>
-//     <ButtonBase style={{width: "100%"}} onClick={()=> {
-        
-//  }}>
-//        <CardContent style={{padding: "0" , width: "100%"}}>
-//              <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
-            
-//                  <Typography  > {product.name} </Typography>
-//             </Box>
-
-//              <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
-//              <Typography variant="h5" style={{color: "#DEC429"}}> ₦{AmountFormater(product.selling_price).amount() } </Typography>
-//              </Box>
-//        </CardContent>
-//      </ButtonBase>
-//  </Card> 
-// </Box>
-
 
 
 
 export default function CashierAppBar() {
   const classes = useStyles();
-  const {toggleDrawer} = useContext(DashboardContext)
+  const {toggleDrawer, storeInfo} = useContext(DashboardContext)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory()
+  const cashierAvatarL = JSON.parse(localStorage.cashier)['name'].charAt(0)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -70,7 +53,7 @@ export default function CashierAppBar() {
     setAnchorEl(null);
   };
 
-  const logOut = ()=> {
+  const handleLogout = ()=> {
 
     cashierApi().logout()
     .then((response) =>{
@@ -89,14 +72,14 @@ export default function CashierAppBar() {
           <IconButton onClick={toggleDrawer} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit">
-            Store
+          <Typography variant="h6" className={classes.storeName} color="inherit">
+            {storeInfo['name']}
           </Typography>
           <Box width="100%" display="flex" justifyContent="flex-end">
             
 
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-            <Avatar className={classes.small} > B </Avatar>
+            <Avatar className={classes.small} > {cashierAvatarL} </Avatar>
               </Button>
               <Menu
                 id="simple-menu"
@@ -106,7 +89,7 @@ export default function CashierAppBar() {
                 onClose={handleClose}
               >
                 
-                <MenuItem onClick={logOut}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
           </Box>
         </Toolbar>

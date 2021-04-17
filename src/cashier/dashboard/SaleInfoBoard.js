@@ -1,8 +1,10 @@
 import { Avatar, Box, IconButton, makeStyles, Slide, Typography } from '@material-ui/core'
 import { Print } from '@material-ui/icons'
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
+import ReactToPrint from 'react-to-print'
 import DashboardContext from '../../context/cashier/DashboardContext'
 import AmountFormater from '../../helpers/AmountFormater'
+import SaleReceipt from './SaleReceipt'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -24,10 +26,16 @@ const actualPayment = (transaction_type) => {
 function SaleInfoBoard(){
 
     const classes = useStyles()
-    const {sale, counterInfo} = useContext(DashboardContext)
+    const {sale, counterInfo, setReceiptOpened} = useContext(DashboardContext)
+    const receiptRef = useRef()
+    const display = useRef('none')
+
+    console.log(display.current)
     
     
     const {receipt_id, receipt_was_issued, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount} = sale
+
+
 
     const actualPayment = () => {
         if (transaction_type === "pos_cashback"){
@@ -45,7 +53,7 @@ function SaleInfoBoard(){
         <Slide direction="up" in={true} > 
         <Box className={classes.infoContainer} borderRadius={10} style={{}} width={450} bottom={20} p={2} position="absolute">
             <Box display="flex" alignItems="center">
-
+                
                 <Box  width="100%" >
                     <Box p={1} display="flex" justifyContent="space-between">
 
@@ -55,6 +63,18 @@ function SaleInfoBoard(){
                         <Box>
                             <Typography variant="h5">  ₦{AmountFormater(total_items_amount).amount()}</Typography>
                         </Box>
+                        <Box  style={{display: `${display.current}`}} >
+                            <Typography> Item </Typography>
+                            {console.log(display.current)}
+                            {
+                                
+                                display.current === 'block' && <Typography> Please get to the same time and the same people </Typography>
+
+                            }
+                            
+                        </Box>
+
+                       
 
                     </Box>
 
@@ -303,10 +323,11 @@ function SaleInfoBoard(){
 
 
 
-                <Box p={2} display="flex" justifyItems="center" flexDirection="column">
+                <Box ref={receiptRef} p={2} display="flex" justifyItems="center" flexDirection="column">
                     <Box>
                         <Typography > Products </Typography>
                         <Typography variant="h4"> {counterInfo['productCount']} </Typography>
+                        
                     </Box>
 
                     <Box m={2}>
@@ -314,13 +335,22 @@ function SaleInfoBoard(){
                         <Typography variant="h4"> {counterInfo['itemsSoldCount']} </Typography>
                     </Box>
 
-                    <Box >
-                        <IconButton>
+                    <Box  >
+                            
+                        <IconButton onClick={()=> {
+                            setReceiptOpened(true)
+
+
+                            
+                        }}>
                             <Avatar className={classes.square}  variant="rounded">
                                 <Print />
                             </Avatar>
                         </IconButton>
+
                     </Box>
+
+                    
                 </Box>
 
 

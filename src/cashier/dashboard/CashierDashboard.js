@@ -1,10 +1,10 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Box, Drawer, createMuiTheme, ThemeProvider, Grid, makeStyles, Paper, Typography, useMediaQuery, IconButton, Avatar, Chip } from '@material-ui/core';
 import NotUsable from './NotUsable';
 import CashierAppBar from './CashierAppBar';
 import Shelf from './shelf/Shelf';
 import { DashboardContextProvider } from '../../context/cashier/DashboardContext';
-import { Clear, Print } from '@material-ui/icons';
+import { Clear, Print, Receipt } from '@material-ui/icons';
 import ActivityNav from './activity/ActivityNav';
 import CashierActionSnackBar from './CashierActionSnackBar';
 import { cashierApi } from '../../api/cashier/activity/api';
@@ -12,6 +12,8 @@ import TableContainer from './table/TableContainer'
 import SaleInfoBoard from './SaleInfoBoard';
 import MuiAlert from '@material-ui/lab/Alert';
 import CashierLoader from './CashierLoader';
+import Dexie from 'dexie'
+import SaleReceipt from './SaleReceipt';
 
 
 const muiTheme = createMuiTheme({
@@ -22,13 +24,6 @@ const muiTheme = createMuiTheme({
       ].join(','),
 },});
 
-const snackBarTheme = createMuiTheme({
-
-})
-
-function SaleAlert(props) {
-   return <MuiAlert elevation={6} variant="filled" {...props} /> 
-}
 
 
 function useWindowSize() {
@@ -80,6 +75,7 @@ function CashierDashboard(){
     const [severity, setSeverity] = useState('')
     const [products, setProducts] = useState([])
     const [dashboardLoading, setDashboardLoading] = useState(true)
+    const [storeInfo, setStoreInfo] = useState({name: ''})
     
 
     // table states
@@ -94,7 +90,10 @@ function CashierDashboard(){
     })
     const [transactionAmount, setTransactionAmount] = useState('0')
     const [inputOpened, setInputOpened] = useState(false)
+    const [receiptOpened, setReceiptOpened] = useState(false)
 
+
+   
 
     // {
    
@@ -168,6 +167,10 @@ function CashierDashboard(){
            const {items, store_info} = response.data
            setProducts(items)
            setDashboardLoading(false)
+           setStoreInfo(store_info)
+
+          
+
         }).catch(err => {
             console.log(err)
         })
@@ -185,6 +188,7 @@ function CashierDashboard(){
                 itemsSoldCount: 0,
             })
             setDashboardLoading(true)
+            setStoreInfo(null)
         }
     }, [])
 
@@ -331,7 +335,8 @@ function CashierDashboard(){
 
     const addItemToTable  = (newProduct) => {
 
-        console.log(newProduct)
+        
+        storeSalesForOffline()
 
         function itemAlreadyExistOnCounter(){
            return itemsToBeSold.some((item) => item.barcode === newProduct.barcode)
@@ -388,6 +393,49 @@ function CashierDashboard(){
 
     }
 
+    const storeSalesForOffline = () => {
+        const db = new Dexie('storeDb')
+
+        db.transaction('rw', db.failedSales, function* () {
+
+            // Let's add some data to db:
+            
+                db.open().catch(function(){
+                console.log("failed to open")
+            });
+                        
+            db.failedSales.add({
+    
+                receipt_id: "bbbeea3f2f",
+                issue: true,
+                receipt_was_issued: true,
+                total_items_amount: 600,
+                discount: 0,
+                total_amount_paid: 600,
+                transaction_type: "cash",
+                cash_amount: 600,
+                cashback_profit: 0,
+                pos_amount: 0,
+                transfer_amount: 0,
+                items: []
+       
+            })
+            
+        
+        }).catch(function(err) {
+        
+            // Catch any error event or exception and log it:
+            console.error(err.stack || err);
+        });
+
+        
+    }
+
+    const toggleReceipt = () => {
+
+        setReceiptOpened(!receiptOpened)
+    }
+
 
 
     const toggleDrawer = () => {
@@ -438,6 +486,11 @@ function CashierDashboard(){
                     transactionOnProcess,
                     inputOpened,
                     setInputOpened,
+                    clearAllItemsOnCounter,
+                    toggleReceipt,
+                    receiptOpened,
+                    setReceiptOpened,
+                    storeInfo,
 
 
                 }}>
@@ -459,10 +512,11 @@ function CashierDashboard(){
                                 <Box display="flex" p={2} justifyContent="space-between" alignItems="center">
                                     <Box display="flex" justifyContent="center">
                                         <Chip
-                                             avatar={<Avatar>U</Avatar>}
-                                             label="Upright Supermarket"
-                                             style={{backgroundColor: "#ff9347"}}
+                                             avatar={<Avatar>{ storeInfo['name'].charAt(0)   }</Avatar>}
+                                             label={`${storeInfo['name']} Supermarket`}
+                                             style={{backgroundColor: "#ff9347" , textTransform: "capitalize"}}
                                              variant="outlined"
+                                            
                                         />
                                         
                                     </Box>
@@ -502,8 +556,7 @@ function CashierDashboard(){
                             transactionOnProcess && <SaleInfoBoard />
                         }
                         
-
-
+                        <SaleReceipt />
                         
                     </Box>
                     }

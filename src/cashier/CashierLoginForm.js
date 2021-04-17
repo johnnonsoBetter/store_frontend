@@ -59,11 +59,17 @@ function CashierLoginForm(){
         e.preventDefault()
             cashierApi().login(email, password).then(response => {
                 
+                
+                const {name, salary_balance} = response.data['data']
+                console.log(name)
+                console.log(response.data['data'])
                 localStorage.setItem('cashier', 
                     JSON.stringify({
                         'access-token': response.headers['access-token'],
                         'client': response.headers['client'],
-                        'uid': response.headers['uid']
+                        'uid': response.headers['uid'],
+                        'name': name,
+                        'salary_blance': salary_balance
                     })
                 )
 
