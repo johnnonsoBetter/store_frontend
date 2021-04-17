@@ -1412,6 +1412,11 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^4.0.0"
 
+"@lukeed/csprng@^1.0.0":
+  "integrity" "sha512-ruuGHsnabmObBdeMg3vKdGRmh06Oog3eFpf/Tk6X0kDSJDpJTDCj2dqdp1+0VjzIUgHlFF9GBm7uFqfYhhdX9g=="
+  "resolved" "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.0.0.tgz"
+  "version" "1.0.0"
+
 "@material-ui/core@^4.0.0", "@material-ui/core@^4.11.3", "@material-ui/core@^4.9.10", "@material-ui/core@>=4.5.0":
   "integrity" "sha512-Adt40rGW6Uds+cAyk3pVgcErpzU/qxc7KBR94jFHBYretU4AtWZltYcNsbeMn9tXL86jjVL1kuGcIHsgLgFGRw=="
   "resolved" "https://registry.npmjs.org/@material-ui/core/-/core-4.11.3.tgz"
@@ -12277,6 +12282,13 @@
   "integrity" "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   "version" "0.0.6"
+
+"uid@^2.0.0":
+  "integrity" "sha512-hFw+zKBA1szYdbZWj6FjTxZzJnKNf+wTDcsxlJaXS64MCy9LQEmJUVieGYHCKek/WRyFIcs0cEXtGIQmfvHe2A=="
+  "resolved" "https://registry.npmjs.org/uid/-/uid-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "@lukeed/csprng" "^1.0.0"
 
 "unbox-primitive@^1.0.0":
   "integrity" "sha512-P/51NX+JXyxK/aigg1/ZgyccdAxm5K1+n8+tvqSntjOivPt19gvm1VC49RWYetsiub8WViUchdxl/KWHHB0kzA=="

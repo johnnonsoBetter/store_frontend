@@ -14,6 +14,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import CashierLoader from './CashierLoader';
 import Dexie from 'dexie'
 import SaleReceipt from './SaleReceipt';
+import {uid} from 'uid'
 
 
 const muiTheme = createMuiTheme({
@@ -201,7 +202,9 @@ function CashierDashboard(){
                 itemsSoldCount: 0,
             })
             setDashboardLoading(true)
-            setStoreInfo(null)
+            setStoreInfo({
+                name: ''
+            })
         }
     }, [])
 
@@ -214,6 +217,7 @@ function CashierDashboard(){
             setTransactionType('cash')
             setInputOpened(false)
             setTransactionAmount('0')
+            setReceiptOpened(false)
 
         }
            
@@ -237,6 +241,8 @@ function CashierDashboard(){
         new_sale['cash_amount'] = 0
         new_sale['transfer_amount'] = 0
         new_sale['cashback_profit'] = 0
+        new_sale['receipt_id'] = uid()
+        new_sale['receipt_was_issued'] = true
 
         new_sale['total_items_amount'] = total_items_amount
         new_sale['total_amount_paid'] = total_amount_paid
@@ -304,12 +310,6 @@ function CashierDashboard(){
             
 
         }
-
-
-
-
-
-
         setSale(new_sale)
 
 
@@ -499,12 +499,12 @@ function CashierDashboard(){
                     transactionOnProcess,
                     inputOpened,
                     setInputOpened,
-                    clearAllItemsOnCounter,
                     toggleReceipt,
                     receiptOpened,
                     setReceiptOpened,
                     storeInfo,
                     actualPayment,
+                
 
 
                 }}>

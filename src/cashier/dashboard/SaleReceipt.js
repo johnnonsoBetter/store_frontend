@@ -34,7 +34,7 @@ export default function SaleReceipt() {
 
   const [scroll, setScroll] = React.useState('paper');
   const receiptRef = useRef()
-  const {receiptOpened, actualPayment, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
+  const {receiptOpened, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
   const {receipt_id, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, items} = sale
   const seller = JSON.parse(localStorage.cashier)['name']
 
@@ -108,7 +108,7 @@ export default function SaleReceipt() {
                         <Typography variant="h6" className={classes.infoText} > Receipt Id </Typography>
                     </Box>
                     <Box p={1} textAlign="center" >
-                        <Typography variant="h6" className={classes.infoText} > {receipt_id} </Typography>
+                        <Typography variant="h6" style={{color: "black"}} > {receipt_id} </Typography>
                     </Box>
                </Box>
 
@@ -183,7 +183,7 @@ export default function SaleReceipt() {
                                 <Typography variant="h6"> Discount:</Typography>
                             </Box>
                             <Box>
-                                <Typography variant="h6" style={{color: "red"}}>  ₦{AmountFormater(discount).amount()}</Typography>
+                                <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(discount).amount()}</Typography>
                             </Box>
 
                         </Box>
@@ -392,10 +392,10 @@ export default function SaleReceipt() {
                     <Box p={1} display="flex" alignItems="center" justifyContent="space-between">
 
                     <Box>
-                        <Typography > Actual Payment:</Typography>
+                        <Typography variant="h6" > Actual Payment:</Typography>
                     </Box>
                     <Box>
-                        <Typography variant="h4" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
+                        <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
                     </Box>
 
                     </Box>
@@ -415,6 +415,15 @@ export default function SaleReceipt() {
                     Sell
                 </Button>
             )}
+
+            onAfterPrint = {() => {
+                
+                
+               clearAllItemsOnCounter()
+
+                console.log("task completed")
+
+            }}    
 
             content={()=> receiptRef.current}
           
