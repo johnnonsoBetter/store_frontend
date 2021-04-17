@@ -251,22 +251,22 @@ function CashierDashboard(){
             const {name, price_sold_per_unit, quantity_sold, selling_price_was_altered} = item
             return {
                 name,
-                price_sold_per_unit,
-                quantity_sold,
+                price_sold_per_unit: parseInt(price_sold_per_unit),
+                quantity_sold: parseInt(quantity_sold),
                 selling_price_was_altered,
             }
         })
-        new_sale['discount'] = discount
+        new_sale['discount'] = parseInt(discount)
 
         const cashbackAmount = 100
         // processes the transaction type
 
         switch(transactionType){
             case "cash": 
-                new_sale['cash_amount'] = (total_amount_paid)
+                new_sale['cash_amount'] = parseInt(total_amount_paid)
             break
             case "pos":
-                new_sale['pos_amount'] = (total_amount_paid)
+                new_sale['pos_amount'] = parseInt((total_amount_paid)) 
             break
             case "transfer":
                 new_sale['transfer_amount'] = (total_amount_paid)
@@ -274,15 +274,15 @@ function CashierDashboard(){
             case "pos_cashback":    
                 const totalPos = (total_amount_paid + cashbackAmount + (parseInt(transactionAmount)))
 
-                new_sale['pos_amount'] = totalPos
+                new_sale['pos_amount'] = parseInt(totalPos) 
                 new_sale['cash_amount'] = parseInt(transactionAmount)
-                new_sale['cashback_profit'] = cashbackAmount
+                new_sale['cashback_profit'] = parseInt(cashbackAmount) 
 
             break
             case "transfer_cashback":
                 const totalTransfer = (total_amount_paid + cashbackAmount + (parseInt(transactionAmount)))
 
-                new_sale['transfer_amount'] = totalTransfer
+                new_sale['transfer_amount'] = parseInt(totalTransfer) 
                 new_sale['cash_amount'] = parseInt(transactionAmount)
                 new_sale['cashback_profit'] = cashbackAmount
 
@@ -295,13 +295,13 @@ function CashierDashboard(){
             break
             case "transfer_cash":
                 const transfer = (total_amount_paid - (parseInt(transactionAmount)))
-                new_sale['transfer_amount'] = transfer
+                new_sale['transfer_amount'] = parseInt(transfer)
                 new_sale['cash_amount'] = parseInt(transactionAmount)
 
             break
             case "pos_transfer": 
                 const pos_ = (total_amount_paid - (parseInt(transactionAmount)))
-                new_sale['pos_amount'] = pos_
+                new_sale['pos_amount'] = parseInt(pos_)
                 new_sale['transfer_amount'] = parseInt(transactionAmount)
 
             break

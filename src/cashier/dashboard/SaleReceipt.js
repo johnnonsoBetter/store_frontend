@@ -11,6 +11,7 @@ import ReactToPrint from 'react-to-print';
 import DashboardContext from '../../context/cashier/DashboardContext';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import AmountFormater from '../../helpers/AmountFormater';
+import { cashierSalesApi } from '../../api/cashier/activity/api';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -421,7 +422,13 @@ export default function SaleReceipt() {
                 
                clearAllItemsOnCounter()
 
-                console.log("task completed")
+               cashierSalesApi().performTransaction(sale).then(response => {
+                   console.log("sales is being processed")
+               }).catch(err => {
+                   console.log("sales failed")
+               })
+
+               console.log("task completed")
 
             }}    
 

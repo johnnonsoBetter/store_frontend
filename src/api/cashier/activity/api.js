@@ -149,6 +149,18 @@ export const cashierSalesApi = () => {
                 headers: JSON.parse(localStorage.getItem('cashier')),
                 url: `${baseUrl}/api/v1/cashier_sales/${receipt_id}`
             })
+        },
+
+        performTransaction: (sale) => {
+            return axios({
+                method: "POST",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/sales/`,
+                data: {
+                    log_issue_type: 'sale',
+                    sale: sale
+                }
+            })
         }
     }
 
