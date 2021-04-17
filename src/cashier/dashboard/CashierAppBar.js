@@ -11,6 +11,7 @@ import { Avatar, Box, Button, InputBase, Menu, MenuItem } from '@material-ui/cor
 import { cashierApi } from '../../api/cashier/activity/api';
 import { useHistory } from 'react-router-dom';
 import { Cached } from '@material-ui/icons';
+import MovingText from 'react-moving-text'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,7 +72,7 @@ export const Input = withStyles((theme) => ({
 
 export default function CashierAppBar() {
   const classes = useStyles();
-  const {toggleDrawer, storeInfo, products, setFilteredProducts} = useContext(DashboardContext)
+  const {toggleDrawer, storeInfo, setProducts, products, setFilteredProducts} = useContext(DashboardContext)
   const [filterValue, setFilterValue] = useState('')
   const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory()
@@ -136,10 +137,57 @@ export default function CashierAppBar() {
               </form>
 
               <Box width="10%" display="flex" marginLeft={0} display="flex" justifyContent="center" marginLeft={5}>
-                <IconButton size="small" style={{backgroundColor: "#0a4ea2f7", color: "white"}}>
+                <IconButton onClick={()=> {
+
+                    cashierApi().fetchStoreResource().then(response => {
+                              
+                      const {items} = response.data
+                      setProducts(items)
+                      setFilteredProducts(items)
+                      
+
+                    }).catch(err => {
+                      console.log(err)
+                    })
+
+
+                }} size="small" style={{backgroundColor: "#0a4ea2f7", color: "white"}}>
                   <Cached />
                 </IconButton>
               </Box>
+                
+
+                <Box  width="80%">
+                  <MovingText
+                    type="bounce"
+                    duration="1000ms"
+                    delay="0s"
+                    direction="normal"
+                    timing="ease"
+                    iteration="infinite"
+                    fillMode="none">
+                      <Typography variant="h6"> Please Request .. For Your Receipt!</Typography>
+                  </MovingText>
+
+                 
+                 
+                </Box>
+
+                <Box  width="80%">
+                  <MovingText
+                    type="bounce"
+                    duration="1000ms"
+                    delay="0s"
+                    direction="normal"
+                    timing="ease"
+                    iteration="infinite"
+                    fillMode="none">
+                      <Typography style={{backgroundColor: "red"}} variant="h6"> Please Request .. For Your Receipt!</Typography>
+                  </MovingText>
+
+                 
+                 
+                </Box>
 
          
             
