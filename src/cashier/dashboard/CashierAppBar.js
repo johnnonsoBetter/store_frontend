@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,10 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import DashboardContext from '../../context/cashier/DashboardContext';
-import { Avatar, Box, Button, InputBase, Menu, MenuItem } from '@material-ui/core';
+import { Avatar, Box, Button, CircularProgress, InputBase, Menu, MenuItem } from '@material-ui/core';
 import { cashierApi } from '../../api/cashier/activity/api';
 import { useHistory } from 'react-router-dom';
-import { Cached } from '@material-ui/icons';
+import { Cached, Check } from '@material-ui/icons';
 import MovingText from 'react-moving-text'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
   },
   storeName: {
     textTransform: "capitalize"
+  },
+  salesLoader: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
   }
 }));
 
@@ -77,6 +83,9 @@ export default function CashierAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory()
   const cashierAvatarL = JSON.parse(localStorage.cashier)['name'].charAt(0)
+  const [indicatorLoading, setIndicatorLoading] = useState(false)
+
+  
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -138,12 +147,13 @@ export default function CashierAppBar() {
 
               <Box width="10%" display="flex" marginLeft={0} display="flex" justifyContent="center" marginLeft={5}>
                 <IconButton onClick={()=> {
-
+                    setIndicatorLoading(true)
                     cashierApi().fetchStoreResource().then(response => {
                               
                       const {items} = response.data
                       setProducts(items)
                       setFilteredProducts(items)
+                      setIndicatorLoading(false)
                       
 
                     }).catch(err => {
@@ -188,16 +198,19 @@ export default function CashierAppBar() {
                  
                  
                 </Box>
-
-         
-            
-
-              
-              
-
-            
-           
-          
+                <>
+                {
+                  indicatorLoading ? <Box width="50%" justifyContent="center" className={classes.salesLoader}>
+                   <CircularProgress />
+                 
+                </Box>
+                 : 
+                 <Box width="50%" justifyContent="center" className={classes.salesLoader} s>
+                   <Check style={{color: "green"}} />
+                 </Box>
+                }
+                </>
+                
           <Box width="100%" display="flex" justifyContent="flex-end">
             
 
