@@ -14,6 +14,7 @@ import CashierLoader from './CashierLoader';
 import Dexie from 'dexie'
 import SaleReceipt from './SaleReceipt';
 import {uid} from 'uid'
+import RecentSaleReceipt from './recent_sales/RecentSaleReceipt';
 
 
 const muiTheme = createMuiTheme({
@@ -94,7 +95,22 @@ function CashierDashboard(){
     const [transactionAmount, setTransactionAmount] = useState('0')
     const [inputOpened, setInputOpened] = useState(false)
     const [receiptOpened, setReceiptOpened] = useState(false)
-    const [recentSale, setRecentSale] = useState(null)
+    const [recentSale, setRecentSale] = useState({
+        receipt_id: "",
+        issue: true,
+        receipt_was_issued: false,
+        total_items_amount: 0,
+        discount: 0,
+        total_amount_paid: 0,
+        transaction_type: 'cash',
+        cash_amount: 0,
+        transfer_amount: 0,
+        pos_amount: 0,
+        cashback_profit: 0,
+        item_solds: []
+
+
+    })
     const [recentSaleReceiptOpened, setRecentSaleReceiptOpened] = useState(false)
 
 
@@ -183,7 +199,22 @@ function CashierDashboard(){
                 name: ''
             })
             setFilteredProducts([])
-            setRecentSale(null)
+            setRecentSale({
+                receipt_id: "",
+                issue: true,
+                receipt_was_issued: false,
+                total_items_amount: 0,
+                discount: 0,
+                total_amount_paid: 0,
+                transaction_type: 'cash',
+                cash_amount: 0,
+                transfer_amount: 0,
+                pos_amount: 0,
+                cashback_profit: 0,
+                items: []
+    
+    
+            })
             setRecentSaleReceiptOpened(false)
         }
     }, [])
@@ -555,6 +586,7 @@ function CashierDashboard(){
                         }
                         
                         <SaleReceipt />
+                        <RecentSaleReceipt />
                         
                     </Box>
                     }

@@ -1,8 +1,10 @@
 import { Box, Button, CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
 import { DateTime } from 'luxon'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { cashierSalesApi } from '../../../api/cashier/activity/api'
+import DashboardContext from '../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../helpers/AmountFormater'
+import RecentSaleReceipt from './RecentSaleReceipt'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +21,7 @@ function RecentSales(){
     const [failedToLoad, setFailedToLoad] = useState(false)
     const [loading, setLoading] = useState(true)
     const classes = useStyles()
+    const {setRecentSale, recentSale, setRecentSaleReceiptOpened, recentSaleReceiptOpened} = useContext(DashboardContext)
     
 
     useEffect(()=> {
@@ -41,6 +44,11 @@ function RecentSales(){
         }
 
     }, [])
+
+    const viewRecentSaleReceipt = (recentSale)=> {
+
+      
+    }
 
 
     return (
@@ -67,27 +75,34 @@ function RecentSales(){
            
 
                                     return (
-                                        <Grid item lg={6} xs={4}>
-                                            <Box p={2} className={classes.saleContainer} >
-                                                <Box p={3}>
-                                                    <Typography >₦{AmountFormater(total_items_amount).amount()} </Typography>
+                                        <>
+                                           
+
+                                            <Grid key={recent_sale.id} item lg={6} xs={4}>
+                                                <Box p={2} className={classes.saleContainer} >
+                                                    <Box p={3}>
+                                                        <Typography >₦{AmountFormater(total_items_amount).amount()} </Typography>
+                                                    </Box>
+                                                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                                                        <Box width="33%" justifyContent="center" alignItems="center" display="flex">
+                                                            <Typography> {time} </Typography>
+                                                        </Box>
+                
+                                                        <Box width="33%" justifyContent="center" alignItems="center" display="flex">
+                                                            <Button onClick={()=> {
+                                                                setRecentSaleReceiptOpened(true)
+                                                                setRecentSale(recent_sale)
+                                                            }}>  View </Button>
+                                                        </Box>
+                                                        <Box width="33%" justifyContent="center" alignItems="center" display="flex">
+                                                            <Typography> {transaction_type}</Typography>
+                                                        </Box>
+                                                        
+                                                        
+                                                    </Box>
                                                 </Box>
-                                                <Box display="flex" alignItems="center" justifyContent="space-between">
-                                                    <Box width="33%" justifyContent="center" alignItems="center" display="flex">
-                                                        <Typography> {time} </Typography>
-                                                    </Box>
-            
-                                                    <Box width="33%" justifyContent="center" alignItems="center" display="flex">
-                                                        <Button> View </Button>
-                                                    </Box>
-                                                    <Box width="33%" justifyContent="center" alignItems="center" display="flex">
-                                                        <Typography> {transaction_type}</Typography>
-                                                    </Box>
-                                                    
-                                                    
-                                                </Box>
-                                            </Box>
-                                        </Grid>
+                                            </Grid>
+                                        </>
                                     )
                                 })
                             }

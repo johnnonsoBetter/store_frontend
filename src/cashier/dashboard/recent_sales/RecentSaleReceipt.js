@@ -8,10 +8,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ReactToPrint from 'react-to-print';
-import DashboardContext from '../../context/cashier/DashboardContext';
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import AmountFormater from '../../helpers/AmountFormater';
-import { cashierSalesApi } from '../../api/cashier/activity/api';
+import DashboardContext from '../../../context/cashier/DashboardContext'
+import AmountFormater from '../../../helpers/AmountFormater';
+
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -35,33 +36,45 @@ export default function RecentSaleReceipt() {
 
   const [scroll, setScroll] = React.useState('paper');
   const receiptRef = useRef()
-  const {receiptOpened, recentSale} = useContext(DashboardContext)
-  const {receipt_id, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, items_sold} = recentSale
+  const {recentSaleReceiptOpened, setRecentSaleReceiptOpened, setRecentSale, storeInfo, recentSale} = useContext(DashboardContext)
+  const {receipt_id, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, item_solds} = recentSale
   const seller = JSON.parse(localStorage.cashier)['name']
 
+  const {name, telephone, address, receipt_remark} = storeInfo
+  
   const classes = useStyles()
 
 
 
   const handleClose = () => {
-    setReceiptOpened(false);
+    setRecentSaleReceiptOpened(false);
+
   };
+
+  const actualPayment = () => {
+    if (transaction_type === "pos_cashback"){
+        return pos_amount
+    }else if(transaction_type === "transfer_cashback"){
+        return transfer_amount
+    }
+    return total_amount_paid
+  }
 
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
-    if (receiptOpened) {
+    if (recentSaleReceiptOpened) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
         descriptionElement.focus();
       }
     }
-  }, [receiptOpened]);
+  }, [recentSaleReceiptOpened]);
 
   return (
     <div>
     
       <Dialog
-        open={receiptOpened}
+        open={recentSaleReceiptOpened}
         onClose={handleClose}
         scroll={scroll}
         aria-labelledby="scroll-dialog-title"
@@ -125,7 +138,7 @@ export default function RecentSaleReceipt() {
                <Box className={classes.itemList}>
 
                    {
-                       items.map((item, index) => {
+                       item_solds.map((item, index) => {
                         const {name, price_sold_per_unit, quantity_sold} = item
                             return (
                                 <Box display="flex" className={classes.itemSold} key={index} justifyContent="space-around" alignItems="center">
@@ -395,7 +408,7 @@ export default function RecentSaleReceipt() {
                         <Typography variant="h6" > Actual Payment:</Typography>
                     </Box>
                     <Box>
-                        {/* <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography> */}
+                        <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
                     </Box>
 
                     </Box>
