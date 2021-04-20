@@ -5,6 +5,7 @@ import { cashierSalesApi } from '../../../api/cashier/activity/api'
 import DashboardContext from '../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../helpers/AmountFormater'
 import RecentSaleReceipt from './RecentSaleReceipt'
+import Dexie from 'dexie'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,10 +46,7 @@ function RecentSales(){
 
     }, [])
 
-    const viewRecentSaleReceipt = (recentSale)=> {
-
-      
-    }
+  
 
 
     return (

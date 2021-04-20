@@ -112,6 +112,7 @@ function CashierDashboard(){
 
     })
     const [recentSaleReceiptOpened, setRecentSaleReceiptOpened] = useState(false)
+    const [storedSaleId, setStoredSaleId] = useState('-1')
 
 
     const actualPayment = () => {
@@ -175,7 +176,20 @@ function CashierDashboard(){
            setFilteredProducts(items)
            setDashboardLoading(false)
            setStoreInfo(store_info)
+       
             
+            var db = new Dexie('storeDb')
+            // db.version(1).stores({
+            //     failedSales: 'receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+            // })
+            db.version(1).stores({
+                salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+            })
+
+            db.open().catch(function(){
+            console.log("failed to open")
+            });
+
           
 
         }).catch(err => {
@@ -211,11 +225,12 @@ function CashierDashboard(){
                 transfer_amount: 0,
                 pos_amount: 0,
                 cashback_profit: 0,
-                items: []
+                item_solds: []
     
     
             })
             setRecentSaleReceiptOpened(false)
+            setStoredSaleId('-1')
         }
     }, [])
 
@@ -362,6 +377,18 @@ function CashierDashboard(){
         
         storeSalesForOffline()
 
+
+        
+
+       
+        
+
+
+       
+
+
+          
+
         function itemAlreadyExistOnCounter(){
            return itemsToBeSold.some((item) => item.barcode === newProduct.barcode)
            
@@ -381,6 +408,10 @@ function CashierDashboard(){
        
             setItemsToBeSold(newItemsToBeSold)
             setTransactionOnProcess(true)
+
+           
+
+
           
             launchSnackBar(`Added ${newProduct['name']}`,'success')
           
@@ -520,7 +551,9 @@ function CashierDashboard(){
                     setRecentSale,
                     setRecentSaleReceiptOpened,
                     recentSale,
-                    recentSaleReceiptOpened
+                    recentSaleReceiptOpened,
+                    setStoredSaleId,
+                    storedSaleId,
                 
                 }}>
 

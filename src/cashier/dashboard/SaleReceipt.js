@@ -12,6 +12,7 @@ import DashboardContext from '../../context/cashier/DashboardContext';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import AmountFormater from '../../helpers/AmountFormater';
 import { cashierSalesApi } from '../../api/cashier/activity/api';
+import Dexie from 'dexie'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -35,8 +36,8 @@ export default function SaleReceipt() {
 
   const [scroll, setScroll] = React.useState('paper');
   const receiptRef = useRef()
-  const {receiptOpened, launchSnackBar, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
-  const {receipt_id, total_amount_paid, total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, items} = sale
+  const {receiptOpened, launchSnackBar, storedSaleId, setStoredSaleId, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
+  const {receipt_id, total_amount_paid,  total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, receipt_was_issued, items} = sale
   const seller = JSON.parse(localStorage.cashier)['name']
 
   const {name, telephone, address, receipt_remark} = storeInfo
@@ -416,6 +417,44 @@ export default function SaleReceipt() {
                     Sell
                 </Button>
             )}
+
+            onBeforeGetContent={() => {
+
+                var db = new Dexie('storeDb')
+
+                db.version(1).stores({
+                    salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+                })
+           
+    
+    
+                db.salesNotSold.add(
+                    {
+                        receipt_id,
+                        issue,
+                        receipt_was_issued,
+                        total_items_amount,
+                        discount,
+                        total_amount_paid,
+                        transaction_type,
+                        cash_amount,
+                        transfer_amount,
+                        pos_amount,
+                        cashback_profit,
+                        items,
+                
+                
+                    }
+                ).then((id)=> {
+                   
+                    setStoredSaleId(id)
+                    console.log("succesfully stored sale id of ", id)
+                   
+                }).catch(()=> {
+                    console.log("failed to add ")
+                })
+    
+            }}
 
             onAfterPrint = {() => {
                 
