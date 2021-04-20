@@ -161,6 +161,16 @@ export const cashierSalesApi = () => {
                     sale: sale
                 }
             })
+        },
+
+        fetchRecentSales: () => {
+            return axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/cashier_sales/`,
+                
+            })
+
         }
     }
 
@@ -194,6 +204,8 @@ export const cashierApi = () => {
                 headers: JSON.parse(localStorage.getItem('cashier')),
                 url: `${baseUrl}/api/v1/sale_boards`
             })
-        }
+        },
+
+        
     }
 }
