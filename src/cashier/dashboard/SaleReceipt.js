@@ -457,13 +457,29 @@ export default function SaleReceipt() {
             }}
 
             onAfterPrint = {() => {
+                var db = new Dexie('storeDb')
+
+                db.version(1).stores({
+                    salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+                })
+
                 
                 
                clearAllItemsOnCounter()
 
                cashierSalesApi().performTransaction(sale).then(response => {
-                    launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
-          
+
+                    db.salesNotSold.delete(storedSaleId).then((res) => {
+
+                        launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
+                        console.log("successfully deleted the sale that was logged")
+                        setStoredSaleId('-1')
+                        
+                    }).catch((err) => {
+                        console.log("failed to delete stored sale")
+                    })
+                    
+        
                }).catch(err => {
                     launchSnackBar(`Oopss Something went wrong! But Sales Being Saved`,'warning')
           
