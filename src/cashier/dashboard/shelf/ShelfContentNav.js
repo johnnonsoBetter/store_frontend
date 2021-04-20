@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ItemList from './items/ItemList';
 import RecentSales from '../recent_sales/RecentSales';
+import ItemsNotSoldContainer from '../item_not_sold/ItemsNotSoldContainer';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -90,7 +91,7 @@ export default function ActivityNav() {
         <RecentSales />
       </TabPanel>
       <TabPanel value={value} index={2}>
-         The 2
+         <ItemsNotSoldContainer />
       </TabPanel>
   
       

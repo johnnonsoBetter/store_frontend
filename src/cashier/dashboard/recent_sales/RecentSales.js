@@ -30,11 +30,11 @@ function RecentSales(){
             const {sales} = response.data
             setRecentSales(sales)
             setLoading(false)
-            console.log("this is the sales", sales)
+           
         }).catch((err)=> {
             console.log(err)
             
-            setLoading(true)
+            setLoading(false)
             setFailedToLoad(true)
         })
         return ()=> {
@@ -54,9 +54,9 @@ function RecentSales(){
             <Box height="calc(100vh - 200px)">
                 {
                     loading ? 
-                    <Box width="100%" display="flex" alignItems="center" justifyContent="center" >  <CircularProgress /> </Box>
+                    <Box width="100%" height="100%" display="flex" alignItems="center" justifyContent="center" >  <CircularProgress /> </Box>
                     : failedToLoad ? 
-                    <Box width="100%"> <CircularProgress /> </Box>
+                    <Box width="100%" height="100%"  display="flex" alignItems="center" alignContent="center" justifyContent="center" > <Typography style={{color: "white"}}> Failed To Load Recent Sales </Typography> </Box>
                     : 
                     <Box >
                         {

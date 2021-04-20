@@ -42,6 +42,13 @@ export default function SaleReceipt() {
 
   const {name, telephone, address, receipt_remark} = storeInfo
   const classes = useStyles()
+  let db = new Dexie('storeDb')
+  let the_id = -1
+
+
+  db.version(1).stores({
+    salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+  })
 
 
 
@@ -420,11 +427,8 @@ export default function SaleReceipt() {
 
             onBeforeGetContent={() => {
 
-                var db = new Dexie('storeDb')
+               
 
-                db.version(1).stores({
-                    salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
-                })
            
     
     
@@ -446,9 +450,9 @@ export default function SaleReceipt() {
                 
                     }
                 ).then((id)=> {
-                   
-                    setStoredSaleId(id)
-                    console.log("succesfully stored sale id of ", id)
+                   the_id = id
+                   //  setStoredSaleId(id)
+                    console.log("succesfully stored sale id of ", the_id)
                    
                 }).catch(()=> {
                     console.log("failed to add ")
@@ -457,23 +461,15 @@ export default function SaleReceipt() {
             }}
 
             onAfterPrint = {() => {
-                var db = new Dexie('storeDb')
 
-                db.version(1).stores({
-                    salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
-                })
-
-                
-                
                clearAllItemsOnCounter()
 
                cashierSalesApi().performTransaction(sale).then(response => {
 
-                    db.salesNotSold.delete(storedSaleId).then((res) => {
+                    db.salesNotSold.delete(the_id).then((res) => {
 
                         launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
-                        console.log("successfully deleted the sale that was logged")
-                        setStoredSaleId('-1')
+
                         
                     }).catch((err) => {
                         console.log("failed to delete stored sale")

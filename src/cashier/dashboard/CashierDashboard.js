@@ -113,6 +113,7 @@ function CashierDashboard(){
     })
     const [recentSaleReceiptOpened, setRecentSaleReceiptOpened] = useState(false)
     const [storedSaleId, setStoredSaleId] = useState('-1')
+    const [unSoldSales, setUnSoldSales] = useState([])
 
 
     const actualPayment = () => {
@@ -140,10 +141,6 @@ function CashierDashboard(){
         processTransaction()
         
     }, [discount, transactionType, transactionAmount])
-
-    
-
-
 
     useEffect(()=> {
 
@@ -177,18 +174,35 @@ function CashierDashboard(){
            setDashboardLoading(false)
            setStoreInfo(store_info)
        
-            
-            var db = new Dexie('storeDb')
-            // db.version(1).stores({
-            //     failedSales: 'receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
-            // })
-            db.version(1).stores({
-                salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
-            })
+           var db = new Dexie('storeDb')
 
-            db.open().catch(function(){
-            console.log("failed to open")
-            });
+           db.version(1).stores({
+               salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+           })
+   
+           db.salesNotSold.toArray().then(sales => {
+            
+                const new_stored_sales = sales.map(sale => {
+                    const {receipt_id, total_amount_paid,  total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, receipt_was_issued, items} = sale
+
+                    return {
+                        receipt_id,
+                        total_amount_paid,
+                        total_items_amount,
+                        transaction_type,
+                        transfer_amount,
+                        cash_amount,
+                        cashback_profit,
+                        discount,
+                        issue,
+                        pos_amount,
+                        receipt_was_issued,
+                        items,
+                    }
+                } )
+               setUnSoldSales(new_stored_sales)
+              
+           })
 
           
 
@@ -230,10 +244,13 @@ function CashierDashboard(){
     
             })
             setRecentSaleReceiptOpened(false)
-            setStoredSaleId('-1')
+            setUnSoldSales([])
         }
     }, [])
 
+
+    
+ 
 
     const applyDefault = (itemsToBeSold) => {
 
@@ -374,20 +391,6 @@ function CashierDashboard(){
 
     const addItemToTable  = (newProduct) => {
 
-        
-        storeSalesForOffline()
-
-
-        
-
-       
-        
-
-
-       
-
-
-          
 
         function itemAlreadyExistOnCounter(){
            return itemsToBeSold.some((item) => item.barcode === newProduct.barcode)
@@ -448,43 +451,7 @@ function CashierDashboard(){
 
     }
 
-    const storeSalesForOffline = () => {
-        const db = new Dexie('storeDb')
-
-        db.transaction('rw', db.failedSales, function* () {
-
-            // Let's add some data to db:
-            
-                db.open().catch(function(){
-                console.log("failed to open")
-            });
-                        
-            db.failedSales.add({
     
-                receipt_id: "bbbeea3f2f",
-                issue: true,
-                receipt_was_issued: true,
-                total_items_amount: 600,
-                discount: 0,
-                total_amount_paid: 600,
-                transaction_type: "cash",
-                cash_amount: 600,
-                cashback_profit: 0,
-                pos_amount: 0,
-                transfer_amount: 0,
-                items: []
-       
-            })
-            
-        
-        }).catch(function(err) {
-        
-            // Catch any error event or exception and log it:
-            console.error(err.stack || err);
-        });
-
-        
-    }
 
     const toggleReceipt = () => {
 
@@ -554,6 +521,8 @@ function CashierDashboard(){
                     recentSaleReceiptOpened,
                     setStoredSaleId,
                     storedSaleId,
+                    unSoldSales,
+                    setUnSoldSales,
                 
                 }}>
 
