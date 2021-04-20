@@ -182,25 +182,7 @@ function CashierDashboard(){
    
            db.salesNotSold.toArray().then(sales => {
             
-                const new_stored_sales = sales.map(sale => {
-                    const {receipt_id, total_amount_paid,  total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, receipt_was_issued, items} = sale
-
-                    return {
-                        receipt_id,
-                        total_amount_paid,
-                        total_items_amount,
-                        transaction_type,
-                        transfer_amount,
-                        cash_amount,
-                        cashback_profit,
-                        discount,
-                        issue,
-                        pos_amount,
-                        receipt_was_issued,
-                        items,
-                    }
-                } )
-               setUnSoldSales(new_stored_sales)
+               setUnSoldSales(sales)
               
            })
 

@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -10,6 +10,19 @@ import Box from '@material-ui/core/Box';
 import ItemList from './items/ItemList';
 import RecentSales from '../recent_sales/RecentSales';
 import ItemsNotSoldContainer from '../item_not_sold/ItemsNotSoldContainer';
+import { Badge } from '@material-ui/core';
+import DashboardContext from '../../../context/cashier/DashboardContext';
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    backgroundColor: "red",
+    padding: '0 4px',
+  },
+}))(Badge);
+
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,6 +72,9 @@ export default function ActivityNav() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const base_imageUrl = 'static/images/' 
+  const {unSoldSales} = useContext(DashboardContext)
+
+  const total = unSoldSales.length
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -80,7 +96,11 @@ export default function ActivityNav() {
           
           <Tab className={classes.tab_headers} label="Shelf"  {...a11yProps(0)} />
           <Tab className={classes.tab_headers} label="Recent" {...a11yProps(1)} />
-          <Tab className={classes.tab_headers} label="Issue"  {...a11yProps(2)} />
+          <Tab className={classes.tab_headers} label={
+             <StyledBadge  badgeContent={total} color="primary">
+                Issue
+            </StyledBadge>    
+          } {...a11yProps(2)} />
                 
         </Tabs>
       </AppBar>

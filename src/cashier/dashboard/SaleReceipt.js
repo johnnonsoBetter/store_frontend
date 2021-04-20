@@ -36,7 +36,7 @@ export default function SaleReceipt() {
 
   const [scroll, setScroll] = React.useState('paper');
   const receiptRef = useRef()
-  const {receiptOpened, launchSnackBar, storedSaleId, setStoredSaleId, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
+  const {receiptOpened, launchSnackBar, unSoldSales, setUnSoldSales, actualPayment, clearAllItemsOnCounter, setReceiptOpened, storeInfo, sale} = useContext(DashboardContext)
   const {receipt_id, total_amount_paid,  total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, receipt_was_issued, items} = sale
   const seller = JSON.parse(localStorage.cashier)['name']
 
@@ -452,7 +452,10 @@ export default function SaleReceipt() {
                 ).then((id)=> {
                    the_id = id
                    //  setStoredSaleId(id)
-                    console.log("succesfully stored sale id of ", the_id)
+                    
+
+                    
+                    
                    
                 }).catch(()=> {
                     console.log("failed to add ")
@@ -463,13 +466,18 @@ export default function SaleReceipt() {
             onAfterPrint = {() => {
 
                clearAllItemsOnCounter()
-
+            
                cashierSalesApi().performTransaction(sale).then(response => {
 
                     db.salesNotSold.delete(the_id).then((res) => {
 
-                        launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
-
+                       
+                        db.salesNotSold.toArray().then(sales => {
+            
+                            setUnSoldSales(sales)
+                            launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
+                           
+                        })
                         
                     }).catch((err) => {
                         console.log("failed to delete stored sale")
@@ -478,6 +486,16 @@ export default function SaleReceipt() {
         
                }).catch(err => {
                     launchSnackBar(`Oopss Something went wrong! But Sales Being Saved`,'warning')
+
+                   
+                      
+                        db.salesNotSold.toArray().then(sales => {
+            
+                            setUnSoldSales(sales)
+                           
+                        })
+                       
+                   
           
                })
 

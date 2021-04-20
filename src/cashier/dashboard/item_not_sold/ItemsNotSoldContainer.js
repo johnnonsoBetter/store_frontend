@@ -1,9 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
 import { ExpandMore } from '@material-ui/icons'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DashboardContext from '../../../context/cashier/DashboardContext'
 import AmountFormater from '../../../helpers/AmountFormater'
-
+import { green } from '@material-ui/core/colors';
+import { cashierSalesApi } from '../../../api/cashier/activity/api'
+import Dexie from 'dexie'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +17,32 @@ const useStyles = makeStyles((theme) => ({
     container: {
         height: "calc(100vh - 200px)",
         overflowY: "auto"
-    }
+    },
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+      },
+      buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+          backgroundColor: green[700],
+        },
+      },
+      fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+      },
+      buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
 }))
 
 
@@ -31,10 +58,61 @@ const actualPayment = (sale) => {
 
 function ItemsNotSoldContainer(){
 
-    const {setUnSoldSales, unSoldSales} = useContext(DashboardContext)
+    const {setUnSoldSales, unSoldSales, launchSnackBar} = useContext(DashboardContext)
+    const [loading, setLoading] =  useState(false)
+
     
     const classes = useStyles()
 
+    const resale =(sale)=> {
+        setLoading(true)
+        const {receipt_id, total_amount_paid,  total_items_amount, transaction_type, transfer_amount, cash_amount, cashback_profit, discount, issue, pos_amount, receipt_was_issued, items} = sale
+
+        console.log(sale)
+        const the_id = sale.id
+
+        var db = new Dexie('storeDb')
+
+        db.version(1).stores({
+            salesNotSold: '++id, receipt_id, issue, receipt_was_issued, total_items_amount, total_amount_paid, discount, transaction_type, cash_amount, cashback_profit, pos_amount, transfer_amount, items'
+        })
+
+        const filteredUnSoldSales = unSoldSales.filter((the_sale) => the_sale.id != the_id)
+
+        console.log(filteredUnSoldSales)
+
+        const real_sale = {
+            receipt_id,
+            total_amount_paid,
+            total_items_amount,
+            transaction_type,
+            transfer_amount,
+            cash_amount,
+            cashback_profit,
+            discount,
+            issue,
+            pos_amount,
+            receipt_was_issued,
+            items,
+        }
+
+        cashierSalesApi().performTransaction(real_sale).then((response) => {
+            
+        
+            db.salesNotSold.delete(the_id).then((res) => {
+                setLoading(false)
+                setUnSoldSales(filteredUnSoldSales)
+                launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
+                setLoading(false)
+            })
+
+
+        }).catch(err => {
+            launchSnackBar(`Oopss Something went wrong!`,'warning')
+            setLoading(false)
+        })
+    }
+ 
     
     return (
         <Box className={classes.container}>
@@ -58,7 +136,8 @@ function ItemsNotSoldContainer(){
                     <Grid container spacing={3}>
                         <Grid item xs={6} >
                             <Box width="100%">
-                            <Box  width="100%"  >
+                                <Typography> Transaction Info</Typography> 
+                                <Box  width="100%"  >
                                     <Box p={1} display="flex" justifyContent="space-between">
 
                                         <Box>
@@ -309,7 +388,21 @@ function ItemsNotSoldContainer(){
 
                                     </Box>
                                     <Box>
-                                        <Button > Resale </Button>
+                                       <div className={classes.wrapper}>
+                                            <Button
+                                            variant="contained"
+                                            color="primary"
+                                            
+                                            disabled={loading}
+                                            onClick={()=> {
+                                                resale(sale)
+                                            }}
+
+                                            >
+                                            Resale
+                                            </Button>
+                                            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                        </div>
                                     </Box>
                                 </Box>
 
@@ -318,6 +411,7 @@ function ItemsNotSoldContainer(){
                         </Grid>
 
                         <Grid item xs={6} >
+                        <Typography> Items</Typography> 
                         <Box className={classes.itemList}>
 
                             {

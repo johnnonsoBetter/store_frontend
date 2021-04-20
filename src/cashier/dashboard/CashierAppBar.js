@@ -201,7 +201,7 @@ export default function CashierAppBar() {
                 <>
                 {
                   indicatorLoading ? <Box width="50%" justifyContent="center" className={classes.salesLoader}>
-                   <CircularProgress />
+                   <CircularProgress size={24} />
                  
                 </Box>
                  : 
