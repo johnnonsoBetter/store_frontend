@@ -1,6 +1,8 @@
 import { Box, Button, CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
+import { DateTime } from 'luxon'
 import React, { useEffect, useState } from 'react'
 import { cashierSalesApi } from '../../../api/cashier/activity/api'
+import AmountFormater from '../../../helpers/AmountFormater'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,8 +23,10 @@ function RecentSales(){
 
     useEffect(()=> {
         cashierSalesApi().fetchRecentSales().then((response)=> {
-            console.log(response)
+            const {sales} = response.data
+            setRecentSales(sales)
             setLoading(false)
+            console.log("this is the sales", sales)
         }).catch((err)=> {
             console.log(err)
             
@@ -54,27 +58,41 @@ function RecentSales(){
                         }
 
                         <Grid spacing={2} container>
-                            <Grid item lg={6} xs={4}>
-                                <Box p={2} className={classes.saleContainer} >
-                                    <Box p={3}>
-                                        <Typography >3000</Typography>
-                                    </Box>
-                                    <Box display="flex" alignItems="center" justifyContent="space-between">
-                                        <Box width="33%" justifyContent="center" alignItems="center" display="flex">
-                                            <Typography> 2:30pm</Typography>
-                                        </Box>
+                            
+                            {
 
-                                        <Box width="33%" justifyContent="center" alignItems="center" display="flex">
-                                            <Button> View </Button>
-                                        </Box>
-                                        <Box width="33%" justifyContent="center" alignItems="center" display="flex">
-                                            <Typography> Pos Cashback</Typography>
-                                        </Box>
-                                        
-                                        
-                                    </Box>
-                                </Box>
-                            </Grid>
+                                recentSales.map((recent_sale)=> {
+                                    const {total_items_amount, transaction_type, created_at} = recent_sale   
+                                    const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+           
+
+                                    return (
+                                        <Grid item lg={6} xs={4}>
+                                            <Box p={2} className={classes.saleContainer} >
+                                                <Box p={3}>
+                                                    <Typography >₦{AmountFormater(total_items_amount).amount()} </Typography>
+                                                </Box>
+                                                <Box display="flex" alignItems="center" justifyContent="space-between">
+                                                    <Box width="33%" justifyContent="center" alignItems="center" display="flex">
+                                                        <Typography> {time} </Typography>
+                                                    </Box>
+            
+                                                    <Box width="33%" justifyContent="center" alignItems="center" display="flex">
+                                                        <Button> View </Button>
+                                                    </Box>
+                                                    <Box width="33%" justifyContent="center" alignItems="center" display="flex">
+                                                        <Typography> {transaction_type}</Typography>
+                                                    </Box>
+                                                    
+                                                    
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                    )
+                                })
+                            }
+                            
+                           
 
                         </Grid>
                     

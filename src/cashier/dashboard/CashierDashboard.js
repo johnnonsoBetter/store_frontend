@@ -94,32 +94,9 @@ function CashierDashboard(){
     const [transactionAmount, setTransactionAmount] = useState('0')
     const [inputOpened, setInputOpened] = useState(false)
     const [receiptOpened, setReceiptOpened] = useState(false)
+    const [recentSale, setRecentSale] = useState(null)
+    const [recentSaleReceiptOpened, setRecentSaleReceiptOpened] = useState(false)
 
-
-   
-
-    // {
-   
-    //     "log_issue_type": "sale",
-    //     "sale": {
-    //         "receipt_id": "bbbeea3f2f",
-    //         "issue": true,
-    //         "receipt_was_issued": true,
-    //         "total_items_amount": 600,
-    //         "discount": 0,
-    //         "total_amount_paid": 600,
-    //         "transaction_type": "cash",
-    //         "cash_amount": 600,
-    //         "cashback_profit": 0,
-    //         "pos_amount": 0,
-    //         "transfer_amount": 0,
-    //         "items": [ {"name": "Snicker Chocolate", "quantity_sold": 1, "price_sold_per_unit": 600, "selling_price_was_altered": true}
-    //         ]
-                
-    //     }
-                                
-               
-    // }
 
     const actualPayment = () => {
         if (sale['transaction_type'] === "pos_cashback"){
@@ -206,6 +183,8 @@ function CashierDashboard(){
                 name: ''
             })
             setFilteredProducts([])
+            setRecentSale(null)
+            setRecentSaleReceiptOpened(false)
         }
     }, [])
 
@@ -507,9 +486,11 @@ function CashierDashboard(){
                     actualPayment,
                     filteredProducts,
                     setFilteredProducts,
+                    setRecentSale,
+                    setRecentSaleReceiptOpened,
+                    recentSale,
+                    recentSaleReceiptOpened
                 
-
-
                 }}>
 
                   {
