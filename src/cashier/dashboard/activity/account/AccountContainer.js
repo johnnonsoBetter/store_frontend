@@ -15,15 +15,9 @@ function AccountContainer(){
 
     return (
         <Container className={classes.root}>
-             <Grid container>
-                <Grid item md={5}>
+             
                     <CreateAccount />
-                </Grid>
-
-                <Grid item md={7}>
-                    <Typography> THe same time and the same place </Typography>
-                </Grid>
-            </Grid>
+              
         </Container>
        
     )

@@ -1,7 +1,9 @@
 import { Box, Button, CircularProgress, Grid, Grow, makeStyles, Paper, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Input} from '../../CustomInput'
 import { green } from '@material-ui/core/colors';
+import { cashierApi } from '../../../../api/cashier/activity/api';
+import DashboardContext from '../../../../context/cashier/DashboardContext';
 
 
 
@@ -51,16 +53,57 @@ const useStyles = makeStyles((theme) => ({
 function CreateAccount(){
     const classes = useStyles()
     const [loading, setLoading] = useState(false)
-    const [cash, setCash] = useState('')
-    const [pos, setPos] = useState('')
-    const [transfer, setTransfer] = useState('')
+    const [cash, setCash] = useState('0')
+    const [pos, setPos] = useState('0')
+    const [transfer, setTransfer] = useState('0')
     const [change, setChange] = useState('')
+    const [cashierSaleSummary, setCashierSaleSummary] = useState({
+        total_cash_at_hand: '0',
+        total_pos: '0',
+        total_transfer: '0',
+        next_day_change: '0'
+    })
+    const {launchSnackBar} = useContext(DashboardContext)
+
+
+    useEffect(()=> {
+
+        setCashierSaleSummary({
+            total_cash_at_hand: cash,
+            total_pos: pos,
+            total_transfer: transfer,
+            next_day_change: change
+        })
+
+        return ()=> {
+            //clean up 
+            setCashierSaleSummary({
+                total_cash_at_hand: '0',
+                total_pos: '0',
+                total_transfer: '0',
+                next_day_change: '0'
+            })
+        }
+    }, [cash, transfer, pos, change])
 
 
 
     const handleSubmit = (e)=> {
-
+        
         e.preventDefault()
+        setLoading(true)
+        cashierApi().submitAccount(cashierSaleSummary).then((response) => {
+
+            launchSnackBar("Thanks! Account Submitted for processing ", 'success')
+           setLoading(false)
+           setCash('0')
+           setPos('0')
+           setTransfer('0')
+           setChange('0')
+        }).catch(err => {
+            launchSnackBar("Opps Something went wrong Please try again", "secondary")
+            setLoading(false)
+        })  
     }
 
 
@@ -89,17 +132,13 @@ function CreateAccount(){
         <Grow in={true}>
 
        
-       <Box className={classes.root} display="flex" justifyContent="center" alignItems="center">
+       <Box width="100%" className={classes.root} display="flex" justifyContent="center" alignItems="center">
            <Paper elevation={6} className={classes.paper} >
                
-           <form onSubmit={handleSubmit}   noValidate autoComplete="off">
-              
-
-               
-
-                <Grid container justify="center" spacing={5}>
+           <form onSubmit={handleSubmit}    noValidate autoComplete="off">
+                <Grid container justify="center"  spacing={3}>
                     <Grid item xs={6}>
-                        <Box display="flex" justifyContent="flex-start">
+                        <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
                                     <Typography variant="h6"> Cash At Hand </Typography>
@@ -115,7 +154,7 @@ function CreateAccount(){
                     </Grid>
 
                     <Grid item xs={6}>
-                        <Box display="flex" justifyContent="flex-start">
+                        <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
                                     <Typography variant="h6"> Total Pos </Typography>
@@ -131,7 +170,7 @@ function CreateAccount(){
                     </Grid>
 
                     <Grid item xs={6}>
-                        <Box display="flex" justifyContent="flex-start">
+                        <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
                                     <Typography variant="h6"> Total Transfer </Typography>
@@ -147,7 +186,7 @@ function CreateAccount(){
                     </Grid>
 
                     <Grid item xs={6}>
-                        <Box display="flex" justifyContent="flex-start">
+                        <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
                                     <Typography variant="h6"> Next Change </Typography>
@@ -163,7 +202,7 @@ function CreateAccount(){
                     </Grid>
 
                     <Grid item xs={6}>
-                         <Box  display="flex"  justifyContent="flex-start">
+                         <Box  display="flex"  justifyContent="center">
                             <div className={classes.wrapper}>
                                 <Button
                                 variant="contained"
