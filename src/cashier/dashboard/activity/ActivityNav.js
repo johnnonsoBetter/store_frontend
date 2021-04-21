@@ -13,6 +13,7 @@ import ItemReturnContainer from './item_return/ItemReturnContainer';
 import DebtContainer from './debt/DebtContainer';
 import RecoveredDebtContainer from './recovered_debts/RecoveredDebtContainer';
 import AccountContainer from './account/AccountContainer';
+import Cashier from './cashier/Cashier';
 
 
 
@@ -127,7 +128,7 @@ export default function ActivityNav() {
         <AccountContainer />
       </TabPanel>
       <TabPanel value={value} index={7}>
-        Item seven
+        <Cashier />
       </TabPanel>
       
     </div>

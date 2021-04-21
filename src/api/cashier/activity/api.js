@@ -172,6 +172,8 @@ export const cashierSalesApi = () => {
             })
 
         }
+
+        
     }
 
 }
@@ -216,6 +218,15 @@ export const cashierApi = () => {
                 data: {
                     cashier_sales_summary: account
                 }
+            })
+        },
+
+
+        fetchSubmittedReport: ()=> {
+            return axios({
+                method: "GET",
+                headers: JSON.parse(localStorage.getItem('cashier')),
+                url: `${baseUrl}/api/v1/my_summaries`
             })
         }
         

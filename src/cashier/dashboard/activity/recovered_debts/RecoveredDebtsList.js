@@ -41,7 +41,7 @@ function RecoveredDebtList(){
                             const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
                             return (
                                 <Grid key={id}  item xs={6}>
-                                    <Box p={2}  display="flex" justifyContent="space-between" alignContent="center" className={classes.recoveredDebt} key={id}>
+                                    <Box p={2} width={250}  display="flex" justifyContent="space-between" alignContent="center" className={classes.recoveredDebt} key={id}>
                                         <Typography className={classes.whiteText} > Recovered ₦{AmountFormater(amount).amount()} at </Typography>
                                         <Typography className={classes.whiteText}>{time}</Typography>
                                     </Box>

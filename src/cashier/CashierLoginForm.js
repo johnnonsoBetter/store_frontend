@@ -69,7 +69,7 @@ function CashierLoginForm(){
                         'client': response.headers['client'],
                         'uid': response.headers['uid'],
                         'name': name,
-                        'salary_blance': salary_balance
+                        'salary_balance': salary_balance
                     })
                 )
 
