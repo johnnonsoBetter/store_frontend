@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
     root: {
         flexGrow: 1,
-        height: "calc(80vh - 50px)"
+       
        
     }, 
     paper: {

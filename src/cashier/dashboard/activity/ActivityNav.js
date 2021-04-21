@@ -12,6 +12,7 @@ import ChangeContainer from './change/ChangeContainer';
 import ItemReturnContainer from './item_return/ItemReturnContainer';
 import DebtContainer from './debt/DebtContainer';
 import RecoveredDebtContainer from './recovered_debts/RecoveredDebtContainer';
+import AccountContainer from './account/AccountContainer';
 
 
 
@@ -78,7 +79,7 @@ export default function ActivityNav() {
           onChange={handleChange}
           scrollButtons="on"
           indicatorColor="primary"
-          variant="fullWidth"
+          centered
           textColor="primary"
           aria-label="scrollable force tabs example"
           style={{backgroundColor: "rgb(11, 18, 37)", color: "white"}}
@@ -123,7 +124,7 @@ export default function ActivityNav() {
         <RecoveredDebtContainer />
       </TabPanel>
       <TabPanel value={value} index={6}>
-        item 6
+        <AccountContainer />
       </TabPanel>
       <TabPanel value={value} index={7}>
         Item seven

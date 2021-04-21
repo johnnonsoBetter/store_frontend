@@ -400,13 +400,17 @@ export default function SaleReceipt() {
 
                     <Box p={1} display="flex" alignItems="center" justifyContent="space-between">
 
-                    <Box>
-                        <Typography variant="h6" > Actual Payment:</Typography>
-                    </Box>
-                    <Box>
-                        <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
+                        <Box>
+                            <Typography variant="h6" > Actual Payment:</Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
+                        </Box>
+
                     </Box>
 
+                    <Box p={2} textAlign="center">
+                        <Typography style={{textTransform: "capitalize"}}> ***** {receipt_remark} ***** </Typography>
                     </Box>
                 </Box>
 
@@ -451,11 +455,6 @@ export default function SaleReceipt() {
                     }
                 ).then((id)=> {
                    the_id = id
-                   //  setStoredSaleId(id)
-                    
-
-                    
-                    
                    
                 }).catch(()=> {
                     console.log("failed to add ")
@@ -464,18 +463,18 @@ export default function SaleReceipt() {
             }}
 
             onAfterPrint = {() => {
+                clearAllItemsOnCounter()
 
-               clearAllItemsOnCounter()
-            
                cashierSalesApi().performTransaction(sale).then(response => {
 
                     db.salesNotSold.delete(the_id).then((res) => {
 
                        
                         db.salesNotSold.toArray().then(sales => {
-            
+                            
                             setUnSoldSales(sales)
                             launchSnackBar(`Thanks, Your Transaction Is Being Processed!`,'success')
+                            
                            
                         })
                         
@@ -485,18 +484,16 @@ export default function SaleReceipt() {
                     
         
                }).catch(err => {
-                    launchSnackBar(`Oopss Something went wrong! But Sales Being Saved`,'warning')
-
-                   
-                      
+                    
                         db.salesNotSold.toArray().then(sales => {
             
                             setUnSoldSales(sales)
+                          
+                            launchSnackBar(`Oopss Something went wrong! But Sales Being Saved`,'warning')
+
                            
                         })
-                       
-                   
-          
+
                })
 
                console.log("task completed")

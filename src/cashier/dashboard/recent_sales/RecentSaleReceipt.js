@@ -404,13 +404,17 @@ export default function RecentSaleReceipt() {
 
                     <Box p={1} display="flex" alignItems="center" justifyContent="space-between">
 
-                    <Box>
-                        <Typography variant="h6" > Actual Payment:</Typography>
-                    </Box>
-                    <Box>
-                        <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
+                        <Box>
+                            <Typography variant="h6" > Actual Payment:</Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant="h6" className={classes.infoText}>  ₦{AmountFormater(actualPayment()).amount()}</Typography>
+                        </Box>
+
                     </Box>
 
+                    <Box p={2} textAlign="center">
+                        <Typography style={{textTransform: "capitalize"}}> ***** {receipt_remark} ***** </Typography>
                     </Box>
                 </Box>
 

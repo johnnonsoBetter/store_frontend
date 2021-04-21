@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     box: {
         flexGrow: 1,
-        height: "calc(75vh - 50px)",
+    
        
     },
     
