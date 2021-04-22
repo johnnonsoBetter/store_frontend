@@ -25,6 +25,33 @@
   color: #61dafb;
 }
 
+*{
+  scrollbar-width: thin;
+  scrollbar-color: blue;
+}
+*::-webkit-scrollbar {
+  width: 5px;
+}
+/* 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: blue;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+
+}
+
+*::-webkit-scrollbar-thumb {
+ 
+  border-radius: 20px;
+ 
+} */ 
+
 
 @keyframes ldio-cyw5oa7niwb-1 {
   0% { top: 53.92399999999999px; height: 136.15200000000002px }
