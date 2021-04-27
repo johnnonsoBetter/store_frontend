@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { AdminDashboardContextProvider } from '../context/admin/AdminDashboardContext'
 import LoginForm from './LoginForm'
 import {makeStyles, createMuiTheme, useTheme, ThemeProvider} from '@material-ui/core/styles'
-import {CssBaseline, Hidden, Drawer, } from '@material-ui/core'
+import {CssBaseline, Hidden, Drawer, Box, Typography } from '@material-ui/core'
 import { Switch, Route} from 'react-router-dom'
 import DrawerLinkList from './dashboard/DrawerLinkList'
 import Home from './dashboard/contents/home/Home'
 import FixedAppBar from './dashboard/FixedAppBar'
 import AuditItem from './dashboard/contents/audit_item/AuditItem'
 import Content from './dashboard/contents/home/transaction_activity/Content'
+import StoreItems from './dashboard/contents/store_items/StoreItems'
+import { Virtuoso, VirtuosoGrid } from 'react-virtuoso'
+import StoreItemList from './dashboard/contents/store_items/StoreItemList'
 
 
   const drawerWidth = 240;
@@ -353,7 +356,7 @@ function AdminPage(props){
                       </Route>
 
                       <Route exact={true} path="/admin_dashboard/:storeName/items" >
-                          <h1> Items </h1>
+                        <StoreItemList />
                       </Route>
                       
                       <Route exact={true} path="/admin_dashboard/:storeName/cashiers" >

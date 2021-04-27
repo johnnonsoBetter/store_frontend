@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow, useMediaQuery, CircularProgress} from '@material-ui/core/';
+import {Paper, Box, Typography, Drawer, IconButton, Button, Menu, MenuItem, InputBase, withStyles, Grow, useMediaQuery, CircularProgress, Hidden} from '@material-ui/core/';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import { PrintDisabledRounded, SearchRounded, FlashOffRounded, CancelOutlined} from '@material-ui/icons';
@@ -290,15 +290,16 @@ function SalesTable() {
               <Sale receipt_id={receipt_id} setReceiptId={setReceiptId} toggleSaleDrawer={toggleSaleDrawer} />
             </Box>
           </Drawer>
+        
         <TableContainer className={classes.tableComponent} component={Paper} style={{backgroundColor: "black"}}>
-          <Box  alignContent="center" display="flex" paddingRight={3} paddingLeft={3}>
+          <Box  alignContent="center" width="100%"  display="flex">
 
             {
               showSearch ? 
 
                 <Grow in={true}>
                       
-                <Box display="flex" width="100%" justifyContent="space-between">
+                <Box display="flex"  width="100%"  justifyContent="space-between">
                   <Box display="flex" >
                    
                     <BootstrapInput  value={searchInput} onChange={(e) => setSearchInput(e.target.value)} label="Search amount" type="number" id="demo-customized-textbox" />
@@ -334,7 +335,7 @@ function SalesTable() {
                 </Grow>
            
                 :
-                <Box display="flex" width="100%"> 
+                <Box display="flex"> 
                   <Box display="flex"  flexGrow={1}>
                     
                       <IconButton onClick={()=> {
@@ -347,8 +348,10 @@ function SalesTable() {
                   </Box>
 
                
+                 
 
-                  <Box display="flex" >
+                 
+                  <Box display="flex"  width="100%" >
                   
                     <Button style={{color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                      {transactionTypeFilter}
@@ -374,6 +377,7 @@ function SalesTable() {
                
                     
                   </Box>
+                  
 
                   <Box display="flex" marginRight={1} marginLeft={1}>
                     <IconButton onClick={filterSalesByReceiptIssued}> 
@@ -404,17 +408,31 @@ function SalesTable() {
               <NoData minHeight={300} activity="Sales" />
           </Box>  :
 
-        <Table stickyHeader  className={classes.table} aria-label="simple table">
+        <Table stickyHeader   aria-label="simple table">
           <TableHead   style={{backgroundColor: "black"}} className={classes.noBottom}>
-            <TableRow>
             
-              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cashier </Typography></TableCell>
-              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Sales Amount </Typography> </TableCell>
-              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Transaction </Typography> </TableCell>
-              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Issue </Typography> </TableCell>
-              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
-              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography></TableCell>
-            </TableRow>
+              <Hidden smDown>  
+                <TableRow>
+                
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cashier </Typography></TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Sales Amount </Typography> </TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Transaction </Typography> </TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Issue </Typography> </TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography></TableCell>
+              </TableRow>
+            </Hidden>
+
+            <Hidden mdUp>
+            <TableRow>
+                
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Sales Amount </Typography> </TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Issue </Typography> </TableCell>
+                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography></TableCell>                
+              </TableRow>
+            </Hidden>
+       
+           
           </TableHead>
          
         
@@ -423,6 +441,7 @@ function SalesTable() {
         </Table>
        }
       </TableContainer>
+  
 
 
 

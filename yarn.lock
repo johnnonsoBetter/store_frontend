@@ -10407,10 +10407,10 @@
     "prop-types" "^15.7.2"
     "react-lifecycles-compat" "^3.0.4"
 
-"react-virtuoso@^1.8.3":
-  "integrity" "sha512-54QRgeGtzAHStyro6sgsKs7ivbpied0prbzMgV72uQC1r5dz0GPzV+4udMOXXDidl+8J+NqE+RAirmocGTOZKg=="
-  "resolved" "https://registry.npmjs.org/react-virtuoso/-/react-virtuoso-1.8.3.tgz"
-  "version" "1.8.3"
+"react-virtuoso@^1.8.6":
+  "integrity" "sha512-WFSI4YzdyAFrr3CuZnQ8cmubGMJjgmgyuhx/OpWLls1uK9O43s+6DMr9oBXHAgvCDjS3Nd3vkIJAhsJBJzS1nQ=="
+  "resolved" "https://registry.npmjs.org/react-virtuoso/-/react-virtuoso-1.8.6.tgz"
+  "version" "1.8.6"
   dependencies:
     "@virtuoso.dev/react-urx" "^0.2.5"
     "@virtuoso.dev/urx" "^0.2.5"
