@@ -1,4 +1,4 @@
-import { Box, Typography, Drawer, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, useMediaQuery } from '@material-ui/core'
+import { Box, Typography, Drawer, TableBody, IconButton, createMuiTheme, TableContainer, makeStyles, Table, Paper, TableCell, TableHead, TableRow, useMediaQuery, Hidden } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import TransactionActivityContext from '../../../../../../context/admin/transaction_activity/TransactionActivity'
@@ -16,7 +16,7 @@ import DebtInfo from './DebtInfo'
 
 const useStyles = makeStyles((theme) => ({
     table: {
-        minWidth: 650,
+       
     },
 
     root: {
@@ -163,7 +163,7 @@ function DebtTable(){
         >
 
         
-        <Box flexGrow={1}
+        <Box width="100%" flexGrow={1}
         
         >
 
@@ -176,7 +176,7 @@ function DebtTable(){
             <>
             <ThemeProvider theme={theme}>
               <Drawer anchor="right" open={drawerOpened} onClose={()=> toggleDrawerOpened(false)}>
-                <Box width={matches ? "100%" : 320 } className={classes.saleContainer}>
+                <Box width={matches ? window.innerWidth : 320 } className={classes.saleContainer}>
                   {
                     debtInfoOpened ? <DebtInfo /> : <Sale receipt_id={receipt_id} setReceiptId={setReceiptId} toggleSaleDrawer={toggleDrawerOpened} />
                   }
@@ -197,12 +197,24 @@ function DebtTable(){
                     <Table stickyHeader  className={classes.table} aria-label="simple table">
                         <TableHead   style={{backgroundColor: "black"}} className={classes.noBottom}>
                             <TableRow>
+
+                              <Hidden mdUp>
+                                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cost </Typography></TableCell>
+                                <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
+                              </Hidden>
+                              
+                              <Hidden smDown>
+                                  <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cost </Typography></TableCell>
+                                  <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Debtor </Typography> </TableCell>
+                                  <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
+                                  <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
+                              </Hidden>
                             
-                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cost </Typography></TableCell>
-                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Debtor </Typography> </TableCell>
+                           
+                            {/* <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Debtor </Typography> </TableCell>
                             <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
                              <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
-                           
+                            */}
                             </TableRow>
                         </TableHead>
 
@@ -216,24 +228,46 @@ function DebtTable(){
                                       const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
 
                                       return (
-                                          <TableRow key={id} style={{borderBottom: "none"}}>
+                                         
+                                          
+                                          
+                                          
+                                           <TableRow key={id} style={{borderBottom: "none"}}>
+                                             <Hidden smDown>
+                                                   <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                                                     <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {debtor_name} </Typography>   </Box></TableCell>
+
+                                                    <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
+                                                         <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=>  {
+                                                        
+                                                          toggleDrawerOpened(true)
+                                                          setDebtInfo(debt)
+                                                          setDebtInfoOpened(true)
+
+                                                       }
+                                                        
+                                                       } > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+
+
+                                             </Hidden>
                                       
-                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                                          
+
+                                          <Hidden mdUp>
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {debtor_name} </Typography>   </Box></TableCell>
-
-                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
-                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=>  {
-                                                 
-                                                  toggleDrawerOpened(true)
-                                                  setDebtInfo(debt)
-                                                  setDebtInfoOpened(true)
-
-                                              }
+                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=>  {
                                                 
-                                              } > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                                                    toggleDrawerOpened(true)
+                                                    setDebtInfo(debt)
+                                                    setDebtInfoOpened(true)
+
+                                                }
+                                                  
+                                                } > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                                          </Hidden>
+                                       
                                           
-                                          
-                                          </TableRow>
+                                           </TableRow>
                                       )
                                   })
                               }
@@ -247,7 +281,7 @@ function DebtTable(){
 
                                       return (
                                           <TableRow key={id} style={{borderBottom: "none", backgroundColor: "#d89b2e"}}>
-                                      
+                                            {/*                                       
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
                                               <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} > {debtor_name} </Typography>   </Box></TableCell>
 
@@ -258,7 +292,34 @@ function DebtTable(){
                                                 setDebtInfo(debt)
                                                 setDebtInfoOpened(true)
                                               }} > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
-                                          
+                                           */}
+
+
+                                           <Hidden smDown >
+                                           <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} > {debtor_name} </Typography>   </Box></TableCell>
+
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText}> {time} </Typography>   </Box></TableCell>
+                                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
+                                               
+                                                toggleDrawerOpened(true)
+                                                setDebtInfo(debt)
+                                                setDebtInfoOpened(true)
+                                              }} > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
+
+                                           </Hidden>
+
+
+                                           <Hidden mdUp>
+                                           <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.blackText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                                           <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
+                                               
+                                               toggleDrawerOpened(true)
+                                               setDebtInfo(debt)
+                                               setDebtInfoOpened(true)
+                                             }} > <ArrowForward style={{color: "black"}} /> </IconButton>  </Box></TableCell>
+                                           </Hidden>
+
                                           
                                           </TableRow>
                                       )
