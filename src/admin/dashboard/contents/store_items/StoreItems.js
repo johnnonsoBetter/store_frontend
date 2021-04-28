@@ -1,5 +1,6 @@
 
-import { Box, ButtonBase, Card, CardContent, Container, FormControl, FormControlLabel, FormLabel, makeStyles, Radio, RadioGroup, styled, Typography } from '@material-ui/core'
+import { Box, ButtonBase, Card, CardContent, Container, Fab, FormControl, FormControlLabel, FormLabel, makeStyles, Radio, RadioGroup, styled, Typography } from '@material-ui/core'
+import { AcUnit } from '@material-ui/icons'
 import React, { useRef, useState } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized'
 import { Virtuoso, VirtuosoGrid } from 'react-virtuoso'
@@ -18,24 +19,16 @@ const useStyles = makeStyles((theme) => ({
       },
 
       itemContainer: {
-        padding: theme.spacing(3)
+        backgroundColor: "green",
+        margin: theme.spacing(2),
+        padding: theme.spacing(3),
+
       }
 }))
 
 function StoreItems(){
     const classes = useStyles()
-    const [items, setItems] = useState(["boy", "girl", "people"])
-    const filteredProducts = [{name: "chicken"}, {name: "noodles"}]
-   
-   
-   
-    const cache = useRef(new CellMeasurerCache({
-        fixedWidth: true,
-        defaultHeight: 100,
-    }))
-
-   
-    
+    const items = [{name: "chicken"}, {name: "noodles"}, {name: "noodles"}, {name: "noodles"}, {name: "noodles"}, {name: "noodles"}, {name: "noodles"}]
 
     return (
 
@@ -44,16 +37,18 @@ function StoreItems(){
                 <Box  height="calc(100vh - 100px)" width="100%" className={classes.box}>
                 <FixedBar />
                 <VirtuosoGrid
-                    totalCount={filteredProducts.length}
+                    totalCount={items.length}
                     overscan={2}
                    
                     listClassName={classes.list}
                     itemClassName={classes.itemContainer}
-                    itemContent={index => <Box   className={classes.itemContainer} >Item {filteredProducts[index].name}</Box>}
+                    itemContent={index => <Box   className={classes.itemContainer} >Item {items[index].name}</Box>}
                 
                     />
+
            
                 </Box>
+                
         </Container>
        
         

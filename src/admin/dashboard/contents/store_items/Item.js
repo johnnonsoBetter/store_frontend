@@ -1,11 +1,13 @@
-import { Typography } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import React from 'react'
 
 function Item(props){
 
     const {name} = props
     return (
-        <Typography>{name}</Typography> 
+        <Box>
+            <Typography> The same {name} </Typography>K
+        </Box>
     )
 }
 
