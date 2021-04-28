@@ -16,7 +16,7 @@ import CashierSummaryInfo from './CashierSummaryInfo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    
     flexGrow: 1
   },
   heading: {
@@ -77,7 +77,9 @@ function CashierSummaryTable(){
     const classes = useStyles();
     const cashierSummaryApi = activitiesApi(storeName, 'cashier_sales_summaries')
     const [cashierSummaryId, setCashierSummaryId] = useState('')
-    const matches = useMediaQuery('max-width:600px')
+
+    const matches = useMediaQuery('(max-width:600px)')
+
     const [drawerOpened, setDrawerOpened] = useState(false)
     const [width] = useWindowSize()
 
@@ -139,7 +141,7 @@ function CashierSummaryTable(){
             failed ? <FailedActivityLoader activity="expenses" />
           : 
 
-            <Box widht="100%">
+            <Box width="100%">
               <CashierSummaryContextProvider
                 value={{
                   cashierSummaryId,
@@ -147,8 +149,8 @@ function CashierSummaryTable(){
                   setDrawerOpened,
                 }}
               > 
-              <Drawer anchor="right" width={width} open={drawerOpened} onClose={()=> setDrawerOpened(false)}>
-                <Box width={matches ? width : 320 } >
+              <Drawer anchor="right"  open={drawerOpened} onClose={()=> setDrawerOpened(false)}>
+                <Box width={matches ? window.innerWidth : 320 } >
                   <CashierSummaryInfo />
                 </Box>
               </Drawer>

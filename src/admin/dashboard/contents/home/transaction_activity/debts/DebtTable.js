@@ -211,10 +211,6 @@ function DebtTable(){
                               </Hidden>
                             
                            
-                            {/* <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Debtor </Typography> </TableCell>
-                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
-                             <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
-                            */}
                             </TableRow>
                         </TableHead>
 
