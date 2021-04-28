@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AdminDashboardContextProvider } from '../context/admin/AdminDashboardContext'
 import LoginForm from './LoginForm'
 import {makeStyles, createMuiTheme, useTheme, ThemeProvider} from '@material-ui/core/styles'
-import {CssBaseline, Hidden, Drawer, Box, Typography } from '@material-ui/core'
+import {CssBaseline, Hidden, Drawer } from '@material-ui/core'
 import { Switch, Route} from 'react-router-dom'
 import DrawerLinkList from './dashboard/DrawerLinkList'
 import Home from './dashboard/contents/home/Home'
@@ -10,8 +10,6 @@ import FixedAppBar from './dashboard/FixedAppBar'
 import AuditItem from './dashboard/contents/audit_item/AuditItem'
 import Content from './dashboard/contents/home/transaction_activity/Content'
 import StoreItems from './dashboard/contents/store_items/StoreItems'
-import { Virtuoso, VirtuosoGrid } from 'react-virtuoso'
-import StoreItemList from './dashboard/contents/store_items/StoreItemList'
 
 
   const drawerWidth = 240;
@@ -27,6 +25,7 @@ import StoreItemList from './dashboard/contents/store_items/StoreItemList'
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
+      width: "100%"
     },
 
     backdrop: {
@@ -338,59 +337,62 @@ function AdminPage(props){
                   </Hidden>
                 </nav>
 
-                  <main className={classes.content}>
-                      <div className={classes.toolbar} />
-                  <Switch>
+                    <main className={classes.content} >
+                    <div className={classes.toolbar} />
+                    
+                      <Switch>
 
-                      <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity/" >
-                        
-                         <Content />
-                      </Route>
+                          <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity/" >
+                            
+                            <Content />
+                          </Route>
 
-                      <Route exact={true} path="/admin_dashboard/:storeName/inventory_activity" >
-                          <h1> Inventory Activity </h1>
-                      </Route>
+                          <Route exact={true} path="/admin_dashboard/:storeName/inventory_activity" >
+                              <h1> Inventory Activity </h1>
+                          </Route>
 
-                      <Route exact={true} path="/admin_dashboard/:storeName/statistics_report" >
-                          <h1>  Statistics Reports</h1>
-                      </Route>
+                          <Route exact={true} path="/admin_dashboard/:storeName/statistics_report" >
+                              <h1>  Statistics Reports</h1>
+                          </Route>
 
-                      <Route exact={true} path="/admin_dashboard/:storeName/items" >
-                        <StoreItemList />
-                      </Route>
-                      
-                      <Route exact={true} path="/admin_dashboard/:storeName/cashiers" >
-                          <h1>  Cashiers </h1>
-                      </Route>
-
-                      <Route exact={true} path="/admin_dashboard/:storeName/settings" >
-                          <h1> Settings  </h1>
-                      </Route>
-
-                      <Route exact={true} path="/admin_dashboard/audit_item" >
-                          <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
-                          <AuditItem />
-                      </Route>
-
-                      <Route exact={true} path='/admin_dashboard/warehouse'>
-                          <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
-                          <h1> THIs is the same warehouse</h1>
-                      </Route>
-
-                      <Route exact={true} path='/admin_dashboard/workers'>
-                          <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
-                          <h1> THIs is the same workers</h1>
-                      </Route>
-
-                      <Route exact={true} path='/admin_dashboard/'>
-                        <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
-
-                          <Home />
+                          <Route exact={true} path="/admin_dashboard/:storeName/items" >
+                            <StoreItems />
                           
-                      </Route>
-                   
-                </Switch>
+                          </Route>
+                          
+                          <Route exact={true} path="/admin_dashboard/:storeName/cashiers" >
+                              <h1>  Cashiers </h1>
+                          </Route>
+
+                          <Route exact={true} path="/admin_dashboard/:storeName/settings" >
+                              <h1> Settings  </h1>
+                          </Route>
+
+                          <Route exact={true} path="/admin_dashboard/audit_item" >
+                              <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                              <AuditItem />
+                          </Route>
+
+                          <Route exact={true} path='/admin_dashboard/warehouse'>
+                              <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                              <h1> THIs is the same warehouse</h1>
+                          </Route>
+
+                          <Route exact={true} path='/admin_dashboard/workers'>
+                              <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                              <h1> THIs is the same workers</h1>
+                          </Route>
+
+                          <Route exact={true} path='/admin_dashboard/'>
+                            <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+
+                              <Home />
+                              
+                          </Route>
+                      
+                    </Switch>
                 </main>
+             
                 </div>
                 </ThemeProvider>
         

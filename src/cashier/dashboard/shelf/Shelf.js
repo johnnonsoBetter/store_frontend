@@ -1,8 +1,6 @@
 import { Box, Divider, makeStyles } from '@material-ui/core'
 import React from 'react'
-import ItemList from '../shelf/items/ItemList'
 import BarcodeProcessor from './items/BarcodeProcessor'
-import ItemSearchInput from './ItemSearchInput'
 import ShelfContentNav from './ShelfContentNav'
 
 const useStyles = makeStyles((theme) => ({
