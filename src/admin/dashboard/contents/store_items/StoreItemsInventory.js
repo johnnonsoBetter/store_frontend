@@ -1,5 +1,5 @@
 
-import { Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, withStyles } from '@material-ui/core'
+import { Avatar, Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, withStyles } from '@material-ui/core'
 import { AcUnit } from '@material-ui/icons'
 import React, { useEffect, useRef, useState } from 'react'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized'
@@ -78,7 +78,11 @@ const useStyles = makeStyles((theme) => ({
           
         },
 
-      }
+      },
+      small: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+      },
 }))
 
 function StoreItemsInventory(){
@@ -135,6 +139,12 @@ function StoreItemsInventory(){
     }
 
 
+    const performAction = () => {
+
+      console.log("action performed")
+    }
+
+
     return (
 
         <Container >
@@ -178,16 +188,21 @@ function StoreItemsInventory(){
                       itemContent={index => {
                         return (
                           <Box p={1}  className={classes.itemContainer} >
-                                 
+                            
                             <Box width="100%"> 
                               <Input value={inputValue} type="number" disabled={inputBoxDisabled} />
                             </Box>
+
+                            <Box p={1} width="100%" display="flex" justifyContent="center">
+                              <Typography style={{color: "green"}}>677</Typography>
+                            </Box>
+                            
 
                             <Box p={1}> 
                               <Typography>  Item {items[index].name} </Typography> 
                             </Box>
                            
-                            <Box width="100%"> <Button style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>
+                            <Box width="100%"> <Button onClick={performAction} style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>
 
                           </Box>
                         )
