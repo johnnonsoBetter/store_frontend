@@ -53,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
       },
 
       itemContainer: {
-        backgroundColor: "green",
+        backgroundColor: "#000000",
+        color: "white",
+        borderRadius: 9,
         marginTop: theme.spacing(2),
      
       
@@ -84,20 +86,52 @@ function StoreItemsInventory(){
     const items = [{name: "chicken"}, {name: "noodles"}, {name: "noodles"}, {name: "noodles"}, {name: "Milk"}, {name: "Timer"}, {name: "Wind"}]
     const [drawerOpened, setDrawerOpened]  = useState(false)
     const [currentAction, setCurrentAction] = useState(null)
+    const [inputBoxDisabled, setInputBoxDisabled] = useState(true)
+    const [inputValue, setInputValue] = useState('')
 
 
     useEffect(() => {
 
-      setCurrentAction('info')
+      setCurrentAction('overview')
+      setInputBoxDisabled(true)
 
+      
       return ()=> {
         setCurrentAction(null)
+        setInputBoxDisabled(true)
+        setDrawerOpened(false)
+        setInputValue('0')
+      }
+
+    }, [])
+
+
+    useEffect(() => {
+
+      if(currentAction === "overview"){
+        setInputValue('')
+      }else{
+        setInputValue('0')
       }
 
     }, [currentAction])
 
     const handleDrawerToggle = () => {
       setDrawerOpened(!drawerOpened)
+    }
+
+    const actionType = () => {
+      let theAction;
+
+      if (currentAction === 'bad_item')
+        theAction = "Remove Bad Item"
+      else if(currentAction === 'restock')
+        theAction = "Restock"
+      else if(currentAction === 'stock')
+        theAction = "Take Stock"
+      else
+        theAction = "Track Inventory"
+      return theAction
     }
 
 
@@ -109,6 +143,10 @@ function StoreItemsInventory(){
             value={{
               drawerOpened,
               setDrawerOpened,
+              setInputBoxDisabled,
+              inputBoxDisabled,
+              currentAction,
+              setCurrentAction,
             }}
           
           >
@@ -139,17 +177,18 @@ function StoreItemsInventory(){
                       itemClassName={classes.itemContainer}
                       itemContent={index => {
                         return (
-                          <Box   className={classes.itemContainer} >
-                            
-                            
+                          <Box p={1}  className={classes.itemContainer} >
+                                 
                             <Box width="100%"> 
-                              <Input />
+                              <Input value={inputValue} type="number" disabled={inputBoxDisabled} />
                             </Box>
-                            <Typography>  Item {items[index].name} </Typography> 
-                            <Box> <Button > Restock</Button> </Box>
 
-                            
-                             
+                            <Box p={1}> 
+                              <Typography>  Item {items[index].name} </Typography> 
+                            </Box>
+                           
+                            <Box width="100%"> <Button style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>
+
                           </Box>
                         )
                       }}

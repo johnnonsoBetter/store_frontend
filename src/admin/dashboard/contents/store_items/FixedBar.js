@@ -1,5 +1,5 @@
 import { AppBar, Box, IconButton, InputBase, makeStyles, Menu, MenuItem, Toolbar, Typography, withStyles } from '@material-ui/core'
-import { AcUnit, Add, Brush, Clear, Equalizer, GraphicEq, PlaylistAddCheck } from '@material-ui/icons'
+import { AcUnit, Add, Brush, Clear, Equalizer, ExpandLessOutlined, GraphicEq, PlaylistAddCheck } from '@material-ui/icons'
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import StoreItemsInventory from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
@@ -54,7 +54,7 @@ export const Input = withStyles((theme) => ({
 function FixedBar(){
     const classes = useStyles()
     const {storeName} = useParams()
-    const {setDrawerOpened} = useContext(StoreItemsInventory)
+    const {setDrawerOpened, setCurrentAction, setInputBoxDisabled} = useContext(StoreItemsInventory)
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -64,6 +64,21 @@ function FixedBar(){
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    const handleAction = (actionType) => {
+
+      if (actionType === 'overview'){
+        setCurrentAction(actionType)
+        setInputBoxDisabled(true)
+        handleClose()
+        return 
+      }
+    
+      setCurrentAction(actionType)
+      setInputBoxDisabled(false)
+      handleClose()
+
+    }
   
     const openInventoryManager = () => {
 
@@ -96,38 +111,34 @@ function FixedBar(){
                               open={Boolean(anchorEl)}
                               onClose={handleClose}
                             >
-                              <MenuItem onClick={handleClose}>     
+                              <MenuItem onClick={() => handleAction('overview')}>     
                                 <Box display="flex" justifyContent="space-between" width={200}> 
                                   <Typography>  Track Item Inventory </Typography> 
                                   <Equalizer />
                                 </Box>  
                               </MenuItem>
 
-                              <MenuItem onClick={handleClose}>     
+                              <MenuItem onClick={() => handleAction('restock')}>     
                                 <Box display="flex" justifyContent="space-between" width={200}> 
                                   <Typography>  Restock </Typography> 
                                   <Add />
                                 </Box>  
                               </MenuItem>
 
-                              <MenuItem onClick={handleClose}>     
+                              <MenuItem onClick={() => handleAction('stock')}>     
                                 <Box display="flex" justifyContent="space-between" width={200}> 
                                   <Typography>  Take Stock </Typography> 
                                   <PlaylistAddCheck />
                                 </Box>  
                               </MenuItem>
 
-                              <MenuItem onClick={handleClose}>     
+                              <MenuItem onClick={() => handleAction('bad_item')}>     
                                 <Box display="flex" justifyContent="space-between" width={200}> 
                                   <Typography>  Remove Bad Item </Typography> 
                                   <Clear />
                                 </Box>  
                               </MenuItem>
 
-
-                              {/* <MenuItem onClick={handleClose}>Restock</MenuItem>
-                              <MenuItem onClick={handleClose}>Take Stock</MenuItem>
-                              <MenuItem onClick={handleClose}>Remove Bad Item</MenuItem> */}
                             </Menu>
                         </Box>
 
