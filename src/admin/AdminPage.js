@@ -9,7 +9,7 @@ import Home from './dashboard/contents/home/Home'
 import FixedAppBar from './dashboard/FixedAppBar'
 import AuditItem from './dashboard/contents/audit_item/AuditItem'
 import Content from './dashboard/contents/home/transaction_activity/Content'
-import StoreItems from './dashboard/contents/store_items/StoreItems'
+import StoreItems from './dashboard/contents/store_items/StoreItemsInventory'
 
 
   const drawerWidth = 240;

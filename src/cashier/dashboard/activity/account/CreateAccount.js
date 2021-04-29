@@ -189,7 +189,7 @@ function CreateAccount(){
                         <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
-                                    <Typography variant="h6"> Next Change </Typography>
+                                    <Typography variant="h6"> Next Day Change </Typography>
                                 </Box>
                                 <Box textAlign="center" >
                                     <Typography variant="h5">  </Typography>
