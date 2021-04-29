@@ -9,6 +9,7 @@ import { store } from '../../../../api/admin/item/api'
 import { StoreItemsInventoryProvider } from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
 import ItemList from '../audit_item/audit_mode/ItemList'
 import FixedBar from './FixedBar'
+import StoreInventory from './StoreInventory'
 
 
 export const Input = withStyles((theme) => ({
@@ -187,6 +188,7 @@ function StoreItemsInventory(){
               currentAction,
               setCurrentAction,
               setInventoryType,
+              items,
             }}
           
           >
@@ -213,7 +215,7 @@ function StoreItemsInventory(){
 
                        {
                          inventoryType === 'store' ?
-                         <Box > Please show the store inventory manager </Box>
+                         <StoreInventory />
                          : <Box> Please show the item inventory  </Box>
                        }
                        

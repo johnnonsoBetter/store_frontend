@@ -80,6 +80,14 @@ export const store = (store) => {
                 url: `${baseUrl}api/v1/admin_dashboards/${store}/store_items`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
+        },
+
+        fetchInventoryInfo: ()=> {
+            return axios({
+                method: "GET",
+                url: `${baseUrl}api/v1/store_inventory_managers/${store}`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+            })
         }
     }
 }
