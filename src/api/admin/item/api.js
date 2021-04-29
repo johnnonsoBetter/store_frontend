@@ -70,3 +70,16 @@ export const itemApi = ()=> {
         
     }
 }
+
+export const store = (store) => {
+
+    return {
+        fetchItems: ()=> {
+            return axios({
+                method: "GET",
+                url: `${baseUrl}api/v1/admin_dashboards/${store}/store_items`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+            })
+        }
+    }
+}

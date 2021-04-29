@@ -1,9 +1,11 @@
 
-import { Avatar, Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, withStyles } from '@material-ui/core'
-import { AcUnit } from '@material-ui/icons'
+import { Avatar, Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, IconButton, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, withStyles } from '@material-ui/core'
+import { AcUnit, Clear } from '@material-ui/icons'
 import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized'
 import { Virtuoso, VirtuosoGrid } from 'react-virtuoso'
+import { store } from '../../../../api/admin/item/api'
 import { StoreItemsInventoryProvider } from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
 import ItemList from '../audit_item/audit_mode/ItemList'
 import FixedBar from './FixedBar'
@@ -87,17 +89,35 @@ const useStyles = makeStyles((theme) => ({
 
 function StoreItemsInventory(){
     const classes = useStyles()
-    const items = [{name: "chicken"}, {name: "noodles"}, {name: "noodles"}, {name: "noodles"}, {name: "Milk"}, {name: "Timer"}, {name: "Wind"}]
     const [drawerOpened, setDrawerOpened]  = useState(false)
     const [currentAction, setCurrentAction] = useState(null)
     const [inputBoxDisabled, setInputBoxDisabled] = useState(true)
     const [inputValue, setInputValue] = useState('')
+    const [inventoryType, setInventoryType] = useState('store')
+    const [items, setItems] = useState([])
+
+
+    const {storeName} = useParams()
 
 
     useEffect(() => {
 
-      setCurrentAction('overview')
-      setInputBoxDisabled(true)
+      
+      store(storeName).fetchItems().then((response) => {
+
+        console.log(response)
+        const {items} = response.data
+
+        setItems(items)
+        setCurrentAction('overview')
+        setInputBoxDisabled(true)
+        setInventoryType('store')
+        
+
+      }).catch((err) => {
+
+        console.log(err)
+      })
 
       
       return ()=> {
@@ -105,6 +125,8 @@ function StoreItemsInventory(){
         setInputBoxDisabled(true)
         setDrawerOpened(false)
         setInputValue('0')
+        setInventoryType('store')
+
       }
 
     }, [])
@@ -142,6 +164,13 @@ function StoreItemsInventory(){
     const performAction = () => {
 
       console.log("action performed")
+
+      if (currentAction === 'overview'){
+        setInventoryType('item')
+        setDrawerOpened(true)
+      }
+
+      
     }
 
 
@@ -157,6 +186,7 @@ function StoreItemsInventory(){
               inputBoxDisabled,
               currentAction,
               setCurrentAction,
+              setInventoryType,
             }}
           
           >
@@ -175,7 +205,18 @@ function StoreItemsInventory(){
                       }}
                     >
                      <Box width={320}>
-                       <Typography> Please let all the same people and the whole time when we are going to start to add some permutation to take from the whole </Typography>
+                       <Box display="flex" justifyContent="flex-end">
+                         <IconButton onClick={() => {setDrawerOpened(false)}}>
+                            <Clear />
+                         </IconButton>
+                       </Box>
+
+                       {
+                         inventoryType === 'store' ?
+                         <Box > Please show the store inventory manager </Box>
+                         : <Box> Please show the item inventory  </Box>
+                       }
+                       
                      </Box>
                       
                     </Drawer>
@@ -186,6 +227,9 @@ function StoreItemsInventory(){
                       listClassName={classes.list}
                       itemClassName={classes.itemContainer}
                       itemContent={index => {
+
+                        const {name, quantity} = items[index]
+
                         return (
                           <Box p={1}  className={classes.itemContainer} >
                             
@@ -194,12 +238,12 @@ function StoreItemsInventory(){
                             </Box>
 
                             <Box p={1} width="100%" display="flex" justifyContent="center">
-                              <Typography style={{color: "green"}}>677</Typography>
+                              <Typography style={{color: "green"}}>{quantity}</Typography>
                             </Box>
                             
 
                             <Box p={1}> 
-                              <Typography>  Item {items[index].name} </Typography> 
+                              <Typography>  {name} </Typography> 
                             </Box>
                            
                             <Box width="100%"> <Button onClick={performAction} style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>

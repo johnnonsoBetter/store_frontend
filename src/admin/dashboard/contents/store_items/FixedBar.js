@@ -54,7 +54,7 @@ export const Input = withStyles((theme) => ({
 function FixedBar(){
     const classes = useStyles()
     const {storeName} = useParams()
-    const {setDrawerOpened, setCurrentAction, setInputBoxDisabled} = useContext(StoreItemsInventory)
+    const {setDrawerOpened, setInventoryType, setCurrentAction, setInputBoxDisabled} = useContext(StoreItemsInventory)
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -83,6 +83,7 @@ function FixedBar(){
     const openInventoryManager = () => {
 
       setDrawerOpened(true)
+      setInventoryType('store')
 
     }
 
