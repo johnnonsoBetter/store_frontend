@@ -1,5 +1,5 @@
 
-import { Avatar, Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, IconButton, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, withStyles } from '@material-ui/core'
+import { Avatar, Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, IconButton, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, useMediaQuery, withStyles } from '@material-ui/core'
 import { AcUnit, Clear } from '@material-ui/icons'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { store } from '../../../../api/admin/item/api'
 import { StoreItemsInventoryProvider } from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
 import ItemList from '../audit_item/audit_mode/ItemList'
 import FixedBar from './FixedBar'
+import ItemInventory from './ItemInventory'
 import StoreInventory from './StoreInventory'
 
 
@@ -96,6 +97,10 @@ function StoreItemsInventory(){
     const [inputValue, setInputValue] = useState('')
     const [inventoryType, setInventoryType] = useState('store')
     const [items, setItems] = useState([])
+    const matches = useMediaQuery('(max-width:600px)')
+    const [itemId, setItemId] = useState('')
+
+
 
 
     const {storeName} = useParams()
@@ -112,7 +117,8 @@ function StoreItemsInventory(){
         setItems(items)
         setCurrentAction('overview')
         setInputBoxDisabled(true)
-        setInventoryType('store')
+        setInventoryType(false)
+        setDrawerOpened(false)
         
 
       }).catch((err) => {
@@ -125,6 +131,7 @@ function StoreItemsInventory(){
         setCurrentAction(null)
         setInputBoxDisabled(true)
         setDrawerOpened(false)
+        setItemId('')
         setInputValue('0')
         setInventoryType('store')
 
@@ -144,7 +151,10 @@ function StoreItemsInventory(){
     }, [currentAction])
 
     const handleDrawerToggle = () => {
-      setDrawerOpened(!drawerOpened)
+      
+      setInventoryType(false)
+      setDrawerOpened(false)
+      setItemId('')
     }
 
     const actionType = () => {
@@ -169,6 +179,7 @@ function StoreItemsInventory(){
       if (currentAction === 'overview'){
         setInventoryType('item')
         setDrawerOpened(true)
+        
       }
 
       
@@ -189,6 +200,8 @@ function StoreItemsInventory(){
               setCurrentAction,
               setInventoryType,
               items,
+              setItemId,
+              itemId,
             }}
           
           >
@@ -206,17 +219,18 @@ function StoreItemsInventory(){
                         keepMounted: true, // Better open performance on mobile. Please tell me and the whole peopole  Please tell me and you to take from the bug the inventory i will try to make th
                       }}
                     >
-                     <Box width={320}>
+                     <Box width={matches ? window.innerWidth : 320}>
                        <Box display="flex" justifyContent="flex-end">
-                         <IconButton onClick={() => {setDrawerOpened(false)}}>
+                         <IconButton onClick={() => {handleDrawerToggle()}}>
                             <Clear />
                          </IconButton>
                        </Box>
 
                        {
-                         inventoryType === 'store' ?
+                         inventoryType === false ?
+                         null : inventoryType === 'store' ?
                          <StoreInventory />
-                         : <Box> Please show the item inventory  </Box>
+                         : <ItemInventory />
                        }
                        
                      </Box>
@@ -230,14 +244,12 @@ function StoreItemsInventory(){
                       itemClassName={classes.itemContainer}
                       itemContent={index => {
 
-                        const {name, quantity} = items[index]
+                        const {id, name, quantity} = items[index]
 
                         return (
                           <Box p={1}  className={classes.itemContainer} >
                             
-                            <Box width="100%"> 
-                              <Input value={inputValue} type="number" disabled={inputBoxDisabled} />
-                            </Box>
+                            
 
                             <Box p={1} width="100%" display="flex" justifyContent="center">
                               <Typography style={{color: "green"}}>{quantity}</Typography>
@@ -247,8 +259,14 @@ function StoreItemsInventory(){
                             <Box p={1}> 
                               <Typography>  {name} </Typography> 
                             </Box>
+                            <Box width="100%"> 
+                              <Input value={inputValue} type="number" disabled={inputBoxDisabled} />
+                            </Box>
                            
-                            <Box width="100%"> <Button onClick={performAction} style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>
+                            <Box width="100%"> <Button onClick={()=> {
+                              setItemId(id)
+                              performAction()
+                            }} style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>
 
                           </Box>
                         )

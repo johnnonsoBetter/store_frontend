@@ -17,6 +17,8 @@ function StoreInventory() {
 
     const {storeName} = useParams()
     const {items} = useContext(StoreItemsInventory)
+    const [loading, setLoading] = useState(true)
+
 
 
     useEffect(() => {
@@ -49,6 +51,8 @@ function StoreInventory() {
 
     return (
         <>
+        
+
         <Paper>
             <Box p={1} textAlign="center">
                 <Typography variant="h5" style={{textTransform: "capitalize"}}> {storeName} Inventory</Typography>

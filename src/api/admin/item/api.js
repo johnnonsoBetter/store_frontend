@@ -49,6 +49,14 @@ export const itemApi = ()=> {
             })
         },
 
+        fetchItemInventoryInfo: (id) => {
+            return axios({
+                method: "GET",
+                url: `${baseUrl}api/v1/store_items/${id}`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+            })
+        },
+
         deleteItem: (name) => {
             return axios({
                 method: "DELETE",
@@ -89,5 +97,7 @@ export const store = (store) => {
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         }
+
+        
     }
 }
