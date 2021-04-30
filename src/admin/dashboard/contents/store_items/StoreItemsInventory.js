@@ -99,6 +99,18 @@ function StoreItemsInventory(){
     const [items, setItems] = useState([])
     const matches = useMediaQuery('(max-width:600px)')
     const [itemId, setItemId] = useState('')
+    const [itemInfo, setItemInfo] = useState({
+      name: 'ser',
+      quantity: '0',
+      inventory_manager: {
+        total_goods_quantity: 0,
+        total_goods_worth: 0,
+        total_goods_cost: 0,
+        expected_profit: 0
+
+      },
+      quantity_event_trackers: []
+    })
 
 
 
@@ -202,6 +214,8 @@ function StoreItemsInventory(){
               items,
               setItemId,
               itemId,
+              itemInfo,
+              setItemInfo,
             }}
           
           >
