@@ -61,7 +61,7 @@ function ItemInventory(){
               })
           
 
-            console.log("clean up has been performed at the item")
+         
         }
 
     }, [])

@@ -1,6 +1,6 @@
 import { AppBar, Box, IconButton, InputBase, makeStyles, Menu, MenuItem, Toolbar, Typography, withStyles } from '@material-ui/core'
 import { AcUnit, Add, Brush, Clear, Equalizer, ExpandLessOutlined, GraphicEq, PlaylistAddCheck } from '@material-ui/icons'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import StoreItemsInventory from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
 
@@ -54,8 +54,9 @@ export const Input = withStyles((theme) => ({
 function FixedBar(){
     const classes = useStyles()
     const {storeName} = useParams()
-    const {setDrawerOpened, setInventoryType, setCurrentAction, setInputBoxDisabled} = useContext(StoreItemsInventory)
+    const {setDrawerOpened, setInventoryType, setCurrentAction, setInputBoxDisabled, items, setFilteredItems} = useContext(StoreItemsInventory)
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [value, setValue] = useState('')
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -64,6 +65,42 @@ function FixedBar(){
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+
+      let newFilteredItems; 
+
+      if (value === '-'){
+        newFilteredItems = items.filter(item => item.quantity < 0)
+
+        
+        setFilteredItems(newFilteredItems)
+        return
+        
+      }
+
+      if (value === '0'){
+        newFilteredItems = items.filter(item => item.quantity === 0)
+
+        
+        setFilteredItems(newFilteredItems)
+        return
+        
+      }
+
+      newFilteredItems = items.filter(item => item.quantity === parseInt(value) || item.name.toLowerCase().includes(value.toLowerCase()))
+
+      setFilteredItems(newFilteredItems)
+      
+
+     
+
+
+
+  
+
+    }
 
     const handleAction = (actionType) => {
 
@@ -78,6 +115,12 @@ function FixedBar(){
       setInputBoxDisabled(false)
       handleClose()
 
+    }
+
+    const handleChange = (e) => {
+      e.preventDefault()
+
+      setValue(e.target.value)
     }
   
     const openInventoryManager = () => {
@@ -98,7 +141,10 @@ function FixedBar(){
 
                     <Box  display="flex" alignItems="center">
                         <Box paddingRight={2} paddingLeft={2}>
-                            <Input  placeholder="Search Items "/>
+                            <form onSubmit={handleSubmit}  noValidate autoComplete="off"  onSubmit={handleSubmit}>
+                              <Input value={value} onChange={handleChange}  placeholder="Search Items "/>
+                            </form>
+                            
                         </Box>
 
                         <Box paddingRight={2}   paddingLeft={2}>

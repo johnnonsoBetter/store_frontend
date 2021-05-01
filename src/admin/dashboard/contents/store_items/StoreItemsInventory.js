@@ -99,6 +99,7 @@ function StoreItemsInventory(){
     const [items, setItems] = useState([])
     const matches = useMediaQuery('(max-width:600px)')
     const [itemId, setItemId] = useState('')
+    const [filteredItems, setFilteredItems] = useState(items)
     const [itemInfo, setItemInfo] = useState({
       name: '',
       quantity: '0',
@@ -127,6 +128,7 @@ function StoreItemsInventory(){
         const {items} = response.data
 
         setItems(items)
+        setFilteredItems(items)
         setCurrentAction('overview')
         setInputBoxDisabled(true)
         setInventoryType(false)
@@ -146,6 +148,7 @@ function StoreItemsInventory(){
         setItemId('')
         setInputValue('0')
         setInventoryType('store')
+        setFilteredItems([])
 
       }
 
@@ -216,6 +219,8 @@ function StoreItemsInventory(){
               itemId,
               itemInfo,
               setItemInfo,
+              setFilteredItems,
+              filteredItems
             }}
           
           >
@@ -251,14 +256,14 @@ function StoreItemsInventory(){
                       
                     </Drawer>
                     <VirtuosoGrid
-                      totalCount={items.length}
+                      totalCount={filteredItems.length}
                       overscan={2}
                     
                       listClassName={classes.list}
                       itemClassName={classes.itemContainer}
                       itemContent={index => {
 
-                        const {id, name, quantity} = items[index]
+                        const {id, name, quantity} = filteredItems[index]
 
                         return (
                           <Box p={1}  className={classes.itemContainer} >
