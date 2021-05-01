@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized'
 import { Virtuoso, VirtuosoGrid } from 'react-virtuoso'
-import { store } from '../../../../api/admin/item/api'
+import { itemApi, store } from '../../../../api/admin/item/api'
 import { StoreItemsInventoryProvider } from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
 import ItemList from '../audit_item/audit_mode/ItemList'
 import FixedBar from './FixedBar'
@@ -99,7 +99,10 @@ function StoreItemsInventory(){
     const [items, setItems] = useState([])
     const matches = useMediaQuery('(max-width:600px)')
     const [itemId, setItemId] = useState('')
+    const [itemName, setItemName] = useState('')
+    const [q_value, setQ_Value] = useState('')
     const [filteredItems, setFilteredItems] = useState(items)
+    
     const [itemInfo, setItemInfo] = useState({
       name: '',
       quantity: '0',
@@ -117,7 +120,7 @@ function StoreItemsInventory(){
 
 
     const {storeName} = useParams()
-
+   
 
     useEffect(() => {
 
@@ -149,7 +152,8 @@ function StoreItemsInventory(){
         setInputValue('0')
         setInventoryType('store')
         setFilteredItems([])
-
+        setItemName('')
+        setQ_Value('')
       }
 
     }, [])
@@ -170,6 +174,17 @@ function StoreItemsInventory(){
       setInventoryType(false)
       setDrawerOpened(false)
       setItemId('')
+    }
+
+    function restockItem(){
+
+      store(storeName).restockItem(itemName, q_value).then((response) => {
+
+        console.log(response)
+      }).catch(err => {
+        console.log(err)
+      })
+
     }
 
     const actionType = () => {
@@ -199,6 +214,31 @@ function StoreItemsInventory(){
 
       
     }
+
+    const handleChange = (e) => {
+      e.preventDefault()
+      
+      setQ_Value(parseInt(e.target.value))
+
+
+    }
+
+    const handleSubmit = (e) => {
+
+      e.preventDefault()
+      if (isNaN(parseInt(q_value))){ 
+        return
+      }
+
+      if (currentAction === 'restock'){
+        restockItem()
+      }
+        
+      console.log()
+      console.log("the item has been submitted")
+    }
+
+    
 
 
     return (
@@ -265,6 +305,10 @@ function StoreItemsInventory(){
 
                         const {id, name, quantity} = filteredItems[index]
 
+                        
+
+                        
+
                         return (
                           <Box p={1}  className={classes.itemContainer} >
                             
@@ -279,10 +323,24 @@ function StoreItemsInventory(){
                               <Typography>  {name} </Typography> 
                             </Box>
                             <Box width="100%"> 
-                              <Input value={inputValue} type="number" disabled={inputBoxDisabled} />
+                              <form onSubmit={handleSubmit}>
+                                <Input  onChange={(e) => {
+
+                                                            
+                                                              
+                                handleChange(e)
+                                setItemName(name)
+
+
+                                }}   type="number" disabled={inputBoxDisabled} />
+
+
+
+                              </form>
+                              
                             </Box>
                            
-                            <Box width="100%"> <Button onClick={()=> {
+                            <Box width="100%"> <Button disabled={currentAction !== 'overview'}  onClick={()=> {
                               setItemId(id)
                               performAction()
                             }} style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>

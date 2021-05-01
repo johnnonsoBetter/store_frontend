@@ -120,6 +120,10 @@ function FixedBar(){
     const handleChange = (e) => {
       e.preventDefault()
 
+      if (e.target.value === ' ' || e.target.value === ''){
+        setFilteredItems(items)
+        
+      }
       setValue(e.target.value)
     }
   

@@ -96,6 +96,20 @@ export const store = (store) => {
                 url: `${baseUrl}api/v1/store_inventory_managers/${store}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
+        },
+
+        restockItem: (name, quantity)=> {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}api/v1/restocks`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+                data: {
+                    store_name: store,
+                    item_name: name,
+                    quantity: quantity
+                }
+            })
+
         }
 
         
