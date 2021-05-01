@@ -100,7 +100,7 @@ function StoreItemsInventory(){
     const matches = useMediaQuery('(max-width:600px)')
     const [itemId, setItemId] = useState('')
     const [itemInfo, setItemInfo] = useState({
-      name: 'ser',
+      name: '',
       quantity: '0',
       inventory_manager: {
         total_goods_quantity: 0,

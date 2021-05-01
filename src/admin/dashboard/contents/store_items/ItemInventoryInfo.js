@@ -8,8 +8,6 @@ function ItemInventoryInfo(){
     const {itemInfo} = useContext(StoreItemsInventory)
     const {inventory_manager} = itemInfo
 
-    console.log(inventory_manager)
-    console.log("this is the inventory")
 
     return (
         <Box>

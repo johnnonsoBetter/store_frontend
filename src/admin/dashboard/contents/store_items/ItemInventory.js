@@ -16,26 +16,22 @@ function ItemInventory(){
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
     const {itemId, itemInfo, setItemInfo} = useContext(StoreItemsInventory)
-    const [value, setValue] = React.useState(0);
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
+   
     useEffect(() => {
 
         itemApi().fetchItemInventoryInfo(parseInt(itemId)).then((response) => {
 
             console.log(response)
 
-            const {quantity} = response.data['item']
-            const {inventory_manager} = response.data
+            const {quantity, name} = response.data['item']
+            const {inventory_manager, quantity_event_trackers} = response.data
 
             console.log(inventory_manager)
             setItemInfo({
-                name: 'ser',
-                quantity: quantity,
+                name,
+                quantity,
                 inventory_manager: inventory_manager,
-                quantity_event_trackers: []
+                quantity_event_trackers,
               })
 
             setLoading(false)
@@ -82,7 +78,7 @@ function ItemInventory(){
                 : 
                 <Box p={2}>
                     <Box textAlign="center"> 
-                        <Typography variant="h6"> Item Name {itemInfo['name']} </Typography> 
+                        <Typography variant="h6"> {itemInfo['name']} </Typography> 
                         <Box p={2}>  <Typography variant="h5"> { AmountFormater(itemInfo['quantity']).amount()  } </Typography>  </Box>
                         <Box display="flex" justifyContent="center"> 
                             <ItemInventoryNav />
