@@ -1,5 +1,5 @@
 
-import { Avatar, Box, Button, ButtonBase, Card, CardContent, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, IconButton, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, useMediaQuery, withStyles } from '@material-ui/core'
+import { Avatar, Box, Button, ButtonBase, Card, CardContent, CircularProgress, Container, Drawer, Fab, FormControl, FormControlLabel, FormLabel, IconButton, InputBase, makeStyles, Radio, RadioGroup, styled, Typography, useMediaQuery, withStyles } from '@material-ui/core'
 import { AcUnit, Clear } from '@material-ui/icons'
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -11,6 +11,10 @@ import ItemList from '../audit_item/audit_mode/ItemList'
 import FixedBar from './FixedBar'
 import ItemInventory from './ItemInventory'
 import StoreInventory from './StoreInventory'
+import { green } from '@material-ui/core/colors';
+import Restocker from './Restocker'
+
+
 
 
 export const Input = withStyles((theme) => ({
@@ -87,6 +91,32 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(4),
         height: theme.spacing(4),
       },
+
+      wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+      },
+      buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+          backgroundColor: green[700],
+        },
+      },
+      fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+      },
+      buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
 }))
 
 function StoreItemsInventory(){
@@ -95,6 +125,7 @@ function StoreItemsInventory(){
     const [currentAction, setCurrentAction] = useState(null)
     const [inputBoxDisabled, setInputBoxDisabled] = useState(true)
     const [inputValue, setInputValue] = useState('')
+    const [loadingButton, setLoadingButton] = useState(false)
     const [inventoryType, setInventoryType] = useState('store')
     const [items, setItems] = useState([])
     const matches = useMediaQuery('(max-width:600px)')
@@ -102,6 +133,8 @@ function StoreItemsInventory(){
     const [itemName, setItemName] = useState('')
     const [q_value, setQ_Value] = useState('')
     const [filteredItems, setFilteredItems] = useState(items)
+    const [loading, setLoading] = useState(false);
+    
     
     const [itemInfo, setItemInfo] = useState({
       name: '',
@@ -154,6 +187,7 @@ function StoreItemsInventory(){
         setFilteredItems([])
         setItemName('')
         setQ_Value('')
+        
       }
 
     }, [])
@@ -177,10 +211,12 @@ function StoreItemsInventory(){
     }
 
     function restockItem(){
-
+      
       store(storeName).restockItem(itemName, q_value).then((response) => {
 
         console.log(response)
+        setLoading(false)
+        setQ_Value('')
       }).catch(err => {
         console.log(err)
       })
@@ -206,10 +242,16 @@ function StoreItemsInventory(){
 
       console.log("action performed")
 
+
+      
+
       if (currentAction === 'overview'){
         setInventoryType('item')
         setDrawerOpened(true)
         
+      }else if(currentAction === 'restock'){
+        setInventoryType('restocker')
+        setDrawerOpened(true)
       }
 
       
@@ -226,12 +268,14 @@ function StoreItemsInventory(){
     const handleSubmit = (e) => {
 
       e.preventDefault()
+      setLoading(true)
       if (isNaN(parseInt(q_value))){ 
         return
       }
 
       if (currentAction === 'restock'){
         restockItem()
+        
       }
         
       console.log()
@@ -260,7 +304,12 @@ function StoreItemsInventory(){
               itemInfo,
               setItemInfo,
               setFilteredItems,
-              filteredItems
+              filteredItems,
+              loadingButton,
+              setLoadingButton,
+              itemName,
+              items,
+              
             }}
           
           >
@@ -289,7 +338,8 @@ function StoreItemsInventory(){
                          inventoryType === false ?
                          null : inventoryType === 'store' ?
                          <StoreInventory />
-                         : <ItemInventory />
+                         : inventoryType === 'item' ? <ItemInventory /> 
+                         : inventoryType === 'restocker' ? <Restocker /> : null
                        }
                        
                      </Box>
@@ -310,7 +360,7 @@ function StoreItemsInventory(){
                         
 
                         return (
-                          <Box p={1}  className={classes.itemContainer} >
+                          <Box p={1} minWidth={300}  className={classes.itemContainer} >
                             
                             
 
@@ -323,29 +373,33 @@ function StoreItemsInventory(){
                               <Typography>  {name} </Typography> 
                             </Box>
                             <Box width="100%"> 
-                              <form onSubmit={handleSubmit}>
-                                <Input  onChange={(e) => {
-
-                                                            
-                                                              
-                                handleChange(e)
-                                setItemName(name)
-
-
-                                }}   type="number" disabled={inputBoxDisabled} />
-
-
-
-                              </form>
+                              
                               
                             </Box>
                            
-                            <Box width="100%"> <Button disabled={currentAction !== 'overview'}  onClick={()=> {
-                              setItemId(id)
-                              performAction()
-                            }} style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}} > {actionType()}</Button> </Box>
+                            <Box width="100%"> 
+                            <div className={classes.wrapper}>
+                                <Button
+                                variant="contained"
+                                color="primary"
+                                style={{width: "100%", color: "white", backgroundColor: "#00475dcf"}}
+                                disabled={loading}
+                                onClick ={() => {
+                                       setItemId(id)
+                                      
+                                      
+                                      performAction()
+                                      setItemName(name)
+                                      
+                                }}
+                                >
+                                {actionType()}
+                                </Button>
+                               
+                            </div> </Box>
 
                           </Box>
+                          
                         )
                       }}
                   

@@ -60,7 +60,7 @@ function CreateExpense(props){
 
     const {expenses,  setTotalExpenses, setExpenses, totalExpenses} = useContext(ExpensesContext)
     const {showSnackBar} = useContext(DashboardContext)
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = useState(false);
     const [expense, setExpense] = useState({
         cost: '',
         detail: ''
