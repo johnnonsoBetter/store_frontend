@@ -13,6 +13,7 @@ import ItemInventory from './ItemInventory'
 import StoreInventory from './StoreInventory'
 import { green } from '@material-ui/core/colors';
 import Restocker from './Restocker'
+import InventorySnackBar from './InventorySnackBar'
 
 
 
@@ -134,6 +135,11 @@ function StoreItemsInventory(){
     const [q_value, setQ_Value] = useState('')
     const [filteredItems, setFilteredItems] = useState(items)
     const [loading, setLoading] = useState(false);
+    const [snackBarOpened, setSnackbarOpened] = useState(false)
+    const [taskDone, setTaskDone] = useState(false)
+    const [message, setMessage] = useState('')
+    const [severity, setSeverity] = useState('')
+
     
     
     const [itemInfo, setItemInfo] = useState({
@@ -210,18 +216,6 @@ function StoreItemsInventory(){
       setItemId('')
     }
 
-    function restockItem(){
-      
-      store(storeName).restockItem(itemName, q_value).then((response) => {
-
-        console.log(response)
-        setLoading(false)
-        setQ_Value('')
-      }).catch(err => {
-        console.log(err)
-      })
-
-    }
 
     const actionType = () => {
       let theAction;
@@ -257,30 +251,14 @@ function StoreItemsInventory(){
       
     }
 
-    const handleChange = (e) => {
-      e.preventDefault()
-      
-      setQ_Value(parseInt(e.target.value))
-
-
+    const launchSnackBar =(s_message, severity, taskDone=false)=> {
+      setSnackbarOpened(true)
+      setMessage(s_message)
+      setSeverity(severity)
+      setTaskDone(taskDone)
     }
 
-    const handleSubmit = (e) => {
 
-      e.preventDefault()
-      setLoading(true)
-      if (isNaN(parseInt(q_value))){ 
-        return
-      }
-
-      if (currentAction === 'restock'){
-        restockItem()
-        
-      }
-        
-      console.log()
-      console.log("the item has been submitted")
-    }
 
     
 
@@ -309,13 +287,24 @@ function StoreItemsInventory(){
               setLoadingButton,
               itemName,
               items,
+              snackBarOpened,
+              severity,
+              message,
+              taskDone,
+              setSnackbarOpened,
+              setSeverity,
+              setMessage,
+              setTaskDone,
+              launchSnackBar,
               
+
             }}
           
           >
 
                 <Box  height="calc(100vh - 100px)" width="100%" className={classes.box}>
                 <FixedBar />
+                <InventorySnackBar  />
                 <Drawer
                       
                       variant="temporary"

@@ -69,7 +69,7 @@ function Restocker(){
 
   const classes = useStyles()
   const [input, setInput] = useState('')
-  const {loadingButton, setLoadingButton,setInventoryType, setDrawerOpened, itemName, items, setFilteredItems } = useContext(StoreItemsInventory)
+  const {loadingButton, setLoadingButton,setInventoryType, setDrawerOpened, itemName, launchSnackBar, items, setFilteredItems } = useContext(StoreItemsInventory)
   const {storeName} = useParams()
 
   const handleSubmit = (e) => {
@@ -92,10 +92,12 @@ function Restocker(){
       setInventoryType(false)
       setDrawerOpened(false)
       setFilteredItems(newFilteredItems)
+      launchSnackBar(`${parseInt(input)} ${itemName} Added`, 'success', 'success')
 
     }).catch(err => {
-      console.log(err)
+     
       setLoadingButton(false)
+      launchSnackBar(`${parseInt(input)} ${itemName} Failed To Be Added`, 'primary', false)
     })
   }
 
