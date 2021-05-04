@@ -16,6 +16,7 @@ import Restocker from './Restocker'
 import InventorySnackBar from './InventorySnackBar'
 import BarcodeRestocker from './barcode/BarcodeRestocker'
 import StockTaker from './StockTaker'
+import RemoveBadItem from './RemoveBadItem'
 
 
 
@@ -236,11 +237,6 @@ function StoreItemsInventory(){
 
     const performAction = () => {
 
-      console.log("action performed")
-
-
-      
-
       if (currentAction === 'overview'){
         setInventoryType('item')
         setDrawerOpened(true)
@@ -252,6 +248,9 @@ function StoreItemsInventory(){
         setInventoryType('take_stock')
         setDrawerOpened(true)
   
+      }else if(currentAction === 'bad_item'){
+        setInventoryType('bad_item_remover')
+        setDrawerOpened(true)
       }
      
       
@@ -339,7 +338,8 @@ function StoreItemsInventory(){
                          <StoreInventory />
                          : inventoryType === 'item' ? <ItemInventory /> 
                          : inventoryType === 'restocker' ? <Restocker /> : 
-                         inventoryType === 'take_stock' ? <StockTaker /> : null
+                         inventoryType === 'take_stock' ? <StockTaker /> : 
+                         inventoryType === 'bad_item_remover' ? <RemoveBadItem /> : null
                        }
                        
                      </Box>

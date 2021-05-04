@@ -125,7 +125,21 @@ export const store = (store) => {
                 }
             })
 
-        }
+        },
+
+        removeBadItem: (name, quantity)=> {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}api/v1/bad_items`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+                data: {
+                    store_name: store,
+                    name,
+                    quantity,
+                }
+            })
+
+        },
 
        
     }

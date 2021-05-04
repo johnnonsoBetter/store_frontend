@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function StockTaker(){
+function RemoveBadItem(){
 
   const classes = useStyles()
   const [input, setInput] = useState('')
@@ -76,12 +76,12 @@ function StockTaker(){
     e.preventDefault()
     setLoadingButton(true)
 
-    store(storeName).takeItemStock(itemName, parseInt(input)).then((response) => {
+    store(storeName).removeBadItem(itemName, parseInt(input)).then((response) => {
         console.log(response)
       const newFilteredItems = items.map(item => {
 
         if (item.name === itemName){
-          item.quantity = parseInt(input)
+          item.quantity = (item.quantity - parseInt(input))
           return item
         }
         return item
@@ -91,12 +91,12 @@ function StockTaker(){
       setInventoryType(false)
       setDrawerOpened(false)
       setFilteredItems(newFilteredItems)
-      launchSnackBar(`Updated  ${itemName} Quantity to ${parseInt(input)}`, 'success', 'success')
+      launchSnackBar(`Removed ${parseInt(input)}  ${itemName} from Shelf`, 'success', 'success')
 
     }).catch(err => {
      
       setLoadingButton(false)
-      launchSnackBar(`Failed To Update  ${itemName} To ${parseInt(input)} `, 'primary', false)
+      launchSnackBar(`Failed To Remove  ${parseInt(input)} ${itemName} from Shelf`, 'primary', false)
     })
   }
 
@@ -111,7 +111,7 @@ function StockTaker(){
     return (
         <Box>
             <Box textAlign="center"> 
-                <Typography variant="h6"> Take Stock </Typography>
+                <Typography variant="h6"> Remove Bad Item </Typography>
                 <Box p={1}>
                     <Typography variant="h6"> {itemName} </Typography>
                 </Box>
@@ -127,7 +127,7 @@ function StockTaker(){
                                 disabled={loadingButton}
                                 type="submit"
                                 >
-                                Ammend Stock
+                                Remove Item
                                 </Button>
                                 {loadingButton && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </div>
@@ -145,4 +145,4 @@ function StockTaker(){
 }
 
 
-export default StockTaker
+export default RemoveBadItem
