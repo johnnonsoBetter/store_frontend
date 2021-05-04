@@ -5,9 +5,9 @@ import DashboardContext from '../../../../context/cashier/DashboardContext'
 
 
 function BarcodeProcessor(){
-    const [result, setResult] = useState('No Result')
+   
     const {addItemToTable, setProducts, products, launchSnackBar} = useContext(DashboardContext)
-    console.log(products)
+    
     const handleScan = (data)=> {
        function itemExist(){
            return products.some((item) => item.barcode === data)

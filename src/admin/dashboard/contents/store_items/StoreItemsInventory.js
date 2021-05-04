@@ -14,6 +14,7 @@ import StoreInventory from './StoreInventory'
 import { green } from '@material-ui/core/colors';
 import Restocker from './Restocker'
 import InventorySnackBar from './InventorySnackBar'
+import BarcodeRestocker from './barcode/BarcodeRestocker'
 
 
 
@@ -296,6 +297,8 @@ function StoreItemsInventory(){
               setMessage,
               setTaskDone,
               launchSnackBar,
+              setItemName,
+              performAction
               
 
             }}
@@ -305,6 +308,7 @@ function StoreItemsInventory(){
                 <Box  height="calc(100vh - 100px)" width="100%" className={classes.box}>
                 <FixedBar />
                 <InventorySnackBar  />
+                <BarcodeRestocker />
                 <Drawer
                       
                       variant="temporary"
