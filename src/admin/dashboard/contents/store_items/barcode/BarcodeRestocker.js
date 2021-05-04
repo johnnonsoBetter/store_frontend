@@ -5,9 +5,8 @@ import BarcodeReader from 'react-barcode-reader'
 
 
 function BarcodeRestocker(){
-    const [result, setResult] = useState('No Result')
-
-    const {setItemName, performAction, launchSnackBar, items} = useContext(StoreItemsInventory)
+   
+    const {setItemName, performAction, launchSnackBar, items, setItemId} = useContext(StoreItemsInventory)
 
     const handleScan = (data) => {
         function itemExist(){
@@ -18,6 +17,7 @@ function BarcodeRestocker(){
         console.log(items)
         if (itemExist()){
              setItemName(theItem.name)
+             setItemId(theItem.id)
              performAction()
         }else{
              launchSnackBar("Item Not found, Please Try Searching with (name or code) And Report Issue",'warning', true)

@@ -15,6 +15,7 @@ import { green } from '@material-ui/core/colors';
 import Restocker from './Restocker'
 import InventorySnackBar from './InventorySnackBar'
 import BarcodeRestocker from './barcode/BarcodeRestocker'
+import StockTaker from './StockTaker'
 
 
 
@@ -247,8 +248,12 @@ function StoreItemsInventory(){
       }else if(currentAction === 'restock'){
         setInventoryType('restocker')
         setDrawerOpened(true)
+      }else if(currentAction === 'stock'){
+        setInventoryType('take_stock')
+        setDrawerOpened(true)
+  
       }
-
+     
       
     }
 
@@ -298,7 +303,8 @@ function StoreItemsInventory(){
               setTaskDone,
               launchSnackBar,
               setItemName,
-              performAction
+              performAction,
+              setItemId,
               
 
             }}
@@ -332,7 +338,8 @@ function StoreItemsInventory(){
                          null : inventoryType === 'store' ?
                          <StoreInventory />
                          : inventoryType === 'item' ? <ItemInventory /> 
-                         : inventoryType === 'restocker' ? <Restocker /> : null
+                         : inventoryType === 'restocker' ? <Restocker /> : 
+                         inventoryType === 'take_stock' ? <StockTaker /> : null
                        }
                        
                      </Box>

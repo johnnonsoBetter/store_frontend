@@ -110,8 +110,23 @@ export const store = (store) => {
                 }
             })
 
+        },
+
+        takeItemStock: (name, repaired_quantity) => {
+            return axios({
+                method: "POST",
+                url: `${baseUrl}api/v1/admin_dashboards/${store}/item_stock_repairs`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+                data: {
+                   item_stock_repair: {
+                       name,
+                       repaired_quantity,
+                   }
+                }
+            })
+
         }
 
-        
+       
     }
 }
