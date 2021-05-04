@@ -77,7 +77,7 @@ function RemoveBadItem(){
     setLoadingButton(true)
 
     store(storeName).removeBadItem(itemName, parseInt(input)).then((response) => {
-        console.log(response)
+        
       const newFilteredItems = items.map(item => {
 
         if (item.name === itemName){

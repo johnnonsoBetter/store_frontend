@@ -1,7 +1,7 @@
-import { AppBar, Box, IconButton, InputBase, makeStyles, Menu, MenuItem, Toolbar, Typography, withStyles } from '@material-ui/core'
+import { AppBar, Avatar, Box, IconButton, InputBase, makeStyles, Menu, MenuItem, Toolbar, Typography, withStyles } from '@material-ui/core'
 import { AcUnit, Add, Brush, Clear, Equalizer, ExpandLessOutlined, GraphicEq, PlaylistAddCheck } from '@material-ui/icons'
 import React, { useContext, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import StoreItemsInventory from '../../../../context/admin/store_item_inventory/StoreItemsInventory'
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,16 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-around"
       },
+      fixedBarContainer: {
+        [theme.breakpoints.down('md')]: {
+         width: "100%"
+          
+        },
+        [theme.breakpoints.up('md')]: {
+          width: "60%"
+           
+         },
+      }
 }))
 
 
@@ -57,6 +67,7 @@ function FixedBar(){
     const {setDrawerOpened, setInventoryType, setCurrentAction, setInputBoxDisabled, items, setFilteredItems} = useContext(StoreItemsInventory)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [value, setValue] = useState('')
+    const history = useHistory()
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -138,8 +149,11 @@ function FixedBar(){
     return (
         <AppBar className={classes.appBar}>
             <Toolbar className={classes.toolBar}>
-                <Box width="60%" display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="h6"> {storeName}  </Typography>
+                <Box width="90%" className={classes.fixedBarContainer} display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography onClick={() => {
+
+                      history.push('/admin_dashboard')
+                    }} variant="h6" style={{textTransform: "capitalize"}}> <Avatar > {storeName.charAt(0)} </Avatar> </Typography>
 
                     
 
@@ -151,7 +165,7 @@ function FixedBar(){
                             
                         </Box>
 
-                        <Box paddingRight={2}   paddingLeft={2}>
+                        <Box >
                             <IconButton onClick={handleClick} > 
                                 <Brush style={{color: "rgb(255 202 2 / 81%)"}}/>
                             </IconButton>
@@ -193,7 +207,7 @@ function FixedBar(){
                             </Menu>
                         </Box>
 
-                        <Box paddingRight={2}  paddingLeft={2}>
+                        <Box >
                             <IconButton onClick={openInventoryManager}  > 
                                 <GraphicEq style={{color: "rgb(255 202 2 / 81%)"}} />
                             </IconButton>
