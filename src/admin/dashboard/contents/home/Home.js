@@ -103,7 +103,6 @@ function Home(){
     
 
     const routes = useRouteMatch()
-    console.log(routes)
 
     const url = routes['url']
   

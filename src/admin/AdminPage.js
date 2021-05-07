@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AdminDashboardContextProvider } from '../context/admin/AdminDashboardContext'
 import LoginForm from './LoginForm'
 import {makeStyles, createMuiTheme, useTheme, ThemeProvider} from '@material-ui/core/styles'
-import {CssBaseline, Hidden, Drawer } from '@material-ui/core'
+import {CssBaseline, Hidden, Drawer, Container, Box } from '@material-ui/core'
 import { Switch, Route} from 'react-router-dom'
 import DrawerLinkList from './dashboard/DrawerLinkList'
 import Home from './dashboard/contents/home/Home'
@@ -10,6 +10,8 @@ import FixedAppBar from './dashboard/FixedAppBar'
 import AuditItem from './dashboard/contents/audit_item/AuditItem'
 import Content from './dashboard/contents/home/transaction_activity/Content'
 import StoreItems from './dashboard/contents/store_items/StoreItemsInventory'
+import InventoryAppBar from './dashboard/InventoryAppBar'
+import InventoryContent from './dashboard/contents/home/inventory_activity/InventoryContent'
 
 
   const drawerWidth = 240;
@@ -348,7 +350,18 @@ function AdminPage(props){
                           </Route>
 
                           <Route exact={true} path="/admin_dashboard/:storeName/inventory_activity" >
-                              <h1> Inventory Activity </h1>
+                           
+                             <Box width="100%">
+                             <InventoryAppBar handleDrawerToggle={handleDrawerToggle}/>
+                          
+                             <InventoryContent />
+
+                             </Box>
+                            
+                              
+                           
+                            
+                            
                           </Route>
 
                           <Route exact={true} path="/admin_dashboard/:storeName/statistics_report" >
