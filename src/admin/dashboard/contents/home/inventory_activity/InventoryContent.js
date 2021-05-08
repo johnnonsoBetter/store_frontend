@@ -11,6 +11,7 @@ import { InventoryActivityContextProvider } from '../../../../../context/admin/i
 import InventoryNav from './InventoryNav';
 import { activitiesApi } from '../../../../../api/admin/activities/api';
 import { useParams } from 'react-router-dom';
+import Restock from './restocks/Restock';
 
 
 
@@ -68,6 +69,9 @@ export default function InventoryContent() {
 
   const [activityType, setActivityType] = useState('restock')
   const activity = activitiesApi(storeName, 'restocks')
+  const [restocks, setRestocks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [failed, setFailed] = useState(false)
   const [inventoryActivity, setInventoryActivity] = useState({
     recieved_goods_quantity: '0',
     recieved_goods_worth: '0',
@@ -89,9 +93,12 @@ export default function InventoryContent() {
       console.log(response)
 
       setInventoryActivity(response.data['inventory_activity'])
+      setRestocks(response.data['restocks'])
     }).catch(err => {
       console.log(err) 
     })
+
+
 
   }, [])
 
@@ -106,6 +113,7 @@ export default function InventoryContent() {
           activityType,
           classes,
           inventoryActivity,
+          restocks,
         }}
       >
         <Box width="90vw" className={classes.cont}>
@@ -115,7 +123,7 @@ export default function InventoryContent() {
         <Box className={classes.contentBox} width="90vw" >
           {
             activityType === 'restock' ? 
-            <Typography>Restock</Typography>  :
+            <Restock />  :
             activityType === 'stock' ? 
             <Typography> Stocker </Typography> : 
             activityType === 'bad_item' ?

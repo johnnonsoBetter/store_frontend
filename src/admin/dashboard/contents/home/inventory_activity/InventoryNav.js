@@ -8,7 +8,7 @@ import AmountFormater from '../../../../../helpers/AmountFormater'
 
 function InventoryNav(){
 
-    const {handleActivityType, classes, inventoryActivity} = useContext(InventoryActivityContext)
+    const {handleActivityType, classes} = useContext(InventoryActivityContext)
 
 
     return (
