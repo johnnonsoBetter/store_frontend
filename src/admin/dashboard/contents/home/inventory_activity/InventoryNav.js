@@ -1,31 +1,18 @@
 import { Box, ButtonBase, Typography } from '@material-ui/core'
-import { DoubleArrow } from '@material-ui/icons'
+import { Block, DoubleArrow, Edit, Redo, Transform } from '@material-ui/icons'
 import React, { useContext } from 'react'
 import InventoryActivityContext from '../../../../../context/admin/inventory_activity/InventoryActivity'
+import AmountFormater from '../../../../../helpers/AmountFormater'
+
 
 
 function InventoryNav(){
 
-    const {handleActivityType, classes} = useContext(InventoryActivityContext)
+    const {handleActivityType, classes, inventoryActivity} = useContext(InventoryActivityContext)
+
 
     return (
         <>
-
-            <ButtonBase onClick={()=> handleActivityType("overview") }
-              style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
-                <Box >
-                    <Box textAlign="left" top={20} left={30}  position="absolute">
-                        <Typography variant="h6"> Overview</Typography>
-                    </Box>
-
-                    <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <DoubleArrow />
-                    </Box>
-
-                </Box>
-                
-            </ButtonBase>      
-
             <ButtonBase onClick={()=> handleActivityType("restock") }
               style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
                 <Box >
@@ -34,14 +21,19 @@ function InventoryNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> r676 </Typography>
+                        <Redo />
                     </Box>
 
                 </Box>
                 
             </ButtonBase>      
 
-                            
+
+
+
+
+
+
             
         
             <ButtonBase onClick={()=> handleActivityType("stock") }  style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(41 138 175 / 68%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
@@ -51,7 +43,7 @@ function InventoryNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> </Typography>
+                        <Edit />
                     </Box>
 
                 </Box>
@@ -67,7 +59,7 @@ function InventoryNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> 4fwsf</Typography>
+                        <Transform />
                     </Box>
 
                 </Box>
@@ -82,7 +74,7 @@ function InventoryNav(){
                     </Box>
 
                     <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> 07u3r</Typography>
+                        <Block />
                     </Box>
 
                 </Box>

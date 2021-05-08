@@ -515,7 +515,7 @@ function CashierDashboard(){
 
                  
                 
-                    <Box maxWidth="xl" className={classes.root}  fixed
+                    <Box maxWidth="xl"  className={classes.root}  fixed
                         
                     >
                         
