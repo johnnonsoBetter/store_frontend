@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { getBaseURL } from '../../../baseUrl'
-const baseUrl = getBaseURL()
+
+import {API_ROOT} from '../../../apiRoot'
 
 
 export const salesApi = () => {
@@ -11,7 +11,7 @@ export const salesApi = () => {
            
             return axios({
                 method: 'GET',
-                url: `${baseUrl}${subUrl}${receipt_id}`,
+                url: `${API_ROOT}${subUrl}${receipt_id}`,
                 headers: JSON.parse(localStorage.getItem('admin'))
             })
         }

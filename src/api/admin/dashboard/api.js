@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {getBaseURL} from '../../../baseUrl'
- const baseUrl = getBaseURL()
+ import {API_ROOT} from '../../../apiRoot'
 
 
 export const dashboardApi = (storeName) => {
@@ -8,7 +8,7 @@ export const dashboardApi = (storeName) => {
           load: ()=> {
             return axios({
                 method: "GET",
-                url: `${baseUrl}api/v1/admin_dashboard/?store=${storeName}`,
+                url: `${API_ROOT}api/v1/admin_dashboard/?store=${storeName}`,
                 headers: JSON.parse(localStorage.getItem('admin'))
               })
           }

@@ -3,6 +3,7 @@ import {TextField, Container, Grid, CssBaseline, Button, Box, Typography} from '
 import {makeStyles} from '@material-ui/core/styles'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios'
+import {API_ROOT} from '../apiRoot'
 
 const font = 'Kanit'
 
@@ -58,7 +59,7 @@ function LoginForm(){
         e.preventDefault()
             axios({
                 method: 'POST',
-                url: 'http://localhost:3001/api/v1/auth_admin/sign_in',
+                url: `${API_ROOT}api/v1/auth_admin/sign_in`,
                 data: {
                     email: email,
                     password: password

@@ -4,6 +4,7 @@ import AdminDashboardContext from '../../context/admin/AdminDashboardContext';
 import axios from 'axios'
 import {useHistory, Link, NavLink} from 'react-router-dom'
 import PersonIcon from '@material-ui/icons/Person'
+import {API_ROOT} from '../../apiRoot'
 
 
 function DrawerLinkList(props){
@@ -56,7 +57,7 @@ function DrawerLinkList(props){
                     e.preventDefault();
                     axios({
                       method: "DELETE",
-                      url: "http://localhost:3001/api/v1/auth_admin/sign_out",
+                      url: `${API_ROOT}api/v1/auth_admin/sign_out/`,    
                       data: JSON.parse(localStorage.admin)
                     }).then((response) =>{
                       localStorage.removeItem('admin')

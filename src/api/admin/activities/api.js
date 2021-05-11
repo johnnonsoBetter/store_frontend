@@ -1,17 +1,15 @@
 import axios from 'axios'
-import { getBaseURL } from '../../../baseUrl'
-const baseUrl = getBaseURL()
 
-
+import {API_ROOT} from '../../../apiRoot'
 
 export const activitiesApi = (store, activity) => {
-    const subUrl = `/api/v1/admin_dashboards/${store}/${activity}`
+    const subUrl = `api/v1/admin_dashboards/${store}/${activity}`
     
     return {
         load: () => {
             return axios({
                 method: 'GET',
-                url: `${baseUrl}${subUrl}`,
+                url: `${API_ROOT}${subUrl}`,
                 headers: JSON.parse(localStorage.getItem('admin'))
             })
         },
@@ -19,7 +17,7 @@ export const activitiesApi = (store, activity) => {
         loadDate: (date) => {
             return axios({
                 method: 'GET',
-                url: `${baseUrl}${subUrl}`,
+                url: `${API_ROOT}${subUrl}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 params: {static_date: date}
             })

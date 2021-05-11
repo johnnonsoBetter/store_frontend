@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { getBaseURL } from '../../../baseUrl'
-
-const baseUrl = getBaseURL()
+import {API_ROOT} from '../../../apiRoot'
 
 export const  categoryApi = ()=> {
 
@@ -9,7 +7,7 @@ export const  categoryApi = ()=> {
         fetchAll: ()=> {
             return axios({
                 method: "GET",
-                url: 'http://localhost:3001/api/v1/categories',
+                url: `${API_ROOT}api/v1/categories/`,
                 headers: JSON.parse(localStorage.admin),
             })
         }
@@ -24,14 +22,14 @@ export const itemApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('admin')),
-                url: `${baseUrl}api/v1/real_items/`
+                url: `${API_ROOT}api/v1/real_items/`
             })
         },
 
         createItem: (item)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}api/v1/real_items/`,
+                url: `${API_ROOT}api/v1/real_items/`,
                 headers: JSON.parse(localStorage.admin),
                 data: item
                 
@@ -41,7 +39,7 @@ export const itemApi = ()=> {
         updateItem: (itemName, updateData)=> {
             return axios({
                 method: "PUT",
-                url: `${baseUrl}api/v1/real_items/name`,
+                url: `${API_ROOT}api/v1/real_items/name`,
                 headers: JSON.parse(localStorage.admin),
                 data: updateData,
                 params: {item_name: itemName}
@@ -52,7 +50,7 @@ export const itemApi = ()=> {
         fetchItemInventoryInfo: (id) => {
             return axios({
                 method: "GET",
-                url: `${baseUrl}api/v1/store_items/${id}`,
+                url: `${API_ROOT}api/v1/store_items/${id}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         },
@@ -60,7 +58,7 @@ export const itemApi = ()=> {
         deleteItem: (name) => {
             return axios({
                 method: "DELETE",
-                url: `${baseUrl}api/v1/real_items/name`,
+                url: `${API_ROOT}api/v1/real_items/name`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 params: {item_name: name}
             })
@@ -69,7 +67,7 @@ export const itemApi = ()=> {
         fetchItem: (name) => {
             return axios({
                 method: "GET",
-                url: `${baseUrl}api/v1/real_items/name`,
+                url: `${API_ROOT}api/v1/real_items/name`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 params: {item_name: name}
     
@@ -85,7 +83,7 @@ export const store = (store) => {
         fetchItems: ()=> {
             return axios({
                 method: "GET",
-                url: `${baseUrl}api/v1/admin_dashboards/${store}/store_items`,
+                url: `${API_ROOT}api/v1/admin_dashboards/${store}/store_items`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         },
@@ -93,7 +91,7 @@ export const store = (store) => {
         fetchInventoryInfo: ()=> {
             return axios({
                 method: "GET",
-                url: `${baseUrl}api/v1/store_inventory_managers/${store}`,
+                url: `${API_ROOT}api/v1/store_inventory_managers/${store}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         },
@@ -101,7 +99,7 @@ export const store = (store) => {
         restockItem: (name, quantity)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}api/v1/restocks`,
+                url: `${API_ROOT}api/v1/restocks`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {
                     store_name: store,
@@ -115,7 +113,7 @@ export const store = (store) => {
         takeItemStock: (name, repaired_quantity) => {
             return axios({
                 method: "POST",
-                url: `${baseUrl}api/v1/admin_dashboards/${store}/item_stock_repairs`,
+                url: `${API_ROOT}api/v1/admin_dashboards/${store}/item_stock_repairs`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {
                    item_stock_repair: {
@@ -130,7 +128,7 @@ export const store = (store) => {
         removeBadItem: (name, quantity)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}api/v1/bad_items`,
+                url: `${API_ROOT}api/v1/bad_items`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {
                     store_name: store,

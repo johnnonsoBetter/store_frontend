@@ -6,10 +6,11 @@ import AmountFormater from '../../../../../../helpers/AmountFormater'
 const useStyles = makeStyles((theme) => ({
     restock: {
         backgroundColor: "#101d68",
-        borderRight: "1px solid" 
+        borderRight: "1px solid",
+        borderRadius: 5
     },
     restockCont: {
-        height: "calc(80vh - 200px)",
+        height: "calc(74vh - 200px)",
         overflowY: "auto"
     }
 }))

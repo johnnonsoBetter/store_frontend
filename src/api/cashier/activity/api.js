@@ -1,8 +1,7 @@
 
 import axios from 'axios'
-import { getBaseURL } from '../../../baseUrl'
+import {API_ROOT} from '../../../apiRoot'
 
-const baseUrl = getBaseURL()
 
 
 export const expensesApi = ()=> {
@@ -13,14 +12,14 @@ export const expensesApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_expenses`
+                url: `${API_ROOT}api/v1/cashier_expenses`
             })
         },
 
         createExpense: (expense)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}/api/v1/expenses`,
+                url: `${API_ROOT}api/v1/expenses`,
                 headers: JSON.parse(localStorage.cashier),
                 data: {expense: expense}
                 
@@ -39,14 +38,14 @@ export const changeApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_changes`
+                url: `${API_ROOT}api/v1/cashier_changes`
             })
         },
 
         createChange: (change)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}/api/v1/change_balances`,
+                url: `${API_ROOT}api/v1/change_balances`,
                 headers: JSON.parse(localStorage.cashier),
                 data: {change_balance: change}
                 
@@ -65,14 +64,14 @@ export const itemReturnApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_item_returns`
+                url: `${API_ROOT}api/v1/cashier_item_returns`
             })
         },
 
         createItemReturn: (item_return)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}/api/v1/item_returns`,
+                url: `${API_ROOT}api/v1/item_returns`,
                 headers: JSON.parse(localStorage.cashier),
                 data: {item_return: item_return}
                 
@@ -94,14 +93,14 @@ export const cashierDebtApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_debts`
+                url: `${API_ROOT}api/v1/cashier_debts`
             })
         },
 
         createDebt: (debt)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}/api/v1/debts`,
+                url: `${API_ROOT}api/v1/debts`,
                 headers: JSON.parse(localStorage.cashier),
                 data: {debt: debt}
                 
@@ -121,14 +120,14 @@ export const cashierRecoverDebtApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_recovered_debts`
+                url: `${API_ROOT}api/v1/cashier_recovered_debts`
             })
         },
 
         recoverDebt: (recovered_debt)=> {
             return axios({
                 method: "POST",
-                url: `${baseUrl}/api/v1/recovered_debts`,
+                url: `${API_ROOT}api/v1/recovered_debts`,
                 headers: JSON.parse(localStorage.cashier),
                 data: {recovered_debt: recovered_debt}
                 
@@ -147,7 +146,7 @@ export const cashierSalesApi = () => {
             return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_sales/${receipt_id}`
+                url: `${API_ROOT}api/v1/cashier_sales/${receipt_id}`
             })
         },
 
@@ -155,7 +154,7 @@ export const cashierSalesApi = () => {
             return axios({
                 method: "POST",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/sales/`,
+                url: `${API_ROOT}api/v1/sales/`,
                 data: {
                     log_issue_type: 'sale',
                     sale: sale
@@ -167,7 +166,7 @@ export const cashierSalesApi = () => {
             return axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_sales/`,
+                url: `${API_ROOT}api/v1/cashier_sales/`,
                 
             })
 
@@ -186,7 +185,7 @@ export const cashierApi = () => {
         login: (email, password) => {
             return axios({
                 method: 'POST',
-                url: `${baseUrl}/api/v1/auth/sign_in`,
+                url: `${API_ROOT}api/v1/auth/sign_in`,
                 data: {
                     email: email,
                     password: password
@@ -197,7 +196,7 @@ export const cashierApi = () => {
         logout: () => {
             return axios({
                 method: "DELETE",
-                url: `${baseUrl}/api/v1/auth/sign_out`,
+                url: `${API_ROOT}api/v1/auth/sign_out`,
                 data: JSON.parse(localStorage.cashier)
               })
         },
@@ -206,7 +205,7 @@ export const cashierApi = () => {
             return axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/sale_boards`
+                url: `${API_ROOT}api/v1/sale_boards`
             })
         },
 
@@ -214,7 +213,7 @@ export const cashierApi = () => {
             return axios({
                 method: "POST",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/cashier_sales_summaries`,
+                url: `${API_ROOT}api/v1/cashier_sales_summaries`,
                 data: {
                     cashier_sales_summary: account
                 }
@@ -226,7 +225,7 @@ export const cashierApi = () => {
             return axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('cashier')),
-                url: `${baseUrl}/api/v1/my_summaries`
+                url: `${API_ROOT}api/v1/my_summaries`
             })
         }
         
