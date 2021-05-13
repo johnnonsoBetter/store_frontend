@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import {TextField, Container, Grid, CssBaseline, Button, Box, Typography, Paper} from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import {TextField, Container, Grid, CssBaseline, Button, Box, Typography, Paper, CircularProgress} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios'
 import { cashierApi } from '../api/cashier/activity/api';
+import { green } from '@material-ui/core/colors';
 
 const font = 'Kanit'
 
@@ -45,7 +46,32 @@ const useStyles = makeStyles((theme) => ({
    },
    headingText: {
        color: "black"
-   }
+   },
+   wrapper: {
+       margin: theme.spacing(1),
+       position: 'relative',
+     },
+     buttonSuccess: {
+       backgroundColor: green[500],
+       '&:hover': {
+         backgroundColor: green[700],
+       },
+     },
+     fabProgress: {
+       color: green[500],
+       position: 'absolute',
+       top: -6,
+       left: -6,
+       zIndex: 1,
+     },
+     buttonProgress: {
+       color: green[500],
+       position: 'absolute',
+       top: '50%',
+       left: '50%',
+       marginTop: -12,
+       marginLeft: -12,
+     },
 }))
 
 
@@ -53,10 +79,20 @@ function CashierLoginForm(){
     const classes = useStyles()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [failed, setFailed] = useState(false)
+
+    useEffect(()=> {
+
+        setLoading(false)
+    }, [failed])
+
+
 
     // handles form submit
     const handleSubmit = (e)=>{
         e.preventDefault()
+        setLoading(true)
             cashierApi().login(email, password).then(response => {
                 
                 
@@ -77,9 +113,9 @@ function CashierLoginForm(){
 
             }).catch(err => {
                
-                setEmail("")
-                setPassword("")
-                console.log(err)
+              
+                setFailed(true)
+                setLoading(false)
             })
     }
 
@@ -117,22 +153,39 @@ function CashierLoginForm(){
                                         </Grid>
 
                                         <Grid item xs={12} className={classes.inputContainer}>
+                                           <div className={classes.wrapper}>
                                             <Button
-                                                variant="contained"
-                                                color="secondary"
-                                                className={classes.button}
-                                                type="submit"
+                                            variant="contained"
+                                            color="primary"
                                             
+                                            disabled={loading}
+                                            type="submit"
                                             >
-                                                Login
+                                            Login
                                             </Button>
-                                    </Grid>
+                                            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                            </div>
+                                        </Grid>
 
 
                                     
                                 </Grid>
 
                                 </form>
+
+                                {
+
+                                    failed &&  
+                                    <Box p={2} >
+                                        <Box p={2}  style={{backgroundColor: "red"}}>
+                                            <Typography> Failed To Login, Try Again! </Typography>
+
+                                        </Box>
+                                    
+                                    </Box>
+                                  
+                                }
+
 
 
                             </Paper>

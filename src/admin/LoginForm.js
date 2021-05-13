@@ -114,8 +114,7 @@ function LoginForm(){
 
             }).catch(err => {
                
-                setEmail("")
-                setPassword("")
+              
                 setFailed(true)
                 setLoading(false)
             })
