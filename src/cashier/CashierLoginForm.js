@@ -79,6 +79,7 @@ function CashierLoginForm(){
                
                 setEmail("")
                 setPassword("")
+                console.log(err)
             })
     }
 
