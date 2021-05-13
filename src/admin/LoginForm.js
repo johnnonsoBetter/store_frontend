@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
-import {TextField, Container, Grid, CssBaseline, Button, Box, Typography} from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import {TextField, Container, Grid, CssBaseline, Button, Box, Typography, CircularProgress} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import axios from 'axios'
 import {API_ROOT} from '../apiRoot'
+import { green } from '@material-ui/core/colors';
+
 
 const font = 'Kanit'
 
@@ -45,7 +47,32 @@ const useStyles = makeStyles((theme) => ({
    },
    headingText: {
        color: "black"
-   }
+   },
+   wrapper: {
+       margin: theme.spacing(1),
+       position: 'relative',
+     },
+     buttonSuccess: {
+       backgroundColor: green[500],
+       '&:hover': {
+         backgroundColor: green[700],
+       },
+     },
+     fabProgress: {
+       color: green[500],
+       position: 'absolute',
+       top: -6,
+       left: -6,
+       zIndex: 1,
+     },
+     buttonProgress: {
+       color: green[500],
+       position: 'absolute',
+       top: '50%',
+       left: '50%',
+       marginTop: -12,
+       marginLeft: -12,
+     },
 }))
 
 
@@ -53,10 +80,19 @@ function LoginForm(){
     const classes = useStyles()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [failed, setFailed] = useState(false)
+
+
+    useEffect(()=> {
+
+        setLoading(false)
+    }, [failed])
 
     // handles form submit
     const handleSubmit = (e)=>{
         e.preventDefault()
+       setLoading(true)
             axios({
                 method: 'POST',
                 url: `${API_ROOT}api/v1/auth_admin/sign_in`,
@@ -80,6 +116,8 @@ function LoginForm(){
                
                 setEmail("")
                 setPassword("")
+                setFailed(true)
+                setLoading(false)
             })
     }
 
@@ -112,16 +150,30 @@ function LoginForm(){
                                         </Grid>
 
                                         <Grid item xs={12} className={classes.inputContainer}>
+                                        <div className={classes.wrapper}>
                                             <Button
-                                                variant="contained"
-                                                color="secondary"
-                                                className={classes.button}
-                                                type="submit"
+                                            variant="contained"
+                                            color="primary"
                                             
+                                            disabled={loading}
+                                            type="submit"
                                             >
-                                                Login
+                                            Login
                                             </Button>
+                                            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                        </div>
                                     </Grid>
+
+                                    {
+
+                                        failed &&  <Grid item xs={12} className={classes.inputContainer} >
+                                        <Box style={{backgroundColor: "red"}} p={2} >
+                                           <Typography> Failed To Login, Try Again! </Typography>
+                                        </Box>
+                                        </Grid>
+                                    }
+
+                                   
 
 
                                     
