@@ -108,6 +108,7 @@ function FixedAppBar(props){
             edge="start"
             onClick={props.handleDrawerToggle}
             className={menuButton}
+            style={{color: "white"}}
           >
             
             <MenuIcon />
