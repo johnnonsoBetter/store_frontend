@@ -1,3 +1,3 @@
 const DEV_URL = 'http://localhost:3001/'
-const PROD_URL = 'https://asupermarket.herokuapp.com/';
+const PROD_URL = '/asupermarket.herokuapp.com/';
 export const API_ROOT = process.env.NODE_ENV === 'development' ? DEV_URL : PROD_URL;
