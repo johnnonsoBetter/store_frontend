@@ -1,12 +1,161 @@
-import { Container, Typography} from '@material-ui/core';
-import React from 'react';
+import { Box, ButtonBase, Card, CardContent, CircularProgress, Container, makeStyles, Typography} from '@material-ui/core';
+import React, { useContext, useEffect, useState } from 'react';
+import { Virtuoso, VirtuosoGrid } from 'react-virtuoso'
+import { itemApi } from '../../../../../api/admin/item/api';
+import AuditModeContext from '../../../../../context/audit_item/AuditModeContext';
+import AmountFormater from '../../../../../helpers/AmountFormater';
+
+
+const useStyles = makeStyles((theme) => ({
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(0),
+      },
+      list: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",     
+      },
+
+      itemContainer: {
+        
+        color: "white",
+        borderRadius: 9,
+        marginTop: theme.spacing(2),
+     
+      
+        [theme.breakpoints.up('lg')]: {
+          width: "",
+          marginLeft: theme.spacing(2),
+          marginRight: theme.spacing(2),
+        },
+        [theme.breakpoints.down('md')]: {
+          width: "",
+          marginLeft: theme.spacing(2),
+          marginRight: theme.spacing(2),
+          
+        },
+        [theme.breakpoints.down('sm')]: {
+          width: "100%",
+          marginLeft: theme.spacing(0),
+          marginRight: theme.spacing(0),
+          
+          
+        },
+
+      },
+      small: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+      }
+}))
+
+
 
 function NoAuditMode(){
+    const [loading, setLoading] = useState(false)
+    const [failed, setFailed] = useState(false)
+    const classes = useStyles()
+    const [items, setItems] = useState([])
+    const [filteredItems, setFilteredItems] = useState(items)
+    const {setItemInfo, toggleItemDrawer} = useContext(AuditModeContext)
 
+
+    const handleShowItemFullDetail = (name) => {
+        itemApi().fetchItem(name).then(response => {
+
+            const {item, cost_price_trackers, selling_price_trackers, category} = response.data
+
+           setItemInfo({
+               item,
+               cost_price_trackers,
+               selling_price_trackers,
+               category,
+               
+           })
+            
+        }).catch(err => {
+            console.log("there was an issue with this request", err)
+        })
+    }
+
+    useEffect(() => {
+
+        itemApi().fetchAll().then(response => {
+            const {items, total_items} = response.data
+           
+            setLoading(false)
+            setItems(items)
+            setFilteredItems(items)
+
+            console.log(items  )
+            
+            
+            
+        }).catch(err => {
+            setLoading(false)
+            setFailed(true)
+        })
+        
+        return ()=> {
+
+            setLoading(false)
+            setFailed(false)
+        }
+    }, [])
     return (
-        <Container>
-            <Typography> How is this same time and </Typography>
-        </Container>
+        <Box  height="calc(100vh - 80px)" width="100%" className={classes.box}>
+            {
+                loading ? 
+                <Box height="calc(100vh - 200px)" display="flex" justifyContent="center" alignItems="center" >
+
+                    <CircularProgress size={24} />
+                </Box> : failed ? 
+                <Box height="calc(100vh - 200px)" display="flex" justifyContent="center" alignItems="center" >
+
+                    <Typography> Failed To Load Items </Typography>
+                </Box> :  
+
+                <VirtuosoGrid
+                totalCount={filteredItems.length}
+                overscan={2}
+
+                listClassName={classes.list}
+                itemClassName={classes.itemContainer}
+                itemContent={index => {
+
+                
+                const {id, name, cost_price, selling_price} = filteredItems[index]
+                
+
+                return (
+                    
+                        <Box p={1}  minWidth={300} className={classes.itemContainer}>
+                            <ButtonBase style={{width: "100%"}} onClick={()=> {
+                                handleShowItemFullDetail(name)
+                                toggleItemDrawer()
+                            }}>
+                                <CardContent style={{padding: "0" , width: "100%"}}>
+                                    <Box display="flex" p={1} justifyContent="space-between" style={{backgroundColor: "#002142"}}>
+                                        <Typography style={{color: "#DEC429"}}> ₦{AmountFormater(cost_price).amount() } </Typography>
+                                        <Typography style={{color: "#17B80A"}}> ₦{AmountFormater(selling_price).amount()} </Typography>
+                                    </Box>
+
+                                    <Box p={2} style={{backgroundColor: "#0A0B0C"}} >
+                                        <Typography > {name} </Typography>
+                                    </Box>
+                                </CardContent>
+                            </ButtonBase>
+                        </Box>     
+                        
+                  
+
+                )
+                }}
+
+                />
+            }
+        </Box>
     )
 }
 
