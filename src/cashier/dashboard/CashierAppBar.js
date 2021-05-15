@@ -10,7 +10,7 @@ import DashboardContext from '../../context/cashier/DashboardContext';
 import { Avatar, Box, Button, CircularProgress, InputBase, Menu, MenuItem } from '@material-ui/core';
 import { cashierApi } from '../../api/cashier/activity/api';
 import { useHistory } from 'react-router-dom';
-import { Cached, Check } from '@material-ui/icons';
+import { Cached, Cancel, Check } from '@material-ui/icons';
 import MovingText from 'react-moving-text'
 
 const useStyles = makeStyles((theme) => ({
@@ -84,8 +84,18 @@ export default function CashierAppBar() {
   const history = useHistory()
   const cashierAvatarL = JSON.parse(localStorage.cashier)['name'].charAt(0)
   const [indicatorLoading, setIndicatorLoading] = useState(false)
+  const [refetchFailed, setRefetchFailed] = useState(false)
 
-  
+  useEffect(() => {
+    setIndicatorLoading(false)
+    setRefetchFailed(false)
+
+
+    return ()=> {
+      setIndicatorLoading(false)
+      setRefetchFailed(false)
+    }
+  }, [])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -153,11 +163,15 @@ export default function CashierAppBar() {
                       const {items} = response.data
                       setProducts(items)
                       setFilteredProducts(items)
+                      setRefetchFailed(false)
                       setIndicatorLoading(false)
+                      
                       
 
                     }).catch(err => {
                       console.log(err)
+                      setIndicatorLoading(false)
+                      setRefetchFailed(true)
                     })
 
 
@@ -200,14 +214,19 @@ export default function CashierAppBar() {
                 </Box>
                 <>
                 {
-                  indicatorLoading ? <Box width="50%" justifyContent="center" className={classes.salesLoader}>
-                   <CircularProgress size={24} />
-                 
-                </Box>
-                 : 
-                 <Box width="50%" justifyContent="center" className={classes.salesLoader} s>
-                   <Check style={{color: "green"}} />
-                 </Box>
+                  indicatorLoading ? 
+                  <Box width="50%" justifyContent="center" className={classes.salesLoader}>
+                    <CircularProgress size={24} />
+                  
+                  </Box>
+                  : 
+                  refetchFailed ? 
+                  <Box width="50%" justifyContent="center" className={classes.salesLoader} s>
+                    <Cancel style={{color: "red"}} />
+                  </Box> :
+                  <Box width="50%" justifyContent="center" className={classes.salesLoader} s>
+                    <Check style={{color: "green"}} />
+                  </Box>
                 }
                 </>
                 
