@@ -162,7 +162,7 @@ import InventoryContent from './dashboard/contents/home/inventory_activity/Inven
     storeInfoContainer: {
 
       backgroundColor: "#0b1125",
-      margin: theme.spacing(1)
+     
     },
 
     storeBaseInfo: {
@@ -175,11 +175,11 @@ import InventoryContent from './dashboard/contents/home/inventory_activity/Inven
 
     infoContainer: {
       backgroundColor: "#453b542e",
-      padding: theme.spacing(1),
+      
       borderRadius: "9px",
       color: "wheat",
       margin: theme.spacing(1),
-      justifyContent: "space-evenly"
+      
       
     },
 

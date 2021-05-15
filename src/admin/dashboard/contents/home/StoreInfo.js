@@ -18,7 +18,7 @@ function StoreInfo(props){
                 {infos.map((info, index) => {
                     return (
                         <Grid item xs={12} sm={6} md={6} key={index}>
-                            <Box display="flex" alignItems="center"  className={classes.infoContainer}>
+                            <Box display="flex" p={1} alignItems="center" justifyContent="space-between"  className={classes.infoContainer}>
         
                                 <Typography style={{fontSize: "1rem" }} className={classes.storeBaseInfoHeader}> {info.infoName}</Typography>
                                 <Typography  className={classes.infoText} style={{color: textColor}} > {info.amount} </Typography>

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState} from 'react'
-import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core'
+import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails, useMediaQuery, Avatar} from '@material-ui/core'
 import {Link, useRouteMatch} from 'react-router-dom'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
 import StoreInfo from './StoreInfo'
 import AmountFormater from '../../../../helpers/AmountFormater'
 import { dashboardApi } from '../../../../api/admin/dashboard/api'
+import { Beenhere } from '@material-ui/icons'
 
 function Home(){
     const [backdropState, setBackdropState] = React.useState(false);
@@ -13,6 +14,10 @@ function Home(){
     const {storeName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
+    const [storeInfo, setStoreInfo] = useState({
+        change_balance: 0,
+        next_day_change: 0
+    }) 
 
     useEffect(() => {
 
@@ -35,32 +40,10 @@ function Home(){
             setBackdropState(false)
         
             
-            setGeneralStoreInfos([
-                {
-                    infoName: "Reserve Change",
-                    amount: `₦ ${AmountFormater(change_balance).amount()}`
-                },
-                {
-                    infoName: "Resumption Change",
-                    amount: `₦ ${AmountFormater(next_day_change).amount()}`
-                },
-                {
-                    infoName: "All Items Worth",
-                    amount: `₦ ${AmountFormater(inventory_manager['total_goods_worth']).amount()}`
-                },
-                {
-                    infoName: "All Items Cost",
-                    amount: `₦ ${AmountFormater(inventory_manager['total_goods_cost']).amount()}`
-                },
-                {
-                    infoName: "All Items Quantity",
-                    amount: `${inventory_manager['total_goods_quantity']}`
-                },
-                {
-                    infoName: "Expected Items Profit",
-                    amount: `₦ ${AmountFormater(inventory_manager['expected_profit']).amount() }`
-                },
-            ])
+            setStoreInfo({
+                change_balance,
+                next_day_change,
+            })
 
             setTransactionReviewInfos([
                 {
@@ -107,6 +90,7 @@ function Home(){
             setGeneralStoreInfos([])
             setTransactionReviewInfos([])
             setBackdropState(false)
+            setStoreInfo({change_balance: 0, next_day_change: 0})
             
             
         }
@@ -116,6 +100,10 @@ function Home(){
     const routes = useRouteMatch()
 
     const url = routes['url']
+    const matches = useMediaQuery('(min-width:1280px)');
+
+    console.log(generalStoreInfos)
+    console.log(generalStoreInfos[1])
   
     
     
@@ -131,9 +119,11 @@ function Home(){
                 </Backdrop>
                 :
                 
-            <Container> 
+            <Container > 
+                <Box display="flex" alignItems="center" width="100%"   >
 
-                <Grid container className={infoLinksContainer}>
+                
+                <Grid container justify="center" alignItems="center">
 
                     <Grid item xs={12} >
             
@@ -150,10 +140,10 @@ function Home(){
                                             <Typography className={storeBaseInfoHeader}>{storeName} Real Time Info</Typography>
                                         </AccordionSummary>
                                         <AccordionDetails >
-                                            <Grid container>
+                                            <Grid container spacing={2}>
                                                 
 
-                                                <Grid item xs={12} md={6}>
+                                                <Grid item xs={12} md={12}>
 
                                                     <Typography className={storeBaseInfoHeader}>Current Transaction Info</Typography>
                                                     <StoreInfo infos={transactionReviewInfos} textColor="#27ffcef2" imgUrl="trend.png"/>
@@ -161,8 +151,31 @@ function Home(){
 
                                                 <Grid item xs={12} md={6}>
 
-                                                    <Typography className={storeBaseInfoHeader}>General Info</Typography>
-                                                    <StoreInfo infos={generalStoreInfos} textColor="#ffef18" imgUrl="logout.png"/>
+                                                    <Box p={2}>
+                                                        < Typography className={storeBaseInfoHeader}>Resumption Change</Typography>
+                                                    </Box>
+                                                        
+                                                    <Box p={2} style={{backgroundColor: "black"}} borderRadius={5} display="flex" alignItems="center" justifyContent="space-between">
+                                                      
+                                                        <Typography variant="h5"> ₦ {storeInfo['next_day_change']}</Typography>
+                                                        <Avatar style={{backgroundColor: "rgb(51 122 216 / 39%)"}} > <Beenhere style={{color: "#28b4ff"}} /></Avatar>
+                                                     </Box>
+                                                </Grid>
+
+                                                <Grid item xs={12} md={6}>
+
+                                                    
+                                                    <Box p={2}>
+                                                        < Typography className={storeBaseInfoHeader}>Change Balance</Typography>
+                                                    </Box>
+                                                        
+                                                    <Box p={2} style={{backgroundColor: "black"}} borderRadius={5} display="flex" alignItems="center" justifyContent="space-between">
+                                                      
+                                                        <Typography variant="h5"> ₦ {storeInfo['change_balance']}</Typography>
+                                                        <Avatar style={{backgroundColor: "rgb(219 217 57 / 39%)"}} > <Beenhere style={{color: "#dbbc06fa"}} /></Avatar>
+                                                     </Box>
+                                                   
+                                                     
                                                 </Grid>
 
                                             </Grid>
@@ -277,7 +290,7 @@ function Home(){
 
                     </Grid>
                 </Grid>
-              
+                </Box>
                 </Container>
 
               }
