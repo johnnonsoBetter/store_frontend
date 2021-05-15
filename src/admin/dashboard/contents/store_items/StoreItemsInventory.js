@@ -143,9 +143,6 @@ function StoreItemsInventory(){
     const [taskDone, setTaskDone] = useState(false)
     const [message, setMessage] = useState('')
     const [severity, setSeverity] = useState('')
-
-    
-    
     const [itemInfo, setItemInfo] = useState({
       name: '',
       quantity: '0',

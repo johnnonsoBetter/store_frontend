@@ -196,14 +196,7 @@ function AuditItem(){
                                     </IconButton>
                                 </Box>
 
-                                <Box className={classes.actionContainer}>
-                                    <Switch  checked={value(storedMode)} onChange={(e) => {
-                                    setAuditMode(e.target.checked)
-                                        
-                                        localStorage.setItem('audit', e.target.checked)
-                                    }}/>
-
-                                </Box>
+                                
 
                                 <Box  className={classes.actionContainer}>
                                     <CreateItem />
@@ -230,7 +223,7 @@ function AuditItem(){
 
                         </Box>
                     </Drawer>
-                    {auditMode ? <AuditMode /> :  <NoAuditMode />  }
+                    { <NoAuditMode />  }
                   </main>
                   <ItemActionSnackbar />
        
