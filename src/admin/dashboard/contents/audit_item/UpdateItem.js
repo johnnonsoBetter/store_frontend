@@ -1,10 +1,41 @@
-import { Box, IconButton, Slide, Typography, TextField, MenuItem, OutlinedInput, InputLabel, InputAdornment, Button} from '@material-ui/core'
+import { Box, IconButton, Slide, Typography, TextField, MenuItem, OutlinedInput, InputLabel, InputAdornment, Button, makeStyles, CircularProgress} from '@material-ui/core'
 import { ArrowBack } from '@material-ui/icons'
 import SaveIcon from '@material-ui/icons/Save'
 import {React, useContext, useEffect, useState} from  'react'
 import { itemApi } from '../../../../api/admin/item/api'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
+import { green } from '@material-ui/core/colors';
 
+
+
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+      },
+      buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+          backgroundColor: green[700],
+        },
+      },
+      fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+      },
+      buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
+}))
 
 
 function UpdateItem({...props}){
@@ -13,6 +44,8 @@ function UpdateItem({...props}){
     const {toggleUpdate} = props
     const {item, category} = itemInfo
     const {name, barcode, cost_price, selling_price, id} = item
+    const [loading, setLoading] = useState(false)
+    const classes = useStyles()
     
     const [itemUpdate, setItem] = useState({
         real_item: {
@@ -92,6 +125,7 @@ function UpdateItem({...props}){
         e.preventDefault()
 
         const newSnackBarAction = Object.assign({}, snackBarAction)
+        setLoading(true)
         itemApi().updateItem(name, itemUpdate).then(response => {
             
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
@@ -117,6 +151,7 @@ function UpdateItem({...props}){
             setItemInfo(itemUpdate)
             toggleUpdate()
             setSnackBarAction(newSnackBarAction)
+            setLoading(false)
             
 
         
@@ -130,6 +165,7 @@ function UpdateItem({...props}){
             newSnackBarAction['taskDone'] = false
 
             setSnackBarAction(newSnackBarAction)
+            setLoading(false)
         })
     }
     
@@ -216,16 +252,21 @@ function UpdateItem({...props}){
                      </Box>
 
                      <Box display="flex" p={3} justifyContent="center" marginTop={1}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            type="submit"
-                            
-                            startIcon={<SaveIcon />}
-                        >
-                            Save
-                        </Button>
+                    
+
+                        <div className={classes.wrapper}>
+                                <Button
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                disabled={loading}
+                                type="submit"
+                                startIcon={<SaveIcon />}
+                                >
+                                Update Item
+                                </Button>
+                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                            </div>
                      </Box>
 
                      
