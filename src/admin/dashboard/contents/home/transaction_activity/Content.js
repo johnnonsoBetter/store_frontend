@@ -100,7 +100,9 @@ function Content(){
          setTableType(null)
          setShow(false)
          setTransactionActivity(transaction_activity)
-         setPreviews(past_sales)
+
+         if(!noTransaction(transaction_activity))
+            setPreviews(past_sales)
         
        }).catch(err => {
 
@@ -116,10 +118,13 @@ function Content(){
          console.log(response)
 
          const {transaction_activity, past_sales} = response.data
-         setLoading(false)
+         
       
          setTransactionActivity(transaction_activity)
          setPreviews(past_sales)
+         setLoading(false)
+
+
         
        }).catch(err => {
          setLoading(false)
@@ -136,6 +141,7 @@ function Content(){
           setStaticDate('')
           setLoading(true)
           setFailed(false)
+          setPreviews([])
 
        }
     }, [])
@@ -158,7 +164,6 @@ function Content(){
             <TransactionActivityContextProvider 
                value= {{
                   transactionActivity: transactionActivity,
-                  preview: [],
                   tableType,
                   show,
                   loading,
@@ -169,6 +174,7 @@ function Content(){
                   setShow,
                   staticDate,
                   previews,
+                  setPreviews
                   
                }}
             >

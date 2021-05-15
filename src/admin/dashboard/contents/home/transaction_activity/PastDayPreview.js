@@ -14,13 +14,13 @@ class PastDayPreview extends Component {
             id: "basic-bar"
           },
           xaxis: {
-            categories: ["Thu", "Fri"]
+            categories: []
           }
         },
         series: [
           {
             name: "series-1",
-            data: [400, 100]
+            data: []
           }
         ]
       };
@@ -37,6 +37,8 @@ class PastDayPreview extends Component {
       })
 
       const dataCategories = this.props.previews.map(data => data.total_sales)
+
+      console.log(dataCategories)
      
     
 

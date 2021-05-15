@@ -25,11 +25,10 @@ const useStyles = makeStyles((theme) => ({
 function Overview(props){
 
     const {show, setShow, previews} = useContext(TransactionActivityContext)
-  console.log(show)
     const classes = useStyles();
     
     
-
+    console.log(previews)
   return (
     <div className={classes.root} >
       <Accordion  expanded={!show}    style={{backgroundColor: "black"}}>
