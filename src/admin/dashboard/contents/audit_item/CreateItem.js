@@ -1,17 +1,50 @@
 import {React, useState, useContext} from 'react'
-import {Box, Drawer, InputAdornment, InputLabel, OutlinedInput, TextField, Button, MenuItem, Typography, IconButton, useMediaQuery} from '@material-ui/core'
+import {Box, Drawer, InputAdornment, InputLabel, OutlinedInput, TextField, Button, MenuItem, Typography, IconButton, useMediaQuery, makeStyles} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import AuditModeContext from '../../../../context/audit_item/AuditModeContext'
 import { itemApi } from '../../../../api/admin/item/api'
+import { green } from '@material-ui/core/colors';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
+
   
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+      },
+      buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+          backgroundColor: green[700],
+        },
+      },
+      fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+      },
+      buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
+}))
 
 function CreateItem(){
 
     const matches = useMediaQuery('(min-width:600px)')
     const {items, setItems, setTotalItems, setSnackBarAction, categories} = useContext(AuditModeContext)
     const {snackBarAction} = useContext(AuditModeContext).snackBarAction
-
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -85,6 +118,7 @@ function CreateItem(){
     const handleSubmit = (e)=> {
         e.preventDefault()
         const newSnackBarAction = Object.assign({}, snackBarAction)
+        setLoading(true)
         itemApi().createItem(item).then(response => {
             
             const new_item = response.data
@@ -123,6 +157,7 @@ function CreateItem(){
                     }
                 },
             })
+            setLoading(false)
             
            
             
@@ -132,6 +167,7 @@ function CreateItem(){
             newSnackBarAction['snackBarOpened'] = true
             newSnackBarAction['taskDone'] = false
             setSnackBarAction(newSnackBarAction)
+            setLoading(false)
             
         })
     }
@@ -167,6 +203,7 @@ function CreateItem(){
     }
 
     const [drawerOpened, setDrawerOpened] = useState(false)
+    const classes = useStyles()
     
 
     return (
@@ -315,8 +352,20 @@ function CreateItem(){
                         </Box>
 
                         <Box display="flex"  m={1} justifyContent="center">
+
                             <Box m={1}>
-                                <Button style={{backgroundColor: "#04044ee0", color: "white"}} type="submit" > Create Item</Button>
+                            <div className={classes.wrapper}>
+                                <Button
+                                variant="contained"
+                                color="primary"
+                                
+                                disabled={loading}
+                                type="submit"
+                                >
+                                Create Item
+                                </Button>
+                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                            </div>
                             </Box>               
                         </Box>
                        
