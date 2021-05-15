@@ -1,4 +1,4 @@
-import { Box, makeStyles, createMuiTheme, Typography, TableContainer, Drawer, Paper, Table, TableHead, TableRow, TableCell, useMediaQuery} from '@material-ui/core'
+import { Box, makeStyles, createMuiTheme, Typography, TableContainer, Drawer, Paper, Table, TableHead, TableRow, TableCell, useMediaQuery, Hidden} from '@material-ui/core'
 import React, { useContext, useEffect, useState, useLayoutEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
@@ -17,12 +17,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
     },
-    tableComponent: {
-        maxHeight: 440
-    },
-    table: {
-        minWidth: 650,
-    },
+   
+   
     cell: {
         backgroundColor: "black"
     },
@@ -119,21 +115,19 @@ function ItemReturnTable(){
                 toggleItemReturnDrawer,
             }}
         > 
-            <div>
-            <Drawer anchor="right" open={itemReturnDrawerOpened} onClose={()=>{
+            <Box width="100%" > 
+                <Drawer anchor="right" open={itemReturnDrawerOpened} onClose={()=>{
                     setItemReturnDrawerOpened(!itemReturnDrawerOpened)
                     console.log("toggling")
                 }}>
-                    <Box width={matches ? "100%" : 320 } >
+                    <Box width={matches ? window.innerWidth : 320 } >
                     <Sale receipt_id={sale_receipt_id} setReceiptId={setSaleReceiptId} toggleSaleDrawer={toggleItemReturnDrawer} />
                     </Box>
                 </Drawer>
-            </div>
-            <Box className={classes.root}
             
-            >
+           
                
-                { 
+                 { 
                     loading ? <Loader /> : failed ? <FailedActivityLoader activity="Items Returned"/>: 
                     
                     <Box width="100%">
@@ -141,17 +135,25 @@ function ItemReturnTable(){
                             {
                                 itemReturns.length === 0 ? <NoData activity="Item Return" /> : 
 
-                                <Box>
-                                    <TableContainer className={classes.tableComponent} component={Paper} style={{backgroundColor: "black"}}>
+                                <Box width="100%">
+                                    <TableContainer component={Paper} style={{backgroundColor: "black"}}>
                                     <Table stickyHeader  className={classes.table} aria-label="simple table">
                                         <TableHead   style={{backgroundColor: "black"}} className={classes.noBottom}>
                                             <TableRow>
-                                            
-                                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cashier Name </Typography></TableCell>
-                                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Item </Typography> </TableCell>
-                                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Amount </Typography> </TableCell>
-                                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
-                                            <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
+                                                <Hidden mdUp>
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Item </Typography> </TableCell>
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
+                                                
+                                                </Hidden>
+
+                                                <Hidden smDown >
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Cashier Name </Typography></TableCell>
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Item </Typography> </TableCell>
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Amount </Typography> </TableCell>
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Time </Typography> </TableCell>
+                                                    <TableCell className={classes.cell} align="center"> <Typography className={classes.whiteText}> Info </Typography> </TableCell>
+                                                
+                                                </Hidden>
                                             </TableRow>
                                         </TableHead>
                                         <ItemReturnList itemReturns={itemReturns} />
@@ -161,7 +163,9 @@ function ItemReturnTable(){
                             }
                         </ThemeProvider>
                     </Box>
-                }
+                } 
+           
+
             </Box>
         </ItemReturnContextProvider>
     )

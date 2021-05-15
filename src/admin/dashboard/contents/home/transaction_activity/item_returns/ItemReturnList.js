@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {Avatar, TableBody, TableCell, TableRow, Typography, Box, IconButton, makeStyles} from '@material-ui/core'
+import {Avatar, TableBody, TableCell, TableRow, Typography, Box, IconButton, makeStyles, Hidden} from '@material-ui/core'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 import { DateTime } from 'luxon'
 import ArrowForward from '@material-ui/icons/ArrowForward'
@@ -51,16 +51,29 @@ function ItemReturnList(props){
 
                     return (
                         <TableRow key={id} style={{borderBottom: "none"}}>
-                            <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > {shortName} </Typography>  </Avatar>    </Box></TableCell>
-                            <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {item_name} </Typography>   </Box></TableCell>
-                    
-                            <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+
+                            <Hidden mdUp>
+                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {item_name} </Typography>   </Box></TableCell>
+                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
+                                  setSaleReceiptId(sale_receipt_id)
+                                  toggleItemReturnDrawer(true)}} > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
                             
-                            <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
-                            <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
-                              setSaleReceiptId(sale_receipt_id)
-                              toggleItemReturnDrawer(true)}} > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
-                        
+                            </Hidden>
+
+                            <Hidden smDown>
+                              <TableCell align="center" className={classes.noBottom}> <Box display="flex" justifyContent="center">  <Avatar sizes="small" style={{color: "white"}} className={classes.small}> <Typography > {shortName} </Typography>  </Avatar>    </Box></TableCell>
+                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} > {item_name} </Typography>   </Box></TableCell>
+                      
+                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText} >  {`₦ ${AmountFormater(cost).amount()}`} </Typography>   </Box></TableCell>
+                              
+                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <Typography className={classes.whiteText}> {time} </Typography>   </Box></TableCell>
+                              <TableCell align="center" className={classes.noBottom}><Box display="flex" justifyContent="center"> <IconButton onClick={()=> {
+                                setSaleReceiptId(sale_receipt_id)
+                                toggleItemReturnDrawer(true)}} > <ArrowForward style={{color: "#1f87f5"}} /> </IconButton>  </Box></TableCell>
+                          
+
+                            </Hidden>
+                            
                         
                         </TableRow>
                     )

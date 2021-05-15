@@ -115,7 +115,7 @@ function Content(){
        updateSize()
        
        transactionActivityApi.load().then(response => {
-         console.log(response)
+         
 
          const {transaction_activity, past_sales} = response.data
          

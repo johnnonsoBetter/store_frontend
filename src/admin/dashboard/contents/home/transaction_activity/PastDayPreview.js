@@ -38,9 +38,7 @@ class PastDayPreview extends Component {
 
       const dataCategories = this.props.previews.map(data => data.total_sales)
 
-      console.log(dataCategories)
      
-    
 
       this.setState({
         options: {
