@@ -149,6 +149,8 @@ function CashierDashboard(){
             itemsSoldCount: 0,
         })
 
+        document.title = "Cashier Dashboard"
+
         setSale({
             receipt_id: "",
             issue: true,

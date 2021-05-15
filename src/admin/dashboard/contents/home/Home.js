@@ -14,6 +14,16 @@ function Home(){
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
 
+    useEffect(() => {
+
+        document.title = "Admin Dashboard"
+
+        return ()=> {
+
+            document.title = "Supermarket App"
+        }
+    })
+
 
     useEffect(() => {
         setBackdropState(true)
@@ -97,6 +107,7 @@ function Home(){
             setGeneralStoreInfos([])
             setTransactionReviewInfos([])
             setBackdropState(false)
+            
             
         }
     }, [storeName])

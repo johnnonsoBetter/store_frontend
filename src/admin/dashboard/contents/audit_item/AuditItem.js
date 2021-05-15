@@ -127,8 +127,11 @@ function AuditItem(){
 
         })
 
+        document.title = "Audit Item"
+
         return ()=> {
             setCategories([])
+            document.title = "Supermarket App"
         }
 
 
