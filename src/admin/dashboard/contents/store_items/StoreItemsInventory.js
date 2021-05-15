@@ -137,7 +137,8 @@ function StoreItemsInventory(){
     const [itemName, setItemName] = useState('')
     const [q_value, setQ_Value] = useState('')
     const [filteredItems, setFilteredItems] = useState(items)
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [failed, setFailed] = useState(false)
     const [snackBarOpened, setSnackbarOpened] = useState(false)
     const [taskDone, setTaskDone] = useState(false)
     const [message, setMessage] = useState('')
@@ -166,7 +167,7 @@ function StoreItemsInventory(){
 
     useEffect(() => {
 
-      
+      document.title = `${storeName} Items`
       store(storeName).fetchItems().then((response) => {
 
         console.log(response)
@@ -178,13 +179,18 @@ function StoreItemsInventory(){
         setInputBoxDisabled(true)
         setInventoryType(false)
         setDrawerOpened(false)
+        setLoading(false)
+        setFailed(false)
         
 
       }).catch((err) => {
 
         console.log(err)
+        setFailed(true)
+        setLoading(false)
       })
 
+      
       
       return ()=> {
         setCurrentAction(null)
@@ -196,6 +202,9 @@ function StoreItemsInventory(){
         setFilteredItems([])
         setItemName('')
         setQ_Value('')
+        setLoading(true)
+        setFailed(false)
+        document.title = "Supermarket App"
         
       }
 
@@ -345,6 +354,21 @@ function StoreItemsInventory(){
                      </Box>
                       
                     </Drawer>
+
+
+                    <>
+                    
+                    {
+                      loading ? 
+                      <Box height="calc(100vh - 200px)">
+                        <CircularProgress  size={20}/>
+                      </Box> :
+                      failed ? 
+                      <Box height="calc(100vh - 200px)" display="flex" justifyContent="center" alignItems="center">
+                        <Typography > Failed To Load Items </Typography>
+                      </Box> 
+                      : 
+                  
                     <VirtuosoGrid
                       totalCount={filteredItems.length}
                       overscan={2}
@@ -404,6 +428,10 @@ function StoreItemsInventory(){
                       }}
                   
                     />
+
+                  }
+
+                  </>
 
            
                 </Box>
