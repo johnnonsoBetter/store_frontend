@@ -89,6 +89,8 @@ function AuditItem(){
     const matches = useMediaQuery('(max-width:600px)')
     const [itemInfo, setItemInfo] = useState(null)
     const [categories, setCategories] = useState([])
+    const [loadingItem,setLoadingItem] = useState(false)
+    const [failedItem, setFailedItem] = useState(false)
     const [snackBarAction, setSnackBarAction] = useState({
         itemName: "",
         action: "",
@@ -96,6 +98,8 @@ function AuditItem(){
         taskDone: false
 
     })
+
+
 
     const handleSearchToggle = () => {
 
@@ -112,6 +116,9 @@ function AuditItem(){
     const toggleItemDrawer = () => {
         setItemDrawerOpened(!itemDrawerOpened)
     }
+
+
+
 
     
     useEffect(()=> {
@@ -131,6 +138,8 @@ function AuditItem(){
 
         return ()=> {
             setCategories([])
+            setLoadingItem(false)
+            setFailedItem(false)
             document.title = "Supermarket App"
         }
 
@@ -153,6 +162,10 @@ function AuditItem(){
                             itemDrawerOpened,
                             snackBarAction,
                             categories,
+                            failedItem,
+                            loadingItem,
+                            setLoadingItem,
+                            setFailedItem,
                             setCategories,
                             toggleItemDrawer: ()=> {toggleItemDrawer()},
                             setItemInfo: itemInfo => setItemInfo(itemInfo),

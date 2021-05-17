@@ -58,10 +58,11 @@ function NoAuditMode(){
     const classes = useStyles()
     const [items, setItems] = useState([])
     const [filteredItems, setFilteredItems] = useState(items)
-    const {setItemInfo, toggleItemDrawer} = useContext(AuditModeContext)
+    const {setItemInfo, toggleItemDrawer, setLoadingItem, setFailedItem, loadingItem, failedItem} = useContext(AuditModeContext)
 
 
     const handleShowItemFullDetail = (name) => {
+        setLoadingItem(true)
         itemApi().fetchItem(name).then(response => {
 
             const {item, cost_price_trackers, selling_price_trackers, category} = response.data
@@ -73,14 +74,18 @@ function NoAuditMode(){
                category,
                
            })
+           setLoadingItem(false)
+           setFailedItem(false)
             
         }).catch(err => {
             console.log("there was an issue with this request", err)
+            setLoadingItem(false)
+            setFailedItem(true)
         })
     }
 
     useEffect(() => {
-
+       setLoading(true)
         itemApi().fetchAll().then(response => {
             const {items, total_items} = response.data
            
@@ -101,6 +106,8 @@ function NoAuditMode(){
 
             setLoading(false)
             setFailed(false)
+            setLoadingItem(false)
+            setFailedItem(false)
         }
     }, [])
     return (
