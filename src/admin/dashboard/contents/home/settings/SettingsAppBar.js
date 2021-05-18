@@ -1,6 +1,7 @@
 import { AppBar, Avatar, IconButton, makeStyles, Toolbar, Typography } from '@material-ui/core'
 import { Menu } from '@material-ui/icons';
 import React from 'react'
+import { useParams, useRouteMatch } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -36,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 
 function SettingsAppBar(props){
     const classes = useStyles()
-
 
     return (
         <AppBar className={classes.appBar} position="fixed" >

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import {AppBar, Toolbar, IconButton, Typography, Avatar, Box, makeStyles, Slide} from '@material-ui/core'
+import {AppBar, Toolbar, IconButton, Typography, Avatar, Box, makeStyles, Slide, Hidden} from '@material-ui/core'
 import SelectStore from './SelectStore'
 import MenuIcon from '@material-ui/icons/Menu'
 import AdminDashboardContext from '../../context/admin/AdminDashboardContext'
@@ -18,7 +18,35 @@ import { AccessTimeOutlined, CloseRounded } from '@material-ui/icons'
 import AdminDashboardStyleContext from '../../context/admin/AdminDashboardContext'
 import { DateTime } from 'luxon'
 
+const drawerWidth = 240
+
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    [theme.breakpoints.up('lg')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+    backgroundColor: "#282c34",
+    boxShadow: "none"
+
+  },
+  toolBar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
+
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('lg')]: {
+      display: 'none',
+    },
+  
+  },
   
   small: {
     width: theme.spacing(4),
@@ -100,10 +128,12 @@ function FixedAppBar(props){
 
     return (
 
-        <AppBar position="fixed" className={appBar} >
+        <AppBar position="fixed" className={classes.appBar} >
         <Toolbar display="flex" justifyContent="space-around" className={toolbar}>
-          <IconButton
-           
+          <Hidden lgUp>
+
+            <IconButton
+            
             aria-label="open drawer"
             edge="start"
             onClick={props.handleDrawerToggle}
@@ -113,6 +143,11 @@ function FixedAppBar(props){
             
             <MenuIcon />
           </IconButton>
+
+
+          </Hidden>
+
+        
           
               {
                 
