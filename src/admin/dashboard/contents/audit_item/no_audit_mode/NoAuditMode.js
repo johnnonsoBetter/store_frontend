@@ -57,7 +57,7 @@ function NoAuditMode(){
     const [failed, setFailed] = useState(false)
     const classes = useStyles()
   
-    const {setItemInfo, toggleItemDrawer, setLoadingItem, setFailedItem, loadingItem, items, setItems, failedItem} = useContext(AuditModeContext)
+    const {setItemInfo, toggleItemDrawer, setLoadingItem, setFailedItem, setStockItems, items, setItems} = useContext(AuditModeContext)
 
 
     const handleShowItemFullDetail = (name) => {
@@ -77,7 +77,7 @@ function NoAuditMode(){
            setFailedItem(false)
             
         }).catch(err => {
-            
+           
             setLoadingItem(false)
             setFailedItem(true)
         })
@@ -90,6 +90,7 @@ function NoAuditMode(){
            
             setLoading(false)
             setItems(items)
+            setStockItems(items)
             
 
         }).catch(err => {
@@ -100,7 +101,12 @@ function NoAuditMode(){
        
     }, [])
 
+    useEffect(()=> {
 
+        setItems(items)
+
+     
+    }, [items])
 
     return (
         <Box  height="calc(100vh - 80px)" width="100%" className={classes.box}>
@@ -117,7 +123,7 @@ function NoAuditMode(){
 
                 <VirtuosoGrid
                 totalCount={items.length}
-                overscan={2}
+                overscan={200}
 
                 listClassName={classes.list}
                 itemClassName={classes.itemContainer}

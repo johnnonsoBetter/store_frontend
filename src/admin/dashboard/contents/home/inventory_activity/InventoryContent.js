@@ -70,8 +70,6 @@ export default function InventoryContent() {
   const [activityType, setActivityType] = useState('restock')
   const activity = activitiesApi(storeName, 'restocks')
   const [restocks, setRestocks] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [failed, setFailed] = useState(false)
   const [inventoryActivity, setInventoryActivity] = useState({
     recieved_goods_quantity: '0',
     recieved_goods_worth: '0',

@@ -165,8 +165,8 @@ function CreateItem(){
             let new_items = [...items, new_item['item']]
             let totalItems = new_items.length
             
-            // setItemName(item['real_item'].name)
             setItems(new_items)
+
             setTotalItems(totalItems)
             setSnackBarAction(newSnackBarAction)
             setItem({

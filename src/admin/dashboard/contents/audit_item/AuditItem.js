@@ -81,6 +81,7 @@ function AuditItem(){
     }
 
     const [items, setItems] = useState([])
+    const [stockItems, setStockItems] = useState([])
     const [totalItems, setTotalItems] = useState("0")
     const [searchValue, setSearchValue] = useState("")
     const [showSearch, setShowSearch] = useState(false)
@@ -105,16 +106,34 @@ function AuditItem(){
 
         setShowSearch(!showSearch)
         setSearchValue("")
+        setItems(stockItems)
     }
 
-    const handleSearchInput = (e) => {
+    const handleSearch = (e) => {
         e.preventDefault()
 
+
+
         setSearchValue(e.target.value)
+        if (e.target.value === ' ' || e.target.value === ''){
+            setItems(stockItems)
+            return
+            
+        }
     }
 
     const toggleItemDrawer = () => {
         setItemDrawerOpened(!itemDrawerOpened)
+    }
+
+
+    const handleSubmit = (e) => {
+
+        e.preventDefault()
+
+        const newItems = stockItems.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+
+        setItems(newItems)
     }
 
 
@@ -126,11 +145,10 @@ function AuditItem(){
        categoryApi().fetchAll().then(response => {
             console.log(response.data)
             const {categories} = response.data
-            console.log(categories)
-
-            setCategories(categories)
+            
         }).catch(err => {
-
+            setLoadingItem(false)
+            setFailedItem(true)
 
         })
 
@@ -172,7 +190,8 @@ function AuditItem(){
                             setItems: items => setItems(items),
                             setSnackBarAction: snackBarAction => setSnackBarAction(snackBarAction),
                             setTotalItems: totalItems => setTotalItems(totalItems),
-                            setSearchValue: searchValue => setSearchValue(searchValue)
+                            setSearchValue: searchValue => setSearchValue(searchValue),
+                            setStockItems,
                         }
                     }
                 
@@ -185,7 +204,11 @@ function AuditItem(){
                                 
                                 <Box width="100%" display="flex" justifyContent="flex-end"> 
                                     <Box display="flex" borderRadius={16}  p={1} style={{backgroundColor: "white"}} >
-                                        <input className={classes.searchInput} onChange={handleSearchInput}/>
+                                        
+                                        <form onSubmit={handleSubmit}>
+                                            <input className={classes.searchInput} onChange={handleSearch}/>
+
+                                        </form>
                                     </Box>
 
                                     <Box display="flex" marginLeft={2} >
