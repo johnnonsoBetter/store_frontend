@@ -12,6 +12,7 @@ import Content from './dashboard/contents/home/transaction_activity/Content'
 import StoreItems from './dashboard/contents/store_items/StoreItemsInventory'
 import InventoryAppBar from './dashboard/InventoryAppBar'
 import InventoryContent from './dashboard/contents/home/inventory_activity/InventoryContent'
+import Settings from './dashboard/contents/home/settings/Settings'
 
 
   const drawerWidth = 240;
@@ -379,7 +380,8 @@ function AdminPage(props){
                           </Route>
 
                           <Route exact={true} path="/admin_dashboard/:storeName/settings" >
-                              <h1> Settings  </h1>
+                             <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                             <Settings />
                           </Route>
 
                           <Route exact={true} path="/admin_dashboard/audit_item" >
