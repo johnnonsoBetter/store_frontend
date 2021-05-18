@@ -1,5 +1,5 @@
-import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, useMediaQuery, Drawer} from '@material-ui/core'
-import { SearchOutlined } from '@material-ui/icons';
+import { AppBar, Box, makeStyles, Switch, Toolbar, IconButton, Grow, useMediaQuery, Drawer, CircularProgress, Typography} from '@material-ui/core'
+import { CloseOutlined, SearchOutlined } from '@material-ui/icons';
 import React, { useEffect, useState, useLayoutEffect } from 'react'
 import {AuditModeContextProvider} from '../../../../context/audit_item/AuditModeContext';
 import AuditMode from './audit_mode/AuditMode'
@@ -232,7 +232,40 @@ function AuditItem(){
                         toggleItemDrawer()
                     }}>
                         <Box width = {matches ? width : 320}   >
-                          {itemInfo ? <Item /> : null}
+
+                            {
+                                loadingItem || failedItem &&
+                                <Box display="flex" justifyContent="flex-end">
+                                    <IconButton onClick={()=> {
+                                        setItemInfo(null)
+                                        toggleItemDrawer()
+                                    }}>
+                                        <CloseOutlined fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                            }
+                         
+                         
+                     
+
+                          {
+                              loadingItem ?
+                              <Box style={{height: "calc(100vh - 200px)"}} display="flex" justifyContent="center" alignItems="center">
+                                   <CircularProgress size={29} />
+                              </Box>
+                              : 
+                              failedItem ?
+                              <Box style={{height: "calc(100vh - 200px)"}} display="flex" justifyContent="center" alignItems="center">
+                                   <Typography> Failed To Load Item Details </Typography>
+                              </Box>
+                              :
+                              <>
+                                 {itemInfo ? <Item /> : null} 
+                              </>
+                              
+
+                          }
+                          
 
                         </Box>
                     </Drawer>

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function NoAuditMode(){
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const classes = useStyles()
     const [items, setItems] = useState([])
@@ -78,7 +78,7 @@ function NoAuditMode(){
            setFailedItem(false)
             
         }).catch(err => {
-            console.log("there was an issue with this request", err)
+            
             setLoadingItem(false)
             setFailedItem(true)
         })
@@ -139,6 +139,7 @@ function NoAuditMode(){
                     
                         <Box p={1}  minWidth={300} className={classes.itemContainer}>
                             <ButtonBase style={{width: "100%"}} onClick={()=> {
+                                
                                 handleShowItemFullDetail(name)
                                 toggleItemDrawer()
                             }}>

@@ -87,21 +87,7 @@ function Item(){
     return (
 
         <>
-
-        {
-            loadingItem ? 
-            <Box display="flex" alignItems="center" justifyContent="center" style={{height: "calc(100vh - 200px)"}}>
-
-                <CircularProgress size={29} />
-
-            </Box>
-            : failedItem ?
-            <Box display="flex" alignItems="center" justifyContent="center" style={{height: "calc(100vh - 200px)"}}>
-
-                <Typography variant="h6" > Failed To Load Item Details </Typography>
-
-            </Box>
-            : 
+            
 
             <Box className={classes.root} >
            { confirmationVisible ?
@@ -184,7 +170,7 @@ function Item(){
            }
            
         </Box>
-        }
+        
 
 
 
