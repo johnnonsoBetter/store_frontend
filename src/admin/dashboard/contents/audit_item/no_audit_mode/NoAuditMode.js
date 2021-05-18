@@ -53,12 +53,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 function NoAuditMode(){
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
     const classes = useStyles()
-    const [items, setItems] = useState([])
-    const [filteredItems, setFilteredItems] = useState(items)
-    const {setItemInfo, toggleItemDrawer, setLoadingItem, setFailedItem, loadingItem, failedItem} = useContext(AuditModeContext)
+  
+    const {setItemInfo, toggleItemDrawer, setLoadingItem, setFailedItem, loadingItem, items, setItems, failedItem} = useContext(AuditModeContext)
 
 
     const handleShowItemFullDetail = (name) => {
@@ -91,25 +90,18 @@ function NoAuditMode(){
            
             setLoading(false)
             setItems(items)
-            setFilteredItems(items)
+            
 
-            console.log(items  )
-            
-            
-            
         }).catch(err => {
             setLoading(false)
             setFailed(true)
         })
         
-        return ()=> {
-
-            setLoading(false)
-            setFailed(false)
-            setLoadingItem(false)
-            setFailedItem(false)
-        }
+       
     }, [])
+
+
+
     return (
         <Box  height="calc(100vh - 80px)" width="100%" className={classes.box}>
             {
@@ -124,7 +116,7 @@ function NoAuditMode(){
                 </Box> :  
 
                 <VirtuosoGrid
-                totalCount={filteredItems.length}
+                totalCount={items.length}
                 overscan={2}
 
                 listClassName={classes.list}
@@ -132,14 +124,13 @@ function NoAuditMode(){
                 itemContent={index => {
 
                 
-                const {id, name, cost_price, selling_price} = filteredItems[index]
+                const { name, cost_price, selling_price} = items[index]
                 
 
                 return (
                     
                         <Box p={1}  minWidth={300} className={classes.itemContainer}>
                             <ButtonBase style={{width: "100%"}} onClick={()=> {
-                                
                                 handleShowItemFullDetail(name)
                                 toggleItemDrawer()
                             }}>

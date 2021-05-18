@@ -80,7 +80,6 @@ function AuditItem(){
         localStorage.setItem('audit', false)
     }
 
-    const [auditMode, setAuditMode] = useState(value(localStorage.getItem('audit')))
     const [items, setItems] = useState([])
     const [totalItems, setTotalItems] = useState("0")
     const [searchValue, setSearchValue] = useState("")
@@ -91,6 +90,7 @@ function AuditItem(){
     const [categories, setCategories] = useState([])
     const [loadingItem,setLoadingItem] = useState(false)
     const [failedItem, setFailedItem] = useState(false)
+    
     const [snackBarAction, setSnackBarAction] = useState({
         itemName: "",
         action: "",

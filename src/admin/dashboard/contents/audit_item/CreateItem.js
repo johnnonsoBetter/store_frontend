@@ -156,7 +156,7 @@ function CreateItem(){
         itemApi().createItem(item).then(response => {
             
             const new_item = response.data
-            
+            console.log(new_item)
             newSnackBarAction['itemName'] = item['real_item'].name
             newSnackBarAction['action'] = "Created"
             newSnackBarAction['snackBarOpened'] = true
