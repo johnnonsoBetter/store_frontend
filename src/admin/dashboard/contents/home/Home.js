@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState} from 'react'
-import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails, useMediaQuery, Avatar} from '@material-ui/core'
+import {Typography, Box, Container, Card, CardContent, Grid, Backdrop, CircularProgress, Accordion, AccordionSummary, AccordionDetails, useMediaQuery, Avatar, Button} from '@material-ui/core'
 import {Link, useRouteMatch} from 'react-router-dom'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AdminDashboardContext from '../../../../context/admin/AdminDashboardContext'
@@ -9,35 +9,26 @@ import { dashboardApi } from '../../../../api/admin/dashboard/api'
 import { Beenhere } from '@material-ui/icons'
 
 function Home(){
-    const [backdropState, setBackdropState] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const {infoLinksContainer, infoLinks, theLink, backdrop, storeBaseInfoHeader, storeBaseInfo, textHeight, storeBaseDetail} = useContext(AdminDashboardContext).styles
     const {storeName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
+    const [failed, setFailed] = useState(false)
     const [storeInfo, setStoreInfo] = useState({
         change_balance: 0,
         next_day_change: 0
     }) 
 
-    useEffect(() => {
 
-        document.title = "Admin Dashboard"
-
-        return ()=> {
-
-            document.title = "Supermarket App"
-        }
-    })
-
-
-    useEffect(() => {
-        setBackdropState(true)
+    const loadResources = () => {
         dashboardApi(storeName).load().then(response => {
             const {data} = response
             const {change_balance, transaction_activity, next_day_change, inventory_manager} = data
             setDashboardData(data)
          
-            setBackdropState(false)
+            setLoading(false)
+            setFailed(false)
         
             
             setStoreInfo({
@@ -73,15 +64,37 @@ function Home(){
                 
             ])
 
+
             
 
            
 
         }).catch(err => {
 
-            console.log(err)
+            
+            setLoading(false)
+            setFailed(true)
         })
 
+
+    }
+   
+
+
+    useEffect(() => {
+
+        document.title = "Admin Dashboard"
+
+        return ()=> {
+
+            document.title = "Supermarket App"
+        }
+    })
+
+
+    useEffect(() => {
+        setLoading(true)
+        loadResources()
 
         return ()=> {
 
@@ -89,8 +102,9 @@ function Home(){
             setDashboardData({})
             setGeneralStoreInfos([])
             setTransactionReviewInfos([])
-            setBackdropState(false)
+            setLoading(false)
             setStoreInfo({change_balance: 0, next_day_change: 0})
+            setFailed(false)
             
             
         }
@@ -100,12 +114,16 @@ function Home(){
     const routes = useRouteMatch()
 
     const url = routes['url']
-    const matches = useMediaQuery('(min-width:1280px)');
 
-    console.log(generalStoreInfos)
-    console.log(generalStoreInfos[1])
-  
-    
+
+    const handleRetrys = () => {
+
+
+        setLoading(true)
+        loadResources()
+
+    }
+
     
 
     return (
@@ -113,11 +131,22 @@ function Home(){
         
 
         <>  
-              { backdropState === true ? 
-                <Backdrop className={backdrop} open={backdropState} >
+              { loading === true ? 
+                <Backdrop className={backdrop} open={loading} >
                   <CircularProgress color="inherit" />
                 </Backdrop>
-                :
+                : failed ?
+                <Box style={{height: "calc(100vh - 200px)"}} display="flex" alignItems="center" justifyContent="center">
+                    <Box>
+                        <Typography> Opps Something Went wrong !!!</Typography>
+                        <Box p={2}>
+                            <Button style={{backgroundColor: "orange"}} onClick={handleRetrys}>
+                                Retry
+                            </Button>
+                        </Box>
+                    </Box>
+                    
+                </Box> :
                 
             <Container > 
                 <Box display="flex" alignItems="center" width="100%"   >
