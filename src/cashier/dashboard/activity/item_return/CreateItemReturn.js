@@ -112,13 +112,14 @@ function CreateItemReturn(props){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        
         if (receiptId === '')
             return
 
+        setNotFound(false)
         setLoading(true)
         setItemSoldListDisplayed(false)
-        setNotFound(true)
+        
         
 
         cashierSalesApi().fetchByReceiptId(receiptId).then((response) => {
