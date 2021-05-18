@@ -13,6 +13,7 @@ import StoreItems from './dashboard/contents/store_items/StoreItemsInventory'
 import InventoryAppBar from './dashboard/InventoryAppBar'
 import InventoryContent from './dashboard/contents/home/inventory_activity/InventoryContent'
 import Settings from './dashboard/contents/home/settings/Settings'
+import SettingsAppBar from './dashboard/contents/home/settings/SettingsAppBar'
 
 
   const drawerWidth = 240;
@@ -63,13 +64,7 @@ import Settings from './dashboard/contents/home/settings/Settings'
       display: "flex",
       justifyContent: "space-around"
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up('lg')]: {
-        display: 'none',
-      },
     
-    },
     storeIcon: {
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2)
@@ -380,7 +375,7 @@ function AdminPage(props){
                           </Route>
 
                           <Route exact={true} path="/admin_dashboard/:storeName/settings" >
-                             <FixedAppBar handleDrawerToggle={handleDrawerToggle}/>
+                             <SettingsAppBar handleDrawerToggle={handleDrawerToggle}/>
                              <Settings />
                           </Route>
 

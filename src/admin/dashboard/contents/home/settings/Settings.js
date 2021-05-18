@@ -9,6 +9,7 @@ function Settings(){
     
     return (
         <Container>
+            
            <GeneralSetting />
 
            <CashierSettings />

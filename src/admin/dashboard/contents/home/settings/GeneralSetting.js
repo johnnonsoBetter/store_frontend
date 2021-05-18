@@ -1,4 +1,5 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, IconButton, Typography } from '@material-ui/core'
+import { Settings } from '@material-ui/icons'
 import React from 'react'
 
 function GeneralSetting(){
@@ -8,8 +9,12 @@ function GeneralSetting(){
 
     return (
         <Box>
-               <Box textAlign="left" p={1}>
+               <Box display="flex" alignItems="center" justifyContent="space-between" p={1}>
                     <Typography> General Settings</Typography>
+                    <IconButton >
+                        <Settings style={{color: "white"}} />
+                    </IconButton>
+                    
                </Box>
                <Box borderRadius={5} style={{backgroundColor: "black"}}>
                     
