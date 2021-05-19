@@ -1,21 +1,44 @@
-import { Box, Button, CircularProgress, Container, Grid, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { Box, Button, CircularProgress, Container, Drawer, Grid, IconButton, Typography, useMediaQuery } from '@material-ui/core'
+import { Close } from '@material-ui/icons'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { store } from '../../../../../api/admin/item/api'
 import { SettingsContextProvider } from '../../../../../context/admin/settings/SettingsContext'
 import CashierSettings from './CashierSettings'
 import GeneralSetting from './GeneralSetting'
 import InternalInfoSettings from './InternalInfoSettings'
+import UpdateSettingsForm from './UpdateSettingsForm'
+
+
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
 
 function Settings(){
 
-    const [drawerOpened, setDrawerOpened] = useState(false)
+    const [drawerOpened, setDrawerOpened] = useState(true)
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
-    
+    const [width] = useWindowSize()
 
     const [storeInfo, setStoreInfo] = useState({})
     const {storeName} = useParams()
+    const matches = useMediaQuery('(max-width:600px)')
+
+
+
+  
+    
+
 
     useEffect(()=> {
         setLoading(true)
@@ -87,6 +110,19 @@ function Settings(){
                 </Box> :
         
                 <>
+                <Drawer anchor="right" open={drawerOpened}  onClose={()=> setDrawerOpened(false)} >
+                    <Box width={matches ? width : 350 }>
+                        <Box display="flex" justifyContent="flex-end">
+                            <IconButton onClick={() => setDrawerOpened(false)}>
+                                <Close />
+                            </IconButton>
+                        </Box>
+                        <Box p={1} textAlign="center">
+                            <Typography style={{textTransform: "capitalize"}} variant="h6"> Update {storeName} Settings </Typography>
+                        </Box>
+                        <UpdateSettingsForm />
+                    </Box>
+                </Drawer>
                 <SettingsContextProvider
                     value={{
                         drawerOpened,

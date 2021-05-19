@@ -6,14 +6,14 @@ import SettingsContext from '../../../../../context/admin/settings/SettingsConte
 function GeneralSetting(){
 
     const base_imageUrl = 'static/images/' 
-    const {storeInfo} = useContext(SettingsContext)
+    const {storeInfo, setDrawerOpened} = useContext(SettingsContext)
     const {full_name, telephone, address, receipt_remark} = storeInfo
 
     return (
         <Box>
                <Box display="flex" alignItems="center" justifyContent="space-between" p={1}>
                     <Typography> General Settings</Typography>
-                    <IconButton >
+                    <IconButton onClick={()=> setDrawerOpened(true)} >
                         <Settings style={{color: "white"}} />
                     </IconButton>
                     
