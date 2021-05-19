@@ -73,10 +73,12 @@ function UpdateSettingsForm(){
 
     const classes = useStyles()
     const [loading, setLoading] = useState(false)
-    const {storeInfo, setStoreInfo, setDrawerOpened} = useContext(SettingsContext)
+    const {storeInfo, setStoreInfo, setDrawerOpened, setSnackbarOpened, setMessage, setTaskDone, setSeverity} = useContext(SettingsContext)
     const {address, cashier_sale_limit, change_balance, full_name, max_excess, mini_excess, next_day_change, receipt_remark, telephone} = storeInfo
     const [info, setInfo] = useState({})
     const {storeName} = useParams()
+    
+
 
     useEffect(() => {
 
@@ -104,6 +106,10 @@ function UpdateSettingsForm(){
             console.log(response)
             const {address, cashier_sale_limit, change_balance, full_name, max_excess, mini_excess, next_day_change, receipt_remark, telephone} = response.data
             setDrawerOpened(false)
+            setTaskDone(true)
+            setMessage("Succesffully Updated The Store Settings")
+            setSeverity('success')
+            setSnackbarOpened(true)
             setInfo({
                 next_day_change,
                 full_name,
@@ -135,10 +141,14 @@ function UpdateSettingsForm(){
 
         }).catch(err => {
 
-            console.log(err)
+           
+            setTaskDone(false)
+            setMessage("Failed To Update Store Settings")
+            setSeverity('failed')
+            setSnackbarOpened(true)
         })
 
-        console.log("submitting")
+      
     }
 
     const handleChange = (e) => {
@@ -181,10 +191,6 @@ function UpdateSettingsForm(){
             break;
 
         }
-        
-        console.log(newInfo)
-
-        
 
         setInfo(newInfo)
 

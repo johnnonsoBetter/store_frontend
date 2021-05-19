@@ -7,6 +7,7 @@ import { SettingsContextProvider } from '../../../../../context/admin/settings/S
 import CashierSettings from './CashierSettings'
 import GeneralSetting from './GeneralSetting'
 import InternalInfoSettings from './InternalInfoSettings'
+import SettingsSnackBar from './SettingsSnackBar'
 import UpdateSettingsForm from './UpdateSettingsForm'
 
 
@@ -33,6 +34,10 @@ function Settings(){
     const [storeInfo, setStoreInfo] = useState({})
     const {storeName} = useParams()
     const matches = useMediaQuery('(max-width:600px)')
+    const [snackBarOpened, setSnackbarOpened] = useState(false)
+    const [taskDone, setTaskDone] = useState(false)
+    const [message, setMessage] = useState('')
+    const [severity, setSeverity] = useState('')
 
     useEffect(()=> {
         setLoading(true)
@@ -90,7 +95,15 @@ function Settings(){
                         drawerOpened,
                         setDrawerOpened,
                         storeInfo,
-                        setStoreInfo
+                        setStoreInfo,
+                        setSeverity,
+                        setTaskDone,
+                        setSnackbarOpened,
+                        setMessage,
+                        message,
+                        severity,
+                        taskDone,
+                        snackBarOpened
                     }}
                 >
 
@@ -141,8 +154,8 @@ function Settings(){
 
 
             
-           
-
+            
+            <SettingsSnackBar />
             </SettingsContextProvider>
         </Container>
     )
