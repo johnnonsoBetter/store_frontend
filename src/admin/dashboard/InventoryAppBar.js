@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(4),
     height: theme.spacing(4),
+    backgroundColor: "#3f51b5",
+    textTransform: "capitalize",
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(4.5),
       height: theme.spacing(4.5),

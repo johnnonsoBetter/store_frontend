@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
       small: {
         width: theme.spacing(4),
         height: theme.spacing(4),
+        backgroundColor: "#3f51b5",
+        textTransform: "capitalize"
       },
 
       menuButton: {
@@ -37,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SettingsAppBar(props){
     const classes = useStyles()
+
+    const {storeName} = useParams()
 
     return (
         <AppBar className={classes.appBar} position="fixed" >
@@ -55,7 +59,7 @@ function SettingsAppBar(props){
                    <Menu />
                 </IconButton>
 
-                <Avatar className={classes.small}> U </Avatar>
+                <Avatar className={classes.small} > {storeName.charAt(0)} </Avatar>
             </Toolbar>
             
 

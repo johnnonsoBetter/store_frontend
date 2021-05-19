@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
            
          },
       }
+      ,
+      small: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+        backgroundColor: "#3f51b5",
+        textTransform: "capitalize"
+      },
+
 }))
 
 
@@ -153,7 +161,7 @@ function FixedBar(){
                     <Typography onClick={() => {
 
                       history.push('/admin_dashboard')
-                    }} variant="h6" style={{textTransform: "capitalize"}}> <Avatar > {storeName.charAt(0)} </Avatar> </Typography>
+                    }} variant="h6" style={{textTransform: "capitalize"}}> <Avatar className={classes.small} > {storeName.charAt(0)} </Avatar> </Typography>
 
                     
 
