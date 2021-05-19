@@ -139,6 +139,14 @@ export const store = (store) => {
 
         },
 
+        getInfo: () => {
+            return axios({
+                method: "GET",
+                url: `${API_ROOT}api/v1/stores/${store}`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+            })
+        }
+
        
     }
 }
