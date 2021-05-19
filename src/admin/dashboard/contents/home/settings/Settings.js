@@ -93,6 +93,13 @@ function Settings(){
 
     return (
         <Container>
+            <SettingsContextProvider
+                    value={{
+                        drawerOpened,
+                        setDrawerOpened,
+                        storeInfo
+                    }}
+                >
 
             {
                 loading ? 
@@ -123,13 +130,7 @@ function Settings(){
                         <UpdateSettingsForm />
                     </Box>
                 </Drawer>
-                <SettingsContextProvider
-                    value={{
-                        drawerOpened,
-                        setDrawerOpened,
-                        storeInfo
-                    }}
-                >
+                
 
                     <GeneralSetting />
 
@@ -137,8 +138,9 @@ function Settings(){
 
                     <InternalInfoSettings />
 
-                </SettingsContextProvider>
+               
                 </>
+                 
 
 
 
@@ -148,7 +150,7 @@ function Settings(){
             
            
 
-           
+            </SettingsContextProvider>
         </Container>
     )
 }
