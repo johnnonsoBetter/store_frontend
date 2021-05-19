@@ -25,7 +25,7 @@ function useWindowSize() {
 
 function Settings(){
 
-    const [drawerOpened, setDrawerOpened] = useState(true)
+    const [drawerOpened, setDrawerOpened] = useState(false)
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
     const [width] = useWindowSize()
@@ -33,12 +33,6 @@ function Settings(){
     const [storeInfo, setStoreInfo] = useState({})
     const {storeName} = useParams()
     const matches = useMediaQuery('(max-width:600px)')
-
-
-
-  
-    
-
 
     useEffect(()=> {
         setLoading(true)
@@ -57,11 +51,9 @@ function Settings(){
 
         store(storeName).getInfo().then((response) => {
 
-            console.log(response)
-            const {name, full_name, address, telephone, next_day_change, max_excess, mini_excess, receipt_remark, change_balance, cashier_sale_limit} = response.data
+            const {full_name, address, telephone, next_day_change, max_excess, mini_excess, receipt_remark, change_balance, cashier_sale_limit} = response.data
             setLoading(false)
             setStoreInfo({
-                name,
                 next_day_change,
                 full_name,
                 address,
@@ -97,7 +89,8 @@ function Settings(){
                     value={{
                         drawerOpened,
                         setDrawerOpened,
-                        storeInfo
+                        storeInfo,
+                        setStoreInfo
                     }}
                 >
 

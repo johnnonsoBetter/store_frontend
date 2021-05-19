@@ -145,6 +145,16 @@ export const store = (store) => {
                 url: `${API_ROOT}api/v1/stores/${store}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
+        },
+
+        updateInfo: (data) => {
+            return axios({
+                method: "PUT",
+                url: `${API_ROOT}api/v1/stores/${store}`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+                data: {store: data}
+            })
+
         }
 
        

@@ -3,6 +3,8 @@ import { LocationCity, Phone, Receipt, Store } from '@material-ui/icons';
 import React, { useContext, useEffect, useState } from 'react'
 import { green } from '@material-ui/core/colors';
 import SettingsContext from '../../../../../context/admin/settings/SettingsContext';
+import { useParams } from 'react-router-dom';
+import { store } from '../../../../../api/admin/item/api';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -71,9 +73,10 @@ function UpdateSettingsForm(){
 
     const classes = useStyles()
     const [loading, setLoading] = useState(false)
-    const {storeInfo} = useContext(SettingsContext)
+    const {storeInfo, setStoreInfo, setDrawerOpened} = useContext(SettingsContext)
     const {address, cashier_sale_limit, change_balance, full_name, max_excess, mini_excess, next_day_change, receipt_remark, telephone} = storeInfo
     const [info, setInfo] = useState({})
+    const {storeName} = useParams()
 
     useEffect(() => {
 
@@ -93,8 +96,47 @@ function UpdateSettingsForm(){
     }, [])
 
     const handleSubmit = (e) => {
-        console.log(info)
+       
         e.preventDefault()
+        
+      
+        store(storeName).updateInfo(info).then(response => {
+            console.log(response)
+            const {address, cashier_sale_limit, change_balance, full_name, max_excess, mini_excess, next_day_change, receipt_remark, telephone} = response.data
+            setDrawerOpened(false)
+            setInfo({
+                next_day_change,
+                full_name,
+                address,
+                telephone,
+                max_excess,
+                mini_excess,
+                receipt_remark,
+                change_balance,
+                cashier_sale_limit,
+            })
+
+            setStoreInfo({
+                next_day_change,
+                full_name,
+                address,
+                telephone,
+                max_excess,
+                mini_excess,
+                receipt_remark,
+                change_balance,
+                cashier_sale_limit,
+            })
+
+            
+
+
+    
+
+        }).catch(err => {
+
+            console.log(err)
+        })
 
         console.log("submitting")
     }
@@ -108,8 +150,7 @@ function UpdateSettingsForm(){
         const value = e.target.vale
 
         const newInfo = Object.assign({}, info)
-        console.log(newInfo)
-
+       
         switch(name){
             case "full_name" :
                 newInfo['full_name'] = `${e.target.value}`
@@ -141,6 +182,7 @@ function UpdateSettingsForm(){
 
         }
         
+        console.log(newInfo)
 
         
 
@@ -254,9 +296,9 @@ function UpdateSettingsForm(){
                             </Grid>
 
                             <Grid item xs={6} >
-                                <Box width="100%" onChange = {handleChange} name="change_balance" display="flex" alignItems="center" justifyContent="space-between" >
+                                <Box width="100%"   display="flex" alignItems="center" justifyContent="space-between" >
                                     
-                                    <Input type="number" value={info['change_balance']} placeholder="Reserve Change"/>
+                                    <Input type="number" name="change_balance" onChange = {handleChange} value={info['change_balance']} placeholder="Reserve Change"/>
                                 </Box>
                                
                             </Grid>
