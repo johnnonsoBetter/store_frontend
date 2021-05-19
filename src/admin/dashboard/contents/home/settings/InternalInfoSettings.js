@@ -1,10 +1,13 @@
 import { Box, Grid, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
+import SettingsContext from '../../../../../context/admin/settings/SettingsContext'
+import AmountFormater from '../../../../../helpers/AmountFormater'
 
 
 function InternalInfoSettings(){
 
     const base_imageUrl = 'static/images/' 
+    const {next_day_change, change_balance} = useContext(SettingsContext).storeInfo
 
 
     return (
@@ -21,7 +24,7 @@ function InternalInfoSettings(){
                                     <Typography variant="h5"> Next Day Change</Typography>
                                 </Box>
                                 <Box p={1}>
-                                <Typography variant="h6"> ₦15,000 </Typography>
+                                <Typography variant="h6">  ₦ {AmountFormater(next_day_change).amount()} </Typography>
                                 </Box>
                             </Box>
 
@@ -34,7 +37,7 @@ function InternalInfoSettings(){
                                     <Typography variant="h5"> Reserve Change</Typography>
                                 </Box>
                                 <Box p={1}>
-                                <Typography variant="h6"> ₦24,000 </Typography>
+                                <Typography variant="h6"> ₦ {AmountFormater(change_balance).amount()} </Typography>
                                 </Box>
                             </Box>
 

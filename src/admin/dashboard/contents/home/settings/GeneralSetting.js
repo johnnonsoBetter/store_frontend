@@ -1,11 +1,13 @@
 import { Box, Grid, IconButton, Typography } from '@material-ui/core'
 import { Settings } from '@material-ui/icons'
-import React from 'react'
+import React, { useContext } from 'react'
+import SettingsContext from '../../../../../context/admin/settings/SettingsContext'
 
 function GeneralSetting(){
 
     const base_imageUrl = 'static/images/' 
-
+    const {storeInfo} = useContext(SettingsContext)
+    const {full_name, telephone, address, receipt_remark} = storeInfo
 
     return (
         <Box>
@@ -22,7 +24,7 @@ function GeneralSetting(){
                         <Grid item xs={12} sm={6} md={4}>
                             <Box p={2} >
                                 <Box p={2} textAlign="center">
-                                    <Typography variant="h5"> Upright Supermarket Ltd</Typography>
+                                    <Typography  style={{textTransform: "capitalize"}} variant="h5"> {full_name} </Typography>
                                 </Box>
                                 <Box p={1}>
                                     <img src={`/${base_imageUrl}medal.png`} alt="items"/>
@@ -32,9 +34,9 @@ function GeneralSetting(){
                         </Grid>
 
                         <Grid item xs={12} sm={6} md={4}>
-                            <Box p={2}>
+                            <Box p={2} >
                                 <Box p={2} textAlign="center">
-                                    <Typography variant="h5"> 09039691334</Typography>
+                                    <Typography variant="h5"> {telephone}</Typography>
                                 </Box>
                                 <Box p={1}>
                                     <img src={`/${base_imageUrl}phone.png`} alt="items"/>
@@ -46,7 +48,7 @@ function GeneralSetting(){
                         <Grid item xs={12} sm={6} md={4}>
                             <Box p={2}>
                                 <Box p={2} textAlign="center">
-                                    <Typography variant="h5"> 14 Salami Afromedia Ojo Lagos, Nigeria</Typography>
+                                    <Typography  style={{textTransform: "capitalize"}} variant="h5">  {address} </Typography>
                                 </Box>
                                 <Box p={1}>
                                     <img src={`/${base_imageUrl}pin.png`} alt="items"/>
@@ -57,7 +59,7 @@ function GeneralSetting(){
 
                         <Grid item xs={12} >
                             <Box p={2}>
-                                <Typography variant="h6"> Thanks For Your Patronage </Typography>
+                                <Typography  style={{textTransform: "capitalize"}} variant="h6"> {receipt_remark} </Typography>
                             </Box>
 
                         </Grid>

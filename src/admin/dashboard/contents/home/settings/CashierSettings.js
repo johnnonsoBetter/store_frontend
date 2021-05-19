@@ -1,9 +1,13 @@
 import { Box, Grid, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
+import SettingsContext from '../../../../../context/admin/settings/SettingsContext'
+import AmountFormater from '../../../../../helpers/AmountFormater'
 
 function CashierSettings(){
 
     const base_imageUrl = 'static/images/' 
+
+    const {mini_excess, max_excess, cashier_sale_limit} = useContext(SettingsContext).storeInfo
 
     return (
         <Box>
@@ -19,7 +23,7 @@ function CashierSettings(){
                              <Typography variant="h5"> Mini Excess</Typography>
                          </Box>
                          <Box p={1}>
-                         <Typography variant="h6"> 100 </Typography>
+                         <Typography variant="h6"> ₦ {AmountFormater(mini_excess).amount()} </Typography>
                          </Box>
                      </Box>
 
@@ -31,7 +35,7 @@ function CashierSettings(){
                              <Typography variant="h5"> Max Excess</Typography>
                          </Box>
                          <Box p={1}>
-                         <Typography variant="h6"> 200 </Typography>
+                         <Typography variant="h6">  ₦ {AmountFormater(max_excess).amount()} </Typography>
                          </Box>
                      </Box>
 
@@ -43,7 +47,7 @@ function CashierSettings(){
                              <Typography variant="h5"> Recent Sales Limit</Typography>
                          </Box>
                          <Box p={1}>
-                         <Typography variant="h6"> 6 </Typography>
+                         <Typography variant="h6"> {cashier_sale_limit} </Typography>
                          </Box>
                      </Box>
 
