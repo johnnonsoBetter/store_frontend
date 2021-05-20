@@ -121,7 +121,9 @@ function StockRepairs(){
     const handleSubmit = (e) => {
         e.preventDefault()
         const newStockRepairs = stockRepairs.filter(stockRepair => stockRepair.name.toLowerCase().includes(searchValue.toLowerCase()))
+        setFilterType('All')
         setFilteredStockRepairs(newStockRepairs)
+        
     }
 
     const handleChange = (e) => {
@@ -210,7 +212,14 @@ function StockRepairs(){
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <CircularProgress size={26} /> </Box> : failed ?
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <Typography> Failed To Load Stock Repairs </Typography> </Box>  :
                 <Box marginTop={3} className={classes.stockRepairCont}>
-           
+                    {
+
+                        filteredStockRepairs.length === 0 &&
+                        <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center">
+                            <Typography> No Stock Repairs Found </Typography>
+                        </Box>
+
+                    }
                 <Grid spacing={2} container >
                     {
                          filteredStockRepairs.map(restock => {
