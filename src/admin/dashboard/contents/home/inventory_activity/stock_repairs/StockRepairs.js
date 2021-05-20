@@ -143,7 +143,7 @@ function StockRepairs(){
 
         activity.load().then((response => {
 
-            console.log(response)
+          
             const {item_stock_repairs} = response.data
 
             setStockRepairs(item_stock_repairs)

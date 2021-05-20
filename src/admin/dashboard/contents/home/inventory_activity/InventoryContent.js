@@ -61,53 +61,19 @@ contentBox: {
 }));
 
 export default function InventoryContent() {
+  const [activityType, setActivityType] = useState('restock')
   const classes = useStyles();
   const handleActivityType = (type) => {
 
     setActivityType(type)
   }
 
-  const {storeName} = useParams()
-
-  const [activityType, setActivityType] = useState('restock')
-  const activity = activitiesApi(storeName, 'restocks')
-  const [restocks, setRestocks] = useState([])
-  const [inventoryActivity, setInventoryActivity] = useState({
-    recieved_goods_quantity: '0',
-    recieved_goods_worth: '0',
-    restocked_goods_cost: '0',
-    restocked_goods_quantity: '0',
-    restocked_goods_worth: '0',
-    total_bad_goods_cost: '0',
-    total_bad_goods_quantity: '0',
-    total_bad_goods_worth: '0',
-    transfered_goods_quantity: '0',
-    transfered_goods_worth: '0',
-  })
-  const [loading, setLoading] = useState(false)
-  const [failed, setFailed] = useState(false)
-
-
 
 
  
   useEffect(() => {
 
-    activity.load().then(response => {
-
-      
-
-      setInventoryActivity(response.data['inventory_activity'])
-      setRestocks(response.data['restocks'])
-    }).catch(err => {
-      console.log(err) 
-    })
-
-
-  
-
-
-
+    setActivityType('restock')
   }, [])
 
 
@@ -120,13 +86,7 @@ export default function InventoryContent() {
           handleActivityType,
           activityType,
           classes,
-          inventoryActivity,
-          restocks,
-          setRestocks,
-          loading,
-          setLoading,
-          setFailed,
-          failed,
+          
         }}
       >
         <Box width="90vw" className={classes.cont}>

@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
@@ -35,6 +35,7 @@ function BadItems(){
         total_bad_goods_quantity: '0',
         total_bad_goods_worth: '0'
     })
+    
 
 
 

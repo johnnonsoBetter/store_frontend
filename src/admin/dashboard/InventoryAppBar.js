@@ -86,7 +86,7 @@ function InventoryAppBar(props){
     const [openDateSelector, setOpenDateSelector] = useState(false)
     const [selectedDate, setSelectedDate] = React.useState(new Date());
     const {setStaticDate} = useContext(AdminDashboardStyleContext).store
-    const {resetContent} = props
+   
     
     const location = useLocation()
     const {storeName} = useContext(AdminDashboardStyleContext).store
@@ -94,9 +94,8 @@ function InventoryAppBar(props){
     const handleDateChange = (date) => {
       setSelectedDate(date);
       const d = DateTime.fromHTTP(new Date(date).toGMTString())
-    //   setStaticDate( d.toISODate())
-    //   resetContent(d.toISODate())
-    //   setOpenDateSelector(!openDateSelector)
+      setStaticDate( d.toISODate())
+      setOpenDateSelector(!openDateSelector)
     };
     
 
