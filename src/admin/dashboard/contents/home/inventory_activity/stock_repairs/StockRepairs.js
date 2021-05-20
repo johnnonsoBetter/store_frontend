@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "orange"
 
     },
+
+    fixedHeight: {
+        height: "calc(74vh - 200px)"
+    }
 }))
 
 
@@ -95,6 +99,7 @@ function StockRepairs(){
 
 
     useEffect(()=> {
+        setLoading(true)
 
         activity.load().then((response => {
 
@@ -102,12 +107,20 @@ function StockRepairs(){
             const {item_stock_repairs} = response.data
 
             setStockRepairs(item_stock_repairs)
+            setLoading(false)
         })).catch(err => {
 
             console.log(err)
+            setFailed(true)
+            setLoading(false)
         })
 
 
+        return ()=> {
+            setLoading(false)
+            setStockRepairs([])
+            setFailed(false)
+        }
     }, [])
 
 
@@ -149,8 +162,8 @@ function StockRepairs(){
 
             {
                 loading ? 
-                <Box display="flex" alignItems="center" justifyItems="center"> <CircularProgress size={29} /> </Box> : failed ?
-                <Box display="flex" alignItems="center" justifyItems="center"> <Typography> Failed To Load Stock Repairs </Typography> </Box>  :
+                <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <CircularProgress size={26} /> </Box> : failed ?
+                <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <Typography> Failed To Load Stock Repairs </Typography> </Box>  :
                 <Box marginTop={3} className={classes.stockRepairCont}>
            
                 <Grid spacing={2} container >
