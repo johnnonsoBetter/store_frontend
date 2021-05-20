@@ -12,6 +12,7 @@ import InventoryNav from './InventoryNav';
 import { activitiesApi } from '../../../../../api/admin/activities/api';
 import { useParams } from 'react-router-dom';
 import Restock from './restocks/Restock';
+import StockRepairs from './stock_repairs/StockRepairs';
 
 
 
@@ -88,7 +89,7 @@ export default function InventoryContent() {
 
     activity.load().then(response => {
 
-      console.log(response)
+      
 
       setInventoryActivity(response.data['inventory_activity'])
       setRestocks(response.data['restocks'])
@@ -123,7 +124,7 @@ export default function InventoryContent() {
             activityType === 'restock' ? 
             <Restock />  :
             activityType === 'stock' ? 
-            <Typography> Stocker </Typography> : 
+            <StockRepairs /> : 
             activityType === 'bad_item' ?
             <Typography> Bad Item </Typography> :
             activityType === 'item_transfer' ? 
