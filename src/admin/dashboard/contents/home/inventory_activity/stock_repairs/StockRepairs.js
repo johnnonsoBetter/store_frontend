@@ -1,4 +1,5 @@
 import { Avatar, Box, Button, CircularProgress, Grid, InputBase, makeStyles, Menu, MenuItem, Typography, withStyles } from '@material-ui/core'
+import { DateTime } from 'luxon';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
@@ -220,49 +221,53 @@ function StockRepairs(){
                         </Box>
 
                     }
-                <Grid spacing={2} container >
-                    {
-                         filteredStockRepairs.map(restock => {
+                        <Grid spacing={2} container >
+                            {
+                                filteredStockRepairs.map(restock => {
 
-                             const {id, name, before_repair_quantity, repaired_quantity, repair_quantity_outcome, repaired_outcome, created_at} = restock
+                                    const {id, name, before_repair_quantity, repaired_quantity, repair_quantity_outcome, repaired_outcome, created_at} = restock
+                                    const time =  DateTime.fromISO(created_at).toLocaleString(DateTime.TIME_SIMPLE)
+            
+                                    return (
+                                        <Grid  item xs={12} md={6} key={id} >
+                                            <Box className={classes.stockRepair}  p={1} >
+                                                    <Box p={1}>
+                                                        <Typography> {name} </Typography>
+                                                    </Box>
 
-                             return (
-                                 <Grid  item xs={12} md={6} key={id} >
-                                     <Box className={classes.stockRepair}  p={1} >
-                                            <Box p={1}>
-                                                <Typography> {name} </Typography>
-                                            </Box>
+                                                <Box display="flex" alignItems="center" justifyContent="space-around">
+                                                    <Box>
+                                                        <Avatar className={classes.blackCircle}>{before_repair_quantity}</Avatar>
+                                                    </Box>
+                                                    <Typography style={{textTransform: "capitalize"}}>{time}</Typography>
+                                                    <Box>
+                                                        <Avatar className={classes.blackCircle}>{repaired_quantity}</Avatar>
+                                                    </Box>
+                                                
+                                                </Box>    
+                                                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+                                                    
+                                                    <Box p={1}>
+                                                        <Avatar className={classesType(classes, repaired_outcome)}>{repair_quantity_outcome}</Avatar>
+                                                    </Box>
 
-                                        <Box display="flex" alignItems="center" justifyContent="space-around">
-                                            <Box>
-                                                <Avatar className={classes.blackCircle}>{before_repair_quantity}</Avatar>
-                                            </Box>
-                                            
-                                            <Box>
-                                                <Avatar className={classes.blackCircle}>{repaired_quantity}</Avatar>
-                                            </Box>
-                                        
-                                        </Box>    
-                                        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-                                            
-                                            <Box p={1}>
-                                                <Avatar className={classesType(classes, repaired_outcome)}>{repair_quantity_outcome}</Avatar>
-                                            </Box>
-                                            
-                                            <Typography style={{textTransform: "capitalize"}}>{repaired_outcome}</Typography>
-                                        </Box>
+                                                    <Typography style={{textTransform: "capitalize"}}>{repaired_outcome}</Typography>
+                                                    
+                                                
+                                                    
+                                                </Box>
 
-                                     </Box>
-                                 </Grid>
-                             )
-                         })
-                    }
-                </Grid>
+                                            </Box>
+                                        </Grid>
+                                    )
+                                })
+                            }
+                        </Grid>
                 
             
-        </Box>
-            }
-           
+                </Box>
+                }
+            
                 
         
                    
