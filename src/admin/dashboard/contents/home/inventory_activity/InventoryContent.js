@@ -13,6 +13,7 @@ import { activitiesApi } from '../../../../../api/admin/activities/api';
 import { useParams } from 'react-router-dom';
 import Restock from './restocks/Restock';
 import StockRepairs from './stock_repairs/StockRepairs';
+import BadItems from './bad_items/BadItems';
 
 
 
@@ -139,7 +140,7 @@ export default function InventoryContent() {
             activityType === 'stock' ? 
             <StockRepairs /> : 
             activityType === 'bad_item' ?
-            <Typography> Bad Item </Typography> :
+            <BadItems /> :
             activityType === 'item_transfer' ? 
             <Typography> Item Transfer </Typography> : null
           }
