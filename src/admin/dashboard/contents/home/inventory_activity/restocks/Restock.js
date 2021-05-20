@@ -1,5 +1,5 @@
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import InventoryActivityContext from '../../../../../../context/admin/inventory_activity/InventoryActivity'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 
@@ -18,7 +18,18 @@ const useStyles = makeStyles((theme) => ({
 
 function Restock(){
     const classes = useStyles()
-    const {inventoryActivity, restocks} = useContext(InventoryActivityContext)
+    const {inventoryActivity, restocks, activityType, setRestocks} = useContext(InventoryActivityContext)
+
+
+    useEffect(() => {
+
+        return ()=> {
+
+           
+            setRestocks([])
+            
+        }
+    }, [])
     return (
         <Box>
             <Box p={2} textAlign="left"> <Typography variant="h5"> Restocks </Typography></Box>

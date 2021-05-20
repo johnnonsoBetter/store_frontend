@@ -83,6 +83,11 @@ export default function InventoryContent() {
     transfered_goods_quantity: '0',
     transfered_goods_worth: '0',
   })
+  const [loading, setLoading] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+
+
 
  
   useEffect(() => {
@@ -96,6 +101,9 @@ export default function InventoryContent() {
     }).catch(err => {
       console.log(err) 
     })
+
+
+  
 
 
 
@@ -113,6 +121,11 @@ export default function InventoryContent() {
           classes,
           inventoryActivity,
           restocks,
+          setRestocks,
+          loading,
+          setLoading,
+          setFailed,
+          failed,
         }}
       >
         <Box width="90vw" className={classes.cont}>

@@ -87,7 +87,9 @@ function StockRepairs(){
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
     const [stockRepairs, setStockRepairs] = useState([])
+    const [filteredStockRepairs, setFilteredStockRepairs] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
+    const [searchValue, setSearchValue] = useState('')
 
     const {storeName} = useParams()
     const activity = activitiesApi(storeName, 'item_stock_repairs')
@@ -96,6 +98,24 @@ function StockRepairs(){
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+
+        const newStockRepairs = stockRepairs.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+        setFilteredStockRepairs(newStockRepairs)
+    }
+
+    const handleChange = (e) => {
+        e.preventDefault()
+
+        if (e.target.value === ' ' || e.target.value === ''){
+            setFilteredStockRepairs(stockRepairs)
+        }
+
+        setSearchValue(e.target.value)
+    }
 
 
     useEffect(()=> {
@@ -107,6 +127,7 @@ function StockRepairs(){
             const {item_stock_repairs} = response.data
 
             setStockRepairs(item_stock_repairs)
+            setFilteredStockRepairs(item_stock_repairs)
             setLoading(false)
         })).catch(err => {
 
@@ -120,6 +141,8 @@ function StockRepairs(){
             setLoading(false)
             setStockRepairs([])
             setFailed(false)
+            setSearchValue('')
+            setFilteredStockRepairs([])
         }
     }, [])
 
@@ -134,12 +157,12 @@ function StockRepairs(){
   return (
         <Box>
             <Box p={2} textAlign="left"> <Typography variant="h5"> Stock Repairs </Typography></Box>
-            <Box>
-                <Input placeholder="Search Item"/>
-                <Box display="flex"  width="100%" >
+            <Box display="flex"  width="100%" alignItems="center" justifyContent="flex-end" >
+                
+                <Box display="flex"  >
                   
                   <Button style={{color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                    BU
+                    All
                   </Button>
                   <Menu
                     id="simple-menu"
@@ -148,7 +171,7 @@ function StockRepairs(){
                     open={Boolean(anchorEl)}
                     onClose={()=>  setAnchorEl(null)}
                   >
-                   
+                    <MenuItem> All</MenuItem>
                     <MenuItem >Shortage</MenuItem>
                     <MenuItem >Excess</MenuItem>
                     <MenuItem >Balanced</MenuItem>
@@ -157,6 +180,11 @@ function StockRepairs(){
              
                   
                 </Box>
+                <form onSubmit={handleSubmit}>
+                    <Input value={searchValue} onChange={handleChange} placeholder="Search Item"/>
+
+                </form>
+                
             </Box>
 
 
@@ -168,7 +196,7 @@ function StockRepairs(){
            
                 <Grid spacing={2} container >
                     {
-                         stockRepairs.map(restock => {
+                         filteredStockRepairs.map(restock => {
 
                              const {id, name, before_repair_quantity, repaired_quantity, repair_quantity_outcome, repaired_outcome, created_at} = restock
 
