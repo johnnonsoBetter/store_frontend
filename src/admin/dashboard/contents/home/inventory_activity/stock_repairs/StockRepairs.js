@@ -90,20 +90,37 @@ function StockRepairs(){
     const [filteredStockRepairs, setFilteredStockRepairs] = useState([])
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchValue, setSearchValue] = useState('')
-
+    const [filterType, setFilterType] = useState('All')
     const {storeName} = useParams()
     const activity = activitiesApi(storeName, 'item_stock_repairs')
     const classes = useStyles()
+    
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+
+
+    const handleFilterOutcome = (outcome) => {
+        const filterOutcome = outcome.toLowerCase()
+        const newFilteredStockRepairs = stockRepairs.filter(stockRepair => stockRepair.repaired_outcome === filterOutcome)
+
+        if (filterOutcome === 'all'){
+            setFilteredStockRepairs(stockRepairs)
+            setFilterType(filterOutcome)
+            setAnchorEl(null)
+            return
+        }
+        
+        setFilteredStockRepairs(newFilteredStockRepairs)
+        setFilterType(filterOutcome)
+        setAnchorEl(null)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-
-
-        const newStockRepairs = stockRepairs.filter(item => item.name.toLowerCase().includes(searchValue.toLowerCase()))
+        const newStockRepairs = stockRepairs.filter(stockRepair => stockRepair.name.toLowerCase().includes(searchValue.toLowerCase()))
         setFilteredStockRepairs(newStockRepairs)
     }
 
@@ -162,7 +179,7 @@ function StockRepairs(){
                 <Box display="flex"  >
                   
                   <Button style={{color: "white"}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                    All
+                    {filterType}
                   </Button>
                   <Menu
                     id="simple-menu"
@@ -171,10 +188,10 @@ function StockRepairs(){
                     open={Boolean(anchorEl)}
                     onClose={()=>  setAnchorEl(null)}
                   >
-                    <MenuItem> All</MenuItem>
-                    <MenuItem >Shortage</MenuItem>
-                    <MenuItem >Excess</MenuItem>
-                    <MenuItem >Balanced</MenuItem>
+                    <MenuItem onClick={()=> handleFilterOutcome('all')}> All</MenuItem>
+                    <MenuItem onClick={()=> handleFilterOutcome('shortage')}>Shortage</MenuItem>
+                    <MenuItem onClick={()=> handleFilterOutcome('excess')}>Excess</MenuItem>
+                    <MenuItem onClick={()=> handleFilterOutcome('balanced')}>Balanced</MenuItem>
                     
                   </Menu>
              
