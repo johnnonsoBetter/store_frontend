@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { VirtuosoGrid } from 'react-virtuoso'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
+import AdminDashboardStyleContext from '../../../../../../context/admin/AdminDashboardContext'
 import InventoryActivityContext from '../../../../../../context/admin/inventory_activity/InventoryActivity'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 
@@ -114,6 +115,11 @@ function Restock(){
     const activity = activitiesApi(storeName, 'restocks')
     const [filteredRestocks, setFilteredRestocks] = useState(restockedItems)
     const [searchValue, setSearchValue] = useState('')
+    const {staticDate}  = useContext(AdminDashboardStyleContext).store
+    
+    function noTransaction(obj){
+        return Object.keys(obj).length === 0
+     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -139,6 +145,30 @@ function Restock(){
     useEffect(() => {
 
         setLoading(true)
+     
+        if(staticDate !== ''){
+
+            activity.loadDate(staticDate).then(response => {
+           
+                const {restocks, inventory_activity} = response.data
+                const {restocked_goods_cost, restocked_goods_quantity, restocked_goods_worth} = inventory_activity
+                
+                setRestockedItems(restocks)
+                setFilteredRestocks(restocks)
+                setInventoryActivity(inventory_activity)
+                setLoading(false)
+                console.log(restocks)
+    
+             
+              }).catch(err => {
+                
+                setFailed(true)
+                setLoading(false)
+              })
+
+        }else{
+
+
         activity.load().then(response => {
            
             const {restocks, inventory_activity} = response.data
@@ -146,12 +176,7 @@ function Restock(){
             
             setRestockedItems(restocks)
             setFilteredRestocks(restocks)
-            setInventoryActivity({
-                restocked_goods_cost,
-                restocked_goods_quantity,
-                restocked_goods_worth,
-               
-            })
+            setInventoryActivity(inventory_activity)
             setLoading(false)
             console.log(restocks)
 
@@ -161,6 +186,11 @@ function Restock(){
             setFailed(true)
             setLoading(false)
           })
+
+
+        }
+
+
 
         
 
@@ -183,29 +213,37 @@ function Restock(){
     }, [])
     return (
             <>
-
+                {
+                    
+                    !noTransaction(inventoryActivity) && 
+                    <>
                     <Box display="flex">
-                        <Box p={1} >
-                            <Typography> Q </Typography>
-                            <Typography> {AmountFormater(inventoryActivity['restocked_goods_quantity']).amount()} </Typography>
-                        </Box>
-                        <Box p={1}>
-                            <Typography> TC </Typography>
-                            <Typography> ₦{AmountFormater(inventoryActivity['restocked_goods_cost']).amount()} </Typography>
-                        </Box>
-                        <Box p={1}>
-                            <Typography> TW </Typography>
-                            <Typography> ₦{AmountFormater(inventoryActivity['restocked_goods_worth']).amount()} </Typography>
-                        </Box>
-                        
+                    <Box p={1} >
+                        <Typography> Q </Typography>
+                        <Typography> {AmountFormater(inventoryActivity['restocked_goods_quantity']).amount()} </Typography>
+                    </Box>
+                    <Box p={1}>
+                        <Typography> TC </Typography>
+                        <Typography> ₦{AmountFormater(inventoryActivity['restocked_goods_cost']).amount()} </Typography>
+                    </Box>
+                    <Box p={1}>
+                        <Typography> TW </Typography>
+                        <Typography> ₦{AmountFormater(inventoryActivity['restocked_goods_worth']).amount()} </Typography>
+                    </Box>
+
                     </Box>
                     <Box width="100%" display="flex" justifyContent="flex-end">
-                        <form onSubmit={handleSubmit}>
-                            <Input value={searchValue} onChange={handleChange} placeholder="Search Item Name" />
+                    <form onSubmit={handleSubmit}>
+                        <Input value={searchValue} onChange={handleChange} placeholder="Search Item Name" />
 
-                        </form>
-                        
+                    </form>
+
                     </Box>
+                    </>
+
+                }
+
+                   
 
             {
                 loading ? 
@@ -213,7 +251,12 @@ function Restock(){
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <Typography> Failed To Load Stock Repairs </Typography> </Box>  :
                  filteredRestocks.length === 0  ?
                         <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center">
-                                <Typography> No Stock Repairs Found </Typography>
+                                
+                                {
+                                    noTransaction(inventoryActivity) ? <Typography> No Transaction On This Day </Typography>  :
+                                    <Typography> No Stock Repairs Found </Typography>
+                                }
+                                
                             </Box>
 
 

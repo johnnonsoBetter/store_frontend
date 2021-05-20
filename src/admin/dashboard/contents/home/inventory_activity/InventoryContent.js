@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import Restock from './restocks/Restock';
 import StockRepairs from './stock_repairs/StockRepairs';
 import BadItems from './bad_items/BadItems';
+import AdminDashboardStyleContext from '../../../../../context/admin/AdminDashboardContext';
 
 
 
@@ -63,18 +64,31 @@ contentBox: {
 export default function InventoryContent() {
   const [activityType, setActivityType] = useState('restock')
   const classes = useStyles();
+  const {staticDate, setStaticDate}  = useContext(AdminDashboardStyleContext).store
   const handleActivityType = (type) => {
 
     setActivityType(type)
   }
 
+  useEffect(() => {
 
+    setActivityType('restock')
+
+    return ()=> {
+      setStaticDate('')
+    }
+
+  }, [])
 
  
   useEffect(() => {
 
-    setActivityType('restock')
-  }, [])
+    if (activityType === 'restock' && staticDate !== ''){
+      setActivityType('stock')
+    }else{
+      setActivityType('restock')
+    }
+  }, [staticDate])
 
 
   return (

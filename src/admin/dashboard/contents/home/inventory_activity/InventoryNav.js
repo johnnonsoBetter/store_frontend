@@ -14,7 +14,7 @@ function InventoryNav(){
     return (
         <>
             <ButtonBase onClick={()=> handleActivityType("restock") }
-              style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(20 173 17 / 68%))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
+              style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(44 7 116))"}} borderRadius={6} className={classes.contItem}   marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Restocks</Typography>
@@ -36,7 +36,7 @@ function InventoryNav(){
 
             
         
-            <ButtonBase onClick={()=> handleActivityType("stock") }  style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(41 138 175 / 68%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            <ButtonBase onClick={()=> handleActivityType("stock") }  style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(4 36 194 / 81%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Stock Repair</Typography>
@@ -52,7 +52,7 @@ function InventoryNav(){
         
             
         
-            <ButtonBase onClick={()=> handleActivityType("item_transfer") } style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #922721)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+            {/* <ButtonBase onClick={()=> handleActivityType("item_transfer") } style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), #922721)"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
                 <Box >
                     <Box textAlign="left" top={20} left={30}  position="absolute">
                         <Typography variant="h6"> Item Transfer</Typography>
@@ -64,7 +64,7 @@ function InventoryNav(){
 
                 </Box>
                 
-            </ButtonBase>      
+            </ButtonBase>       */}
         
          
             <ButtonBase onClick={()=> handleActivityType("bad_item") }  style={{backgroundImage: "linear-gradient(to right, rgb(0 0 0 / 67%), rgb(0 0 0 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
