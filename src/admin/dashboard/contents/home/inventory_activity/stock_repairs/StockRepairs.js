@@ -1,8 +1,9 @@
 import { Avatar, Box, Button, CircularProgress, Grid, InputBase, makeStyles, Menu, MenuItem, Typography, withStyles } from '@material-ui/core'
 import { DateTime } from 'luxon';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
+import AdminDashboardStyleContext from '../../../../../../context/admin/AdminDashboardContext';
 
 
 
@@ -95,6 +96,10 @@ function StockRepairs(){
     const {storeName} = useParams()
     const activity = activitiesApi(storeName, 'item_stock_repairs')
     const classes = useStyles()
+    const {staticDate}  = useContext(AdminDashboardStyleContext).store
+    const [inventoryActivity, setInventoryActivity] = useState({
+        empty: ""
+    })
     
 
     const handleClick = (event) => {
@@ -137,24 +142,53 @@ function StockRepairs(){
         setSearchValue(e.target.value)
     }
 
+    function noInventoryActivity(obj){
+        return Object.keys(obj).length === 0
+    }
+
 
     useEffect(()=> {
         setLoading(true)
 
-        activity.load().then((response => {
+        
+
+
+        if (staticDate !== ''){
+            activity.loadDate(staticDate).then((response => {
 
           
-            const {item_stock_repairs} = response.data
+                const {item_stock_repairs, inventory_activity} = response.data
+    
+                setStockRepairs(item_stock_repairs)
+                setFilteredStockRepairs(item_stock_repairs)
+                setLoading(false)
+                setInventoryActivity(inventory_activity)
+            })).catch(err => {
+    
+                console.log(err)
+                setFailed(true)
+                setLoading(false)
+            })
+        }else{
 
-            setStockRepairs(item_stock_repairs)
-            setFilteredStockRepairs(item_stock_repairs)
-            setLoading(false)
-        })).catch(err => {
+            activity.load().then((response => {
 
-            console.log(err)
-            setFailed(true)
-            setLoading(false)
-        })
+          
+                const {item_stock_repairs, inventory_activity} = response.data
+    
+                setStockRepairs(item_stock_repairs)
+                setFilteredStockRepairs(item_stock_repairs)
+                setLoading(false)
+                setInventoryActivity(inventory_activity)
+            })).catch(err => {
+    
+                console.log(err)
+                setFailed(true)
+                setLoading(false)
+            })
+
+
+        }
 
 
         return ()=> {
@@ -177,7 +211,10 @@ function StockRepairs(){
   return (
         <Box>
             <Box p={2} textAlign="left"> <Typography variant="h5"> Stock Repairs </Typography></Box>
-            <Box display="flex"  width="100%" alignItems="center" justifyContent="flex-end" >
+           
+           {
+               !noInventoryActivity(inventoryActivity) &&
+               <Box display="flex"  width="100%" alignItems="center" justifyContent="flex-end" >
                 
                 <Box display="flex"  >
                   
@@ -207,6 +244,9 @@ function StockRepairs(){
                 
             </Box>
 
+           }
+            
+            
 
             {
                 loading ? 
@@ -217,7 +257,14 @@ function StockRepairs(){
 
                         filteredStockRepairs.length === 0 &&
                         <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center">
-                            <Typography> No Stock Repairs Found </Typography>
+
+                            {
+
+                                noInventoryActivity(inventoryActivity) ? <Typography> No Inventory Activity On This Day </Typography>  :
+                                <Typography> No Stock Repairs Found </Typography>
+                            }
+
+                            
                         </Box>
 
                     }
@@ -264,15 +311,11 @@ function StockRepairs(){
                             }
                         </Grid>
                 
-            
+                        
                 </Box>
                 }
             
                 
-        
-                   
-        
-
         </Box>
     )
 }

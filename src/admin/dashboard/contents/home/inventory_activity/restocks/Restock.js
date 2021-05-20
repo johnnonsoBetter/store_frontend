@@ -117,7 +117,7 @@ function Restock(){
     const [searchValue, setSearchValue] = useState('')
     const {staticDate}  = useContext(AdminDashboardStyleContext).store
     
-    function noTransaction(obj){
+    function noInventoryActivity(obj){
         return Object.keys(obj).length === 0
      }
 
@@ -215,7 +215,7 @@ function Restock(){
             <>
                 {
                     
-                    !noTransaction(inventoryActivity) && 
+                    !noInventoryActivity(inventoryActivity) && 
                     <>
                     <Box display="flex">
                     <Box p={1} >
@@ -253,8 +253,8 @@ function Restock(){
                         <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center">
                                 
                                 {
-                                    noTransaction(inventoryActivity) ? <Typography> No Transaction On This Day </Typography>  :
-                                    <Typography> No Stock Repairs Found </Typography>
+                                    noInventoryActivity(inventoryActivity) ? <Typography> No Inventory Activity On This Day </Typography>  :
+                                    <Typography> No ReStocks Found </Typography>
                                 }
                                 
                             </Box>
