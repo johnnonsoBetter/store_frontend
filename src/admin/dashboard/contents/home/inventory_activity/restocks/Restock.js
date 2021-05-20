@@ -113,6 +113,25 @@ function Restock(){
     const {storeName} = useParams()
     const activity = activitiesApi(storeName, 'restocks')
     const [filteredRestocks, setFilteredRestocks] = useState(restockedItems)
+    const [searchValue, setSearchValue] = useState('')
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const newFilteredRestocks = restockedItems.filter(restock => restock.item_name.toLowerCase().includes(searchValue.toLowerCase()))
+        setFilteredRestocks(newFilteredRestocks)
+        
+    }
+
+    const handleChange = (e) => {
+        e.preventDefault()
+
+        if (e.target.value === ' ' || e.target.value === ''){
+            setFilteredRestocks(restockedItems)
+        }
+
+        setSearchValue(e.target.value)
+    }
 
    
 
@@ -181,8 +200,8 @@ function Restock(){
                         
                     </Box>
                     <Box width="100%" display="flex" justifyContent="flex-end">
-                        <form>
-                            <Input />
+                        <form onSubmit={handleSubmit}>
+                            <Input value={searchValue} onChange={handleChange} placeholder="Search Item Name" />
 
                         </form>
                         
@@ -192,20 +211,27 @@ function Restock(){
                 loading ? 
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <CircularProgress size={26} /> </Box> : failed ?
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <Typography> Failed To Load Stock Repairs </Typography> </Box>  :
+                 filteredRestocks.length === 0  ?
+                        <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center">
+                                <Typography> No Stock Repairs Found </Typography>
+                            </Box>
+
+
+                :
                 <Box marginTop={3} height= "calc(74vh - 200px)"  >
                     
 
                    
                         <VirtuosoGrid
-                            totalCount={restockedItems.length}
+                            totalCount={filteredRestocks.length}
                             overscan={2}
                             
                             listClassName={classes.list}
                             itemClassName={classes.itemContainer}
                             itemContent={index => {
 
-                            const {id, item_name, quantity, created_at} = restockedItems[index]
-                            const time =  DateTime.fromISO(restockedItems[index]['created_at']).toLocaleString(DateTime.TIME_SIMPLE)
+                            const {id, item_name, quantity, created_at} = filteredRestocks[index]
+                            const time =  DateTime.fromISO(filteredRestocks[index]['created_at']).toLocaleString(DateTime.TIME_SIMPLE)
             
 
                             return (
