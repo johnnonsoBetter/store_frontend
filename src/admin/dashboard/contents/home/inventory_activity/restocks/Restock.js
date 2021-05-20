@@ -212,7 +212,9 @@ function Restock(){
         }
     }, [])
     return (
+       
             <>
+                <Box p={2} textAlign="left"> <Typography variant="h5"> Restocks </Typography></Box>
                 {
                     
                     !noInventoryActivity(inventoryActivity) && 

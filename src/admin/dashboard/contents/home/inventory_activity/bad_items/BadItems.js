@@ -2,6 +2,7 @@ import { Box, CircularProgress, Grid, makeStyles, Typography } from '@material-u
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { activitiesApi } from '../../../../../../api/admin/activities/api'
+import AdminDashboardStyleContext from '../../../../../../context/admin/AdminDashboardContext'
 import AmountFormater from '../../../../../../helpers/AmountFormater'
 
 
@@ -35,6 +36,11 @@ function BadItems(){
         total_bad_goods_quantity: '0',
         total_bad_goods_worth: '0'
     })
+    const {staticDate}  = useContext(AdminDashboardStyleContext).store
+
+    function noInventoryActivity(obj){
+        return Object.keys(obj).length === 0
+    }
     
 
 
@@ -42,30 +48,56 @@ function BadItems(){
     useEffect(()=> {
         setLoading(true)
 
-        activity.load().then((response => {
+        
+
+        if(staticDate !== ''){
+
+            activity.loadDate(staticDate).then((response => {
 
           
-            const {bad_items, inventory_activity} = response.data
-            const {total_bad_goods_cost, total_bad_goods_quantity, total_bad_goods_worth} = inventory_activity
-
- 
-            setInventoryActivity({
-                total_bad_goods_cost,
-                total_bad_goods_quantity,
-                total_bad_goods_worth,
+                const {bad_items, inventory_activity} = response.data
+     
+                setInventoryActivity(inventory_activity)
+                setBadItems(bad_items)
+                setLoading(false)
+            })).catch(err => {
+    
+                setFailed(true)
+                setLoading(false)
+                setInventoryActivity({
+                    total_bad_goods_cost: '0',
+                    total_bad_goods_quantity: '0',
+                    total_bad_goods_worth: '0'
+                })
             })
-            setBadItems(bad_items)
-            setLoading(false)
-        })).catch(err => {
 
-            setFailed(true)
-            setLoading(false)
-            setInventoryActivity({
-                total_bad_goods_cost: '0',
-                total_bad_goods_quantity: '0',
-                total_bad_goods_worth: '0'
+
+        }else{
+
+            activity.load().then((response => {
+
+          
+                const {bad_items, inventory_activity} = response.data
+                
+     
+                setInventoryActivity(inventory_activity)
+                setBadItems(bad_items)
+                setLoading(false)
+            })).catch(err => {
+    
+                setFailed(true)
+                setLoading(false)
+                setInventoryActivity({
+                    total_bad_goods_cost: '0',
+                    total_bad_goods_quantity: '0',
+                    total_bad_goods_worth: '0'
+                })
             })
-        })
+
+
+        }
+
+
 
 
         return ()=> {
@@ -92,28 +124,38 @@ function BadItems(){
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <CircularProgress size={26} /> </Box> : failed ?
                 <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center"> <Typography> Failed To Load Stock Repairs </Typography> </Box>  :
                 <Box marginTop={3} >
-                    <Box display="flex">
-                        <Box p={1} >
-                            <Typography> Q </Typography>
-                            <Typography> {AmountFormater(inventoryActivity['total_bad_goods_quantity']).amount()} </Typography>
+                    {
+                        !noInventoryActivity(inventoryActivity) &&
+                        <Box display="flex">
+                            <Box p={1} >
+                                <Typography> Q </Typography>
+                                <Typography> {AmountFormater(inventoryActivity['total_bad_goods_quantity']).amount()} </Typography>
+                            </Box>
+                            <Box p={1}>
+                                <Typography> TC </Typography>
+                                <Typography> ₦{AmountFormater(inventoryActivity['total_bad_goods_cost']).amount()} </Typography>
+                            </Box>
+                            <Box p={1}>
+                                <Typography> TW </Typography>
+                                <Typography> ₦{AmountFormater(inventoryActivity['total_bad_goods_worth']).amount()} </Typography>
+                            </Box>
+                            
                         </Box>
-                        <Box p={1}>
-                            <Typography> TC </Typography>
-                            <Typography> ₦{AmountFormater(inventoryActivity['total_bad_goods_cost']).amount()} </Typography>
-                        </Box>
-                        <Box p={1}>
-                            <Typography> TW </Typography>
-                            <Typography> ₦{AmountFormater(inventoryActivity['total_bad_goods_worth']).amount()} </Typography>
-                        </Box>
-                        
-                    </Box>
+
+                    }
+                    
 
                     <Box marginTop={3} className={classes.badItemCont}>
                         {
 
                             badItems.length === 0 &&
                             <Box display="flex" className={classes.fixedHeight} alignItems="center" justifyContent="center">
-                                <Typography> No Stock Repairs Found </Typography>
+                                
+                                {
+
+                                    noInventoryActivity(inventoryActivity) ? <Typography> No Inventory Activity On This Day </Typography>  :
+                                    <Typography> No Bad Items Found </Typography>
+                                }
                             </Box>
 
                             }

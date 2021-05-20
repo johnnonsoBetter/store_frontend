@@ -13,7 +13,7 @@ function InternalInfoSettings(){
     return (
         <Box>
                <Box textAlign="left" p={2}>
-                    <Typography> Cashier Settings</Typography>
+                    <Typography> Internal Info Settings</Typography>
                </Box>
                <Box borderRadius={5} style={{backgroundColor: "black"}}>
                     
