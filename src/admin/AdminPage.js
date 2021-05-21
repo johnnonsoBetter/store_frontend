@@ -373,7 +373,7 @@ function AdminPage(props){
                           </Route>
                           
                           <Route exact={true} path="/admin_dashboard/:storeName/cashiers" >
-                              <CashierAppBar />
+                              <CashierAppBar handleDrawerToggle={handleDrawerToggle} />
                               <CashierContainer />
                               
                           </Route>
