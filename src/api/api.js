@@ -14,5 +14,15 @@ export const cashier = () => {
             })
         },
 
+        loadCashiers: (storeName) => {
+            return axios({
+                method: 'GET',
+                url: `${API_ROOT}api/v1/cashiers`,
+                headers: JSON.parse(localStorage.getItem('admin')),
+                params: {store: storeName}
+            })
+
+        }
+
     }
 }

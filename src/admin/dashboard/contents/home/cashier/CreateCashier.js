@@ -2,6 +2,7 @@ import { Box, Button, CircularProgress, InputBase, makeStyles, Typography, withS
 import { Email, Person, PersonOutline, VpnKey } from '@material-ui/icons';
 import React, { useState } from 'react'
 import { green } from '@material-ui/core/colors';
+import { cashier } from '../../../../../api/api';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -132,6 +133,18 @@ function CreateCashier(){
         
         e.preventDefault()
         setLoading(true)
+
+        cashier().signup(cashierValue).then((response) => {
+
+            console.log(response)
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setLoading(false)
+        })
+
+
+
 
 
 
