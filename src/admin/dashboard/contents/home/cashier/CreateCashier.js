@@ -1,6 +1,38 @@
-import { Box, Button, InputBase, Typography, withStyles } from '@material-ui/core'
+import { Box, Button, CircularProgress, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
 import { Email, Person, PersonOutline, VpnKey } from '@material-ui/icons';
-import React from 'react'
+import React, { useState } from 'react'
+import { green } from '@material-ui/core/colors';
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+      },
+      buttonSuccess: {
+        backgroundColor: green[500],
+        '&:hover': {
+          backgroundColor: green[700],
+        },
+      },
+      fabProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: -6,
+        left: -6,
+        zIndex: 1,
+      },
+      buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+      },
+}))
+
+
+
 
  const Input = withStyles((theme) => ({
     root: {
@@ -36,37 +68,119 @@ import React from 'react'
 
 function CreateCashier(){
 
+    const [loading, setLoading] = useState(false)
+    const classes = useStyles()
+    const [cashierValue, setCashierValue] = useState({
+        name: "",
+        email: "",
+        password: "",
+        salary_balance: "",
+        default_salary: ""
+    })
+
+    useState(()=> {
+
+        return ()=>{
+            setCashierValue({
+                name: "",
+                email: "",
+                password: "",
+                salary_balance: "",
+                default_salary: ""
+            })
+
+            setLoading(false)
+        }
+    })
+
+
+    const handleChange = (e) => {
+
+        e.preventDefault()
+        const name = e.target.name
+
+        const newValue = Object.assign({}, cashierValue)
+
+        switch(name){
+            case "name": 
+                newValue['name'] = e.target.value
+            break;
+            case "email":
+                newValue['email'] = e.target.value
+            break;
+            case "password":
+                newValue['password'] = e.target.value
+            break;
+            case "salary_balance":
+                newValue['salary_balance'] = e.target.value
+            break;
+            case "default_salary":
+                newValue['default_salary'] = e.target.value
+            break;
+            default:
+            break
+        }
+
+        setCashierValue(newValue)
+
+    }
+
+
+
+    const handleSubmit = (e) => {
+
+        
+        e.preventDefault()
+        setLoading(true)
+
+
+
+    }
+
 
     return (
         <Box p={2}>
              
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Box p={1} display="flex" justifyContent="space-between" alignItems="center">
                     <Person />
-                    <Input  placeholder="Name"  />
+                    <Input onChange={handleChange} name="name"  placeholder="Name" value={cashierValue['name']}  />
                 </Box>
                 <Box  p={1} display="flex" justifyContent="space-between" alignItems="center">
                     <Email  />
-                    <Input  placeholder="Email" type="email" />
+                    <Input onChange={handleChange} name="email" placeholder="Email"  type="email" value={cashierValue['email']} />
                 </Box>
                 <Box  p={1} display="flex" justifyContent="space-between" alignItems="center">
                     <VpnKey />
-                    <Input placeholder="Password" type="password" />
+                    <Input onChange={handleChange} name="password" value={cashierValue['password']} placeholder="Password" type="password" />
                 </Box>
 
                 <Box marginTop={2} display="flex" >
                     <Box p={1} >
-                        <Input type="number" placeholder="Salary" />
+                        <Input onChange={handleChange} name="salary_balance" type="number" placeholder="Salary" value={cashierValue['salary_balance']} />
                         
                     </Box>
                     <Box p={1}>
-                        <Input type="number" placeholder="Default"/>
+                        <Input onChange={handleChange} name="default_salary" type="number" placeholder="Default" value={cashierValue['default_salary']}/>
                     </Box>
+
+
                 </Box>
 
 
                 <Box display="flex" justifyContent="center" p={2}>
-                    <Button style={{backgroundColor: "#3f51b5",  color: "white"}}> Create Casheir </Button>
+                            <div className={classes.wrapper}>
+                                <Button
+                                variant="contained"
+                                color="primary"
+                                
+                                disabled={loading}
+                                type="submit"
+                                >
+                                Create Expense
+                                </Button>
+                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                            </div>
                 </Box>
             </form>
         </Box>
