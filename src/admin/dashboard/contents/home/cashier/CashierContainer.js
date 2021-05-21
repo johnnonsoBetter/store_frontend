@@ -3,6 +3,7 @@ import { Cancel, Close, Edit, Star, ViewAgenda, Visibility } from '@material-ui/
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { cashier } from '../../../../../api/api';
+import { CashierContextProvider } from '../../../../../context/admin/CashierContext';
 import AmountFormater from '../../../../../helpers/AmountFormater';
 import CashierInfo from './CashierInfo';
 import CreateCashier from './CreateCashier';
@@ -52,18 +53,17 @@ function CashierContainer(){
 
     const loadResources = () => {
         cashier().loadCashiers(storeName).then((response) => {
-
-            console.log(response)
             const {storeId, cashiers} = response.data
 
             setStoreId(storeId)
             setCashiers(cashiers)
             setLoading(false)
+            setFailed(false)
 
         }).catch(err => {
             setFailed(true)
-            setLoading(true)
-            console.log(err)
+            setLoading(false)
+           
         })
 
     }
@@ -79,6 +79,16 @@ function CashierContainer(){
 
     return (
         <Container>
+            <CashierContextProvider
+                value={{
+                    cashiers,
+                    setCashiers,
+                    storeId,
+
+                }}
+            >
+
+            
             <Drawer onClose={() => {
                 setType('')
                 setDrawerOpened(false)
@@ -206,10 +216,7 @@ function CashierContainer(){
                     </Box>
 
             }
-
-
-
-
+        </CashierContextProvider>
         </Container>
     )
 }

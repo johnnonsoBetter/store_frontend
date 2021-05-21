@@ -1,8 +1,9 @@
 import { Box, Button, CircularProgress, InputBase, makeStyles, Typography, withStyles } from '@material-ui/core'
 import { Email, Person, PersonOutline, VpnKey } from '@material-ui/icons';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { green } from '@material-ui/core/colors';
 import { cashier } from '../../../../../api/api';
+import CashierContext from '../../../../../context/admin/CashierContext';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -71,15 +72,27 @@ function CreateCashier(){
 
     const [loading, setLoading] = useState(false)
     const classes = useStyles()
+    const {storeId} = useContext(CashierContext)
+
     const [cashierValue, setCashierValue] = useState({
         name: "",
         email: "",
         password: "",
         salary_balance: "",
-        default_salary: ""
+        default_salary: "",
+        store_id: storeId
     })
 
     useState(()=> {
+
+        setCashierValue({
+            name: "",
+            email: "",
+            password: "",
+            salary_balance: "",
+            default_salary: "",
+            storeId,
+        })
 
         return ()=>{
             setCashierValue({
@@ -87,7 +100,8 @@ function CreateCashier(){
                 email: "",
                 password: "",
                 salary_balance: "",
-                default_salary: ""
+                default_salary: "",
+                store_id: ''
             })
 
             setLoading(false)
