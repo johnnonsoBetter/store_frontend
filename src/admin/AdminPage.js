@@ -14,6 +14,8 @@ import InventoryAppBar from './dashboard/InventoryAppBar'
 import InventoryContent from './dashboard/contents/home/inventory_activity/InventoryContent'
 import Settings from './dashboard/contents/home/settings/Settings'
 import SettingsAppBar from './dashboard/contents/home/settings/SettingsAppBar'
+import CashierContainer from './dashboard/contents/home/cashier/CashierContainer'
+import CashierAppBar from './dashboard/contents/home/cashier/CashierAppBar'
 
 
   const drawerWidth = 240;
@@ -371,7 +373,9 @@ function AdminPage(props){
                           </Route>
                           
                           <Route exact={true} path="/admin_dashboard/:storeName/cashiers" >
-                              <h1>  Cashiers </h1>
+                              <CashierAppBar />
+                              <CashierContainer />
+                              
                           </Route>
 
                           <Route exact={true} path="/admin_dashboard/:storeName/settings" >
