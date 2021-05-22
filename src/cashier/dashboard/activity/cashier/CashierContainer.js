@@ -31,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Cashier(){
-    const salaryBalance = JSON.parse(localStorage.cashier)['salary_balance']
+    
     const classes = useStyles()
+    const [salaryBalance, setSalaryBalance] = useState('0')
 
     const [myActivities, setMyActivities] = useState([])
 
@@ -41,7 +42,8 @@ function Cashier(){
         cashierApi().fetchSubmittedReport().then((response) => {
 
             console.log(response)
-            const {cashier_sales_summaries} = response.data
+            const {cashier_sales_summaries, salary_balance} = response.data
+            setSalaryBalance(salary_balance)
             
             setMyActivities([...cashier_sales_summaries])
         }).catch(err => {
@@ -50,6 +52,7 @@ function Cashier(){
 
         return ()=> {
             setMyActivities([])
+            setSalaryBalance('0')
         }
 
     }, [])
@@ -90,7 +93,7 @@ function Cashier(){
                                                         <Typography>₦ {AmountFormater(total_amount_difference).amount()}</Typography>
                                                     </Box>
                                                     <Box> 
-                                                        <Typography> Nov 16</Typography>
+                                                        <Typography> {date.getDate()}</Typography>
                                                     </Box>
                                                    
                                                 </Box>

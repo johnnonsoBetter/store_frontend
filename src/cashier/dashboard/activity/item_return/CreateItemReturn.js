@@ -157,8 +157,8 @@ function CreateItemReturn(props){
             }}
         >
        <Grow in={true}>
-        <Box className={classes.root} display="flex" justifyContent="center" >
-            <Paper elevation={6} className={classes.paper} >
+        <Box  >
+            <Paper className={classes.root} display="flex" justifyContent="center" style={{height: "calc(100vh - 200px)", overflow: "auto"}} elevation={6} className={classes.paper} >
 
                 { 
 

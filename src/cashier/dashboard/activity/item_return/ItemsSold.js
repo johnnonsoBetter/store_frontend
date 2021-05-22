@@ -1,6 +1,6 @@
 import { Box, IconButton, List, ListItem, Typography } from '@material-ui/core'
 import { Launch } from '@material-ui/icons'
-import React, { useContext } from 'react'
+import React , { useContext } from 'react'
 import CreateItemReturnContext from '../../../../context/cashier/CreateItemReturnContext'
 
 function ItemsSold(){
@@ -8,7 +8,7 @@ function ItemsSold(){
     const {itemsSold, setItemSoldData, setFormDisplayed} = useContext(CreateItemReturnContext)
 
     return(
-        <Box>
+        <Box >
             <List>
 
 
