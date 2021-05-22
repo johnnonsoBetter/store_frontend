@@ -214,7 +214,7 @@ function CreateCashier(){
                                 disabled={loading}
                                 type="submit"
                                 >
-                                Create Expense
+                                Create Cashier
                                 </Button>
                                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                             </div>
