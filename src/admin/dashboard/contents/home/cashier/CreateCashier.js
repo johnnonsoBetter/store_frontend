@@ -72,7 +72,7 @@ function CreateCashier(){
 
     const [loading, setLoading] = useState(false)
     const classes = useStyles()
-    const {storeId} = useContext(CashierContext)
+    const {store_id} = useContext(CashierContext)
 
     const [cashierValue, setCashierValue] = useState({
         name: "",
@@ -80,7 +80,7 @@ function CreateCashier(){
         password: "",
         salary_balance: "",
         default_salary: "",
-        store_id: storeId
+        store_id,
     })
 
     useState(()=> {
@@ -91,7 +91,7 @@ function CreateCashier(){
             password: "",
             salary_balance: "",
             default_salary: "",
-            storeId,
+            store_id,
         })
 
         return ()=>{
@@ -118,19 +118,19 @@ function CreateCashier(){
 
         switch(name){
             case "name": 
-                newValue['name'] = e.target.value
+                newValue['name'] = `${e.target.value}`
             break;
             case "email":
-                newValue['email'] = e.target.value
+                newValue['email'] = `${e.target.value}`
             break;
             case "password":
-                newValue['password'] = e.target.value
+                newValue['password'] = `${e.target.value}`
             break;
             case "salary_balance":
-                newValue['salary_balance'] = e.target.value
+                newValue['salary_balance'] = `${e.target.value}`
             break;
             case "default_salary":
-                newValue['default_salary'] = e.target.value
+                newValue['default_salary'] = `${e.target.value}`
             break;
             default:
             break

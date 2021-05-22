@@ -31,7 +31,7 @@ function CashierContainer(){
     const matches = useMediaQuery('(max-width:600px)')
     const [type, setType] = useState('')
     const {storeName} = useParams()
-    const [storeId, setStoreId] = useState('')
+    const [store_id, setStoreId] = useState('')
     const [cashiers, setCashiers] = useState([])
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
@@ -52,10 +52,11 @@ function CashierContainer(){
     }, [])
 
     const loadResources = () => {
+        setLoading(true)
         cashier().loadCashiers(storeName).then((response) => {
-            const {storeId, cashiers} = response.data
-
-            setStoreId(storeId)
+            const {store_id, cashiers} = response.data
+            console.log(store_id)
+            setStoreId(store_id)
             setCashiers(cashiers)
             setLoading(false)
             setFailed(false)
@@ -83,7 +84,7 @@ function CashierContainer(){
                 value={{
                     cashiers,
                     setCashiers,
-                    storeId,
+                    store_id,
 
                 }}
             >
