@@ -55,7 +55,7 @@ function CashierContainer(){
         setLoading(true)
         cashier().loadCashiers(storeName).then((response) => {
             const {store_id, cashiers} = response.data
-            console.log(store_id)
+            console.log(cashiers)
             setStoreId(store_id)
             setCashiers(cashiers)
             setLoading(false)
@@ -85,6 +85,8 @@ function CashierContainer(){
                     cashiers,
                     setCashiers,
                     store_id,
+                    setType,
+                    setDrawerOpened
 
                 }}
             >

@@ -72,7 +72,9 @@ function CreateCashier(){
 
     const [loading, setLoading] = useState(false)
     const classes = useStyles()
-    const {store_id} = useContext(CashierContext)
+    const {store_id, cashiers, setCashiers, setDrawerOpened, setType} = useContext(CashierContext)
+    const [failed, setFailed] = useState(false)
+    
 
     const [cashierValue, setCashierValue] = useState({
         name: "",
@@ -105,6 +107,7 @@ function CreateCashier(){
             })
 
             setLoading(false)
+            setFailed(false)
         }
     })
 
@@ -150,11 +153,18 @@ function CreateCashier(){
 
         cashier().signup(cashierValue).then((response) => {
 
-            console.log(response)
+            const {id, name, salary_balance } = response.data['data']
+            const newCashiers = [...cashiers, {id, name, salary_balance,}]
+            
             setLoading(false)
+            setType('')
+            setCashiers(newCashiers)
+            setDrawerOpened(false)
         }).catch((err) => {
-            console.log(err)
+            
             setLoading(false)
+            setFailed(true)
+            
         })
 
 
@@ -210,6 +220,15 @@ function CreateCashier(){
                             </div>
                 </Box>
             </form>
+
+            {
+                failed && 
+                <Box display="flex" borderRadius={5} justifyContent="center" p={2} style={{backgroundColor: "red", color: "white"}} >
+                <Typography> Failed To Create Cashier </Typography>
+                </Box>
+            }
+
+            
         </Box>
     )
 }
