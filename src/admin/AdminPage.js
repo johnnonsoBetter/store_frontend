@@ -234,7 +234,7 @@ function AdminPage(props){
     const classes = useStyles()
 
     // info states
-    const [storeName, setStoreName] = useState("upright")
+    const [storeName, setStoreName] = useState("")
     const [dashboardData, setDashboardData] = useState(null)
     const [generalStoreInfos, setGeneralStoreInfos] = useState([])
     const [transactionReviewInfos, setTransactionReviewInfos] = useState([])

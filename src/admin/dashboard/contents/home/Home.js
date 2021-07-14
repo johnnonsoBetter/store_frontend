@@ -11,7 +11,7 @@ import { Beenhere } from '@material-ui/icons'
 function Home(){
     const [loading, setLoading] = React.useState(false);
     const {infoLinksContainer, infoLinks, theLink, backdrop, storeBaseInfoHeader, storeBaseInfo, textHeight, storeBaseDetail} = useContext(AdminDashboardContext).styles
-    const {storeName} = useContext(AdminDashboardContext).store
+    const {storeName, changeStoreName} = useContext(AdminDashboardContext).store
     const {setDashboardData, generalStoreInfos, setGeneralStoreInfos, transactionReviewInfos, setTransactionReviewInfos} = useContext(AdminDashboardContext).store
     const [isExpanded, setIsExpanded] = useState(true)
     const [failed, setFailed] = useState(false)
@@ -24,7 +24,8 @@ function Home(){
     const loadResources = () => {
         dashboardApi(storeName).load().then(response => {
             const {data} = response
-            const {change_balance, transaction_activity, next_day_change, inventory_manager} = data
+            console.log(data)
+            const {change_balance, transaction_activity, next_day_change, inventory_manager, store_name} = data
             setDashboardData(data)
          
             setLoading(false)
@@ -35,6 +36,8 @@ function Home(){
                 change_balance,
                 next_day_change,
             })
+
+            changeStoreName(store_name)
 
             setTransactionReviewInfos([
                 {

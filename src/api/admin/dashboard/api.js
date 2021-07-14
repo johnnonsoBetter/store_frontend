@@ -8,7 +8,7 @@ export const dashboardApi = (storeName) => {
           load: ()=> {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v1/admin_dashboard/?store=${storeName}`,
+                url: `${API_ROOT}api/v2/admin_dashboards`,
                 headers: JSON.parse(localStorage.getItem('admin'))
               })
           }
