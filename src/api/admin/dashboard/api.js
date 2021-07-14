@@ -3,7 +3,7 @@ import {getBaseURL} from '../../../baseUrl'
  import {API_ROOT} from '../../../apiRoot'
 
 
-export const dashboardApi = (storeName) => {
+export const dashboardApi = () => {
       return {
           load: ()=> {
             return axios({

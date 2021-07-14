@@ -151,7 +151,7 @@ function FixedAppBar(props){
                 
                   <div className={appBarPickerContainer}>
                   {
-                    location.pathname === "/admin_dashboard" && <Box marginLeft={10} > <SelectStore /> </Box> 
+                    location.pathname === "/admin_dashboard" && <Box marginLeft={10} >  </Box> 
                   }
                   
                   

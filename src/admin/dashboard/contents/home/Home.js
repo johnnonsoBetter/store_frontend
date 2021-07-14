@@ -22,7 +22,7 @@ function Home(){
 
 
     const loadResources = () => {
-        dashboardApi(storeName).load().then(response => {
+        dashboardApi().load().then(response => {
             const {data} = response
             console.log(data)
             const {change_balance, transaction_activity, next_day_change, inventory_manager, store_name} = data
@@ -111,7 +111,7 @@ function Home(){
             
             
         }
-    }, [storeName])
+    }, [])
     
 
     const routes = useRouteMatch()
