@@ -42,7 +42,7 @@ function ExpensesTable(){
     const [expenses, setExpenses] = useState([])
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
-    const expensesApi = activitiesApi(storeName, 'expenses')
+    const expensesApi = activitiesApi('expenses')
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);

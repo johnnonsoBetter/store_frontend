@@ -158,7 +158,7 @@ function SalesTable() {
   const [width] = useWindowSize()
   const [loading, setLoading] = useState(true)
   const [failed, setFailed] = useState(false)
-  const salesApi = activitiesApi(storeName, 'sales')
+  const salesApi = activitiesApi('sales')
 
 
  

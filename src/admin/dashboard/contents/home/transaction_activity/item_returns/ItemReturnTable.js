@@ -60,7 +60,7 @@ function ItemReturnTable(){
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const classes = useStyles()
-    const itemReturnApi = activitiesApi(storeName, 'item_returns')
+    const itemReturnApi = activitiesApi('item_returns')
     const [itemReturnDrawerOpened, setItemReturnDrawerOpened] = useState(false)
     const matches = useMediaQuery('(max-width:600px)')
     const [sale_receipt_id, setSaleReceiptId] = useState('')

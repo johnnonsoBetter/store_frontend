@@ -34,7 +34,7 @@ function RecoveredDebtsTable(){
     const [recovered_debts, setRecoveredDebts] = useState([])
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
     const classes = useStyles()
-    const recoveredDebtApi = activitiesApi(storeName, 'recovered_debts')
+    const recoveredDebtApi = activitiesApi('recovered_debts')
 
     
  

@@ -80,7 +80,7 @@ function DebtTable(){
     const {staticDate, setTransactionActivity} = useContext(TransactionActivityContext)
     const {storeName} = useParams()
     const classes = useStyles()
-    const debtApi = activitiesApi(storeName, 'debts')
+    const debtApi = activitiesApi('debts')
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const [drawerOpened, setDrawerOpened] = useState(false)
