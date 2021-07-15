@@ -22,14 +22,14 @@ export const itemApi = ()=> {
           return  axios({
                 method: "GET",
                 headers: JSON.parse(localStorage.getItem('admin')),
-                url: `${API_ROOT}api/v1/real_items/`
+                url: `${API_ROOT}api/v2/items/`
             })
         },
 
         createItem: (item)=> {
             return axios({
                 method: "POST",
-                url: `${API_ROOT}api/v1/real_items/`,
+                url: `${API_ROOT}api/v2/items/`,
                 headers: JSON.parse(localStorage.admin),
                 data: item
                 
@@ -39,7 +39,7 @@ export const itemApi = ()=> {
         updateItem: (itemName, updateData)=> {
             return axios({
                 method: "PUT",
-                url: `${API_ROOT}api/v1/real_items/name`,
+                url: `${API_ROOT}api/v2/items/name`,
                 headers: JSON.parse(localStorage.admin),
                 data: updateData,
                 params: {item_name: itemName}
@@ -58,7 +58,7 @@ export const itemApi = ()=> {
         deleteItem: (name) => {
             return axios({
                 method: "DELETE",
-                url: `${API_ROOT}api/v1/real_items/name`,
+                url: `${API_ROOT}api/v2/items/name`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 params: {item_name: name}
             })
@@ -67,7 +67,7 @@ export const itemApi = ()=> {
         fetchItem: (name) => {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v1/real_items/name`,
+                url: `${API_ROOT}api/v2/items/name`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 params: {item_name: name}
     

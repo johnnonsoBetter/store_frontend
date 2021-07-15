@@ -221,7 +221,7 @@ function Home(){
                     </Grid>
 
                     <Grid item xs={12} sm={6} lg={4}>
-                        <Link className={theLink} to={`${url}/${storeName}/transaction_activity/`}>
+                        <Link className={theLink} to={`${url}/transaction_activity/`}>
                             <Box>
                                 <Card className={infoLinks}>
                                     <CardContent>
@@ -237,7 +237,7 @@ function Home(){
 
 
                     <Grid item xs={12} sm={6} lg={4}>
-                        <Link className={theLink} to={`${url}/${storeName}/inventory_activity`}>              
+                        <Link className={theLink} to={`${url}/inventory_activity`}>              
                             <Box>
                                 <Card className={infoLinks}>
                                     <CardContent>

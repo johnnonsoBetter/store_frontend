@@ -112,7 +112,7 @@ function Restock(){
     const [loading, setLoading] = useState(false)
     const [failed, setFailed] = useState(false)
     const {storeName} = useParams()
-    const activity = activitiesApi(storeName, 'restocks')
+    const activity = activitiesApi('restocks')
     const [filteredRestocks, setFilteredRestocks] = useState(restockedItems)
     const [searchValue, setSearchValue] = useState('')
     const {staticDate}  = useContext(AdminDashboardStyleContext).store

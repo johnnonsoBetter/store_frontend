@@ -30,7 +30,7 @@ function BadItems(){
     const [badItems, setBadItems] = useState([])
     const classes = useStyles()
     const {storeName} = useParams()
-    const activity = activitiesApi(storeName, 'bad_items')
+    const activity = activitiesApi('bad_items')
     const [inventoryActivity, setInventoryActivity] = useState({
         total_bad_goods_cost: '0',
         total_bad_goods_quantity: '0',

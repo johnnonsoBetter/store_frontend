@@ -78,7 +78,7 @@ function Content(){
     const [failed, setFailed] = useState(false)
     const d = DateTime.fromHTTP(new Date().toGMTString())
    
-    const transactionActivityApi = activitiesApi(storeName, `transaction_activities/${d.toISODate()}`)
+    const transactionActivityApi = activitiesApi(`transaction_activities/${d.toISODate()}`)
 
     function noTransaction(obj){
        return Object.keys(obj).length === 0
@@ -93,7 +93,7 @@ function Content(){
 
     const setTransactionByDate = (date) => {
       
-       activitiesApi(storeName, `transaction_activities/${date}`).load().then(response => {
+       activitiesApi(`transaction_activities/${date}`).load().then(response => {
          
          const {transaction_activity, past_sales} = response.data
 

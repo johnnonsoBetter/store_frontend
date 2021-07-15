@@ -94,7 +94,7 @@ function StockRepairs(){
     const [searchValue, setSearchValue] = useState('')
     const [filterType, setFilterType] = useState('All')
     const {storeName} = useParams()
-    const activity = activitiesApi(storeName, 'item_stock_repairs')
+    const activity = activitiesApi('item_stock_repairs')
     const classes = useStyles()
     const {staticDate}  = useContext(AdminDashboardStyleContext).store
     const [inventoryActivity, setInventoryActivity] = useState({

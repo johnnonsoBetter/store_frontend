@@ -343,12 +343,12 @@ function AdminPage(props){
                     
                       <Switch>
 
-                          <Route exact={true} path="/admin_dashboard/:storeName/transaction_activity/" >
+                          <Route exact={true} path="/admin_dashboard/transaction_activity/" >
                             
                             <Content />
                           </Route>
 
-                          <Route exact={true} path="/admin_dashboard/:storeName/inventory_activity" >
+                          <Route exact={true} path="/admin_dashboard/inventory_activity" >
                            
                              <Box width="100%">
                              <InventoryAppBar handleDrawerToggle={handleDrawerToggle}/>

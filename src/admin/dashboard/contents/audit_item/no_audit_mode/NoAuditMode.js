@@ -91,6 +91,8 @@ function NoAuditMode(){
             setLoading(false)
             setItems(items)
             setStockItems(items)
+
+            
             
 
         }).catch(err => {

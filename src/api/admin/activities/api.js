@@ -2,8 +2,8 @@ import axios from 'axios'
 
 import {API_ROOT} from '../../../apiRoot'
 
-export const activitiesApi = (store, activity) => {
-    const subUrl = `api/v1/admin_dashboards/${store}/${activity}`
+export const activitiesApi = (activity) => {
+    const subUrl = `api/v2/${activity}`
     
     return {
         load: () => {
