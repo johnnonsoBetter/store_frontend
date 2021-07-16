@@ -48,7 +48,7 @@ function UpdateItem({...props}){
     const classes = useStyles()
     
     const [itemUpdate, setItem] = useState({
-        real_item: {
+        item: {
             name: "",
             cost_price: 0,
             selling_price: 0,
@@ -59,7 +59,7 @@ function UpdateItem({...props}){
 
      useEffect(()=> {
         setItem({
-            real_item: {
+            item: {
                 name: name,
                 cost_price: cost_price,
                 selling_price: selling_price,
@@ -70,7 +70,7 @@ function UpdateItem({...props}){
 
         return ()=> {
             setItem({
-                real_item: {
+                item: {
                     name: "",
                     cost_price: 0,
                     selling_price: 0,
@@ -90,23 +90,23 @@ function UpdateItem({...props}){
         const field_name = e.target.name
         switch(field_name){
             case "name":
-                new_item['real_item']['name'] = `${e.target.value}`
+                new_item['item']['name'] = `${e.target.value}`
                 
             break;
             case "barcode": 
-                new_item['real_item']['barcode'] = `${e.target.value}`
+                new_item['item']['barcode'] = `${e.target.value}`
             break;
             case "cost_price": 
-                new_item['real_item']['cost_price'] = e.target.value
+                new_item['item']['cost_price'] = e.target.value
                 
             break;
             case "selling_price": 
-                new_item['real_item']['selling_price'] = e.target.value
+                new_item['item']['selling_price'] = e.target.value
             break;
             case "category": 
 
                 const category = categories.find(category => category.id === e.target.value)            
-                new_item['real_item']['category_id'] = category.id
+                new_item['item']['category_id'] = category.id
             break;
           
             default: 
@@ -191,11 +191,11 @@ function UpdateItem({...props}){
                      
                      <Box display="flex" m={1} justifyContent="center">
                          <Box m={1}> 
-                             <TextField id="outlined-basic" name="name" label="Name" variant="outlined"  value={itemUpdate['real_item'].name} onChange={handleChange}/>
+                             <TextField id="outlined-basic" name="name" label="Name" variant="outlined"  value={itemUpdate['item'].name} onChange={handleChange}/>
                          </Box>
 
                          <Box m={1}>
-                             <TextField id="outlined-basic" name="barcode"  label="Barcode" variant="outlined"  value={itemUpdate['real_item'].barcode} onChange={handleChange}/>
+                             <TextField id="outlined-basic" name="barcode"  label="Barcode" variant="outlined"  value={itemUpdate['item'].barcode} onChange={handleChange}/>
                          </Box>
                      </Box>
 
@@ -205,7 +205,7 @@ function UpdateItem({...props}){
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type={"number"}
-                                    value={itemUpdate['real_item'].cost_price}
+                                    value={itemUpdate['item'].cost_price}
                                     name="cost_price"
                                     onChange={handleChange}
                                     placeholder={0}
@@ -220,7 +220,7 @@ function UpdateItem({...props}){
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type={"number"}
-                                    value={itemUpdate['real_item'].selling_price}
+                                    value={itemUpdate['item'].selling_price}
                                     name="selling_price"
                                     placeholder={0}
                                     onChange={handleChange}

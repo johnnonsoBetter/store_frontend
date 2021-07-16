@@ -37,17 +37,9 @@ function DrawerLinkList(props){
                     <ListItemText primary="Audit Items"/>
                   </ListItem>
         
-                  <ListItem onClick={props.handleDrawerToggle} button component={Link} to="/admin_dashboard/warehouse" >
-                     
-                     <ListItemIcon > <img src={`/${base_imageUrl}warehouse.png`} alt="warehouse" className={img} />  </ListItemIcon>
-                    <ListItemText primary="WareHouse"/>
-                  </ListItem>
+                
         
-                  <ListItem onClick={props.handleDrawerToggle} button component={Link} to="/admin_dashboard/workers">
-                     
-                     <ListItemIcon > <img src={`/${base_imageUrl}workers.png`} className={img} alt="workers" />  </ListItemIcon>
-                    <ListItemText primary="Workers"/>
-                  </ListItem>
+                  
         
                   
                   <ListItem button component={Link} to="/">

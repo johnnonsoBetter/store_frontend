@@ -56,7 +56,7 @@ function CreateAccount(){
     const [cash, setCash] = useState('0')
     const [pos, setPos] = useState('0')
     const [transfer, setTransfer] = useState('0')
-    const [change, setChange] = useState('')
+    const [change, setChange] = useState('0')
     const [cashierSaleSummary, setCashierSaleSummary] = useState({
         total_cash_at_hand: '0',
         total_pos: '0',
@@ -153,7 +153,7 @@ function CreateAccount(){
                         </Box>
                     </Grid>
 
-                    <Grid item xs={6}>
+                   {/* } <Grid item xs={6}>
                         <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
@@ -167,7 +167,7 @@ function CreateAccount(){
                                 </Box>
                             </Box>
                         </Box>
-                    </Grid>
+                    </Grid> */ }
 
                     <Grid item xs={6}>
                         <Box display="flex" justifyContent="center">
@@ -185,7 +185,7 @@ function CreateAccount(){
                         </Box>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                         <Box display="flex" justifyContent="center">
                             <Box boxShadow={30} width={200} borderRadius={6} p={2} className={classes.inputContainer}>
                                 <Box textAlign="center">
@@ -199,7 +199,7 @@ function CreateAccount(){
                                 </Box>
                             </Box>
                         </Box>
-                    </Grid>
+                    </Grid> */ }
 
                     <Grid item xs={6}>
                          <Box  display="flex"  justifyContent="center">

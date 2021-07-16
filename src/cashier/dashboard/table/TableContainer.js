@@ -197,22 +197,31 @@ function TableContainer(){
                             handleTransactionType("cash")
                             setInputOpened(false)
                         }}>Cash</MenuItem>
-                        <MenuItem   onClick={()=> {
-                            handleTransactionType("pos")
-                            setInputOpened(false)
-                        }}>Pos</MenuItem>
+                        
+                       
                         <MenuItem   onClick={()=> {
                             handleTransactionType("transfer")
                             setInputOpened(false)
                         }} >Transfer</MenuItem>
-                        <MenuItem   onClick={()=> {
-                            handleTransactionType("pos_cashback")
-                            setInputOpened(true)
-                        }} >Pos Cashback</MenuItem>
+
                         <MenuItem   onClick={()=> {
                             handleTransactionType("transfer_cashback")
                             setInputOpened(true)
                         }}>Transfer Cashback</MenuItem>
+
+
+
+                        {/* <MenuItem   onClick={()=> {
+                            handleTransactionType("pos")
+                            setInputOpened(false)
+                        }}>Pos</MenuItem>
+
+
+                        <MenuItem   onClick={()=> {
+                            handleTransactionType("pos_cashback")
+                            setInputOpened(true)
+                        }} >Pos Cashback</MenuItem>
+                        
                         <MenuItem   onClick={()=> {
                             handleTransactionType("pos_cash")
                             setInputOpened(true)
@@ -224,7 +233,7 @@ function TableContainer(){
                         <MenuItem   onClick={()=> {
                             handleTransactionType("pos_transfer")
                             setInputOpened(true)
-                        }}>Pos Transfer</MenuItem>
+                        }}>Pos Transfer</MenuItem> */}
                     </Menu>
                 </Box>
 

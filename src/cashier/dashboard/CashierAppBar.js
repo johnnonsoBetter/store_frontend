@@ -181,7 +181,7 @@ export default function CashierAppBar() {
               </Box>
                 
 
-                <Box  width="80%">
+              {/*  <Box  width="80%">
                   <MovingText
                     type="bounce"
                     duration="1000ms"
@@ -195,7 +195,7 @@ export default function CashierAppBar() {
 
                  
                  
-                </Box>
+                </Box> 
 
                 <Box  width="80%">
                   <MovingText
@@ -211,7 +211,7 @@ export default function CashierAppBar() {
 
                  
                  
-                </Box>
+                </Box> */}
                 <>
                 {
                   indicatorLoading ? 

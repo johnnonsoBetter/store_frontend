@@ -145,6 +145,10 @@ function AuditItem(){
        categoryApi().fetchAll().then(response => {
             console.log(response.data)
             const {categories} = response.data
+
+            setCategories(categories)
+
+            console.log("this is the categories data")
             
         }).catch(err => {
             setLoadingItem(false)

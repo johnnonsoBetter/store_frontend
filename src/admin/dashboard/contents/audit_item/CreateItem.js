@@ -87,33 +87,28 @@ function CreateItem(){
         const field_name = e.target.name
         switch(field_name){
             case "name":
-                new_item['real_item']['name'] = `${e.target.value}`
+                new_item['item']['name'] = `${e.target.value}`
                 
             break;
             case "barcode": 
-                new_item['real_item']['barcode'] = `${e.target.value}`
+                new_item['item']['barcode'] = `${e.target.value}`
             break;
             case "cost_price": 
-                new_item['real_item']['cost_price'] = e.target.value
+                new_item['item']['cost_price'] = e.target.value
                 console.log(e.target)
             break;
             case "selling_price": 
-                new_item['real_item']['selling_price'] = e.target.value
+                new_item['item']['selling_price'] = e.target.value
             break;
             case "category": 
                 
-                new_item['real_item']['category_id'] = e.target.value
+                new_item['item']['category_id'] = e.target.value
             break;
-            case "upright":
-                new_item['create_item']['upright']['quantity'] = e.target.value
+            case "quantity":
+                new_item['item']['quantity'] = e.target.value
                 
             break;
-            case "dechoice":
-                new_item['create_item']['dechoice']['quantity'] = e.target.value
-            break;
-            case "warehouse":
-                new_item['create_item']['warehouse']['quantity'] = e.target.value
-            break;
+           
             default: 
 
     
@@ -126,25 +121,13 @@ function CreateItem(){
 
 
     const [item, setItem] = useState({
-        real_item: {
+        item: {
             name: "",
             cost_price: 0,
             selling_price: 0,
             barcode: "",
             category_id: 1,
-        },
-        create_item: {
-            upright: {
-                name: "upright",
-                quantity: 0
-            }, 
-            dechoice: {
-                name: "dechoice",
-                quantity: 0
-            },
-            warehouse: {
-                quantity: 0
-            }
+            quantity: 0,
         },
     })
 
@@ -157,7 +140,7 @@ function CreateItem(){
             
             const new_item = response.data
             console.log(new_item)
-            newSnackBarAction['itemName'] = item['real_item'].name
+            newSnackBarAction['itemName'] = item['item'].name
             newSnackBarAction['action'] = "Created"
             newSnackBarAction['snackBarOpened'] = true
             newSnackBarAction['taskDone'] = true
@@ -170,33 +153,22 @@ function CreateItem(){
             setTotalItems(totalItems)
             setSnackBarAction(newSnackBarAction)
             setItem({
-                real_item: {
+                item: {
                     name: "",
                     cost_price: 0,
                     selling_price: 0,
                     barcode: "",
                     category_id: 1,
+                    quantity: 0,
                 },
-                create_item: {
-                    upright: {
-                        name: "upright",
-                        quantity: 0
-                    }, 
-                    dechoice: {
-                        name: "dechoice",
-                        quantity: 0
-                    },
-                    warehouse: {
-                        quantity: 0
-                    }
-                },
+                
             })
             setLoading(false)
             
            
             
         }).catch(err => {
-            newSnackBarAction['itemName'] = item['real_item'].name
+            newSnackBarAction['itemName'] = item['item'].name
             newSnackBarAction['action'] = "Created"
             newSnackBarAction['snackBarOpened'] = true
             newSnackBarAction['taskDone'] = false
@@ -210,26 +182,13 @@ function CreateItem(){
     const clearItemState = () => {
         let cleared_item = Object.assign({}, item)
 
-        cleared_item['real_item'] = {
+        cleared_item['item'] = {
             name: "",
             cost_price: 0,
             selling_price: 0,
             barcode: "",
             category_id: 1,
-        }
-
-        cleared_item['create_item'] = {
-            upright: {
-                name: "upright",
-                quantity: 0
-            }, 
-            dechoice: {
-                name: "dechoice",
-                quantity: 0
-            },
-            warehouse: {
-                quantity: 0
-            }
+            quantity: 0,
         }
 
         setItem(cleared_item)
@@ -270,11 +229,11 @@ function CreateItem(){
                      
                         <Box display="flex"  m={1} justifyContent="center">
                             <Box m={1} > 
-                                <Input name="name"placeholder="Name" variant="outlined" onChange={handleChange} value={item['real_item'].name} />
+                                <Input name="name"placeholder="Name" variant="outlined" onChange={handleChange} value={item['item'].name} />
                             </Box>
 
                             <Box m={1}>
-                                <Input id="outlined-basic" name="barcode" placeholder="Barcode"  label="Barcode" variant="outlined" onChange={handleChange} value={item['real_item'].barcode} />
+                                <Input id="outlined-basic" name="barcode" placeholder="Barcode"  label="Barcode" variant="outlined" onChange={handleChange} value={item['item'].barcode} />
 
                             </Box>
                         </Box>
@@ -285,7 +244,7 @@ function CreateItem(){
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type={"number"}
-                                    value={item['real_item'].cost_price}
+                                    value={item['item'].cost_price}
                                     name="cost_price"
                                     onChange={handleChange}
                                     placeholder={0}
@@ -300,7 +259,7 @@ function CreateItem(){
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type={"number"}
-                                    value={item['real_item'].selling_price}
+                                    value={item['item'].selling_price}
                                     name="selling_price"
                                     placeholder={0}
                                     onChange={handleChange}
@@ -343,47 +302,21 @@ function CreateItem(){
                         </Box>
 
                         <Box display="flex" m={1} justifyContent="center">
-                        <Box m={1}>
-                                <InputLabel htmlFor="outlined-adornment-amount">Upright</InputLabel>
+                            <Box m={1}>
+                                <InputLabel htmlFor="outlined-adornment-amount">Quantity</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-amount"
                                     type="number"
-                                    value={item['create_item']['upright'].quantity}
+                                    value={item['item'].quantity}
                                     onChange={handleChange}
-                                    name="upright"
+                                    name="quantity"
                                     
                                 />
                             
                             
                             </Box>
 
-                            <Box m={1}>
-                                <InputLabel htmlFor="outlined-adornment-amount">Dechoice</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-amount"
-                                    type="number"
-                                    value={item['create_item']['dechoice'].quantity}
-                                    onChange={handleChange}
-                                    name="dechoice"
-                                    
-                                />
-                            
-                            
-                            </Box>
-
-                            <Box m={1}>
-                                <InputLabel htmlFor="outlined-adornment-amount">Store</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-amount"
-                                    type="number"
-                                    value={item['create_item']['warehouse'].quantity}
-                                    onChange={handleChange}
-                                    name="warehouse"
-                                    
-                                />
-                            
-                            
-                            </Box>
+                           
                         </Box>
 
                         <Box display="flex"  m={1} justifyContent="center">

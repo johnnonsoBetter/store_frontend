@@ -165,7 +165,7 @@ function StoreItemsInventory(){
     useEffect(() => {
 
       document.title = `${storeName} Items`
-      store(storeName).fetchItems().then((response) => {
+      store().fetchItems().then((response) => {
 
         console.log(response)
         const {items} = response.data

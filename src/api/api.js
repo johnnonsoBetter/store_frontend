@@ -14,12 +14,12 @@ export const cashier = () => {
             })
         },
 
-        loadCashiers: (storeName) => {
+        loadCashiers: () => {
             return axios({
                 method: 'GET',
-                url: `${API_ROOT}api/v1/cashiers`,
+                url: `${API_ROOT}api/v2/cashiers`,
                 headers: JSON.parse(localStorage.getItem('admin')),
-                params: {store: storeName}
+                
             })
 
         }

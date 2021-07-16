@@ -4,7 +4,7 @@ import {API_ROOT} from '../../../apiRoot'
 
 
 export const salesApi = () => {
-    const subUrl = `/api/v2/sales/`
+    const subUrl = `/api/v1/sales/`
 
     return {
         fetchByReceiptId: (receipt_id) => {

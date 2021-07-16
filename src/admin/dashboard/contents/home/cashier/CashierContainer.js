@@ -3,6 +3,7 @@ import { Cancel, Close, Edit, Star, ViewAgenda, Visibility } from '@material-ui/
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { cashier } from '../../../../../api/api';
+
 import { CashierContextProvider } from '../../../../../context/admin/CashierContext';
 import AmountFormater from '../../../../../helpers/AmountFormater';
 import CashierInfo from './CashierInfo';
@@ -53,7 +54,7 @@ function CashierContainer(){
 
     const loadResources = () => {
         setLoading(true)
-        cashier().loadCashiers(storeName).then((response) => {
+        cashier().loadCashiers().then((response) => {
             const {store_id, cashiers} = response.data
             console.log(cashiers)
             setStoreId(store_id)

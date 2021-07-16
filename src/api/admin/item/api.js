@@ -7,7 +7,7 @@ export const  categoryApi = ()=> {
         fetchAll: ()=> {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v1/categories/`,
+                url: `${API_ROOT}api/v2/categories/`,
                 headers: JSON.parse(localStorage.admin),
             })
         }
@@ -36,13 +36,13 @@ export const itemApi = ()=> {
             })
         },
 
-        updateItem: (itemName, updateData)=> {
+        updateItem: (name, updateData)=> {
             return axios({
                 method: "PUT",
-                url: `${API_ROOT}api/v2/items/name`,
+                url: `${API_ROOT}api/v2/items/${name}`,
                 headers: JSON.parse(localStorage.admin),
                 data: updateData,
-                params: {item_name: itemName}
+                params: {name: name}
                 
             })
         },
@@ -58,18 +58,18 @@ export const itemApi = ()=> {
         deleteItem: (name) => {
             return axios({
                 method: "DELETE",
-                url: `${API_ROOT}api/v2/items/name`,
+                url: `${API_ROOT}api/v2/items/${name}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
-                params: {item_name: name}
+                params: {name: name}
             })
         },
 
         fetchItem: (name) => {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v2/items/name`,
+                url: `${API_ROOT}api/v2/items/${name}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
-                params: {item_name: name}
+                params: {name: name}
     
             })
         },
@@ -77,21 +77,21 @@ export const itemApi = ()=> {
     }
 }
 
-export const store = (store) => {
+export const store = () => {
 
     return {
         fetchItems: ()=> {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v1/admin_dashboards/${store}/store_items`,
+                url: `${API_ROOT}api/v2/store_items`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         },
 
-        fetchInventoryInfo: ()=> {
+        fetchInventoryInfo: (store_name)=> {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v1/store_inventory_managers/${store}`,
+                url: `${API_ROOT}api/v1/store_inventory_managers/${store_name}`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         },
@@ -99,12 +99,13 @@ export const store = (store) => {
         restockItem: (name, quantity)=> {
             return axios({
                 method: "POST",
-                url: `${API_ROOT}api/v1/restocks`,
+                url: `${API_ROOT}api/v2/restocks`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {
-                    store_name: store,
-                    item_name: name,
-                    quantity: quantity
+                    restock: {
+                        item_name: name,
+                        quantity: quantity
+                    }
                 }
             })
 
@@ -113,7 +114,7 @@ export const store = (store) => {
         takeItemStock: (name, repaired_quantity) => {
             return axios({
                 method: "POST",
-                url: `${API_ROOT}api/v1/admin_dashboards/${store}/item_stock_repairs`,
+                url: `${API_ROOT}api/v2/item_stock_repairs`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {
                    item_stock_repair: {
@@ -128,10 +129,9 @@ export const store = (store) => {
         removeBadItem: (name, quantity)=> {
             return axios({
                 method: "POST",
-                url: `${API_ROOT}api/v1/bad_items`,
+                url: `${API_ROOT}api/v2/bad_items`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {
-                    store_name: store,
                     name,
                     quantity,
                 }
@@ -142,7 +142,7 @@ export const store = (store) => {
         getInfo: () => {
             return axios({
                 method: "GET",
-                url: `${API_ROOT}api/v1/stores/${store}`,
+                url: `${API_ROOT}api/v1/stores/name`,
                 headers: JSON.parse(localStorage.getItem('admin')),
             })
         },
@@ -150,7 +150,7 @@ export const store = (store) => {
         updateInfo: (data) => {
             return axios({
                 method: "PUT",
-                url: `${API_ROOT}api/v1/stores/${store}`,
+                url: `${API_ROOT}api/v1/stores/name`,
                 headers: JSON.parse(localStorage.getItem('admin')),
                 data: {store: data}
             })

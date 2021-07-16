@@ -138,7 +138,7 @@ function CashierSummaryTable(){
       <Box  className={classes.root}>
         {
           loading ? <Loader  minHeight={300}/> :
-            failed ? <FailedActivityLoader activity="expenses" />
+            failed ? <FailedActivityLoader activity="cashier summary" />
           : 
 
             <Box width="100%">

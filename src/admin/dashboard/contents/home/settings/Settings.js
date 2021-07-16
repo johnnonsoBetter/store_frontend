@@ -54,7 +54,7 @@ function Settings(){
             cashier_sale_limit: 0
         })
 
-        store(storeName).getInfo().then((response) => {
+        store().getInfo().then((response) => {
 
             const {full_name, address, telephone, next_day_change, max_excess, mini_excess, receipt_remark, change_balance, cashier_sale_limit} = response.data
             setLoading(false)

@@ -122,19 +122,19 @@ function ContentNav(){
         
             
         
-            <ButtonBase onClick={()=> handleTableType("changes") } style={{backgroundImage: " linear-gradient(to right, rgb(0 0 0 / 67%), rgb(137 78 255 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
-                <Box >
-                    <Box textAlign="left" top={20} left={30}  position="absolute">
-                        <Typography variant="h6"> Changes</Typography>
-                    </Box>
-
-                    <Box textAlign="right" bottom={20} right={30} position="absolute">
-                        <Typography variant="h6"> {`₦ ${AmountFormater(total_change).amount()}`}</Typography>
-                    </Box>
-
-                </Box>
-                
-            </ButtonBase>      
+          {/*  <ButtonBase onClick={()=> handleTableType("changes") } style={{backgroundImage: " linear-gradient(to right, rgb(0 0 0 / 67%), rgb(137 78 255 / 73%))"}}  borderRadius={6} className={classes.contItem}  p={2} marginRight={2} position="relative" marginLeft={2}>
+                          <Box >
+                              <Box textAlign="left" top={20} left={30}  position="absolute">
+                                  <Typography variant="h6"> Changes</Typography>
+                              </Box>
+          
+                              <Box textAlign="right" bottom={20} right={30} position="absolute">
+                                  <Typography variant="h6"> {`₦ ${AmountFormater(total_change).amount()}`}</Typography>
+                              </Box>
+          
+                          </Box>
+                          
+                      </ButtonBase> */}
         
            
         

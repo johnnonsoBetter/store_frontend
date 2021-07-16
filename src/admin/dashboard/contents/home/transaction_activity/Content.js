@@ -206,8 +206,7 @@ function Content(){
                                  <AccordionDetails>
                                     
                                     {
-                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : tableType === "changes" ? 
-                                       <ChangeTable /> : tableType === "item_returns" ? <ItemReturnTable /> : tableType === "recovered_debts" ? <RecoveredDebtsTable /> : tableType === "cashier_summaries" ? <CashierSummaryTable /> : null
+                                       tableType === "sales" ? <SalesTable /> : tableType === "expenses" ? <ExpensesTable /> : tableType === "debts" ? <DebtTable /> : tableType === "item_returns" ? <ItemReturnTable /> : tableType === "recovered_debts" ? <RecoveredDebtsTable /> : tableType === "cashier_summaries" ? <CashierSummaryTable /> : null
                                     }
                                  
                                  

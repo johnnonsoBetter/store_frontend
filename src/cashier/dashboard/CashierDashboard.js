@@ -285,7 +285,7 @@ function CashierDashboard(){
         })
         new_sale['discount'] = parseInt(discount)
 
-        const cashbackAmount = 100
+        const cashbackAmount = 0
         // processes the transaction type
 
         switch(transactionType){
@@ -528,7 +528,7 @@ function CashierDashboard(){
                                     <Box display="flex" justifyContent="center">
                                         <Chip
                                              avatar={<Avatar>{ storeInfo['name'].charAt(0)   }</Avatar>}
-                                             label={`${storeInfo['name']} Supermarket`}
+                                             label={`${storeInfo['name']} Store`}
                                              style={{backgroundColor: "#ff9347" , textTransform: "capitalize"}}
                                              variant="outlined"
                                             
