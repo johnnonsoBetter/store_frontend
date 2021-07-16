@@ -32,7 +32,7 @@ function CashierSummaryInfo(){
     const [cashierSystemSummary, setCashierSystemSummary] = useState(null)
     const [transactionReview, setTransactionReview] = useState(null)
     const [view, setView] = useState('summary')
-    const cashierSummaryApi = activitiesApi(storeName, `cashier_sales_summaries/${cashierSummaryId}`)
+    const cashierSummaryApi = activitiesApi(`cashier_sales_summaries/${cashierSummaryId}`)
     const [loading, setLoading] = useState(true)
     const [failed, setFailed] = useState(false)
     const classes = useStyles()

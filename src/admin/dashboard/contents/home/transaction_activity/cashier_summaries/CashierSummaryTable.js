@@ -75,7 +75,7 @@ function CashierSummaryTable(){
     const [failed, setFailed] = useState(false)
     const [cashier_summaries, setCashierSummaries] = useState([])
     const classes = useStyles();
-    const cashierSummaryApi = activitiesApi(storeName, 'cashier_sales_summaries')
+    const cashierSummaryApi = activitiesApi('cashier_sales_summaries')
     const [cashierSummaryId, setCashierSummaryId] = useState('')
 
     const matches = useMediaQuery('(max-width:600px)')
